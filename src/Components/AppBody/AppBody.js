@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import createScrollSnap from 'scroll-snap'
 
 import Landing from "./Components/Landing";
 import Skills from "./Components/Skills";
@@ -15,9 +16,13 @@ AppBody.propTypes = {
 
 };
 
-function AppBody({className}) {
+function AppBody({className, handleScroll, appBodyRef}) {
     return (
-        <div className={cx(styles.appBody, className)} style={{scrollSnapType: 'y mandatory'}}>
+        <div
+            className={cx(styles.appBody, className)}
+            onScroll={handleScroll}
+            ref={appBodyRef}
+        >
             <Landing className={styles.childSection}/>
             <ShortBio className={styles.childSection}/>
             <Skills className={styles.childSection}/>

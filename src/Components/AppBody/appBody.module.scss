@@ -5,11 +5,11 @@
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    max-height: 1200vh;
+    scroll-snap-type: y proximity;
 }
 
 .childSection {
     scroll-snap-align: start none;
     @include full-width;
+    flex-shrink: 0;
 }

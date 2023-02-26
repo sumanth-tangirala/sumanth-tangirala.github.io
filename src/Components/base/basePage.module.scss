@@ -11,13 +11,14 @@ $nav_bar_end_height:3.2rem;
 .navBar {
   height: $nav_bar_full_height;
   flex-shrink: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
+  //position: fixed;
+  //top: 0;
+  //left: 0;
   width: 100%;
 }
 
 .appBody {
+  height: calc(100vh - $nav_bar_end_height);
   flex-shrink: 0;
 }
 

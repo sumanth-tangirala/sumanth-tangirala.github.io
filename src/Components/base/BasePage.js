@@ -19,7 +19,7 @@ const END_NAVBAR_HEIGHT = 3.2
 const TITLE_START_FONT_SIZE = 4.8;
 const TITLE_END_FONT_SIZE = 2.4;
 
-const TITLE_TOP_START_POSITION = 40;
+const TITLE_TOP_START_POSITION = 43;
 const TITLE_TOP_END_POSITION = 0.1;
 
 const TITLE_START_WIDTH = 100;
@@ -33,16 +33,18 @@ function calculateNewValueAfterScroll(startValue, endValue, scrollPercent, delay
 function BasePage(props) {
     const containerRef = useRef();
     const navBarRef = useRef();
+    const appBodyRef = useRef();
     const nameTitleRef = useRef();
     const handleScroll = (event) => {
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) - 60;
         const scrollTop = event.target.scrollTop;
-        console.log(scrollTop, vh)
         const scrollPercent = (scrollTop/vh)
 
         if (scrollTop < vh) {
             const new_height = calculateNewValueAfterScroll(START_NAVBAR_HEIGHT, END_NAVBAR_HEIGHT, scrollPercent)
-            navBarRef.current.style.height = String(new_height) + 'rem';
+            const navBarHeight = String(new_height) + 'rem';
+            navBarRef.current.style.height = navBarHeight;
+            // appBodyRef.current.style.height = 'calc(100vh - '+ navBarHeight + ')';
 
             const new_title_font_size = calculateNewValueAfterScroll(TITLE_START_FONT_SIZE, TITLE_END_FONT_SIZE, scrollPercent, .5);
             nameTitleRef.current.style.fontSize = String(new_title_font_size) + 'rem';
@@ -64,9 +66,9 @@ function BasePage(props) {
 
     return (
         <ParallaxProvider scrollContainer={containerRef.current}>
-            <div className={styles.container} ref={containerRef} onScroll={handleScroll}>
+            <div className={styles.container} ref={containerRef}>
                 <NavBar className={styles.navBar} navBarRef={navBarRef}/>
-                <AppBody className={styles.appBody}/>
+                <AppBody className={styles.appBody} handleScroll={handleScroll} appBodyRef={appBodyRef}/>
                 <Name nameTitleRef={nameTitleRef}/>
             </div>
         </ParallaxProvider>
