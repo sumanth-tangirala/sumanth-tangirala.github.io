@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
-import './navBar.scss';
+import styles from './navBar.module.scss';
 
 NavBar.propTypes = {
     
 };
 
-function NavBar(props) {
+function NavBar({className, navBarRef}) {
+
     return (
-        <div className="container">navbar</div>
+        <div className={cx(styles.container, className)} ref={navBarRef}>
+            Navbar
+        </div>
     );
 }
 

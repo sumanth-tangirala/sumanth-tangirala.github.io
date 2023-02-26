@@ -1,0 +1,15 @@
+@import '../../../base/basePage.module.scss';
+
+.container{
+  background: bisque;
+  height: calc(100vh - $nav_bar_end_height);
+  width: 100%;
+  @include flex;
+  justify-content: flex-start;
+}
+
+.text{
+  @include flex();
+  flex-grow: 1;
+  width: 100%;
+}

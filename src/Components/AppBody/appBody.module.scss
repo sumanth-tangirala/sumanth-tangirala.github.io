@@ -1,0 +1,15 @@
+@import '../base/basePage.module.scss';
+
+.appBody{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    max-height: 1200vh;
+}
+
+.childSection {
+    scroll-snap-align: start none;
+    @include full-width;
+}

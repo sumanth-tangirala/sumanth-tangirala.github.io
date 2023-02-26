@@ -1,0 +1,8 @@
+@import '../../../base/basePage.module.scss';
+
+.container{
+  background: khaki;
+  height: 24rem;
+  width: 100%;
+  @include flex();
+}

@@ -1,0 +1,8 @@
+@import '../../../base/basePage.module.scss';
+
+.container{
+  background: red;
+  height: calc(150vh - $nav_bar_end_height);
+  width: 100%;
+  @include flex();
+}
