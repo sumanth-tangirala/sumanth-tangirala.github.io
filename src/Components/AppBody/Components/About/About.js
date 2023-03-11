@@ -1,13 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import styles from './ShortBio.module.scss';
+import styles from './About.module.scss';
 import cx from "classnames";
 import HistoryBanner from "./HistoryBanner";
 
-function ShortBio({ className }) {
+function About({ className, sectionRef }) {
     return (
-        <div className={cx(styles.container, className)}>
+        <div className={cx(styles.container, className)} ref={sectionRef}>
             <HistoryBanner />
             <div className={styles.text}>
                 Short Bio
@@ -16,6 +15,6 @@ function ShortBio({ className }) {
     );
 }
 
-ShortBio.propTypes = {};
+About.propTypes = {};
 
-export default ShortBio;
+export default About;

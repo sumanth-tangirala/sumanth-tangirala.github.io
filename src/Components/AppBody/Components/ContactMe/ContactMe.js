@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './ContactMe.module.scss';
 import cx from "classnames";
 
-function ContactMe({className}) {
+function ContactMe({className, sectionRef}) {
     return (
-        <div className={cx(styles.container, className)}>Contact Me</div>
+        <div className={cx(styles.container, className)} ref={sectionRef}>Contact Me</div>
     );
 }
 

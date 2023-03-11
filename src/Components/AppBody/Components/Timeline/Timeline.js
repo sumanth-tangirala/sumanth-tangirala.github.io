@@ -1,12 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import styles from './Timeline.module.scss';
 import cx from "classnames";
 
-function Timeline({className}) {
+function Timeline({className, sectionRef}) {
     return (
-        <div className={cx(styles.container, className)}>Timeline</div>
+        <div className={cx(styles.container, className)} ref={sectionRef}>Timeline</div>
     );
 }
 

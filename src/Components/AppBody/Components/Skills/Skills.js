@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './Skills.module.scss';
 import cx from "classnames";
 
-function Skills({className}) {
+function Skills({className, sectionRef}) {
     return (
-        <div className={cx(styles.container, className)}>Skills</div>
+        <div className={cx(styles.container, className)} ref={sectionRef}>Skills</div>
     );
 }
 

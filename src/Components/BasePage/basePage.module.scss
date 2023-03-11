@@ -5,7 +5,7 @@ $nav_bar_end_height:3.2rem;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .navBar {

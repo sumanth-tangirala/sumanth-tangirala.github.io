@@ -1,0 +1,19 @@
+.container {
+  background: azure;
+  padding: 2rem;
+  min-width: 12rem;
+  min-height: 12rem;
+  max-width: 16rem;
+  max-height: 16rem;
+  flex-grow: 1;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  box-shadow: .05rem .05rem .3rem .2rem rgba(0,0,0,.05);
+  border-radius: .4rem;
+  margin: 1.2rem;
+  &:hover{
+    box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.2);
+    transform: translate3d(0, -0.2rem, 0);
+    -webkit-transform: translate3d(0, -0.2rem, 0);
+  }
+}

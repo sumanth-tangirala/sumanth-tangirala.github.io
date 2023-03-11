@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import styles from './historyBanner.module.scss';
 import cx from "classnames";
 
-function HistoryBanner({}) {
+function HistoryBanner(props) {
     return (
         <div className={cx(styles.container)}>
             <div>DAIICT</div>
