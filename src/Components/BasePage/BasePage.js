@@ -1,4 +1,5 @@
 import React, {useCallback, useMemo, useRef} from 'react';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 import NavBar from "../NavBar";
 import AppBody from "../AppBody";
@@ -62,29 +63,29 @@ function BasePage(props) {
     }), [])
 
     const handleScroll = useCallback((event) => {
-        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) - 60;
-        const scrollTop = event.target.scrollTop;
-        const scrollPercent = (scrollTop/vh)
-
-        if (scrollTop < vh) {
-            const new_height = calculateNewValueAfterScroll(START_NAVBAR_HEIGHT, END_NAVBAR_HEIGHT, scrollPercent)
-            navBarRef.current.style.height = String(new_height) + 'rem';
-
-            const new_title_font_size = calculateNewValueAfterScroll(TITLE_START_FONT_SIZE, TITLE_END_FONT_SIZE, scrollPercent, .5);
-            nameTitleRef.current.style.fontSize = String(new_title_font_size) + 'rem';
-
-            const new_title_top_position = -1 * calculateNewValueAfterScroll(TITLE_TOP_START_POSITION, TITLE_TOP_END_POSITION, scrollPercent, .11)
-            nameTitleRef.current.style.transform = "translateY(" + String(new_title_top_position) + 'vh)';
-
-            const new_title_width = calculateNewValueAfterScroll(TITLE_START_WIDTH, TITLE_END_WIDTH, scrollPercent, 3)
-            nameTitleRef.current.style.width = String(new_title_width) + '%';
-        }
-        else {
-            navBarRef.current.style.height = String(END_NAVBAR_HEIGHT) + 'rem';
-            nameTitleRef.current.style.fontSize = String(TITLE_END_FONT_SIZE) + 'rem';
-            nameTitleRef.current.style.transform = "translateY(" + String(-1 * TITLE_TOP_END_POSITION) + 'vh)';
-            nameTitleRef.current.style.width = String(TITLE_END_WIDTH) + '%';
-        }
+        // const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0) - 60;
+        // const scrollTop = event.target.scrollTop;
+        // const scrollPercent = (scrollTop/vh)
+        //
+        // if (scrollTop < vh) {
+        //     const new_height = calculateNewValueAfterScroll(START_NAVBAR_HEIGHT, END_NAVBAR_HEIGHT, scrollPercent)
+        //     navBarRef.current.style.height = String(new_height) + 'rem';
+        //
+        //     const new_title_font_size = calculateNewValueAfterScroll(TITLE_START_FONT_SIZE, TITLE_END_FONT_SIZE, scrollPercent, .5);
+        //     nameTitleRef.current.style.fontSize = String(new_title_font_size) + 'rem';
+        //
+        //     const new_title_top_position = -1 * calculateNewValueAfterScroll(TITLE_TOP_START_POSITION, TITLE_TOP_END_POSITION, scrollPercent, .11)
+        //     nameTitleRef.current.style.transform = "translateY(" + String(new_title_top_position) + 'vh)';
+        //
+        //     const new_title_width = calculateNewValueAfterScroll(TITLE_START_WIDTH, TITLE_END_WIDTH, scrollPercent, 3)
+        //     nameTitleRef.current.style.width = String(new_title_width) + '%';
+        // }
+        // else {
+        //     navBarRef.current.style.height = String(END_NAVBAR_HEIGHT) + 'rem';
+        //     nameTitleRef.current.style.fontSize = String(TITLE_END_FONT_SIZE) + 'rem';
+        //     nameTitleRef.current.style.transform = "translateY(" + String(-1 * TITLE_TOP_END_POSITION) + 'vh)';
+        //     nameTitleRef.current.style.width = String(TITLE_END_WIDTH) + '%';
+        // }
 
     }, [])
 
@@ -95,9 +96,7 @@ function BasePage(props) {
 
     return (
         <div className={styles.container}>
-            <NavBar className={styles.navBar} navBarRef={navBarRef} handleNavigation={onNavigation}/>
             <AppBody className={styles.appBody} handleScroll={handleScroll} appBodyRef={appBodyRef} sectionRefs={sectionRefs}/>
-            <Name nameTitleRef={nameTitleRef}/>
         </div>
     );
 }

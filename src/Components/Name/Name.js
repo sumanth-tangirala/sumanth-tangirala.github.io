@@ -1,19 +1,20 @@
 import React from 'react';
 
 import styles from './name.module.scss';
+import {Parallax, useParallax} from "react-scroll-parallax";
 
 Name.propTypes = {
 
 };
 
-function Name({nameTitleRef}) {
+function Name(props) {
     return (
-        <div
+        <Parallax
             className={styles.name}
-            ref={nameTitleRef}
+            translateY={[0, 1000]}
         >
-            Sumanth Tangirala
-        </div>
+                Sumanth Tangirala
+        </Parallax>
     );
 }
 
