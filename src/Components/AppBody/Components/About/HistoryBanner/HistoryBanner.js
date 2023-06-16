@@ -1,16 +1,24 @@
-import React from 'react';
+import React, {useMemo} from 'react';
+
+import _map from 'lodash/map';
+
+import text from 'text/text.json';
 
 import styles from './historyBanner.module.scss';
 import cx from "classnames";
 
 function HistoryBanner(props) {
+    const images = text.historyBannerImages;
+
+    const imagesComponents = useMemo(() => _map(images, (imageDetails) => {
+        return (
+            <img src={imageDetails.path} className={styles.image} alt={imageDetails.text} key={imageDetails.text}/>
+        )
+    }), [images]);
+
     return (
         <div className={cx(styles.container)}>
-            <div>DAIICT</div>
-            <div>ISRO</div>
-            <div>Center of WIMS2 UMich</div>
-            <div>TEKION</div>
-            <div>RUTGERS</div>
+            {imagesComponents}
         </div>
     );
 }

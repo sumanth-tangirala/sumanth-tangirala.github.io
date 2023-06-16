@@ -1,8 +1,20 @@
-@import '../../../BasePage/basePage.module.scss';
+@import 'src/styles.module.scss';
+
+$img_size: 10rem;
 
 .container{
-  background: green;
-  height: calc(100vh - $nav_bar_end_height);
+  background: $matte_grey;
+  color: $aluminium;
+  padding: 2rem;
   width: 100%;
   @include flex();
+}
+
+.skillContainer{
+  @include flex();
+}
+
+.skillImg{
+  max-height: $img_size;
+  max-width: $img_size;
 }

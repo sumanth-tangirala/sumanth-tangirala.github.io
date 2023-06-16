@@ -1,15 +1,19 @@
-@import '../BasePage/basePage.module.scss';
+@import 'src/styles.module.scss';
 
-.appBody{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.appBodyContainer{
+    height: calc(100vh - $nav_bar_height);
+    flex-shrink: 0;
     overflow-y: scroll;
+    overflow-x: hidden;
     scroll-snap-type: y proximity;
+    @include main-background;
 }
 
 .childSection {
-    scroll-snap-align: start none;
+    scroll-snap-align: start end;
     @include full-width;
-    flex-shrink: 0;
+}
+
+.sectionHeading {
+    @include section-heading;
 }

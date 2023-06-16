@@ -1,15 +1,29 @@
-@import '../../../BasePage/basePage.module.scss';
+@import 'src/styles.module.scss';
+
+$img_size: 24rem;
 
 .container{
-  background: bisque;
-  height: calc(100vh - $nav_bar_end_height);
+  height: calc(100vh - $nav_bar_height);
   width: 100%;
   @include flex;
   justify-content: flex-start;
 }
 
-.text{
+.about{
   @include flex();
+  flex-direction: row;
   flex-grow: 1;
   width: 100%;
+  z-index: 2;
+  background-color: $trans_matte_grey;
+  backdrop-filter: blur(7px);
+}
+
+.image {
+  height: $img_size;
+  max-height: 80%;
+}
+
+.text {
+  flex-grow: .5;
 }

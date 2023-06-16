@@ -1,1 +1,1 @@
-export {default} from './CardToModal';
+export {default} from './CardToPopover';

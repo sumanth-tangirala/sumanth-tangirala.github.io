@@ -1,0 +1,43 @@
+$nav_bar_height: 4rem;
+$backgroundColor: white;
+
+@mixin flex{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+@mixin full-width{
+  width: 100%;
+}
+
+@mixin section-heading {
+  font-size: 2rem;
+}
+
+@mixin main-background {
+  color: #000;
+  background: linear-gradient(180deg, $backgroundColor 70%, transparent 0) 0 2rem, linear-gradient(90deg, currentColor 1%, transparent 1%) 0.5rem 0, linear-gradient(90deg, $backgroundColor 70%, transparent 0) 2rem 0, linear-gradient(180deg, currentColor 1%, transparent 1%) 0.5rem 0.5rem;
+  background-size: calc(2 * 2.5rem) calc(2 * 2.5rem);
+}
+
+$honolulu_blue: #2176ae;
+$argentinian_blue: #57b8ff;
+$tigers_eye_brown: #b66d0d;
+$hunyadi_yellow: #fbb13c;
+$tomato_red: #fe6847;
+$dutch_white: #e8dab2;
+$payne_grey: #4F6D7A;
+$columbia_blue: #C0D6DF;
+$platinum_blue: #EAEAEA;
+$aluminium: #a7adba;
+$burnt_red: #DD6E42;
+$chrome_yellow: #fcbc1d;
+$matte_grey: #202124;
+$trans_matte_grey: #20212488;
+$mint_green: #DAFFEF;
+$verdegris: #64B6AC;
+$greenish-blue: #266f72;
+$mint_blue: #cafffb;
+

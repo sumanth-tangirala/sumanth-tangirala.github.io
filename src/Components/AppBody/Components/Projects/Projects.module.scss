@@ -1,8 +1,7 @@
-@import '../../../BasePage/basePage.module.scss';
+@import 'src/styles.module.scss';
 
 .container {
   background: #61dafb;
-  height: calc(100vh - $nav_bar_end_height);
   width: 100%;
   @include flex();
   flex-direction: row;

@@ -1,20 +1,15 @@
-import './App.css';
-import BasePage from "./Components/BasePage";
-import styles from "./Components/BasePage/basePage.module.scss";
+import React, {useCallback, useMemo, useRef} from "react";
+import {ParallaxProvider} from "react-scroll-parallax";
 import NavBar from "./Components/NavBar";
-import React, {useRef} from "react";
+import styles from './App.module.scss';
+import AppBody from "./Components/AppBody";
+import {SECTION_TYPES} from "./constants";
+import BasePage from "./Components/BasePage";
 
 function App() {
-    const navBarRef = useRef()
-    const onNavigation = () => {
-
-    }
-
+    const parallaxContainerRef = useRef();
     return (
-    <div className="App">
-        <NavBar className={styles.navBar} navBarRef={navBarRef} handleNavigation={onNavigation}/>
-        <BasePage />
-    </div>
+        <BasePage parallaxContainerRef={parallaxContainerRef}/>
     );
 }
 

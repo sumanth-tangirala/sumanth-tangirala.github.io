@@ -1,7 +1,32 @@
-@import '../../../BasePage/basePage.module.scss';
+@import 'src/styles.module.scss';
+
+$img_size: 16rem;
+$backgroundColor: white;
 
 .landing{
-  background: orange;
-  height: 100vh;
+  height: calc(100vh - $nav_bar_height);
   @include flex();
+  justify-content: center;
+}
+
+.container {
+  background: $backgroundColor;
+  @include flex();
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+}
+
+.image {
+  height: $img_size;
+  width: $img_size;
+  border-radius: 100%;
+  border: 0.4rem solid;
+  margin-bottom: 3rem;
+}
+
+.tagline{
+  color: $honolulu_blue;
+  font-size: 2rem;
+  margin-top: 4rem;
 }

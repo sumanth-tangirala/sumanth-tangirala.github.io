@@ -1,0 +1,61 @@
+{
+  "name": "Sumanth Tangirala",
+  "picturePath": "/img/picture.jpg",
+  "tagline": "this is the tagline",
+  "historyBannerImages": [
+    {
+      "path": "/img/DAIICT.png",
+      "text": "DA-IICT"
+    },
+    {
+      "path": "/img/ISRO.png",
+      "text": "ISRO"
+    },
+    {
+      "path": "/img/WIMS2.png",
+      "text": "WIMS2"
+    },
+    {
+      "path": "/img/Tekion.png",
+      "text": "Tekion"
+    },
+    {
+      "path": "/img/Rutgers.png",
+      "text": "Rutgers"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Project Title",
+      "description": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "Project Title",
+      "description": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "Project Title",
+      "description": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "Project Title",
+      "description": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "Project Title",
+      "description": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    }
+  ],
+  "skills": [
+    {
+      "title": "skill",
+      "description": "description",
+      "imgPath": "/img/WIMS2.png"
+    }
+  ]
+}

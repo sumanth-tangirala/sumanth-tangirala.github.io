@@ -2,11 +2,17 @@ import React, {useCallback} from 'react';
 import cx from 'classnames';
 import { Button } from 'antd';
 
+import basicData from 'text/text.json';
+
 import styles from './navBar.module.scss';
 import {SECTION_TYPES} from "../../constants";
 
 
 function NavBar({className, navBarRef, handleNavigation}) {
+    const onNavigateToLanding = useCallback(() => {
+        handleNavigation(SECTION_TYPES.LANDING)
+    }, [handleNavigation]);
+
     const onNavigateToAbout = useCallback(() => {
         handleNavigation(SECTION_TYPES.ABOUT)
     }, [handleNavigation]);
@@ -29,12 +35,17 @@ function NavBar({className, navBarRef, handleNavigation}) {
 
     return (
         <div className={cx(styles.container, className)} ref={navBarRef}>
-            <Button type="link" onClick={onNavigateToAbout}>About</Button>
-            <Button type="link" onClick={onNavigateToSkills}>Skills</Button>
-            <Button type="link" onClick={onNavigateToTimeline}>Timeline</Button>
-            <Button type="link" onClick={onNavigateToProjects}>Projects</Button>
-            <Button type="link" onClick={onNavigateToContact}>Contact</Button>
-            Resume
+            <div className={styles.name} onClick={onNavigateToLanding}>
+                {basicData.name}
+            </div>
+            <div className={styles.actions}>
+                <Button type="link" onClick={onNavigateToAbout} className={styles.navBarItem}>About</Button>
+                <Button type="link" onClick={onNavigateToSkills} className={styles.navBarItem}>Skills</Button>
+                <Button type="link" onClick={onNavigateToTimeline} className={styles.navBarItem}>Timeline</Button>
+                <Button type="link" onClick={onNavigateToProjects} className={styles.navBarItem}>Projects</Button>
+                <Button type="link" onClick={onNavigateToContact} className={styles.navBarItem}>Contact</Button>
+                <Button type="link" className={styles.navBarItem}>Resume</Button>
+            </div>
         </div>
     );
 }

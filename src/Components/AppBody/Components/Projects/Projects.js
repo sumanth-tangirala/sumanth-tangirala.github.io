@@ -1,20 +1,25 @@
 import React from 'react';
+import cx from "classnames";
+
+import _map from "lodash/map";
+
+import text from 'text/text.json';
+
+import CardToPopover from "../../../CardToModal";
 
 import styles from './Projects.module.scss';
-import cx from "classnames";
-import CardToModal from "../../../CardToModal";
 
 function Projects({className, sectionRef}) {
     return (
         <div className={cx(styles.container, className)} ref={sectionRef}>
-            <CardToModal />
-            <CardToModal />
-            <CardToModal />
-            <CardToModal />
-            <CardToModal />
-            <CardToModal />
-            <CardToModal />
-            <CardToModal />
+            {_map(text.projects, (projectDetails, index) => (
+                <CardToPopover
+                    title={projectDetails.title}
+                    description={projectDetails.description}
+                    imgPath={projectDetails.imgPath}
+                    key={index}
+                />
+            ))}
         </div>
     );
 }

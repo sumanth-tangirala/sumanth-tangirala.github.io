@@ -1,6 +1,43 @@
+@import "src/styles.module";
+
 .container{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    //background-color: azure;
+    height: $nav_bar_height;
+    flex-shrink: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: $honolulu_blue;
+    color: black;
+}
+
+.name {
+    user-select: none;
+    margin-left: 2.4rem;
+    font-size: 2.4rem;
+    cursor: pointer;
+    transition: all .2s ease;
+    color: white;
+    -webkit-transition: all .2s ease;
+    &:hover {
+        color: $hunyadi_yellow !important;
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 4rem;
+    flex-grow: 1;
+}
+
+.navBarItem {
+    color: azure;
+    font-size: 1rem;
+    &:hover {
+        color: $hunyadi_yellow !important;
+    }
 }
