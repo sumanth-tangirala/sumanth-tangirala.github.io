@@ -45,7 +45,7 @@ const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
 });
 
 // Some apps do not need the benefits of saving a web request, so not inlining the chunk
-// makes for a smoother build process.
+// makes for a smoother docs process.
 const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 
 const emitErrorsAsWarnings = process.env.ESLINT_NO_DEV_ERRORS === 'true';
@@ -92,7 +92,7 @@ module.exports = function (webpackEnv) {
   const isEnvProduction = webpackEnv === 'production';
 
   // Variable used for enabling profiling in Production
-  // passed into alias object. Uses a flag if passed into the build command
+  // passed into alias object. Uses a flag if passed into the docs command
   const isEnvProductionProfile =
     isEnvProduction && process.argv.includes('--profile');
 
@@ -202,7 +202,7 @@ module.exports = function (webpackEnv) {
     // This means they will be the "root" imports that are included in JS bundle.
     entry: paths.appIndexJs,
     output: {
-      // The build folder.
+      // The docs folder.
       path: paths.appBuild,
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
@@ -545,7 +545,7 @@ module.exports = function (webpackEnv) {
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
-            // In production, they would get copied to the `build` folder.
+            // In production, they would get copied to the `docs` folder.
             // This loader doesn't use a "test" so it will catch all modules
             // that fall through the other loaders.
             {
@@ -607,7 +607,7 @@ module.exports = function (webpackEnv) {
       // Makes some environment variables available to the JS code, for example:
       // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
       // It is absolutely essential that NODE_ENV is set to production
-      // during a production build.
+      // during a production docs.
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
       // Experimental hot reloading for React .
@@ -662,7 +662,7 @@ module.exports = function (webpackEnv) {
         contextRegExp: /moment$/,
       }),
       // Generate a service worker script that will precache, and keep up to date,
-      // the HTML & assets that are part of the webpack build.
+      // the HTML & assets that are part of the webpack docs.
       isEnvProduction &&
         fs.existsSync(swSrc) &&
         new WorkboxWebpackPlugin.InjectManifest({
