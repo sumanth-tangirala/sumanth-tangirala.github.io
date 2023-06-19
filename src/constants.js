@@ -1,10 +1,3 @@
-import Landing from "./Components/AppBody/Components/Landing";
-import About from "./Components/AppBody/Components/About";
-import Skills from "./Components/AppBody/Components/Skills";
-import Timeline from "./Components/AppBody/Components/Timeline";
-import Projects from "./Components/AppBody/Components/Projects";
-import ContactMe from "./Components/AppBody/Components/ContactMe";
-
 export const SECTION_TYPES = {
     LANDING: 'LANDING',
     ABOUT: 'ABOUT',

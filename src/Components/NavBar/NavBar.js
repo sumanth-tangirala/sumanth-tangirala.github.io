@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import cx from 'classnames';
 import { Button, Dropdown } from 'antd';
 import { ReactComponent as MenuSvg } from './menu.svg';
@@ -10,7 +10,6 @@ import basicData from 'text/text.json';
 import styles from './navBar.module.scss';
 import {SECTION_TYPES, SECTION_ORDER, SECTION_TYPE_VS_NAME} from "../../constants";
 import _map from "lodash/map";
-import {logDOM} from "@testing-library/react";
 
 const sectionsToDisplay = _filter(SECTION_ORDER, sectionType => sectionType !== SECTION_TYPES.LANDING)
 

@@ -17,7 +17,6 @@ $backgroundColor: white;
   justify-content: center;
   align-items: center;
   padding: 1.2rem;
-  max-width: 70%;
 }
 
 .image {
@@ -54,6 +53,9 @@ $backgroundColor: white;
   .tagline{
     font-size: 2rem;
     margin-top: 2rem;
+  }
+  .container{
+    max-width: 70%;
   }
 }
 

@@ -1,9 +1,4 @@
-import React, {useCallback, useMemo, useRef} from "react";
-import {ParallaxProvider} from "react-scroll-parallax";
-import NavBar from "./Components/NavBar";
-import styles from './App.module.scss';
-import AppBody from "./Components/AppBody";
-import {SECTION_TYPES} from "./constants";
+import React, {useRef} from "react";
 import BasePage from "./Components/BasePage";
 
 function App() {

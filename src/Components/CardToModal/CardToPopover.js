@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Modal} from 'antd'
-import text from 'text/text.json';
 
 import styles from './CardToModal.module.scss';
 

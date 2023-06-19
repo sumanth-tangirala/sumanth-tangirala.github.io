@@ -10,7 +10,11 @@ function About({ className, sectionRef }) {
         <div className={cx(styles.container, className)} ref={sectionRef}>
             <HistoryBanner />
             <div className={styles.about}>
-                <img src={text.picturePath} className={styles.image}/>
+                <img
+                    src={text.picturePath}
+                    className={styles.image}
+                    alt=""
+                />
                 <div className={styles.text}>
                     Short Bio
                 </div>
