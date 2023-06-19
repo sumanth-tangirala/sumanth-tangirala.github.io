@@ -31,6 +31,7 @@ function BasePage({parallaxContainerRef:appBodyRef}) {
     }), [])
 
     const onNavigation = useCallback((section) => {
+        console.log(section);
         const sectionRef = sectionRefs[section];
         sectionRef.current.scrollIntoView({ behavior: 'smooth'});
     }, [sectionRefs])

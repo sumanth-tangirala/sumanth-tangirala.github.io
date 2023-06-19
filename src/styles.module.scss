@@ -1,5 +1,6 @@
 $nav_bar_height: 4rem;
 $backgroundColor: white;
+$mobile_width: 750px;
 
 @mixin flex{
   display: flex;
@@ -13,7 +14,7 @@ $backgroundColor: white;
 }
 
 @mixin section-heading {
-  font-size: 2rem;
+  font-size: 2.4rem;
 }
 
 @mixin main-background {
@@ -23,19 +24,24 @@ $backgroundColor: white;
 }
 
 $honolulu_blue: #2176ae;
+$text_blue: #48A6E9;
 $argentinian_blue: #57b8ff;
 $tigers_eye_brown: #b66d0d;
+$text_yellow: #FCBA23;
 $hunyadi_yellow: #fbb13c;
 $tomato_red: #fe6847;
 $dutch_white: #e8dab2;
 $payne_grey: #4F6D7A;
 $columbia_blue: #C0D6DF;
 $platinum_blue: #EAEAEA;
+$text_grey: #D8D9DD;
 $aluminium: #a7adba;
 $burnt_red: #DD6E42;
 $chrome_yellow: #fcbc1d;
+$light_matte_grey: #4f525d;
 $matte_grey: #202124;
-$trans_matte_grey: #20212488;
+$light_trans_matte_grey: #20212488;
+$dark_trans_matte_grey: #202124DF;
 $mint_green: #DAFFEF;
 $verdegris: #64B6AC;
 $greenish-blue: #266f72;

@@ -3,18 +3,46 @@
 $img_size: 10rem;
 
 .container{
-  background: $matte_grey;
-  color: $aluminium;
-  padding: 2rem;
+  min-height: calc(100vh - $nav_bar_height);;
+  background: $dark_trans_matte_grey;
+  backdrop-filter: blur(8px);
+  color: $text_blue;
   width: 100%;
+  padding: 2.4rem 0;
   @include flex();
+}
+
+.sectionHeading{
+  color: $argentinian_blue;
+}
+
+.skillsGrid {
+  @include flex();
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 2rem 1.2rem;
+  justify-content: center;
+  flex-grow: 1;
 }
 
 .skillContainer{
   @include flex();
+  padding: .8rem;
+  width: 23rem;
 }
 
 .skillImg{
   max-height: $img_size;
   max-width: $img_size;
+}
+
+.skillTitle{
+  font-size: 1.6rem;
+  color: $platinum_blue;
+}
+
+.skillDescription{
+  padding-top: .4rem;
+  font-size: 1rem;
+  color: $text_grey;
 }

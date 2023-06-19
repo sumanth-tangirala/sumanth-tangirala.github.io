@@ -1,3 +1,5 @@
+// TODO: not using this
+
 import React from 'react';
 
 import styles from './name.module.scss';

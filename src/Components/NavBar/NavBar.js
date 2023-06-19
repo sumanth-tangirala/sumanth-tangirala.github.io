@@ -1,51 +1,86 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import cx from 'classnames';
-import { Button } from 'antd';
+import { Button, Dropdown } from 'antd';
+import { ReactComponent as MenuSvg } from './menu.svg';
+import _filter from 'lodash/filter';
+import _reduce from 'lodash/reduce';
 
 import basicData from 'text/text.json';
 
 import styles from './navBar.module.scss';
-import {SECTION_TYPES} from "../../constants";
+import {SECTION_TYPES, SECTION_ORDER, SECTION_TYPE_VS_NAME} from "../../constants";
+import _map from "lodash/map";
+import {logDOM} from "@testing-library/react";
 
+const sectionsToDisplay = _filter(SECTION_ORDER, sectionType => sectionType !== SECTION_TYPES.LANDING)
+
+const sectionMenuItems = _map(sectionsToDisplay, sectionType => ({
+    key: sectionType,
+    label: (<span className={styles.menuItem}>{SECTION_TYPE_VS_NAME[sectionType]}</span>),
+}));
 
 function NavBar({className, navBarRef, handleNavigation}) {
-    const onNavigateToLanding = useCallback(() => {
-        handleNavigation(SECTION_TYPES.LANDING)
-    }, [handleNavigation]);
 
-    const onNavigateToAbout = useCallback(() => {
-        handleNavigation(SECTION_TYPES.ABOUT)
-    }, [handleNavigation]);
+    const sectionTypeVsNavigationFunc = useMemo(() => {
+        const getHandleNavigation = (sectionType) => () => {
+            handleNavigation(sectionType)
+        }
 
-    const onNavigateToSkills = useCallback(() => {
-        handleNavigation(SECTION_TYPES.SKILLS)
-    }, [handleNavigation]);
+        return _reduce(SECTION_TYPES, (acc, sectionType) => ({
+            ...acc,
+            [sectionType]: getHandleNavigation(sectionType),
+        }), {})
 
-    const onNavigateToTimeline = useCallback(() => {
-        handleNavigation(SECTION_TYPES.TIMELINE)
-    }, [handleNavigation]);
+    }, [handleNavigation])
 
-    const onNavigateToProjects = useCallback(() => {
-        handleNavigation(SECTION_TYPES.PROJECTS)
-    }, [handleNavigation]);
+    const dropDownMenuProp = useMemo(() => {
+        return {
+            items: sectionMenuItems,
+            onClick: ({key:sectionType}) => {
+                handleNavigation(sectionType)
+            },
+        }
+    }, [handleNavigation])
 
-    const onNavigateToContact = useCallback(() => {
-        handleNavigation(SECTION_TYPES.CONTACT)
-    }, [handleNavigation]);
+    const renderActions = () => (
+        <div className={styles.actions}>
+            {_map(sectionsToDisplay, sectionType => (
+                <Button
+                    type="link"
+                    onClick={sectionTypeVsNavigationFunc[sectionType]}
+                    className={styles.navBarItem}
+                    key={sectionType}
+                >
+                    {SECTION_TYPE_VS_NAME[sectionType]}
+                </Button>
+            ))}
+            <Button type="link" className={styles.navBarItem}>Resume</Button>
+        </div>
+    )
+
+    const renderMenu = () => (
+        <Dropdown
+            menu={dropDownMenuProp}
+            placement="bottomRight"
+            className={styles.menu}
+            onSelect={() => {
+                console.log('ehy')
+            }}
+        >
+            <MenuSvg className={styles.menuIcon}/>
+        </Dropdown>
+    );
 
     return (
         <div className={cx(styles.container, className)} ref={navBarRef}>
-            <div className={styles.name} onClick={onNavigateToLanding}>
+            <div
+                className={styles.name}
+                onClick={sectionTypeVsNavigationFunc[SECTION_TYPES.LANDING]}
+            >
                 {basicData.name}
             </div>
-            <div className={styles.actions}>
-                <Button type="link" onClick={onNavigateToAbout} className={styles.navBarItem}>About</Button>
-                <Button type="link" onClick={onNavigateToSkills} className={styles.navBarItem}>Skills</Button>
-                <Button type="link" onClick={onNavigateToTimeline} className={styles.navBarItem}>Timeline</Button>
-                <Button type="link" onClick={onNavigateToProjects} className={styles.navBarItem}>Projects</Button>
-                <Button type="link" onClick={onNavigateToContact} className={styles.navBarItem}>Contact</Button>
-                <Button type="link" className={styles.navBarItem}>Resume</Button>
-            </div>
+            {renderActions()}
+            {renderMenu()}
         </div>
     );
 }

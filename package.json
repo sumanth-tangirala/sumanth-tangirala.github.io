@@ -64,7 +64,8 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "devDependencies": {
-    "sass": "1.58.3"
+    "sass": "1.58.3",
+    "@svgr/webpack": "8.0.1"
   },
   "scripts": {
     "start": "node scripts/start.js",

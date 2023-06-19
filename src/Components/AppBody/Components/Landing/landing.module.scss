@@ -1,6 +1,8 @@
 @import 'src/styles.module.scss';
 
 $img_size: 16rem;
+$tablet_img_size: 12rem;
+$mobile_img_size: 9.2rem;
 $backgroundColor: white;
 
 .landing{
@@ -15,6 +17,7 @@ $backgroundColor: white;
   justify-content: center;
   align-items: center;
   padding: 1.2rem;
+  max-width: 70%;
 }
 
 .image {
@@ -25,8 +28,54 @@ $backgroundColor: white;
   margin-bottom: 3rem;
 }
 
+.name {
+  font-size: 4.8rem;
+  text-align: center;
+}
+
 .tagline{
   color: $honolulu_blue;
   font-size: 2rem;
   margin-top: 4rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+  .image{
+    height: $tablet_img_size;
+    width: $tablet_img_size;
+    margin-bottom: 2rem;
+  }
+
+  .name {
+    font-size: 4rem;
+  }
+
+  .tagline{
+    font-size: 2rem;
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (max-width: 720px) {
+    .image{
+      height: $mobile_img_size;
+      width: $mobile_img_size;
+      margin-bottom: 2rem;
+    }
+
+  .tagline{
+    font-size: 1.6rem;
+    margin-top: 1.6rem;
+  }
+
+  .name {
+    font-size: 3.2rem;
+  }
+
+  .container{
+    padding-left: .6rem;
+    padding-right: .6rem;
+    max-width: 60%;
+  }
 }

@@ -6,8 +6,6 @@ import styles from './CardToModal.module.scss';
 
 
 function CardToPopover({title, shortDesc, longDesc, imgPath}) {
-    const images = text.historyBannerImages;
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const toggleModal = () => {
