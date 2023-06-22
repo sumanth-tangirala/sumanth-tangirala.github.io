@@ -1,6 +1,6 @@
 @import 'src/styles.module.scss';
 
-$img_size: 10rem;
+$img_size: 8rem;
 
 .container{
   min-height: calc(100vh - $nav_bar_height);;
@@ -37,12 +37,12 @@ $img_size: 10rem;
 }
 
 .skillTitle{
-  font-size: 1.6rem;
+  @include item-title;
   color: $platinum_blue;
 }
 
 .skillDescription{
   padding-top: .4rem;
-  font-size: 1rem;
+  @include item-description;
   color: $text_grey;
 }

@@ -97,5 +97,31 @@
       "description": "description",
       "imgPath": "/img/WIMS2.png"
     }
+  ],
+  "timeline": [
+    {
+      "title": "event title",
+      "desc": "event description",
+      "date": "September 1985",
+      "imgPath": "/img/WIMS2.png"
+    },
+    {
+      "title": "event title",
+      "desc": "event description",
+      "date": "September 1985",
+      "imgPath": "/img/WIMS2.png"
+    },
+    {
+      "title": "event title",
+      "desc": "event description",
+      "date": "September 1985",
+      "imgPath": "/img/WIMS2.png"
+    },
+    {
+      "title": "event title",
+      "desc": "event description",
+      "date": "September 1985",
+      "imgPath": "/img/WIMS2.png"
+    }
   ]
 }

@@ -1,10 +1,31 @@
 import React from 'react';
-import styles from './Timeline.module.scss';
 import cx from "classnames";
 
+import text from 'text/text.json';
+
+import styles from './Timeline.module.scss';
+import _map from "lodash/map";
+
 function Timeline({className, sectionRef}) {
+    const timelineText = text.timeline;
     return (
-        <div className={cx(styles.container, className)} ref={sectionRef}>Timeline</div>
+        <div className={cx(styles.container, className)} ref={sectionRef}>
+            <div className={styles.sectionTitle}>
+                Timeline
+            </div>
+            <ul className={styles.timeline}>
+                {_map(timelineText, (event, idx) => (
+                    <li className={styles.event} key={idx}>
+                        <time className={styles.date}>{event.date}</time>
+                        <img src={event.imgPath} className={styles.eventImg} alt=""/>
+                        <div className={styles.eventDetails}>
+                            <span className={styles.eventTitle}>{event.title}</span>
+                            <span className={styles.eventDescription}>{event.desc}</span>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 }
 

@@ -5,7 +5,7 @@ import { ReactComponent as MenuSvg } from './menu.svg';
 import _filter from 'lodash/filter';
 import _reduce from 'lodash/reduce';
 
-import basicData from 'text/text.json';
+import text from 'text/text.json';
 
 import styles from './navBar.module.scss';
 import {SECTION_TYPES, SECTION_ORDER, SECTION_TYPE_VS_NAME} from "../../constants";
@@ -76,7 +76,7 @@ function NavBar({className, navBarRef, handleNavigation}) {
                 className={styles.name}
                 onClick={sectionTypeVsNavigationFunc[SECTION_TYPES.LANDING]}
             >
-                {basicData.name}
+                {text.name}
             </div>
             {renderActions()}
             {renderMenu()}

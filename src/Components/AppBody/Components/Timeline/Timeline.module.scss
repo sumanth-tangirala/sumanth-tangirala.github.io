@@ -1,8 +1,124 @@
 @import 'src/styles.module.scss';
 
-.container{
-  background: red;
-  height: calc(150vh - $nav_bar_height);
+$color1: $mint_green;
+$color2: $platinum_blue;
+$color3: $verdegris;
+$color4: $light_matte_grey;
+$text_color1: $matte_grey;
+$text_color2: black;
+$text_color4: $color2;
+
+$img_size: 6rem;
+
+
+.container {
   width: 100%;
   @include flex();
+  background: linear-gradient(    to right,     $color2 0%,     $color2 50%,     $color4 50%,     $color4 100%  );
+}
+
+.sectionTitle{
+  border: .8rem solid $color3;
+  border-radius: 2rem;
+  padding: 1rem;
+  @include section-heading;
+  background: $platinum_blue;
+  margin-top: 1rem;
+}
+
+.timeline{
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 14rem);
+  justify-content: center;
+  background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% - 1rem) 0/2rem 2rem no-repeat,
+    radial-gradient(farthest-side at bottom left, $color3 98%, #0000) calc(50% + 1rem) 100%/2rem 2rem no-repeat,
+    linear-gradient(90deg, $color2 50%, $color4 0);
+}
+
+.event{
+  @include flex;
+  flex-direction: row;
+  grid-column: span 2;
+  text-align: center;
+  border-radius: 6.5rem;
+  color: $text_color1;
+  font-size: 1.6rem;
+  line-height: 1.5rem;
+  position: relative;
+  padding: 2rem;
+  border: 2rem solid #0000;
+  background: linear-gradient($color1 0 0) content-box, linear-gradient(0, var(--c, $color2) 0, var(--c, $color2) 0) padding-box, linear-gradient(var(--d, 90deg), #0000 75%, $color3 0) border-box;
+
+  &:nth-child(even) {
+    grid-column-end: -1;
+    flex-direction: row-reverse;
+    --d: -90deg;
+    --c: #4f525d; // same as color4
+  }
+
+  &:not(:last-child) {
+    margin-bottom: -2rem;
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    height: 0.6em;
+  }
+
+  &:nth-child(even) .date{
+    left: auto;
+    color: $text_color2 !important;
+    right: calc(100% + 5rem);
+  }
+
+  &:nth-child(even) .date:before {
+    right: auto;
+    left: calc(100% + .5rem);
+    background: repeating-linear-gradient(90deg, $color4 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+  }
+}
+
+.eventImg{
+  max-height: $img_size;
+  max-width: $img_size;
+}
+
+.eventDetails {
+  @include flex;
+  padding: 1rem;
+}
+
+.date{
+  color: $text_color4;
+  position: absolute;
+  font-size: $item_desc_font_size;
+  left: calc(100% + 5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+
+  &:before {
+     content: "";
+    position: absolute;
+    height: 1rem;
+    top: calc(50% - .5rem);
+    right: calc(100% + .5rem);
+    width: 6.5rem;
+    background: repeating-linear-gradient(-90deg, $color2 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+  }
+}
+
+.eventTitle {
+  @include item-title;
+}
+
+.eventDescription {
+  @include item-description;
+  padding-top: .6rem;
 }

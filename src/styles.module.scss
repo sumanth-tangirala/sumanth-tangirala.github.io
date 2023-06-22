@@ -1,6 +1,8 @@
 $nav_bar_height: 4rem;
 $backgroundColor: white;
 $mobile_width: 750px;
+$item_title_font_size: 1.6rem;
+$item_desc_font_size: 1.2rem;
 
 @mixin flex{
   display: flex;
@@ -15,6 +17,16 @@ $mobile_width: 750px;
 
 @mixin section-heading {
   font-size: 2.4rem;
+  font-weight: 500;
+}
+
+@mixin item-title {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+@mixin item-description {
+  font-size: 1.2rem;
 }
 
 @mixin main-background {

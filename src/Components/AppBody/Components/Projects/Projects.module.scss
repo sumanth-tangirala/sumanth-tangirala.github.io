@@ -1,8 +1,17 @@
 @import 'src/styles.module.scss';
 
 .container {
-  background: #61dafb;
+  background: $platinum_blue;
   width: 100%;
+  @include flex();
+  padding: 1rem 0;
+}
+
+.sectionHeading {
+  @include section-heading;
+}
+
+.projectsGrid{
   @include flex();
   flex-direction: row;
   flex-wrap: wrap;

@@ -12,7 +12,11 @@ import styles from './Projects.module.scss';
 function Projects({className, sectionRef}) {
     return (
         <div className={cx(styles.container, className)} ref={sectionRef}>
-            {_map(text.projects, (projectDetails, index) => (
+            <span className={styles.sectionHeading}>
+                Projects
+            </span>
+            <div className={styles.projectsGrid}>
+                {_map(text.projects, (projectDetails, index) => (
                 <CardToPopover
                     title={projectDetails.title}
                     description={projectDetails.description}
@@ -20,6 +24,7 @@ function Projects({className, sectionRef}) {
                     key={index}
                 />
             ))}
+            </div>
         </div>
     );
 }
