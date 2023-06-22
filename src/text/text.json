@@ -27,27 +27,50 @@
   "projects": [
     {
       "title": "Project Title",
-      "description": "lorem ipsum",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
       "imgPath": "/img/DAIICT.png"
     },
     {
       "title": "Project Title",
-      "description": "lorem ipsum",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
       "imgPath": "/img/DAIICT.png"
     },
     {
       "title": "Project Title",
-      "description": "lorem ipsum",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
       "imgPath": "/img/DAIICT.png"
     },
     {
       "title": "Project Title",
-      "description": "lorem ipsum",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
       "imgPath": "/img/DAIICT.png"
     },
     {
       "title": "Project Title",
-      "description": "lorem ipsum",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "Project Title",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "Project Title",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "Project Title",
+      "longDesc": "lorem ipsum",
+      "shortDesc": "lorem ipsum",
       "imgPath": "/img/DAIICT.png"
     }
   ],

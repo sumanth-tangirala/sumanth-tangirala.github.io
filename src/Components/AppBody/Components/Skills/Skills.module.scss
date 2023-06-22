@@ -3,7 +3,7 @@
 $img_size: 8rem;
 
 .container{
-  min-height: calc(100vh - $nav_bar_height);;
+  min-height: calc(100vh - $nav_bar_height);
   background: $dark_trans_matte_grey;
   backdrop-filter: blur(8px);
   color: $text_blue;

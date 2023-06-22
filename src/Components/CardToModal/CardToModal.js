@@ -4,7 +4,7 @@ import {Modal} from 'antd'
 import styles from './CardToModal.module.scss';
 
 
-function CardToPopover({title, shortDesc, longDesc, imgPath}) {
+function CardToModal({title, shortDesc, longDesc, imgPath}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const toggleModal = () => {
@@ -23,13 +23,15 @@ function CardToPopover({title, shortDesc, longDesc, imgPath}) {
              style={{backgroundImage: `url(${imgPath})`}}
              onClick={toggleModal}
          >
-             <div className={styles.title}>{title}</div>
-             <div className={styles.description}>{shortDesc}</div>
-             {renderModal()}
+             <div className={styles.cardInfo}>
+                 <div className={styles.title}>{title}</div>
+                 <div className={styles.description}>{shortDesc}</div>
+                 {renderModal()}
+             </div>
          </div>
     );
 }
 
-CardToPopover.propTypes = {};
+CardToModal.propTypes = {};
 
-export default CardToPopover;
+export default CardToModal;

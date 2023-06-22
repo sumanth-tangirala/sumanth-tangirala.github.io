@@ -5,7 +5,7 @@ import _map from "lodash/map";
 
 import text from 'text/text.json';
 
-import CardToPopover from "../../../CardToModal";
+import CardToModal from "../../../CardToModal";
 
 import styles from './Projects.module.scss';
 
@@ -17,9 +17,10 @@ function Projects({className, sectionRef}) {
             </span>
             <div className={styles.projectsGrid}>
                 {_map(text.projects, (projectDetails, index) => (
-                <CardToPopover
+                <CardToModal
                     title={projectDetails.title}
-                    description={projectDetails.description}
+                    shortDesc={projectDetails.shortDesc}
+                    longDesc={projectDetails.longDesc}
                     imgPath={projectDetails.imgPath}
                     key={index}
                 />

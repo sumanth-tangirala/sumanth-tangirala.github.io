@@ -1,8 +1,9 @@
 @import 'src/styles.module.scss';
 
 .container {
-  background: $platinum_blue;
+  background: $mint_green;
   width: 100%;
+  min-height: calc(100vh - $nav_bar_height);
   @include flex();
   padding: 1rem 0;
 }
@@ -15,4 +16,6 @@
   @include flex();
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  flex-grow: 1;
 }

@@ -1,39 +1,51 @@
 @import "src/styles.module.scss";
 
+$max_size: 16rem;
+
 .container {
-  background: rgba(255,255,255,.7);
-  padding: 2rem;
-  min-width: 12rem;
-  min-height: 12rem;
-  max-width: 16rem;
-  max-height: 16rem;
+  @include flex;
+  background: rgba(255, 255, 255, .7) no-repeat center;
+  background-size: 100%;
+  width: $max_size;
+  height: $max_size;
   flex-grow: 1;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
   box-shadow: .05rem .05rem .3rem .2rem rgba(0,0,0,.05);
   border-radius: .4rem;
   margin: 1.2rem;
+
   &:hover{
     box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.2);
     transform: translate3d(0, -0.4rem, 0);
     -webkit-transform: translate3d(0, -0.4rem, 0);
     cursor: pointer;
   }
-  @include flex();
+}
+
+.cardInfo {
+  flex-grow: 1;
+  width: 100%;
+  @include flex;
+  background: #202124BB;
+  border-radius: .4rem;
+  color: white;
 }
 
 .title {
   flex-grow: 0;
-  background: rgba(255,255,255,.7);
-  margin: 0 0 0.4rem 0;
+  @include item-title;
+  margin: .4rem 0 0.4rem 0;
   border-radius: 0.2rem;
   padding: 0.2rem 0.4rem;
+  text-align: center;
 }
 
 .description {
   flex-grow: 1;
-  background: rgba(255,255,255,.7);
+  @include item-description;
   border-radius: 0.2rem;
   padding: 0.2rem 0.4rem;
   width: 100%;
+  text-align: center;
 }
