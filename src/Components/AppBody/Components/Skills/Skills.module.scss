@@ -5,15 +5,14 @@ $img_size: 8rem;
 .container{
   min-height: calc(100vh - $nav_bar_height);
   background: $dark_trans_matte_grey;
-  backdrop-filter: blur(8px);
-  color: $text_blue;
+  backdrop-filter: blur(3px);
   width: 100%;
   padding: 2.4rem 0;
   @include flex();
 }
 
 .sectionHeading{
-  color: $argentinian_blue;
+  color: white;
 }
 
 .skillsGrid {

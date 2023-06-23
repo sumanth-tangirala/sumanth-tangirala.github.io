@@ -4,11 +4,10 @@ $max_size: 16rem;
 
 .container {
   @include flex;
-  background: rgba(255, 255, 255, .7) no-repeat center;
+  background: rgba(255, 255, 255,100) no-repeat center;
   background-size: 100%;
   width: $max_size;
   height: $max_size;
-  flex-grow: 1;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
   box-shadow: .05rem .05rem .3rem .2rem rgba(0,0,0,.05);
@@ -16,7 +15,7 @@ $max_size: 16rem;
   margin: 1.2rem;
 
   &:hover{
-    box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.2);
+    box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.5);
     transform: translate3d(0, -0.4rem, 0);
     -webkit-transform: translate3d(0, -0.4rem, 0);
     cursor: pointer;
@@ -27,7 +26,7 @@ $max_size: 16rem;
   flex-grow: 1;
   width: 100%;
   @include flex;
-  background: #202124BB;
+  background: $light_trans_matte_grey;
   border-radius: .4rem;
   color: white;
 }

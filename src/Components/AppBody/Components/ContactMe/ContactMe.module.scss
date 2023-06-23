@@ -1,8 +1,81 @@
 @import 'src/styles.module.scss';
 
+$img_size: 2.8rem;
+
 .container{
-  background: khaki;
-  height: 24rem;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  height: 20rem;
   width: 100%;
   @include flex();
+}
+
+.sectionHeading {
+  @include section-heading;
+  padding-top: 2.4rem;
+}
+
+.emailsContainer{
+  flex-grow: 1;
+  @include flex;
+  flex-direction: row;
+}
+
+.emailText {
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding-right: .8rem;
+}
+
+.emailId {
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: $honolulu_blue;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  &:hover {
+    color: $hunyadi_yellow;
+    text-decoration: underline;
+  }
+}
+
+.emailDivider {
+  font-size: 1.6rem;
+  padding: 0 .8rem;
+}
+
+.socialMediaLinks {
+  @include flex;
+  flex-direction: row;
+  padding-bottom: 2.4rem;
+}
+
+.socialMediaImg {
+  height: 4rem !important;
+  width: 4rem !important;
+  font-size: 2rem;
+
+  &:not(:last-child) {
+    margin-right: 2rem;
+  }
+
+  &:hover {
+    color: $hunyadi_yellow !important;
+    border-color: $hunyadi_yellow !important;
+  }
+}
+
+.resume {
+  height: 3.6rem !important;
+  font-size: 1.2rem;
+  @include flex;
+  flex-direction: row;
+  &:hover {
+    color: $acrobat_red !important;
+    border-color: $acrobat_red !important;
+  }
+
+  & :global(.anticon) {
+    font-size: 1.6rem;
+  }
 }

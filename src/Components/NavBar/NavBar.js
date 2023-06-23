@@ -53,7 +53,6 @@ function NavBar({className, navBarRef, handleNavigation}) {
                     {SECTION_TYPE_VS_NAME[sectionType]}
                 </Button>
             ))}
-            <Button type="link" className={styles.navBarItem}>Resume</Button>
         </div>
     )
 
