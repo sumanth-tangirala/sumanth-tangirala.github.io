@@ -2,6 +2,7 @@ import React, {useMemo} from 'react';
 import cx from 'classnames';
 import { Button, Dropdown } from 'antd';
 import { ReactComponent as MenuSvg } from './menu.svg';
+
 import _filter from 'lodash/filter';
 import _reduce from 'lodash/reduce';
 
@@ -61,9 +62,7 @@ function NavBar({className, navBarRef, handleNavigation}) {
             menu={dropDownMenuProp}
             placement="bottomRight"
             className={styles.menu}
-            onSelect={() => {
-                console.log('ehy')
-            }}
+            trigger="click"
         >
             <MenuSvg className={styles.menuIcon}/>
         </Dropdown>
