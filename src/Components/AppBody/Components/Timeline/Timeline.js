@@ -16,7 +16,14 @@ function Timeline({className, sectionRef}) {
             <ul className={styles.timeline}>
                 {_map(timelineText, (event, idx) => (
                     <li className={styles.event} key={idx}>
-                        <time className={styles.date}>{event.date}</time>
+                        <time className={styles.date}>
+                            <span className={styles.largeDate}>
+                                {event.date}
+                            </span>
+                            <span className={styles.miniDate}>
+                                {event.miniDate}
+                            </span>
+                        </time>
                         <img src={event.imgPath} className={styles.eventImg} alt=""/>
                         <div className={styles.eventDetails}>
                             <span className={styles.eventTitle}>{event.title}</span>

@@ -5,26 +5,38 @@ $img_size: 2.8rem;
 .container{
   background: transparent;
   backdrop-filter: blur(5px);
-  height: 20rem;
+  height: 24rem;
   width: 100%;
   @include flex();
 }
 
 .sectionHeading {
   @include section-heading;
-  padding-top: 2.4rem;
+  padding-top: 3.2rem;
 }
 
 .emailsContainer{
-  flex-grow: 1;
+  margin-top: auto;
+  margin-bottom: auto;
   @include flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  @media screen and (max-width: $mobile_screen_width) {
+    flex-direction: column;
+    & > *{
+      padding-bottom: .2rem;
+    }
+  }
 }
 
 .emailText {
   font-size: 1.2rem;
   font-weight: 500;
   padding-right: .8rem;
+  @media screen and (max-width: $mobile_screen_width) {
+    padding-right: 0;
+    padding-bottom: .4rem;
+  }
 }
 
 .emailId {
@@ -33,6 +45,7 @@ $img_size: 2.8rem;
   color: $honolulu_blue;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
+
   &:hover {
     color: $hunyadi_yellow;
     text-decoration: underline;
@@ -42,12 +55,15 @@ $img_size: 2.8rem;
 .emailDivider {
   font-size: 1.6rem;
   padding: 0 .8rem;
+  @media screen and (max-width: $mobile_screen_width) {
+    display: none;
+  }
 }
 
 .socialMediaLinks {
   @include flex;
   flex-direction: row;
-  padding-bottom: 2.4rem;
+  padding-bottom: 5.2rem;
 }
 
 .socialMediaImg {
@@ -63,6 +79,12 @@ $img_size: 2.8rem;
     color: $hunyadi_yellow !important;
     border-color: $hunyadi_yellow !important;
   }
+  
+  @media screen and (max-width: $mobile_screen_width) {
+    height: 3.2rem !important;
+    width: 3.2rem !important;
+    font-size: 1.5rem;
+  }
 }
 
 .resume {
@@ -77,5 +99,10 @@ $img_size: 2.8rem;
 
   & :global(.anticon) {
     font-size: 1.6rem;
+  }
+
+  @media screen and (max-width: $mobile_screen_width) {
+    height: 2.8rem !important;
+    font-size: 1rem;
   }
 }

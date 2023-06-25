@@ -6,7 +6,7 @@ $mobile_img_size: 9.2rem;
 $backgroundColor: white;
 
 .landing{
-  height: calc(100vh - $nav_bar_height);
+  height: 100vh;
   @include flex();
   justify-content: center;
 }
@@ -39,7 +39,7 @@ $backgroundColor: white;
   text-align: center;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: $tablet_screen_width) {
   .image{
     height: $tablet_img_size;
     width: $tablet_img_size;
@@ -59,7 +59,7 @@ $backgroundColor: white;
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: $mobile_screen_width) {
     .image{
       height: $mobile_img_size;
       width: $mobile_img_size;

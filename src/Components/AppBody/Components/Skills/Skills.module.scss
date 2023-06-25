@@ -1,17 +1,18 @@
 @import 'src/styles.module.scss';
 
 $img_size: 8rem;
+$skill_item_max_size: 23rem;
 
 .container{
   min-height: calc(100vh - $nav_bar_height);
   background: $dark_trans_matte_grey;
   backdrop-filter: blur(3px);
   width: 100%;
-  padding: 2.4rem 0;
   @include flex();
 }
 
 .sectionHeading{
+  padding-top: 2.4rem;
   color: white;
 }
 
@@ -27,7 +28,8 @@ $img_size: 8rem;
 .skillContainer{
   @include flex();
   padding: .8rem;
-  width: 23rem;
+  width: 15rem;
+  flex-grow: 1;
 }
 
 .skillImg{
@@ -45,3 +47,16 @@ $img_size: 8rem;
   @include item-description;
   color: $text_grey;
 }
+
+@media screen and (max-width: $tablet_screen_width) {
+  .skillContainer{
+    width: 18rem;
+  }
+}
+
+@media screen and (max-width: $mobile_screen_width) {
+  .skillContainer{
+    width: 20rem;
+  }
+}
+

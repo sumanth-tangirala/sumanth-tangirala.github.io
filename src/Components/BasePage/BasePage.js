@@ -5,13 +5,14 @@ import AppBody from "../AppBody";
 
 import {SECTION_TYPES} from "../../constants";
 
+import styles from './basePage.module.scss';
 
 BasePage.propTypes = {
 
 };
 
 
-function BasePage({parallaxContainerRef:appBodyRef}) {
+function BasePage() {
     const navBarRef = useRef();
 
     const landingSectionRef=useRef();
@@ -37,16 +38,16 @@ function BasePage({parallaxContainerRef:appBodyRef}) {
     }, [sectionRefs])
 
     return (
-        <>
+        <div className={styles.app}>
             <NavBar
+                className={styles.navBar}
                 navBarRef={navBarRef}
                 handleNavigation={onNavigation}
             />
             <AppBody
-                appBodyRef={appBodyRef}
                 sectionRefs={sectionRefs}
             />
-        </>
+        </div>
     );
 }
 

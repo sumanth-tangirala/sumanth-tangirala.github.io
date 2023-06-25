@@ -1,0 +1,25 @@
+@import "styles.module";
+
+$tablet_img_size: 6rem;
+
+.container{
+  z-index: 2;
+  min-height: $min_history_banner_height;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 -0.05rem .8rem 0.2rem rgba(0, 0, 0, 0.2);
+  @include flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.image{
+  height: 7.2rem;
+  padding: .4rem;
+}
+
+@media screen and (max-width: $tablet_screen_width) {
+  .image {
+    height: $tablet_img_size;
+  }
+}

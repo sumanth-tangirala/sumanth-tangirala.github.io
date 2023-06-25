@@ -1,9 +1,11 @@
 @import 'src/styles.module.scss';
 
 $img_size: 24rem;
+$tablet_img_size: 16rem;
+$mobile_img_size: 12rem;
 
 .container{
-  height: calc(100vh - $nav_bar_height);
+  min-height: calc(100vh - $nav_bar_height - $min_history_banner_height);
   width: 100%;
   @include flex;
   justify-content: flex-start;
@@ -26,4 +28,20 @@ $img_size: 24rem;
 
 .text {
   flex-grow: .5;
+}
+
+@media screen and (max-width: $tablet_screen_width) {
+  .about {
+    flex-direction: column;
+  }
+
+  .image {
+    height: $tablet_img_size;
+  }
+}
+
+@media screen and (max-width: $mobile_screen_width) {
+  .image {
+    height: $mobile_img_size;
+  }
 }

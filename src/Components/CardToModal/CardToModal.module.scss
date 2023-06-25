@@ -1,13 +1,15 @@
 @import "src/styles.module.scss";
 
-$max_size: 16rem;
+$max_card_size: 16rem;
+$tablet_card_size: 12rem;
+$mobile_card_width: 9rem;
 
 .container {
   @include flex;
   background: rgba(255, 255, 255,100) no-repeat center;
   background-size: 100%;
-  width: $max_size;
-  height: $max_size;
+  width: $max_card_size;
+  height: $max_card_size;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
   box-shadow: .05rem .05rem .3rem .2rem rgba(0,0,0,.05);
@@ -19,6 +21,15 @@ $max_size: 16rem;
     transform: translate3d(0, -0.4rem, 0);
     -webkit-transform: translate3d(0, -0.4rem, 0);
     cursor: pointer;
+  }
+
+  @media screen and (max-width: $tablet_screen_width) {
+    width: $tablet_card_size;
+    height: $tablet_card_size;
+  }
+  
+  @media screen and (max-width: $mobile_screen_width) {
+    width: $mobile_card_width;
   }
 }
 

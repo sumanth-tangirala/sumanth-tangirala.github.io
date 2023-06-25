@@ -3,6 +3,10 @@ $backgroundColor: white;
 $mobile_width: 750px;
 $item_title_font_size: 1.6rem;
 $item_desc_font_size: 1.2rem;
+$tablet_screen_width: 900px;
+$mobile_screen_width: 720px;
+$mini_mobile_screen_width: 360px;
+$min_history_banner_height: 9.6rem;
 
 @mixin flex{
   display: flex;
@@ -21,12 +25,20 @@ $item_desc_font_size: 1.2rem;
 }
 
 @mixin item-title {
-  font-size: 1.6rem;
+  font-size: $item_title_font_size;
   font-weight: 400;
+
+  @media screen and (max-width: $tablet_screen_width) {
+    font-size: 1.4rem;
+  }
 }
 
 @mixin item-description {
-  font-size: 1.2rem;
+  font-size: $item_desc_font_size;
+
+  @media screen and (max-width: $tablet_screen_width) {
+    font-size: 1rem;
+  }
 }
 
 @mixin main-background {

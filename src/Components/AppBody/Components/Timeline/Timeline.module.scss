@@ -67,13 +67,6 @@ $img_size: 6rem;
     margin-bottom: -2rem;
   }
 
-  &:before,
-  &:after {
-    content: "";
-    display: block;
-    height: 0.6em;
-  }
-
   &:nth-child(even) .date{
     left: auto;
     color: $text_color2 !important;
@@ -100,20 +93,24 @@ $img_size: 6rem;
 .date{
   color: $text_color4;
   position: absolute;
-  font-size: $item_desc_font_size;
+  @include item-description;
   left: calc(100% + 5rem);
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
 
   &:before {
-     content: "";
+    content: "";
     position: absolute;
     height: 1rem;
     top: calc(50% - .5rem);
     right: calc(100% + .5rem);
     width: 6.5rem;
     background: repeating-linear-gradient(-90deg, $color2 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+  }
+
+  & .miniDate {
+    display: none;
   }
 }
 
@@ -125,3 +122,55 @@ $img_size: 6rem;
   @include item-description;
   padding-top: .6rem;
 }
+
+@media screen and (max-width: $mobile_screen_width) {
+  .event {
+    width: 10rem;
+    flex-direction: column;
+    left: calc(50% - 6.5rem);
+    margin-top: -.795rem;
+    &:first-child{
+      margin-top: -.44rem;
+    }
+    &:last-child{
+      margin-top: -.795rem;
+      margin-bottom: -0.433rem;
+    }
+    &:nth-child(even) {
+      flex-direction: column;
+      left: calc(50% - 11.5rem);
+    }
+
+    &:nth-child(even) .date{
+      left: auto;
+      color: $text_color2 !important;
+      right: calc(100% + 3rem);
+      padding-left: 0;
+      padding-right: 1rem;
+    }
+
+    &:nth-child(even) .date:before {
+      left: calc(100% - .4rem);
+    }
+  }
+
+  .date {
+    left: calc(100% + 3rem);
+    padding-left: 1rem;
+    white-space: break-spaces;
+
+    &:before {
+      width: 3.4rem;
+      right: calc(100% - .4rem);
+    }
+
+    & .miniDate {
+      display: block;
+    }
+
+    & .largeDate {
+      display: none;
+    }
+  }
+}
+
