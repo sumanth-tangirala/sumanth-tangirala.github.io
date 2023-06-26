@@ -5,14 +5,14 @@ $img_size: 2.8rem;
 .container{
   background: transparent;
   backdrop-filter: blur(5px);
-  height: 24rem;
+  height: 28rem;
   width: 100%;
   @include flex();
 }
 
 .sectionHeading {
   @include section-heading;
-  padding-top: 3rem;
+  padding-top: 5.4rem;
 }
 
 .emailsContainer{
@@ -63,7 +63,7 @@ $img_size: 2.8rem;
 .socialMediaLinks {
   @include flex;
   flex-direction: row;
-  padding-bottom: 5.2rem;
+  padding-bottom: 5.4rem;
 }
 
 .socialMediaImg {
