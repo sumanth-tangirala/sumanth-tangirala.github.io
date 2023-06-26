@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import cx from 'classnames';
 import {Modal} from 'antd'
 
 import styles from './CardToModal.module.scss';
@@ -19,7 +20,7 @@ function CardToModal({title, shortDesc, longDesc, imgPath}) {
 
     return (
          <div
-             className={styles.container}
+             className={cx(styles.container, {[styles.openCard]: isModalOpen})}
              style={{backgroundImage: `url(${imgPath})`}}
              onClick={toggleModal}
          >

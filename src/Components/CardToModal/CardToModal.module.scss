@@ -17,9 +17,7 @@ $mobile_card_width: 9rem;
   margin: 1.2rem;
 
   &:hover{
-    box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.5);
-    transform: translate3d(0, -0.4rem, 0);
-    cursor: pointer;
+
   }
 
   @media screen and (max-width: $tablet_screen_width) {
@@ -30,6 +28,12 @@ $mobile_card_width: 9rem;
   @media screen and (max-width: $mobile_screen_width) {
     width: $mobile_card_width;
   }
+}
+
+.openCard, .container:hover {
+  box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.5);
+  transform: translate3d(0, -0.4rem, 0);
+  cursor: pointer;
 }
 
 .cardInfo {

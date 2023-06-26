@@ -62,7 +62,6 @@ function NavBar({className, navBarRef, handleNavigation}) {
             menu={dropDownMenuProp}
             placement="bottomRight"
             className={styles.menu}
-            trigger="click"
         >
             <MenuSvg className={styles.menuIcon}/>
         </Dropdown>

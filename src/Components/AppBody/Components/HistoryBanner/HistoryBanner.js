@@ -7,7 +7,7 @@ import text from 'text/text.json';
 import styles from './historyBanner.module.scss';
 import cx from "classnames";
 
-function HistoryBanner({className}) {
+function HistoryBanner({className, sectionRef}) {
     const images = text.historyBannerImages;
 
     const imagesComponents = useMemo(() => _map(images, (imageDetails) => {
@@ -17,7 +17,7 @@ function HistoryBanner({className}) {
     }), [images]);
 
     return (
-        <div className={cx(styles.container, className)}>
+        <div className={cx(styles.container, className)} ref={sectionRef}>
             {imagesComponents}
         </div>
     );

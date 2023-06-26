@@ -13,6 +13,8 @@ $menu_icon_size: 1.6rem;
     width: 100%;
     background: $honolulu_blue;
     color: black;
+    position: fixed;
+    z-index: 4;
 }
 
 .name {
@@ -48,7 +50,7 @@ $menu_icon_size: 1.6rem;
 .menu {
     margin-right: 1.6rem;
     cursor: pointer;
-    z-index: 3;
+    z-index: inherit;
 }
 
 .menuIcon {

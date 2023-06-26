@@ -5,17 +5,20 @@ import AppBody from "../AppBody";
 
 import {SECTION_TYPES} from "../../constants";
 
-import styles from './basePage.module.scss';
-
 BasePage.propTypes = {
 
 };
+
+const SECTION_TYPE_VS_SECTION_TYPE_TO_SCROLL_TO = {
+    [SECTION_TYPES.ABOUT]: SECTION_TYPES.HISTORY,
+}
 
 
 function BasePage() {
     const navBarRef = useRef();
 
     const landingSectionRef=useRef();
+    const historySectionRef = useRef();
     const aboutSectionRef = useRef();
     const skillsSectionRef = useRef();
     const timelineSectionRef = useRef();
@@ -24,6 +27,7 @@ function BasePage() {
 
     const sectionRefs = useMemo(() => ({
         [SECTION_TYPES.LANDING]: landingSectionRef,
+        [SECTION_TYPES.HISTORY]: historySectionRef,
         [SECTION_TYPES.ABOUT]: aboutSectionRef,
         [SECTION_TYPES.SKILLS]: skillsSectionRef,
         [SECTION_TYPES.TIMELINE]: timelineSectionRef,
@@ -32,22 +36,21 @@ function BasePage() {
     }), [])
 
     const onNavigation = useCallback((section) => {
-        console.log(section);
-        const sectionRef = sectionRefs[section];
+        const sectionToScrollTo = SECTION_TYPE_VS_SECTION_TYPE_TO_SCROLL_TO[section] || section;
+        const sectionRef = sectionRefs[sectionToScrollTo];
         sectionRef.current.scrollIntoView({ behavior: 'smooth'});
     }, [sectionRefs])
 
     return (
-        <div className={styles.app}>
+        <>
             <NavBar
-                className={styles.navBar}
                 navBarRef={navBarRef}
                 handleNavigation={onNavigation}
             />
             <AppBody
                 sectionRefs={sectionRefs}
             />
-        </div>
+        </>
     );
 }
 

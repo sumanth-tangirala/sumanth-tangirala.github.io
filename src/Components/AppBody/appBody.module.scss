@@ -1,13 +1,11 @@
 @import 'src/styles.module.scss';
 
 .appBodyContainer{
-    height: 100vh;
-    flex-shrink: 0;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     scroll-snap-type: y proximity;
     scroll-padding-top: $nav_bar_height;
-    @include main-background;
+    //@include main-background;
 }
 
 .childSection {
