@@ -1,15 +1,7 @@
 @import 'src/styles.module.scss';
 
-.appBodyContainer{
-    overflow-y: hidden;
-    overflow-x: hidden;
-    scroll-snap-type: y proximity;
-    scroll-padding-top: $nav_bar_height;
-    //@include main-background;
-}
-
 .childSection {
-    scroll-snap-align: start end;
+    scroll-snap-align: start;
     @include full-width;
     overflow: hidden;
 }

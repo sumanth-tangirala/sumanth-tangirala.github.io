@@ -33,7 +33,7 @@ const sections = _map(SECTION_ORDER, sectionType => ({
 
 function AppBody({sectionRefs}) {
     return (
-        <div className={styles.appBodyContainer}>
+        <>
             {_map(sections, ({Component, sectionType}) => (
                 <Component
                     key={sectionType}
@@ -42,7 +42,7 @@ function AppBody({sectionRefs}) {
                     sectionHeadingClassName={styles.sectionHeading}
                 />
             ))}
-        </div>
+        </>
 
     );
 }
