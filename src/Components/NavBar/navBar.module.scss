@@ -57,12 +57,11 @@ $menu_icon_size: 1.6rem;
     height: $menu_icon_size;
     width: $menu_icon_size;
     stroke: white;
-    transition: all .2s ease;
-    -webkit-transition: all .2s ease;
     &:hover{
         stroke: $hunyadi_yellow !important;
     }
 }
+
 
 :global(.ant-dropdown-menu-item) {
     transition: all .2s ease;
