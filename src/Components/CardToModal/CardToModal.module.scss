@@ -12,13 +12,9 @@ $mobile_card_width: 9rem;
   height: $max_card_size;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
-  box-shadow: .05rem .05rem .3rem .2rem rgba(0,0,0,.05);
+  box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.3);
   border-radius: .4rem;
   margin: 1.2rem;
-
-  &:hover{
-
-  }
 
   @media screen and (max-width: $tablet_screen_width) {
     width: $tablet_card_size;
