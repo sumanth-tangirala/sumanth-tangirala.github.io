@@ -21,7 +21,7 @@ body {
     scroll-padding-top: 4rem;
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 650px) {
   #root {
       scroll-padding-top: 2.8rem;
   }
