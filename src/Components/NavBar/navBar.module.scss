@@ -1,6 +1,7 @@
 @import "src/styles.module";
 
 $menu_icon_size: 1.6rem;
+$mini_menu_icon_size: 1.2rem;
 
 .container{
     display: flex;
@@ -95,5 +96,21 @@ $menu_icon_size: 1.6rem;
     .name {
         font-size: 1.6rem;
         margin-left: 1rem;
+    }
+}
+
+@media screen and (max-height: $mobile_landscape_screen_height) {
+    .name {
+        font-size: 1.6rem;
+        margin-left: 1rem;
+    }
+
+    .menuIcon {
+        height: $mini_menu_icon_size;
+        width: $mini_menu_icon_size;
+    }
+
+    .container {
+        height: $mini_nav_bar_height;
     }
 }

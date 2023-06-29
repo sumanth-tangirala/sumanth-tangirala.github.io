@@ -8,11 +8,17 @@ $img_size: 2.8rem;
   height: 28rem;
   width: 100%;
   @include flex();
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    height: 24rem;
+  }
 }
 
 .sectionHeading {
   @include section-heading;
   padding-top: 5.4rem;
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    padding-top: 1.6rem;
+  }
 }
 
 .emailsContainer{
@@ -64,6 +70,9 @@ $img_size: 2.8rem;
   @include flex;
   flex-direction: row;
   padding-bottom: 5.4rem;
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    padding-bottom: 9.2rem;
+  }
 }
 
 .socialMediaImg {

@@ -3,6 +3,7 @@
 $max_card_size: 16rem;
 $tablet_card_size: 12rem;
 $mobile_card_width: 9rem;
+$mobile_landscape_card_size: 9rem;
 
 .container {
   @include flex;
@@ -23,6 +24,18 @@ $mobile_card_width: 9rem;
   
   @media screen and (max-width: $mobile_screen_width) {
     width: $mobile_card_width;
+  }
+
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    height: $mobile_landscape_card_size;
+    width: $mobile_landscape_card_size;
+  }
+
+  @media (pointer:coarse) {
+    &:not(.openCard) {
+      box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.3) !important;
+      transform: none !important;
+    }
   }
 }
 

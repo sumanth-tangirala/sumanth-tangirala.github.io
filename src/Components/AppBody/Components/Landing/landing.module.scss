@@ -3,6 +3,7 @@
 $img_size: 16rem;
 $tablet_img_size: 12rem;
 $mobile_img_size: 9.2rem;
+$mobile_landscape_img_size: 7.2rem;
 $backgroundColor: white;
 
 .landing{
@@ -79,5 +80,22 @@ $backgroundColor: white;
     padding-left: .6rem;
     padding-right: .6rem;
     max-width: 60%;
+  }
+}
+
+@media screen and (max-height: $mobile_landscape_screen_height) {
+  .image{
+    height: $mobile_landscape_img_size;
+    width: $mobile_landscape_img_size;
+    margin-bottom: 1rem;
+  }
+
+  .name {
+    font-size: 2.4rem;
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+    margin-top: 1rem;
   }
 }

@@ -9,6 +9,10 @@
   box-shadow: 0 0.7rem 0.8rem 0.2rem rgba(0, 0, 0, 0.2);
   z-index: 2;
   position: relative;
+
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    min-height: calc(100vh - $mini_nav_bar_height);
+  }
 }
 
 .sectionHeading {
@@ -23,4 +27,6 @@
   flex-wrap: wrap;
   justify-content: center;
   flex-grow: 1;
+  padding: 0 2rem;
+  width: calc(100% - 4rem) !important;
 }

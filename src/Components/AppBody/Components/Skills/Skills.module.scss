@@ -9,6 +9,11 @@ $skill_item_max_size: 23rem;
   backdrop-filter: blur(3px);
   width: 100%;
   @include flex();
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    min-height: calc(100vh - $mini_nav_bar_height);
+    padding: 0 2rem;
+    width: calc(100% - 4rem) !important;
+  }
 }
 
 .sectionHeading{

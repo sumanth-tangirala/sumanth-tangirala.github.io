@@ -3,12 +3,17 @@
 $img_size: 24rem;
 $tablet_img_size: 16rem;
 $mobile_img_size: 12rem;
+$mobile_landscape_img_size: 10rem;
 
 .container{
   min-height: calc(100vh - $nav_bar_height - $min_history_banner_height);
   width: 100%;
   @include flex;
   justify-content: flex-start;
+
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
+  }
 }
 
 .about{
@@ -43,5 +48,20 @@ $mobile_img_size: 12rem;
 @media screen and (max-width: $mobile_screen_width) {
   .image {
     height: $mobile_img_size;
+  }
+}
+
+@media screen and (max-height: $mobile_landscape_screen_height) {
+  .container {
+    min-height: calc(100vh - $nav_bar_height);
+  }
+  .about {
+    flex-direction: row;
+    padding: 0 2rem;
+    width: calc(100% - 4rem) !important;
+  }
+
+  .image {
+    height: $mobile_landscape_img_size;
   }
 }
