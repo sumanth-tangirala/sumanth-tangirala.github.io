@@ -14,7 +14,8 @@ $tablet_img_size: 6rem;
 }
 
 .image{
-  height: 7.2rem;
+  max-height: 7.2rem;
+  max-width: 12rem;
   padding: .4rem;
 }
 
