@@ -4,9 +4,10 @@ $img_size: 16rem;
 $tablet_img_size: 12rem;
 $mobile_img_size: 9.2rem;
 $mobile_landscape_img_size: 7.2rem;
-$backgroundColor: white;
+$backgroundColor: transparent;
 
 .landing{
+  backdrop-filter: blur(4px);
   height: 100vh;
   @include flex();
   justify-content: center;

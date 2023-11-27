@@ -1,23 +1,25 @@
 import React from 'react';
 
 import cx from "classnames";
+import _map from "lodash/map";
 
 import text from 'text/text.json';
-
-import _map from "lodash/map";
 
 import styles from './Skills.module.scss';
 
 function Skill({
     title,
-    desc,
+    description,
     imgPath,
+    imgStyle,
 }) {
     return (
         <div className={styles.skillContainer}>
-            <img src={imgPath} className={styles.skillImg} alt=""/>
+            <div className={styles.skillImgContainer}>
+                <img src={imgPath} className={styles.skillImg} style={imgStyle} alt=""/>
+            </div>
             <span className={styles.skillTitle}>{title}</span>
-            <span className={styles.skillDescription}>{desc}</span>
+            <span className={styles.skillDescription}>{description}</span>
         </div>
     )
 }
@@ -32,9 +34,7 @@ function Skills({className, sectionRef, sectionHeadingClassName}) {
                 {_map(text.skills, (skill, idx) => (
                 <Skill
                     key={idx}
-                    title={skill.title}
-                    desc={skill.description}
-                    imgPath={skill.imgPath}
+                    {...skill}
                 />
             ))}
             </div>

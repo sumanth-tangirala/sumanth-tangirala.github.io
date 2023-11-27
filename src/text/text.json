@@ -1,7 +1,16 @@
 {
   "name": "Sumanth Tangirala",
+  "qualifications": "qualifications",
+  "about": [
+    "paragraph1",
+    "paragraph2"
+  ],
+  "qualificationDetails": [
+    "qualificationDetail1",
+    "qualificationDetail2"
+  ],
   "picturePath": "/img/picture.jpg",
-  "tagline": "this is the tagline",
+  "tagline": "Graduate Researcher, Rutgers University",
   "linkedinURL": "https://www.linkedin.com/in/sumanthtangirala",
   "githubURL": "https://github.com/sumanth-tangirala",
   "historyBannerImages": [
@@ -82,49 +91,52 @@
   ],
   "skills": [
     {
-      "title": "skill",
+      "title": "Machine & Deep Learning",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/ML.svg"
     },
     {
-      "title": "skill",
+      "title": "Reinforcement Learning",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/RL.svg"
     },
     {
-      "title": "skill",
+      "title": "Robot Operating System",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/ROS.svg"
     },
     {
-      "title": "skill",
+      "title": "Physics Simulation Engines",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/DeepMind.svg"
     },
     {
-      "title": "skill",
+      "title": "Internet of Things",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/IoT.svg"
     },
     {
-      "title": "skill",
+      "title": "Geospatial Imagery",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/GIS.svg"
     },
     {
-      "title": "skill",
+      "title": "Computer Vision, OpenCV",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/opencv.svg",
+      "imgStyle": {
+        "padding-bottom": "0.7rem"
+      }
     },
     {
-      "title": "skill",
+      "title": "React.js, Javascript",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/ReactJs.svg"
     },
     {
-      "title": "skill",
+      "title": "Python, C++",
       "description": "description",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/pythonCpp.png"
     }
   ],
   "timeline": [
@@ -133,7 +145,7 @@
       "desc": "event description",
       "date": "September 1985",
       "miniDate": "Sept 1985",
-      "imgPath": "/img/WIMS2.png"
+      "imgPath": "/img/PRACSYS.png"
     },
     {
       "title": "event title",

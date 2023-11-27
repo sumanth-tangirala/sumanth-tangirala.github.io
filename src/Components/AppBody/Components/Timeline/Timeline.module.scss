@@ -1,14 +1,16 @@
 @import 'src/styles.module.scss';
 
-$color1: $mint_green;
-$color2: $platinum_blue;
-$color3: $verdegris;
-$color4: $light_matte_grey;
+$color1: white;
+$color2: transparent;
+$color3: $dark_chrome_yellow;
+$color4: transparent;
 $text_color1: $matte_grey;
 $text_color2: black;
 $text_color4: $color2;
 
 $img_size: 6rem;
+
+$border_size: 1rem;
 
 
 .container {
@@ -16,7 +18,9 @@ $img_size: 6rem;
   z-index: 3;
   position: relative;
   @include flex();
-  background: linear-gradient(    to right,     $color2 0%,     $color2 50%,     $color4 50%,     $color4 100%  );
+  backdrop-filter: blur(5px);
+  //background: linear-gradient(    to right,     $color2 0%,     $color2 50%,     $color4 50%,     $color4 100%  );
+  background-color: $light_trans_matte_grey;
 }
 
 .sectionTitle{
@@ -24,7 +28,7 @@ $img_size: 6rem;
   border-radius: 2rem;
   padding: 1rem;
   @include section-heading;
-  background: $platinum_blue;
+  background: white;
   margin-top: 1rem;
 }
 
@@ -42,6 +46,7 @@ $img_size: 6rem;
 }
 
 .event{
+  z-index: 10;
   @include flex;
   flex-direction: row;
   grid-column: span 2;
@@ -51,31 +56,35 @@ $img_size: 6rem;
   font-size: 1.6rem;
   line-height: 1.5rem;
   position: relative;
-  padding: 2rem;
-  border: 2rem solid #0000;
-  background: linear-gradient($color1 0 0) content-box, linear-gradient(0, var(--c, $color2) 0, var(--c, $color2) 0) padding-box, linear-gradient(var(--d, 90deg), #0000 75%, $color3 0) border-box;
+  padding: .75rem;
+  border: $border_size solid #0000;
+  background: linear-gradient($color1 0 0) content-box, linear-gradient(0, var(--c) 0, var(--c) 0) padding-box, linear-gradient(var(--d, 90deg), #0000 75%, $color3 0) border-box;
 
   &:nth-child(even) {
     grid-column-end: -1;
     flex-direction: row-reverse;
     --d: -90deg;
-    --c: #4f525d; // same as color4
+    --c: #fcc923;
+  }
+
+  &:nth-child(odd) {
+    --c: #fcc923;
   }
 
   &:not(:last-child) {
-    margin-bottom: -2rem;
+    margin-bottom: -$border_size;
   }
 
   &:nth-child(even) .date{
     left: auto;
-    color: $text_color2 !important;
+    color: black !important;
     right: calc(100% + 5rem);
   }
 
   &:nth-child(even) .date:before {
     right: auto;
     left: calc(100% + .5rem);
-    background: repeating-linear-gradient(90deg, $color4 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+    background: repeating-linear-gradient(90deg, $text_color2 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
   }
 }
 
@@ -90,7 +99,7 @@ $img_size: 6rem;
 }
 
 .date{
-  color: $text_color4;
+  color: black;
   position: absolute;
   @include item-description;
   left: calc(100% + 5rem);
@@ -104,8 +113,8 @@ $img_size: 6rem;
     height: 1rem;
     top: calc(50% - .5rem);
     right: calc(100% + .5rem);
-    width: 6.5rem;
-    background: repeating-linear-gradient(-90deg, $color2 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+    width: 3.5rem;
+    background: repeating-linear-gradient(-90deg, black 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
   }
 
   & .miniDate {

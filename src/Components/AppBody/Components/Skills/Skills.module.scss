@@ -1,13 +1,12 @@
 @import 'src/styles.module.scss';
 
-$img_size: 8rem;
+$img_size: 5.2rem;
 $skill_item_max_size: 23rem;
 
 .container{
   min-height: calc(100vh - $nav_bar_height);
   background: $dark_trans_matte_grey;
   backdrop-filter: blur(3px);
-  width: 100%;
   @include flex();
   @media screen and (max-height: $mobile_landscape_screen_height) {
     min-height: calc(100vh - $mini_nav_bar_height);
@@ -33,18 +32,33 @@ $skill_item_max_size: 23rem;
 .skillContainer{
   @include flex();
   padding: .8rem;
-  width: 15rem;
-  flex-grow: 1;
+  width: 29%;
+  text-align: center;
+}
+
+.skillImgContainer {
+  background: white;
+  border-radius: 100%;
+  height: $img_size;
+  width: $img_size;
+  margin-bottom: .8rem;
+  @include flex;
+  justify-content: center;
+  padding: .8rem;
+  box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.5);
 }
 
 .skillImg{
-  max-height: $img_size;
-  max-width: $img_size;
+  //display: none;
+  max-height: 100%;
+  max-width: 100%;
+  flex-grow: 0;
+  stroke: $honolulu_blue;
 }
 
 .skillTitle{
   @include item-title;
-  color: $platinum_blue;
+  color: white;
 }
 
 .skillDescription{

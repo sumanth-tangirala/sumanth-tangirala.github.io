@@ -3,6 +3,7 @@ import React from 'react';
 import text from "text/text.json";
 import styles from './About.module.scss';
 import cx from "classnames";
+import _map from "lodash/map";
 
 function About({ className, sectionRef }) {
     return (
@@ -14,7 +15,22 @@ function About({ className, sectionRef }) {
                     alt=""
                 />
                 <div className={styles.text}>
-                    Short Bio
+                    <span className={styles.name}>{text.name}</span>
+                    <span className={styles.qualifications}>{text.qualifications}</span>
+                    <div className={styles.aboutParagraphs}>
+                        {_map(text.about, paragraph => (
+                            <span className={styles.aboutParagraphItem}>
+                                {paragraph}
+                            </span>
+                        ))}
+                    </div>
+                    <div className={styles.qualificationDetails}>
+                        {_map(text.qualificationDetails, qualificationDetail => (
+                            <span className={styles.qualificationDetailItem}>
+                                {qualificationDetail}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
