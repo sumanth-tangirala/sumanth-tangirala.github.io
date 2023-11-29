@@ -318,7 +318,7 @@
         "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter"
     },
     {
-      "title": "Cross-Platform Playlist Shell Player using Multi-Processing Parallelism",
+      "title": "Shell Media Player using Multi-Processing",
       "longDesc": [
         "Developed as a way to experiment with Parallelism in Python, this project is a cross-platform music player that can play playlists from Saavn, an Indian music streaming service, on YouTube",
         "The application consists of a scraper process, a player process and a controller process which communicate using Pipes",

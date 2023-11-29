@@ -6,8 +6,10 @@ $tablet_card_size: 12rem;
 $tablet_small_card_size: 10rem;
 $mobile_card_width: 9rem;
 $mobile_small_card_width: 7rem;
-$mobile_landscape_card_size: 9rem;
-$mobile_landscape_small_card_size: 7rem;
+$mobile_small_card_height: 8rem;
+$mobile_landscape_card_size: 11rem;
+$mobile_landscape_small_card_width: 7rem;
+$mobile_landscape_small_card_height: 8rem;
 
 .container {
   @include flex;
@@ -36,7 +38,9 @@ $mobile_landscape_small_card_size: 7rem;
     &.smallCard {
       width: $tablet_small_card_size;
       height: $tablet_small_card_size;
-
+      & .title {
+        font-size: 1.2rem;
+      }
     }
   }
   
@@ -45,15 +49,28 @@ $mobile_landscape_small_card_size: 7rem;
     margin: .6rem;
     &.smallCard {
       width: $mobile_small_card_width;
-      height: $mobile_small_card_width;
+      height: $mobile_small_card_height;
+      & .title {
+        font-size: 1rem;
+      }
+
+      & .githubButton {
+        bottom: .2rem;
+        right: .2rem;
+        &:global(.ant-btn) {
+          font-size: .7rem;
+          height: 2rem;
+          width: 2rem;
+        }
+      }
     }
   }
 
   @media screen and (max-height: $mobile_landscape_screen_height) {
     width: $mobile_landscape_card_size;
     &.smallCard {
-      width: $mobile_landscape_small_card_size;
-      height: $mobile_landscape_small_card_size;
+      width: $mobile_landscape_small_card_width;
+      height: $mobile_landscape_small_card_height;
     }
   }
 
@@ -90,6 +107,8 @@ $mobile_landscape_small_card_size: 7rem;
   border-radius: 0.2rem;
   padding: 0.2rem 0.4rem;
   text-align: center;
+
+
 }
 
 .description {

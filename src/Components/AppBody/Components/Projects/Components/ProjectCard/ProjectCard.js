@@ -9,7 +9,7 @@ import _map from "lodash/map";
 import {GithubOutlined, SearchOutlined} from "@ant-design/icons";
 
 
-function ProjectCard({title, backgroundColor, techStack, longDesc, imgPath, isSmall, textColor, githubURL, toggleModal, isModalOpen }) {
+function ProjectCard({title, backgroundColor, imgPath, isSmall, textColor, githubURL, toggleModal, isModalOpen }) {
 
     return (
         <div
