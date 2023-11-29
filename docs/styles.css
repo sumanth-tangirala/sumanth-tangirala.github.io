@@ -1,0 +1,28 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background:
+            linear-gradient(180deg, white 70%, transparent 0) 0 2rem,
+            linear-gradient(90deg, black 1%, transparent 1%) 0.5rem 0,
+            linear-gradient(90deg, white 70%, transparent 0) 2rem 0,
+            linear-gradient(180deg, black 1%, transparent 1%) 0.5rem 0.5rem;
+    background-attachment: fixed;
+    background-size: calc(2 * 2.5rem) calc(2 * 2.5rem);
+}
+
+#root {
+    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+    overflow-y: scroll;
+    position: fixed;
+    scroll-snap-type: y ;
+    scroll-padding-top: 4rem;
+}
+
+@media screen and (max-height: 650px) {
+  #root {
+      scroll-padding-top: 2.8rem;
+  }
+}
