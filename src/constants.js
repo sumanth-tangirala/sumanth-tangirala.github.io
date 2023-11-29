@@ -23,7 +23,7 @@ export const SECTION_ORDER = [
 export const SECTION_TYPE_VS_NAME = {
     [SECTION_TYPES.ABOUT]: 'About',
     [SECTION_TYPES.SKILLS]: 'Skills',
-    [SECTION_TYPES.TIMELINE]: 'Timeline',
+    [SECTION_TYPES.TIMELINE]: 'Experience',
     [SECTION_TYPES.PROJECTS]: 'Projects',
     [SECTION_TYPES.CONTACT]: 'Contact',
     [SECTION_TYPES.PUBLICATIONS]: 'Publications',

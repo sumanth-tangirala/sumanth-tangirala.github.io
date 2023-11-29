@@ -7,6 +7,7 @@ import _size from 'lodash/size';
 import text from 'text/text.json';
 
 import styles from './Timeline.module.scss';
+import {SECTION_TYPE_VS_NAME} from "../../../../constants";
 
 function Timeline({className, sectionRef}) {
     const timelineText = text.timeline;
@@ -14,7 +15,7 @@ function Timeline({className, sectionRef}) {
     return (
         <div className={cx(styles.container, className)} ref={sectionRef}>
             <div className={styles.sectionTitle}>
-                Timeline
+                {SECTION_TYPE_VS_NAME['TIMELINE']}
             </div>
             <ul className={cx(styles.timeline, {[styles.evenCount]: isEven, [styles.oddCount]: !isEven})}>
                 {_map(timelineText, (event, idx) => (

@@ -7,7 +7,7 @@ import _map from "lodash/map";
 
 function About({ className, sectionRef }) {
     return (
-        <div className={cx(styles.container, className)} ref={sectionRef}>
+        <div className={cx(styles.container)} ref={sectionRef}>
             <div className={styles.about}>
                 <img
                     src={text.aboutPicturePath}

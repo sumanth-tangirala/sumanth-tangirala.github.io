@@ -38,8 +38,8 @@
   ],
   "aboutPicturePath": "/img/about.jpg",
   "about": [
-    "My passion is working on challenging inter-disciplinary problems that can tangibly impact the real-world.",
-    "I am primarily interested in Reinforcement Learning, Robotics, Sensor Fusion, and Internet-of-Things."
+    "I am deeply passionate about tackling complex, interdisciplinary challenges that have a tangible and positive impact on the real world, a journey that began as an undergraduate researcher and continued to deepen during my Masters programme.",
+    "My primary areas of focus currently are Reinforcement Learning, Robotics, Sensor Fusion, and the Internet of Things."
   ],
   "qualificationDetails": [
     "Masters of Science in Computer Science |  Rutgers University - New Brunswick",
@@ -78,17 +78,17 @@
     },
     {
       "title": "Reinforcement Learning",
-      "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and HER-SAC, as a graduate researcher at PRACSYS lab",
+      "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and HER-SAC at the PRACSYS lab",
       "imgPath": "/img/RL.svg"
     },
     {
       "title": "Robot Operating System",
-      "description": "My current research involves using ROS for robot communication and environment interaction, including developing a perception system in PRACSYS Lab's MuSHR platform for mobile robot controller training.",
+      "description": "My current research involves using ROS for robot communication and environment interaction, including developing a perception system in PRACSYS Lab's MuSHR platform",
       "imgPath": "/img/ROS.svg"
     },
     {
       "title": "Physics Simulation Engines",
-      "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for robot simulations and controller development. My projects include a robot dog navigating obstacles in IsaacGym and training a quadrotor in MuJoCo to handle aerodynamic conditions",
+      "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for robot simulations and controller development",
       "imgPath": "/img/DeepMind.svg"
     },
     {
@@ -101,7 +101,7 @@
     },
     {
       "title": "Python, C++",
-      "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields to create advanced algorithms, develop robust software solutions, and integrate these tools into complex, multidisciplinary applications",
+      "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields",
       "imgPath": "/img/pythonCpp.png"
     },
     {
@@ -111,7 +111,7 @@
     },
     {
       "title": "Geospatial Imagery",
-      "description": "In my undergraduate research and internship at the Indian Space Research Organization, I developed Machine Learning and Deep Learning techniques for land cover classification using Dual-PolSAR and Multifrequency PolSAR imagery",
+      "description": "In my undergraduate research and internship at the Indian Space Research Organization, I developed data-based techniques for land cover classification using PolSAR imagery",
 
       "imgPath": "/img/GIS.svg"
     },

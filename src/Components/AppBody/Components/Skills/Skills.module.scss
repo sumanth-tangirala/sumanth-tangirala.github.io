@@ -1,6 +1,7 @@
 @import 'src/styles.module.scss';
 
-$img_size: 5.2rem;
+$img_size: 4rem;
+$small_img_size: 3rem;
 $skill_item_max_size: 23rem;
 
 .container{
@@ -24,8 +25,8 @@ $skill_item_max_size: 23rem;
   @include flex();
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 2rem 1.2rem;
-  justify-content: center;
+  padding: 1rem 1.2rem;
+  justify-content: space-evenly;
   align-items: flex-start;
 }
 
@@ -70,13 +71,18 @@ $skill_item_max_size: 23rem;
 
 @media screen and (max-width: $tablet_screen_width) {
   .skillContainer{
-    width: 18rem;
+    width: 16rem;
+  }
+
+  .skillImgContainer {
+    height: $small_img_size !important;
+    width: $small_img_size !important;
   }
 }
 
 @media screen and (max-width: $mobile_screen_width) {
   .skillContainer{
-    width: 20rem;
+    //width: 20rem;
   }
 }
 
