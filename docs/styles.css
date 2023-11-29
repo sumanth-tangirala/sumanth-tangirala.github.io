@@ -17,7 +17,7 @@ body {
     width: 100vw;
     overflow-y: scroll;
     position: fixed;
-    scroll-snap-type: y ;
+    /*scroll-snap-type: y proximity;*/
     scroll-padding-top: 4rem;
 }
 
