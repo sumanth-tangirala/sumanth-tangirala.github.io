@@ -1,0 +1,108 @@
+@import "../../../../../../styles.module";
+
+$max_card_size: 16rem;
+$small_card_size: 13rem;
+$tablet_card_size: 12rem;
+$tablet_small_card_size: 10rem;
+$mobile_card_width: 9rem;
+$mobile_small_card_width: 7rem;
+$mobile_landscape_card_size: 9rem;
+$mobile_landscape_small_card_size: 7rem;
+
+.container {
+  @include flex;
+  background: rgba(255, 255, 255,100) no-repeat center;
+  background-size: 100%;
+  width: $max_card_size;
+  height: $max_card_size;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.3);
+  border-radius: .4rem;
+  margin: 1.2rem;
+  position: relative;
+
+  &.smallCard{
+    width: $small_card_size;
+    height: $small_card_size;
+    margin: .8rem;
+    @include item-mini-title;
+
+  }
+
+  @media screen and (max-width: $tablet_screen_width) {
+    width: $tablet_card_size;
+    height: $tablet_card_size;
+    &.smallCard {
+      width: $tablet_small_card_size;
+      height: $tablet_small_card_size;
+
+    }
+  }
+  
+  @media screen and (max-width: $mobile_screen_width) {
+    width: $mobile_card_width;
+    margin: .6rem;
+    &.smallCard {
+      width: $mobile_small_card_width;
+      height: $mobile_small_card_width;
+    }
+  }
+
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    width: $mobile_landscape_card_size;
+    &.smallCard {
+      width: $mobile_landscape_small_card_size;
+      height: $mobile_landscape_small_card_size;
+    }
+  }
+
+  @media (pointer:coarse) {
+    &:not(.openCard) {
+      box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.3) !important;
+      transform: none !important;
+    }
+  }
+}
+
+.openCard, .container:hover {
+  box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.5);
+  transform: translate3d(0, -0.4rem, 0);
+  cursor: pointer;
+}
+
+.cardInfo {
+  flex-grow: 1;
+  width: 100%;
+  @include flex;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(2px);
+  border-radius: .4rem;
+  color: black;
+}
+
+.title {
+  flex-grow: 1;
+  @include item-title;
+  font-weight: 500;
+  color: white;
+  margin: .4rem 0 0.4rem 0;
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.4rem;
+  text-align: center;
+}
+
+.description {
+  @include item-description;
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.4rem;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.githubButton {
+  position: absolute;
+  bottom: .5rem;
+  right: .5rem;
+}

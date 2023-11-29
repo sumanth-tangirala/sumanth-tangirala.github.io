@@ -10,23 +10,31 @@ function About({ className, sectionRef }) {
         <div className={cx(styles.container, className)} ref={sectionRef}>
             <div className={styles.about}>
                 <img
-                    src={text.picturePath}
+                    src={text.aboutPicturePath}
                     className={styles.image}
                     alt=""
                 />
                 <div className={styles.text}>
                     <span className={styles.name}>{text.name}</span>
-                    <span className={styles.qualifications}>{text.qualifications}</span>
+                    <div className={styles.qualifications}>{
+                          _map(text.qualifications, (qual, idx) => (
+                              <div key={idx}>
+                                  {qual}
+                              </div>
+                          )
+                        )
+
+                    }</div>
                     <div className={styles.aboutParagraphs}>
-                        {_map(text.about, paragraph => (
-                            <span className={styles.aboutParagraphItem}>
+                        {_map(text.about, (paragraph, idx) => (
+                            <span className={styles.aboutParagraphItem} key={idx}>
                                 {paragraph}
                             </span>
                         ))}
                     </div>
                     <div className={styles.qualificationDetails}>
-                        {_map(text.qualificationDetails, qualificationDetail => (
-                            <span className={styles.qualificationDetailItem}>
+                        {_map(text.qualificationDetails, (qualificationDetail, idx) => (
+                            <span className={styles.qualificationDetailItem} key={idx}>
                                 {qualificationDetail}
                             </span>
                         ))}

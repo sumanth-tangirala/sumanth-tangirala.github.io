@@ -8,7 +8,7 @@ $text_color1: $matte_grey;
 $text_color2: black;
 $text_color4: $color2;
 
-$img_size: 6rem;
+$img_size: 8rem;
 
 $border_size: 1rem;
 
@@ -19,8 +19,6 @@ $border_size: 1rem;
   position: relative;
   @include flex();
   backdrop-filter: blur(5px);
-  //background: linear-gradient(    to right,     $color2 0%,     $color2 50%,     $color4 50%,     $color4 100%  );
-  background-color: $light_trans_matte_grey;
 }
 
 .sectionTitle{
@@ -40,18 +38,28 @@ $border_size: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 14rem);
   justify-content: center;
-  background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% - 1rem) 0/2rem 2rem no-repeat,
-    radial-gradient(farthest-side at bottom left, $color3 98%, #0000) calc(50% + 1rem) 100%/2rem 2rem no-repeat,
+
+
+  &.evenCount {
+    background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% + .5rem) 0/1.5rem 1.5rem no-repeat,
+    radial-gradient(farthest-side at bottom left, $color3 98%, #0000) calc(50% + .5rem) 100%/1rem 1rem no-repeat,
     linear-gradient(90deg, $color2 50%, $color4 0);
+  }
+
+  &.oddCount {
+    background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% + .5rem) 0/1.5rem 1.5rem no-repeat,
+    radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50% + .3rem) 100%/1rem 1rem no-repeat,
+    linear-gradient(90deg, $color2 50%, $color4 0);
+  }
 }
 
 .event{
-  z-index: 10;
   @include flex;
+  width: 37rem;
   flex-direction: row;
   grid-column: span 2;
   text-align: center;
-  border-radius: 6.5rem;
+  border-radius: 4.5rem;
   color: $text_color1;
   font-size: 1.6rem;
   line-height: 1.5rem;
@@ -65,10 +73,21 @@ $border_size: 1rem;
     flex-direction: row-reverse;
     --d: -90deg;
     --c: #fcc923;
+    left: calc(50% - 16rem);
+
+
+    & .eventImg {
+      padding-right: 1rem;
+    }
   }
 
   &:nth-child(odd) {
     --c: #fcc923;
+    left: calc(50% - 22.6rem);
+
+    & .eventImg {
+      padding-left: 1rem;
+    }
   }
 
   &:not(:last-child) {
@@ -85,6 +104,10 @@ $border_size: 1rem;
     right: auto;
     left: calc(100% + .5rem);
     background: repeating-linear-gradient(90deg, $text_color2 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+  }
+
+  &:first-child {
+    margin-top: 0rem;
   }
 }
 
@@ -124,6 +147,8 @@ $border_size: 1rem;
 
 .eventTitle {
   @include item-title;
+  font-size: 1.4rem;
+  font-weight: 500;
 }
 
 .eventDescription {
@@ -131,54 +156,112 @@ $border_size: 1rem;
   padding-top: .6rem;
 }
 
-@media screen and (max-width: $mobile_screen_width) {
+@media screen and (max-width: $tablet_screen_width) {
   .event {
-    width: 10rem;
-    flex-direction: column;
-    left: calc(50% - 6.5rem);
-    margin-top: -.795rem;
-    &:first-child{
-      margin-top: -.44rem;
+    width: 25rem;
+    margin-top: -.05rem;
+
+    &:first-child {
+      margin-top: -.2rem;
     }
-    &:last-child{
-      margin-top: -.795rem;
-      margin-bottom: -0.433rem;
+
+    &:nth-child(odd) {
+      left: calc(50% - 14.5rem);
     }
+
     &:nth-child(even) {
       flex-direction: column;
-      left: calc(50% - 11.5rem);
+      left: calc(50% - 14rem);
+    }
+  }
+
+}
+
+@media screen and (max-width: $mobile_screen_width) {
+  .timeline {
+    &.evenCount {
+      background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
+        radial-gradient(farthest-side at bottom left, $color3 98%, #0000) calc(50% + 1.25rem) 100%/1rem 1rem no-repeat,
+        linear-gradient(90deg, $color2 50%, $color4 0);
+    }
+
+    &.oddCount {
+      background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
+        radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50% - .75rem) 100%/1rem 1rem no-repeat,
+        linear-gradient(90deg, $color2 50%, $color4 0);
+    }
+
+  }
+  .event {
+    width: 13.5rem;
+    flex-direction: column;
+
+    //margin-top: -.2rem;
+    border-radius: 4rem;
+
+    &:nth-child(odd) {
+      left: calc(50% - 6rem);
+    }
+
+    &:nth-child(even) {
+      flex-direction: column;
+      left: calc(50% - 10.9rem);
     }
 
     &:nth-child(even) .date{
       left: auto;
       color: $text_color2 !important;
-      right: calc(100% + 3rem);
+      right: calc(100% + 2rem);
       padding-left: 0;
       padding-right: 1rem;
     }
 
     &:nth-child(even) .date:before {
-      left: calc(100% - .4rem);
+      left: calc(100% - .5rem);
     }
   }
 
   .date {
-    left: calc(100% + 3rem);
+    left: calc(100% + 1.25rem);
     padding-left: 1rem;
     white-space: break-spaces;
 
     &:before {
-      width: 3.4rem;
-      right: calc(100% - .4rem);
+      width: 2.5rem;
+      right: calc(100% - .5rem);
     }
 
     & .miniDate {
-      display: block;
+      display: flex;
     }
 
     & .largeDate {
       display: none;
     }
+  }
+
+  .eventImg{
+    max-height: 6rem;
+    max-width: 6rem;
+    margin: 1rem 0 0;
+    padding: 0 !important;
+  }
+}
+
+.miniDate {
+  @include flex();
+  flex-direction: row;
+  justify-content: center;
+}
+
+.partMiniDate {
+  white-space: initial;
+  text-align: center;
+  &:first-child {
+    margin-right: .5rem;
+  }
+  &:last-child {
+    margin-left: .5rem;
   }
 }
 

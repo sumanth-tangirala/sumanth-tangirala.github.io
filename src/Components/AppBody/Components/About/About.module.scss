@@ -6,7 +6,6 @@ $mobile_img_size: 12rem;
 $mobile_landscape_img_size: 10rem;
 
 .container{
-  //min-height: calc(100vh - $nav_bar_height - $min_history_banner_height);
   width: 100%;
   @include flex;
   justify-content: flex-start;
@@ -25,12 +24,14 @@ $mobile_landscape_img_size: 10rem;
   background-color: $light_trans_matte_grey;
   backdrop-filter: blur(7px);
   padding: 5rem 0;
+  color: white
 }
 
 .image {
   height: $img_size;
   max-height: 80%;
   border: white solid 0.3rem;
+  margin: 1rem 6rem 1rem 10rem;
 }
 
 .text {
@@ -38,6 +39,8 @@ $mobile_landscape_img_size: 10rem;
   flex-grow: .5;
   @include flex;
   align-items: flex-start;
+  text-align: left;
+  margin-right: 10rem;
 }
 
 .name {
@@ -50,10 +53,14 @@ $mobile_landscape_img_size: 10rem;
   margin-bottom: 1.2rem;
   font-weight: 400;
   font-size: 1.6rem;
+  & *{
+    margin-bottom: .5rem;
+  }
 }
 
 .aboutParagraphs {
   @include flex;
+  align-items: flex-start;
 }
 
 .aboutParagraphItem {
@@ -66,6 +73,7 @@ $mobile_landscape_img_size: 10rem;
 .qualificationDetails {
   @include flex;
   margin-top: 1.2rem;
+  align-items: flex-start;
 }
 
 .qualificationDetailItem {
@@ -88,10 +96,23 @@ $mobile_landscape_img_size: 10rem;
 @media screen and (max-width: $mobile_screen_width) {
   .image {
     height: $mobile_img_size;
+    margin: 0 0 1rem;
+  }
+  .text {
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
+  }
+  .name{
+    width: 100%;
+    text-align: center;
   }
 }
 
 @media screen and (max-height: $mobile_landscape_screen_height) {
+  .name{
+    width: 100%;
+    text-align: center;
+  }
   .container {
     min-height: calc(100vh - $nav_bar_height);
   }
@@ -103,5 +124,11 @@ $mobile_landscape_img_size: 10rem;
 
   .image {
     height: $mobile_landscape_img_size;
+    margin: 0;
+  }
+
+  .text {
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
   }
 }

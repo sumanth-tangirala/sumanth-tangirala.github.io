@@ -26,7 +26,7 @@ $skill_item_max_size: 23rem;
   flex-wrap: wrap;
   padding: 2rem 1.2rem;
   justify-content: center;
-  flex-grow: 1;
+  align-items: flex-start;
 }
 
 .skillContainer{
@@ -34,6 +34,7 @@ $skill_item_max_size: 23rem;
   padding: .8rem;
   width: 29%;
   text-align: center;
+  justify-content: flex-start;
 }
 
 .skillImgContainer {
@@ -58,7 +59,7 @@ $skill_item_max_size: 23rem;
 
 .skillTitle{
   @include item-title;
-  color: white;
+  color: $hunyadi_yellow;
 }
 
 .skillDescription{

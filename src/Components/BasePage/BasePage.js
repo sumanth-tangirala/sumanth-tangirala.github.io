@@ -24,6 +24,7 @@ function BasePage() {
     const timelineSectionRef = useRef();
     const projectsSectionRef = useRef();
     const contactSectionRef = useRef();
+    const publicationsSectionRef = useRef();
 
     const sectionRefs = useMemo(() => ({
         [SECTION_TYPES.LANDING]: landingSectionRef,
@@ -33,6 +34,7 @@ function BasePage() {
         [SECTION_TYPES.TIMELINE]: timelineSectionRef,
         [SECTION_TYPES.PROJECTS]: projectsSectionRef,
         [SECTION_TYPES.CONTACT]: contactSectionRef,
+        [SECTION_TYPES.PUBLICATIONS]: publicationsSectionRef,
     }), [])
 
     const onNavigation = useCallback((section) => {

@@ -8,7 +8,7 @@ function Landing({className, sectionRef}) {
     return (
         <div className={cx(styles.landing, className)} ref={sectionRef}>
             <div className={styles.container}>
-                <img src={text.picturePath} className={styles.image} alt=""/>
+                <img src={text.landingPicturePath} className={styles.image} alt=""/>
                 <div
                     className={styles.name}
                 >

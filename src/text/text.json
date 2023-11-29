@@ -1,18 +1,10 @@
 {
   "name": "Sumanth Tangirala",
-  "qualifications": "qualifications",
-  "about": [
-    "paragraph1",
-    "paragraph2"
-  ],
-  "qualificationDetails": [
-    "qualificationDetail1",
-    "qualificationDetail2"
-  ],
-  "picturePath": "/img/picture.jpg",
-  "tagline": "Graduate Researcher, Rutgers University",
-  "linkedinURL": "https://www.linkedin.com/in/sumanthtangirala",
+  "landingPicturePath": "/img/landing.jpg",
+  "tagline": "Graduate Researcher | Rutgers University",
+  "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
+
   "historyBannerImages": [
     {
       "path": "/img/DAIICT.png",
@@ -39,134 +31,317 @@
       "text": "PRACSYS - Rutgers"
     }
   ],
-  "projects": [
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    },
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    },
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    },
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    },
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    },
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    },
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    },
-    {
-      "title": "Project Title",
-      "longDesc": "lorem ipsum",
-      "shortDesc": "lorem ipsum",
-      "imgPath": "/img/DAIICT.png"
-    }
+
+  "qualifications": [
+    "Masters in Computer Science, Rutgers University, Class of 2024",
+    "Robotics Researcher, PRACSYS Lab"
   ],
+  "aboutPicturePath": "/img/about.jpg",
+  "about": [
+    "My passion is working on challenging inter-disciplinary problems that can tangibly impact the real-world.",
+    "I am primarily interested in Reinforcement Learning, Robotics, Sensor Fusion, and Internet-of-Things."
+  ],
+  "qualificationDetails": [
+    "Masters of Science in Computer Science |  Rutgers University - New Brunswick",
+    "Bachelor of Technology in Information and Communication Technology | DA-IICT"
+  ],
+
+  "publications": {
+    "conferencePapers": [
+      {
+        "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
+        "authors": "Tushar Gadhiya, Sumanth Tangirala, Anil K. Roy",
+        "arXiv": "https://arxiv.org/abs/2311.02887",
+        "venue": "Pattern Recognition and Machine Intelligence: 8th International Conference, PReMI 2019, Tezpur, India, December 17-20, 2019; Proceedings, Part II, Dec 2019, Pages 331-339",
+        "link": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37"
+      }
+    ],
+    "prePrints": [
+      {
+        "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
+        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, Sumanth Tangirala, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
+        "arXiv": "https://arxiv.org/abs/2310.03246"
+      },
+      {
+        "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
+        "authors": "Aravind Sivaramakrishnan, Noah R. Carver, Sumanth Tangirala, Kostas E. Bekris",
+        "arXiv": "https://arxiv.org/abs/2310.03239"
+      }
+    ]
+  },
+
   "skills": [
     {
       "title": "Machine & Deep Learning",
-      "description": "description",
+      "description": "I have extensive experience in Machine Learning and Deep Learning, applying these techniques in Computer Vision, Robotics, and NLP projects",
       "imgPath": "/img/ML.svg"
     },
     {
       "title": "Reinforcement Learning",
-      "description": "description",
+      "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and HER-SAC, as a graduate researcher at PRACSYS lab",
       "imgPath": "/img/RL.svg"
     },
     {
       "title": "Robot Operating System",
-      "description": "description",
+      "description": "My current research involves using ROS for robot communication and environment interaction, including developing a perception system in PRACSYS Lab's MuSHR platform for mobile robot controller training.",
       "imgPath": "/img/ROS.svg"
     },
     {
       "title": "Physics Simulation Engines",
-      "description": "description",
+      "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for robot simulations and controller development. My projects include a robot dog navigating obstacles in IsaacGym and training a quadrotor in MuJoCo to handle aerodynamic conditions",
       "imgPath": "/img/DeepMind.svg"
     },
     {
+      "title": "Computer Vision, OpenCV",
+      "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform utilizing AprilTags",
+      "imgPath": "/img/opencv.svg",
+      "imgStyle": {
+        "paddingBottom": "0.7rem"
+      }
+    },
+    {
+      "title": "Python, C++",
+      "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields to create advanced algorithms, develop robust software solutions, and integrate these tools into complex, multidisciplinary applications",
+      "imgPath": "/img/pythonCpp.png"
+    },
+    {
       "title": "Internet of Things",
-      "description": "description",
+      "description": "Over the last four years, I've developed IoT-based solutions for real-world challenges, including an autonomous environmental logging system and my work at Tekion Corp.",
       "imgPath": "/img/IoT.svg"
     },
     {
       "title": "Geospatial Imagery",
-      "description": "description",
+      "description": "In my undergraduate research and internship at the Indian Space Research Organization, I developed Machine Learning and Deep Learning techniques for land cover classification using Dual-PolSAR and Multifrequency PolSAR imagery",
+
       "imgPath": "/img/GIS.svg"
     },
     {
-      "title": "Computer Vision, OpenCV",
-      "description": "description",
-      "imgPath": "/img/opencv.svg",
-      "imgStyle": {
-        "padding-bottom": "0.7rem"
-      }
-    },
-    {
       "title": "React.js, Javascript",
-      "description": "description",
+      "description": "I have used React.js and Javascript to develop multiple web applications and websites. My most notable projects being developing this website and my work at Tekion Corp.",
       "imgPath": "/img/ReactJs.svg"
-    },
-    {
-      "title": "Python, C++",
-      "description": "description",
-      "imgPath": "/img/pythonCpp.png"
     }
   ],
+
   "timeline": [
     {
-      "title": "event title",
-      "desc": "event description",
-      "date": "September 1985",
-      "miniDate": "Sept 1985",
+      "title": "PRACSYS Lab, Rutgers University",
+      "desc": "I am researching robot motion planning algorithms for high-velocity robots in dynamic conditions using AI/ML and Reinforcement Learning techniques",
+      "date": "January 2023 - Present",
+      "miniDate": ["Jan 2023", "Now"],
       "imgPath": "/img/PRACSYS.png"
     },
     {
-      "title": "event title",
-      "desc": "event description",
-      "date": "September 1985",
-      "miniDate": "Sept 1985",
+      "title": "Rutgers University",
+      "desc": "As a graduate of Masters of Computer Science, Class of 2024, I continue to pursue my passion for AI/ML and Robotics",
+      "date": "August 2022 - Present",
+      "miniDate": ["Aug 2022", "Now"],
+      "imgPath": "/img/Rutgers.png"
+    },
+    {
+      "title": "Tekion Corp.",
+      "desc": "Starting with a Winter 2020 software engineering internship and advancing to a full-time role as Software Engineer, I worked on building data-driven products for the automotive industry using Machine Learning and Computer Vision tools",
+      "date": "January 2020 - July 2022",
+      "miniDate": ["Jan 2020", "July 2022"],
+      "imgPath": "/img/Tekion.svg"
+    },
+    {
+      "title": "Center of WIMS2, University of Michigan",
+      "desc": "In a collaborative project between WIMS2 and Smart City Lab, DAIICT, I developed end-to-end IoT solutions for an environmental logging sensor network",
+      "date": "May 2019 - November 2019",
+      "miniDate": ["May 2019", "Nov 2019"],
       "imgPath": "/img/WIMS2.png"
     },
     {
-      "title": "event title",
-      "desc": "event description",
-      "date": "September 1985",
-      "miniDate": "Sept 1985",
-      "imgPath": "/img/WIMS2.png"
+      "title": "Indian Space Research Organization",
+      "desc": "During a Summer Internship, I developed a time-series Machine Learning technique for accurate land cover classification using satellite imagery and this tool continues to be used by ISRO in their ongoing projects",
+      "date": "May 2019 - August 2019",
+      "miniDate": ["May 2019", "Aug 2019"],
+      "imgPath": "/img/ISRO.png"
     },
     {
-      "title": "event title",
-      "desc": "event description",
-      "date": "September 1985",
-      "miniDate": "Sept 1985",
-      "imgPath": "/img/WIMS2.png"
+      "title": "Smart City Lab, DA-IICT",
+      "desc": "As a Research Assistant, I worked to advance the lab's goal of developing intelligent systems that use multi-modal data. My work was focused on PolSAR image segmentation and classification using Deep Learning techniques",
+      "date": "August 2018 - December 2019",
+      "miniDate": ["Aug 2018", "Dec 2019"],
+      "imgPath": "/img/DAIICT.png"
+    },
+    {
+      "title": "DA-IICT",
+      "desc": "I graduated with a Bachelor of Technology in Information and Communication Technology. I was also a member of the DA-IICT Google Developer Student Club, the Student Council and the Student Placement Cell",
+      "date": "August 2016 - May 2020",
+      "miniDate": ["Aug 2016", "May 2020"],
+      "imgPath": "/img/DAIICT.png"
+    }
+  ],
+
+  "keyProjects": [
+    {
+      "title": "Obstacle Navigation with Unitree Go1 Robot",
+      "longDesc": [
+        "Trained a two-fold controller policy for a robot dog to navigate an environment with obstacles simulated in NVIDIA IsaacGym",
+        "The first policy was trained to reach velocity goals by providing torques to the 12 joints of the robot dog and the second policy was trained to provide appropriate velocities to the robot dog to reach the goal",
+        "Used NVIDIA IsaacGym to simulate a Unitree Go1 robot in a 3D environment with obstacles",
+        "Trained the controller policies using PyTorch, an Actor-Critic network and Proximal Policy Optimization to navigate the robot in the environment",
+        "Implemented a custom reward function to encourage the robot to avoid obstacles and reach the goal"
+      ],
+      "techStack": ["NVIDIA IsaacGym", "PyTorch", "Python"],
+      "imgPath": "/img/go1.gif",
+      "textColor": "black",
+      "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim"
+    },
+    {
+      "title": "GPU Parallelization of Fuzzy SuperPixel Segmentation ",
+      "longDesc": [
+        "Designed and implemented a GPU parallelized strategy for the Fuzzy Simple Linear Iterative Clustering (SLIC) algorithm",
+        "Achieved a 200x speedup over the sequential version of the algorithm for a 2K Image using CUDA on an NVIDIA GeForce GTX 1080 Ti"
+      ],
+      "techStack": ["NVIDIA CUDA", "C++"],
+      "imgPath": "/img/fuzzySLIC.jpg",
+      "textColor": "white",
+      "backgroundColor": "black",
+      "githubURL": "https://github.com/sumanth-tangirala/Fuzzy-SLIC-CUDA-Parallelization"
+    },
+    {
+      "title": "Just Walk Out Shopping",
+      "longDesc": [
+        "Developed a prototype for an automated shopping system inspired by Amazon Go that uses sensors and an in-store communication network to track customers and their purchases",
+        "Due to a limitation placed by the advisor on the use of cameras and computer vision, I used a combination of sensors to track customers and their purchases",
+        "Customers could pick up NFC bands at the entrance of the store and tap their phone on the band to identify themselves on the system",
+        "Customers could then pick up products and each aisle processor would use a combination of LIDAR and pressure sensors to quantity the product and use RFID readers to identify the customer",
+        "The aisle processor, an Arduino, would then communicate with the main processor hub, a Raspberry Pi, through the Zigbee network to update the customer's cart",
+        "The customer could then drop their NFS band in a dropbox which would detect exited customer to digitally checkout their purchase and charge the customer"
+      ],
+      "techStack": ["Raspberry Pi & Arduino", "Zigbee Network", "NFC tags and RFID readers","Pressure & LIDAR sensors", "Android Development", "Python", "Java","C++"],
+      "imgPath": "/img/amazonGo.png",
+      "textColor": "black"
+    },
+    {
+      "title": "External Perception System for Autonomous Navigation with MuSHR",
+      "longDesc": [
+        "Contributed to development of an external perception system in the PRACSYS lab for the MuSHR platform to enable training of closed-loop control policies for mobile robots",
+        "Used AprilTags to localize the robot and the boundaries in the environment which were then processed using OpenCV to estimate the pose and location of the robot and the boundaries",
+        "Built Robot Operating System (ROS) services to communicate the location of the robot and the boundaries to the robot",
+        "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
+      ],
+      "techStack": ["Robot Operating System (ROS)", "OpenCV", "NVIDIA Jetson", "Python", "C++"],
+      "imgPath": "/img/mushr.gif",
+      "textColor": "white",
+      "backgroundColor": "black"
+    },
+    {
+      "title": "Social Navigation of MuSHR using RVO Avoidance",
+      "longDesc": [
+        "Built a simulation environment for the MuSHR platform with obstacles using MuJoCo and a collision detection algorithm",
+        "Used the Reciprocal Velocity Obstacle (RVO) algorithm to come up with a controller for the MuSHR platform capable of navigating and reaching goals while avoiding other agents and obstacles",
+        "Demonstrated the limitations of the RVO algorithm in complex environments with multiple agents and obstacles and proposed a prediction-based hierarchical planning approach to overcome these limitations"
+      ],
+      "techStack": ["MuJoCo", "Python"],
+      "imgPath": "/img/rvo.gif",
+      "textColor": "white",
+      "backgroundColor": "black",
+        "githubURL": "https://github.com/sumanth-tangirala/MuSHR-RVO-Social-Navigation/"
+    },
+    {
+      "title": "Land Cover Classification using Time-Series Dual-Polarized SAR Imagery",
+      "longDesc": [
+        "Dual-Polarized SAR imagery techniques for land cover classification are limited and Fully-Polarimetric SAR images are not available for all regions",
+        "During a Summer Internship at the Indian Space Research Organization, I worked on filling this gap by developing a land cover classification technique using a Dual-Polarized SAR imagery",
+        "As a part of the internship, my advisor and I surveyed farmlands in the area of Junagadh, Gujarat, India to collect ground truth data for the project",
+        "This area predominantly has farmlands of Cotton and Groundnut, and information about the crop type and harvest days is crucial for the government to make informed decisions about the area",
+        "I developed a time-series Machine Learning technique that used Dual-Polarized SAR imagery of the region and the ground truth data for accurate land cover classification",
+        "The technique used a Recurrent Neural Networks (RNN) to learn the time-series patterns in the SAR imagery and a Convolutional Neural Network (CNN) to learn the spatial patterns in the imagery",
+        "The technique achieved an accuracy of 91.2% for the classification of Cotton and Groundnut crops",
+        "The technique continues to be used by ISRO in their ongoing projects"
+      ],
+      "techStack": ["TensorFlow","OpenCV", "Python", "C"],
+      "imgPath": "/img/polsar.jpg",
+      "textColor": "white",
+      "backgroundColor": "black"
+    },
+    {
+      "title": "Autonomous Environmental Logging IoT System",
+      "longDesc": [
+        "Developed an end-to-end IoT solution that acted as an external unit for the ELM7 environmental logging sensor developed by the WIMS2 Lab at the University of Michigan",
+        "This work was a part of a collaborative project between WIMS2 and Smart City Lab, DAIICT, and my work was advised by Dr. Yogesh Gianchandani, Director of WIMS2 Lab, University of Michigan",
+        "The sensor was aimed to measure environmental parameters in remote dangerous locations such as mines and the end-to-end system was aimed to provide a way to monitor such sites remotely",
+        "The system consisted of a gateway in the form of a Raspberry Pi, a cloud server and a client-side desktop GUI",
+        "The Raspberry Pi was connected to the ELM7 sensor through Bluetooth Low Energy (BLE) protocol and the cloud server was connected to the Raspberry Pi through a WiFi network",
+        "The GUI was developed using Tkinter and was responsible for sending control commands to the Raspberry Pi and displaying the data received from the sensor",
+        "The Raspberry Pi was responsible for receiving controls and operating in one of the three modes - Single, Batch and Continuous - where the mode determined the frequency of data collection. This data would then be relayed to the cloud server with a frequency determined by the mode",
+        "The cloud server was developed using NodeJS and was responsible for storing the data and providing it to the web application on request"
+      ],
+      "techStack": ["Raspberry Pi", "Bluetooth-Low-Energy", "NodeJS & ExpressJS", "Tkinter GUI", "Python", "Javascript"],
+      "imgPath": "/img/raspi.jpg",
+      "textColor": "white",
+      "backgroundColor": "black"
+    }
+  ],
+
+  "otherProjects": [
+    {
+      "title": "Summary Bot",
+      "longDesc": [
+        "Led a team of 10 students as Project Manager to develop a multi-platform application that can summarize long text passages and email threads using Natural Language Processing (NLP) techniques",
+        "Split the project into 4 modules - NLP, Android, Web Development. Assigned each module a lead and a team of 2-3 students. I personally led the NLP module",
+        "Conducted weekly scrum meetings among module leads for a collaborative development environment and managed the project using Agile methodology",
+        "The NLP module was developed using Tensorflow and NLTK and used a combination of extractive and abstractive summarization techniques to summarize long text passages",
+        "The Android module was developed using React Native and the Web module was developed using ReactJS with Firebase used as the backend for both modules",
+        "Received the Best Project Award out of 30+ projects in the Software Engineering course"
+      ],
+      "techStack": ["TensorFlow", "Natural Language Toolkit (NLTK)", "Android", "ReactJS", "React Native", "Firebase", "NodeJS", "Python", "Javascript", "Java"],
+      "imgPath": "/img/paragraph.jpg",
+      "textColor": "black"
+    },
+    {
+      "title": "Protego - Safe Transit Planner",
+      "longDesc": [
+        "This project was developed as a part of the AngelHack Bangalore 2018 and was one of the 5 projects selected for the final round",
+        "Inspired by a late night drive through a shady part of Bangalore before the day of the hackathon, my team and I developed a mobile application that uses Machine Learning to suggest safe routes to the user",
+        "The Machine Learning application used historical crime data to predict the safety of a discretized map of the city and the mobile application used this data to suggest routes built with waypoints in safe regions of the city using a A* search algorithm with the safety score as the heuristic",
+        "The mobile application was developed using Android and used the Google Maps API to generate the routes from the waypoints"
+      ],
+      "techStack": ["TensorFlow", "Android", "Firebase", "NodeJS", "Python", "Javascript"],
+      "imgPath": "/img/protego.jpg",
+      "textColor": "black"
+    },
+    {
+      "title": "Playlist Porter",
+      "longDesc": [
+        "Faced with the problem of switching from Saavn, an Indian music streaming service, developed a web scraping project to port playlists from Saavn to other music streaming services such as YouTube and Spotify",
+        "The script uses Selenium WebDriver to automate the process of logging into the user's YouTube and Spotify accounts and BeautifulSoup 4 to scrape the playlists from the user's accounts",
+        "The hope is to then extend the script to port playlists from other music services such as Spotify and Apple Music"
+
+      ],
+      "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Python", "Linux Scripting"],
+      "imgPath": "/img/playlistPorter.png",
+      "textColor": "black",
+        "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter"
+    },
+    {
+      "title": "Cross-Platform Playlist Shell Player using Multi-Processing Parallelism",
+      "longDesc": [
+        "Developed as a way to experiment with Parallelism in Python, this project is a cross-platform music player that can play playlists from Saavn, an Indian music streaming service, on YouTube",
+        "The application consists of a scraper process, a player process and a controller process which communicate using Pipes",
+        "The controller process waits for command line inputs from the user and sends the appropriate commands to the player and scraper processes",
+        "The scraper processes waits for inputs on playlists to play and uses BeautifulSoup4 to automate the process of logging into the user's Saavn account and BeautifulSoup 4 to scrape the playlist from the user's account to forward a list of songs to the player process",
+        "The player process then uses the Selenium Webdriver to play the received songs and also processes the commands from the controller process to pause, play, skip and stop the playlist"
+      ],
+      "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Multi-Processing Parallelism", "Python", "Linux Scripting"],
+      "imgPath": "/img/musicPlayer.png",
+      "textColor": "black",
+      "githubURL": "https://github.com/sumanth-tangirala/Cross-Platform-Playlist-Player"
+    },
+    {
+      "title": "P2P File Sharing (Work in Progress)",
+      "longDesc": [
+        "This project is an attempt to learn about Peer-to-Peer (P2P) networks and replicate the functionality of BitTorrent. This project is also an attempt to develop a completely decentralized P2P network (if such a thing is possible)",
+        "The application will allow users to share files with other users on the same network and also search for files on the network and download them"
+      ],
+      "techStack": ["Python", "Socket Programming"],
+      "imgPath": "/img/p2p.jpg",
+      "textColor": "black",
+      "githubURL": "https://github.com/sumanth-tangirala/P2P"
     }
   ]
+
 }

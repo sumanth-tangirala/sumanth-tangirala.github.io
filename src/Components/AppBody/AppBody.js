@@ -11,6 +11,7 @@ import HistoryBanner from './Components/HistoryBanner';
 import styles from "./appBody.module.scss";
 import {SECTION_TYPES, SECTION_ORDER} from "../../constants";
 import _map from "lodash/map";
+import Publications from "./Components/Publications";
 
 AppBody.propTypes = {
 
@@ -21,6 +22,7 @@ const SECTION_TYPE_VS_COMPONENT = {
     [SECTION_TYPES.HISTORY]: HistoryBanner,
     [SECTION_TYPES.ABOUT]: About,
     [SECTION_TYPES.SKILLS]: Skills,
+    [SECTION_TYPES.PUBLICATIONS]: Publications,
     [SECTION_TYPES.TIMELINE]: Timeline,
     [SECTION_TYPES.PROJECTS]: Projects,
     [SECTION_TYPES.CONTACT]: ContactMe,

@@ -3,8 +3,10 @@ $mini_nav_bar_height: 2.8rem;
 $backgroundColor: white;
 $mobile_width: 750px;
 $item_title_font_size: 1.6rem;
+$item_mini_title_font_size: 1.4rem;
 $item_desc_font_size: 1.2rem;
 $tablet_screen_width: 900px;
+$tablet_landscape_screen_width: 1000px;
 $mobile_screen_width: 720px;
 $mobile_landscape_screen_height: 650px;
 $mini_mobile_screen_width: 360px;
@@ -32,6 +34,19 @@ $min_history_banner_height: 9.6rem;
 
   @media screen and (max-width: $tablet_screen_width) {
     font-size: 1.4rem;
+  }
+
+  @media screen and (max-width: $mobile_screen_width) {
+    font-size: 1.2rem;
+  }
+}
+
+@mixin item-mini-title {
+  @include item-title;
+  font-size: $item_mini_title_font_size;
+
+  @media screen and (max-width: $mobile_screen_width) {
+    font-size: 1.2rem;
   }
 }
 

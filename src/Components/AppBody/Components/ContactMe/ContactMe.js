@@ -56,12 +56,12 @@ function ContactMe({className, sectionRef}) {
                     className={styles.socialMediaImg}
                     onClick={openGithub}
                 />
-                <Button
-                    icon={<FilePdfOutlined />}
-                    className={styles.resume}
-                >
-                    Resume
-                </Button>
+                {/*<Button*/}
+                {/*    icon={<FilePdfOutlined />}*/}
+                {/*    className={styles.resume}*/}
+                {/*>*/}
+                {/*    Resume*/}
+                {/*</Button>*/}
             </div>
         </div>
     );

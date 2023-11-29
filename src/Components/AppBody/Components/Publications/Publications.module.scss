@@ -1,0 +1,57 @@
+@import 'src/styles.module.scss';
+
+.sectionContainer {
+  @include flex;
+  width: 100%;
+  padding: 2.4rem 0;
+  backdrop-filter: blur(8px);
+}
+
+.content {
+  margin: 2rem 1rem 0 1rem;
+  text-align: left;
+  overflow: hidden;
+  white-space: pre-wrap;
+}
+
+.subSectionTitle {
+  @include item-title;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.publication {
+  &:not(:first-child){
+    margin-top: 2rem;
+  }
+  & > * {
+    margin: 0.5rem 0;
+  }
+}
+
+.publicationTitle {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.publicationAuthors {
+
+}
+
+.publicationVenue {
+  white-space: break-spaces;
+  font-style: oblique;
+}
+
+.publicationYear {
+
+}
+
+.publicationLinks {
+  @include flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  & > * {
+    margin-right: .3rem;
+  }
+}

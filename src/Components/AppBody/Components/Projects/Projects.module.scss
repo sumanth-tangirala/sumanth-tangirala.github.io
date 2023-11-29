@@ -1,7 +1,7 @@
 @import 'src/styles.module.scss';
 
 .container {
-  background: $dark_trans_matte_grey;
+  background: $light_trans_matte_grey;
   backdrop-filter: blur(3px);
   width: 100%;
   min-height: calc(100vh - $nav_bar_height);
@@ -17,16 +17,38 @@
 
 .sectionHeading {
   @include section-heading;
+  justify-self: flex-start !important;
   color: white;
   padding-top: 1.2rem;
+  text-align: center;
+  justify-self: flex-start;
 }
 
-.projectsGrid{
+.projects {
+  flex-grow: 1;
+  @include flex();
+  justify-content: center !important;
+}
+
+.subSection {
+  @include flex;
+}
+
+.projectsSubGrid{
   @include flex();
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  flex-grow: 1;
   padding: 0 2rem;
   width: calc(100% - 4rem) !important;
+  margin: 1.5rem 0 2rem 0;
+
+  &:first-child{
+    margin-top: 2rem;
+    justify-content: center;
+  }
+
+  &:not(:first-child){
+    justify-content: center;
+  }
 }
+
