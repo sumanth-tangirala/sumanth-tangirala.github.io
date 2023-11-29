@@ -187,7 +187,8 @@
       "techStack": ["NVIDIA IsaacGym", "PyTorch", "Python"],
       "imgPath": "/img/go1.gif",
       "textColor": "black",
-      "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim"
+      "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim",
+      "details": "Ongoing Project | September, 2023 - Present"
     },
     {
       "title": "GPU Parallelization of Fuzzy SuperPixel Segmentation ",
@@ -199,7 +200,22 @@
       "imgPath": "/img/fuzzySLIC.jpg",
       "textColor": "white",
       "backgroundColor": "black",
-      "githubURL": "https://github.com/sumanth-tangirala/Fuzzy-SLIC-CUDA-Parallelization"
+      "githubURL": "https://github.com/sumanth-tangirala/Fuzzy-SLIC-CUDA-Parallelization",
+      "details": "August, 2019 - December, 2019"
+    },
+    {
+      "title": "Social Navigation of MuSHR using RVO Avoidance",
+      "longDesc": [
+        "Built a simulation environment for the MuSHR platform with obstacles using MuJoCo and a collision detection algorithm",
+        "Used the Reciprocal Velocity Obstacle (RVO) algorithm to come up with a controller for the MuSHR platform capable of navigating and reaching goals while avoiding other agents and obstacles",
+        "Demonstrated the limitations of the RVO algorithm in complex environments with multiple agents and obstacles and proposed a prediction-based hierarchical planning approach to overcome these limitations"
+      ],
+      "techStack": ["MuJoCo", "Python"],
+      "imgPath": "/img/rvo.gif",
+      "textColor": "white",
+      "backgroundColor": "black",
+      "githubURL": "https://github.com/sumanth-tangirala/MuSHR-RVO-Social-Navigation/",
+      "details": "Jan, 2023 - May, 2023"
     },
     {
       "title": "Just Walk Out Shopping",
@@ -213,7 +229,8 @@
       ],
       "techStack": ["Raspberry Pi & Arduino", "Zigbee Network", "NFC tags and RFID readers","Pressure & LIDAR sensors", "Android Development", "Python", "Java","C++"],
       "imgPath": "/img/amazonGo.png",
-      "textColor": "black"
+      "textColor": "black",
+      "details": "January, 2019 - May, 2019"
     },
     {
       "title": "External Perception System for Autonomous Navigation with MuSHR",
@@ -226,20 +243,8 @@
       "techStack": ["Robot Operating System (ROS)", "OpenCV", "NVIDIA Jetson", "Python", "C++"],
       "imgPath": "/img/mushr.gif",
       "textColor": "white",
-      "backgroundColor": "black"
-    },
-    {
-      "title": "Social Navigation of MuSHR using RVO Avoidance",
-      "longDesc": [
-        "Built a simulation environment for the MuSHR platform with obstacles using MuJoCo and a collision detection algorithm",
-        "Used the Reciprocal Velocity Obstacle (RVO) algorithm to come up with a controller for the MuSHR platform capable of navigating and reaching goals while avoiding other agents and obstacles",
-        "Demonstrated the limitations of the RVO algorithm in complex environments with multiple agents and obstacles and proposed a prediction-based hierarchical planning approach to overcome these limitations"
-      ],
-      "techStack": ["MuJoCo", "Python"],
-      "imgPath": "/img/rvo.gif",
-      "textColor": "white",
       "backgroundColor": "black",
-        "githubURL": "https://github.com/sumanth-tangirala/MuSHR-RVO-Social-Navigation/"
+      "details": "May, 2023 - August, 2023"
     },
     {
       "title": "Land Cover Classification using Time-Series Dual-Polarized SAR Imagery",
@@ -256,7 +261,8 @@
       "techStack": ["TensorFlow","OpenCV", "Python", "C"],
       "imgPath": "/img/polsar.jpg",
       "textColor": "white",
-      "backgroundColor": "black"
+      "backgroundColor": "black",
+      "details": "May, 2019 - August, 2019"
     },
     {
       "title": "Autonomous Environmental Logging IoT System",
@@ -273,7 +279,8 @@
       "techStack": ["Raspberry Pi", "Bluetooth-Low-Energy", "NodeJS & ExpressJS", "Tkinter GUI", "Python", "Javascript"],
       "imgPath": "/img/raspi.jpg",
       "textColor": "white",
-      "backgroundColor": "black"
+      "backgroundColor": "black",
+      "details": "May, 2019 - November, 2019"
     }
   ],
 
@@ -289,8 +296,9 @@
         "Received the Best Project Award out of 30+ projects in the Software Engineering course"
       ],
       "techStack": ["TensorFlow", "Natural Language Toolkit (NLTK)", "Android", "ReactJS", "React Native", "Firebase", "NodeJS", "Python", "Javascript", "Java"],
-      "imgPath": "/img/paragraph.jpg",
-      "textColor": "black"
+      "imgPath": "/img/summary.jpeg",
+      "textColor": "black",
+      "details": "January, 2019 - May, 2019"
     },
     {
       "title": "Protego - Safe Transit Planner",
@@ -302,7 +310,8 @@
       ],
       "techStack": ["TensorFlow", "Android", "Firebase", "NodeJS", "Python", "Javascript"],
       "imgPath": "/img/protego.jpg",
-      "textColor": "black"
+      "textColor": "black",
+      "details": "June 2019"
     },
     {
       "title": "Playlist Porter",
@@ -310,12 +319,12 @@
         "Faced with the problem of switching from Saavn, an Indian music streaming service, developed a web scraping project to port playlists from Saavn to other music streaming services such as YouTube and Spotify",
         "The script uses Selenium WebDriver to automate the process of logging into the user's YouTube and Spotify accounts and BeautifulSoup 4 to scrape the playlists from the user's accounts",
         "The hope is to then extend the script to port playlists from other music services such as Spotify and Apple Music"
-
       ],
       "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Python", "Linux Scripting"],
       "imgPath": "/img/playlistPorter.png",
       "textColor": "black",
-        "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter"
+      "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter",
+      "details": "August, 2017 - September, 2017"
     },
     {
       "title": "Parallelized Shell Media Player",
@@ -329,7 +338,8 @@
       "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Multi-Processing Parallelism", "Python", "Linux Scripting"],
       "imgPath": "/img/musicPlayer.png",
       "textColor": "black",
-      "githubURL": "https://github.com/sumanth-tangirala/Cross-Platform-Playlist-Player"
+      "githubURL": "https://github.com/sumanth-tangirala/Cross-Platform-Playlist-Player",
+      "details": "January, 2018 - May, 2018"
     },
     {
       "title": "P2P File Sharing (Work in Progress)",
@@ -340,7 +350,8 @@
       "techStack": ["Python", "Socket Programming"],
       "imgPath": "/img/p2p.jpg",
       "textColor": "black",
-      "githubURL": "https://github.com/sumanth-tangirala/P2P"
+      "githubURL": "https://github.com/sumanth-tangirala/P2P",
+      "details": "Ongoing Project | June, 2021 - Present"
     }
   ]
 

@@ -19,7 +19,7 @@ function ProjectModal({isModalOpen, toggleModal, openKey, openProjectIdx, handle
     const [isDownScrollable, setIsDownScrollable] = useState(false);
     const [isUpScrollable, setIsUpScrollable] = useState(false);
 
-    const {title, techStack, longDesc, githubURL} = _get(text, [openKey, openProjectIdx], {});
+    const {title, techStack, longDesc, githubURL, details} = _get(text, [openKey, openProjectIdx], {});
 
 
     const hasLeft = openKey === 'otherProjects' || openProjectIdx > 0;
@@ -42,6 +42,7 @@ function ProjectModal({isModalOpen, toggleModal, openKey, openProjectIdx, handle
 
     const renderContent = () => (
         <div className={styles.modalContent}>
+            <div className={styles.extraProjectDetails}>{details}</div>
             <div className={styles.descriptionContainer}>
                 <div
                     className={cx(styles.description, {
@@ -52,7 +53,7 @@ function ProjectModal({isModalOpen, toggleModal, openKey, openProjectIdx, handle
                     onScroll={isDescriptionOverflowing && handleScroll
                 }>
                     {!_isList(longDesc) ? longDesc : (
-                        <ul>
+                        <ul className={styles.projectDetails}>
                             {_map(longDesc, (desc, idx) => (
                                 <li key={idx}>{desc}</li>
                             ))}
@@ -84,7 +85,6 @@ function ProjectModal({isModalOpen, toggleModal, openKey, openProjectIdx, handle
                             size="large"
                         />
                     </div>
-
                     {renderContent()}
                     <div className={styles.modalRightPanel}>
                         <Button

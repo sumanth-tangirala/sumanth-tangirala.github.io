@@ -61,9 +61,14 @@
 
 .modalContent {
   margin-top: 1rem;
-  margin-left: 2rem;
-  margin-right: 3rem;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
 
+.extraProjectDetails {
+  text-align: center;
+  color: $honolulu_blue;
+  font-weight: 500;
 }
 
 .descriptionContainer {
@@ -99,6 +104,10 @@
 
 .techStackSection {
   margin-top: 1rem;
+}
+
+.projectDetails {
+  padding: 0 .5rem 0 1.5rem;
 }
 
 
