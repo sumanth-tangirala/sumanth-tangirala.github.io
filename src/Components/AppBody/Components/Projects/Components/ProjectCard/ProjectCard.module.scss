@@ -41,6 +41,15 @@ $mobile_landscape_small_card_height: 8rem;
       & .title {
         font-size: 1.2rem;
       }
+      & .githubButton {
+        bottom: .2rem;
+        right: .2rem;
+        &:global(.ant-btn) {
+          font-size: .7rem;
+          height: 2rem;
+          width: 2rem;
+        }
+      }
     }
   }
   
@@ -71,6 +80,19 @@ $mobile_landscape_small_card_height: 8rem;
     &.smallCard {
       width: $mobile_landscape_small_card_width;
       height: $mobile_landscape_small_card_height;
+      & .title {
+        font-size: 1rem;
+      }
+
+      & .githubButton {
+        bottom: .2rem;
+        right: .2rem;
+        &:global(.ant-btn) {
+          font-size: .7rem;
+          height: 2rem;
+          width: 2rem;
+        }
+      }
     }
   }
 
