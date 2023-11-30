@@ -60,7 +60,6 @@ function ContactMe({className, sectionRef}) {
                     icon={<FilePdfOutlined />}
                     className={styles.resume}
                     onClick={() => {
-                        console.log(`${window.location.origin}${text.resumeURL}`);
                         window.open(`${window.location.origin}${text.resumeURL}`);
                     }}
                 >
