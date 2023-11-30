@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
+import React from "react";
 
 import {Button, Modal} from "antd";
 import {GithubOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
@@ -67,7 +67,6 @@ class ProjectModal extends React.Component {
         const {
             isDownScrollable,
             isUpScrollable,
-            isDescriptionOverflowing
         } = this.state
 
         const { techStack, longDesc, details} = _get(text, [openKey, openProjectIdx], {});
@@ -111,9 +110,7 @@ class ProjectModal extends React.Component {
             openKey,
             openProjectIdx,
             handleLeft,
-            handleRight,
-            projectScrollPositions,
-            setProjectScrollPositions
+            handleRight
         } = this.props;
 
         const {title, githubURL } = _get(text, [openKey, openProjectIdx], {});

@@ -37,12 +37,10 @@ function ProjectSubSection({title, projects, isKey, toggleModal, openProjectIdx}
 function Projects({className, sectionRef}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [[openKey, openProjectIdx], setOpenProjectIdx] = useState([]);
-    const [projectScrollPositions, setProjectScrollPositions] = useState({});
 
     const toggleModal = (key, projectIdx) => {
         setIsModalOpen(!isModalOpen);
         setOpenProjectIdx([key, projectIdx]);
-        if (!isModalOpen) setProjectScrollPositions({})
     }
 
     const handleLeft = () => {
@@ -88,8 +86,6 @@ function Projects({className, sectionRef}) {
                 openProjectIdx={openProjectIdx}
                 handleLeft={handleLeft}
                 handleRight={handleRight}
-                projectScrollPositions={projectScrollPositions}
-                setProjectScrollPositions={setProjectScrollPositions}
             />
         </div>
         </>
