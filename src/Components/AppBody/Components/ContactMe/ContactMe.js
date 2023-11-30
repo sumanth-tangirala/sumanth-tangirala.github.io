@@ -56,12 +56,16 @@ function ContactMe({className, sectionRef}) {
                     className={styles.socialMediaImg}
                     onClick={openGithub}
                 />
-                {/*<Button*/}
-                {/*    icon={<FilePdfOutlined />}*/}
-                {/*    className={styles.resume}*/}
-                {/*>*/}
-                {/*    Resume*/}
-                {/*</Button>*/}
+                <Button
+                    icon={<FilePdfOutlined />}
+                    className={styles.resume}
+                    onClick={() => {
+                        console.log(`${window.location.origin}${text.resumeURL}`);
+                        window.open(`${window.location.origin}${text.resumeURL}`);
+                    }}
+                >
+                    Resume
+                </Button>
             </div>
         </div>
     );

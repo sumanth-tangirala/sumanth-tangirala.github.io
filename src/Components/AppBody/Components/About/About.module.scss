@@ -94,10 +94,10 @@ $mobile_landscape_img_size: 10rem;
   }
 }
 
-@media screen and (max-width: $mobile_screen_width) {
+@media screen and (max-width: calc($tablet_landscape_screen_width + 100px)) {
   .image {
     height: $mobile_img_size;
-    margin: 0 0 1rem;
+    margin: 0 0 0 1rem;
   }
   .text {
     margin-left: 2rem !important;
@@ -125,7 +125,7 @@ $mobile_landscape_img_size: 10rem;
 
   .image {
     height: $mobile_landscape_img_size;
-    margin: 0;
+    margin: 0 0 1rem 0;
   }
 
   .text {
