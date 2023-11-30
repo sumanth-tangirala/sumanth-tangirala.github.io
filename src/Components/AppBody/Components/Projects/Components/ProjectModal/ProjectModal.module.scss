@@ -117,3 +117,14 @@
   -webkit-columns: 2;
   -moz-columns: 2;
 }
+
+@media screen and (max-width: $mobile_screen_width) {
+  .description {
+    max-height: unset;
+  }
+
+  .modalContent {
+    max-height: 55vh;
+    overflow-y: auto;
+  }
+}
