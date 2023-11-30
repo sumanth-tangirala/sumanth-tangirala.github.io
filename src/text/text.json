@@ -33,8 +33,7 @@
   ],
 
   "qualifications": [
-    "Masters in Computer Science, Rutgers University, Class of 2024",
-    "Robotics Researcher, PRACSYS Lab"
+    "Robotics Researcher, PRACSYS Lab, Rutgers University"
   ],
   "aboutPicturePath": "/img/about.jpg",
   "about": [
@@ -188,7 +187,7 @@
       "imgPath": "/img/go1.gif",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim",
-      "details": "Ongoing Project | September, 2023 - Present"
+      "details": "September, 2023 - December, 2023"
     },
     {
       "title": "GPU Parallelization of Fuzzy SuperPixel Segmentation ",

@@ -66,20 +66,22 @@ $mobile_landscape_img_size: 10rem;
 .aboutParagraphItem {
   font-size: 1.2rem;
   &:not(:first-child) {
-    margin-top: .4rem;
+    margin-top: .8rem;
   }
 }
 
 .qualificationDetails {
   @include flex;
-  margin-top: 1.2rem;
+  margin-top: 2rem;
   align-items: flex-start;
 }
 
 .qualificationDetailItem {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: $hunyadi_yellow;
   &:not(:first-child) {
-    margin-top: .4rem;
+    margin-top: .8rem;
   }
 }
 

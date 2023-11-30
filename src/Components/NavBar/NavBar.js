@@ -5,6 +5,7 @@ import { ReactComponent as MenuSvg } from './menu.svg';
 
 import _filter from 'lodash/filter';
 import _reduce from 'lodash/reduce';
+import _includes from 'lodash/includes';
 
 import text from 'text/text.json';
 
@@ -12,7 +13,7 @@ import styles from './navBar.module.scss';
 import {SECTION_TYPES, SECTION_ORDER, SECTION_TYPE_VS_NAME} from "../../constants";
 import _map from "lodash/map";
 
-const sectionsToDisplay = _filter(SECTION_ORDER, sectionType => sectionType !== SECTION_TYPES.LANDING)
+const sectionsToDisplay = _filter(SECTION_ORDER, sectionType => !_includes([SECTION_TYPES.LANDING, SECTION_TYPES.HISTORY], sectionType))
 
 const sectionMenuItems = _map(sectionsToDisplay, sectionType => ({
     key: sectionType,
