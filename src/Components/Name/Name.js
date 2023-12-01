@@ -3,7 +3,7 @@
 import React from 'react';
 
 import styles from './name.module.scss';
-import basicData from 'text/text.json';
+import basicData from 'text';
 
 Name.propTypes = {
 

@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 
 import _map from 'lodash/map';
 
-import text from 'text/text.json';
+import text from 'text';
 
 import styles from './historyBanner.module.scss';
 import cx from "classnames";

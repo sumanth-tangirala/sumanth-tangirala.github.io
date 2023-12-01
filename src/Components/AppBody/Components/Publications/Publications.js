@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import styles from './Publications.module.scss';
 import _map from "lodash/map";
-import text from 'text/text.json';
+import text from 'text';
 import {SECTION_TYPE_VS_NAME} from "../../../../constants";
 
 function Publications({className, sectionRef, sectionHeadingClassName}) {

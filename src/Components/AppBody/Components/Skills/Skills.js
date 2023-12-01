@@ -3,7 +3,7 @@ import React from 'react';
 import cx from "classnames";
 import _map from "lodash/map";
 
-import text from 'text/text.json';
+import text from 'text';
 
 import styles from './Skills.module.scss';
 import {SECTION_TYPE_VS_NAME} from "../../../../constants";

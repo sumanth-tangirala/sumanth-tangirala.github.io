@@ -3,7 +3,7 @@ import React, {useCallback} from 'react';
 import {FilePdfOutlined, GithubFilled, LinkedinFilled} from '@ant-design/icons';
 import {Button} from "antd";
 
-import text from 'text/text.json';
+import text from 'text';
 
 import styles from './ContactMe.module.scss';
 import cx from "classnames";

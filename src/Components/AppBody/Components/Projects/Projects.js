@@ -4,7 +4,7 @@ import cx from "classnames";
 import _map from "lodash/map";
 import _curry from 'lodash/curry';
 
-import text from 'text/text.json';
+import text from 'text';
 
 import ProjectCard from "./Components/ProjectCard";
 import ProjectModal from './Components/ProjectModal/ProjectModal';

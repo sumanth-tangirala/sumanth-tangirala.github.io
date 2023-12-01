@@ -1,6 +1,6 @@
 import React from 'react';
 
-import text from "text/text.json";
+import text from 'text';
 import styles from './About.module.scss';
 import cx from "classnames";
 import _map from "lodash/map";

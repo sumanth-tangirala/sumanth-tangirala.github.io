@@ -4,7 +4,7 @@ import cx from "classnames";
 import _map from "lodash/map";
 import _size from 'lodash/size';
 
-import text from 'text/text.json';
+import text from 'text';
 
 import styles from './Timeline.module.scss';
 import {SECTION_TYPE_VS_NAME} from "../../../../constants";

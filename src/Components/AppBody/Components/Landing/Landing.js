@@ -1,8 +1,8 @@
 import React from 'react';
-import text from 'text/text.json';
+import text from 'text';
 import styles from './landing.module.scss';
 import cx from "classnames";
-import basicData from "../../../../text/text.json";
+import basicData from 'text';
 
 function Landing({className, sectionRef}) {
     return (

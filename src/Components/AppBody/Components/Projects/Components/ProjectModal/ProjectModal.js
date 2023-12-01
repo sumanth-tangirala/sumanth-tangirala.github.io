@@ -11,7 +11,7 @@ import _map from "lodash/map";
 
 import styles from "./ProjectModal.module.scss";
 
-import text from "text/text.json";
+import text from 'text';
 
 class ProjectModal extends React.Component {
     constructor(props) {

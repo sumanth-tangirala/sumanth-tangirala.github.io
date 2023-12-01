@@ -7,7 +7,7 @@ import _filter from 'lodash/filter';
 import _reduce from 'lodash/reduce';
 import _includes from 'lodash/includes';
 
-import text from 'text/text.json';
+import text from 'text';
 
 import styles from './navBar.module.scss';
 import {SECTION_TYPES, SECTION_ORDER, SECTION_TYPE_VS_NAME} from "../../constants";
