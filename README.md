@@ -1,1 +1,1 @@
-To push changes to the website, build the application and rename the build folder to 'docs' and push changes 
+Personal Webpage
