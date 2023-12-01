@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import cx from 'classnames';
-import {Modal, Button} from 'antd'
+import {Button} from 'antd'
 
-import _isList from 'lodash/isArray';
 
 import styles from './ProjectCard.module.scss';
-import _map from "lodash/map";
-import {GithubOutlined, SearchOutlined} from "@ant-design/icons";
+import {GithubOutlined} from "@ant-design/icons";
 
 
 function ProjectCard({title, backgroundColor, imgPath, isSmall, textColor, githubURL, toggleModal, isModalOpen }) {
