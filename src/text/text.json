@@ -40,7 +40,7 @@
   "about": [
     "I am passionate about tackling complex, interdisciplinary challenges that have a tangible and positive impact on the real world.",
     "My primary areas of focus currently are Reinforcement Learning, Robotics, Motion Planning, Sensor Fusion, and Internet of Things.",
-    "I am currently pursuing a thesis under the guidance of Professor Kostas Bekris, where I am researching robot motion planning algorithms for high-velocity robots with complicated goal spaces."
+    "I am currently pursuing a thesis under the guidance of Professor Kostas Bekris, exploring robot motion planning algorithms for high-velocity robots with velocity goals."
   ],
   "qualificationDetails": [
     "Masters of Science in Computer Science |  Rutgers University - New Brunswick",
