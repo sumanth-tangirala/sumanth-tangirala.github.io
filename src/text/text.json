@@ -73,7 +73,7 @@
   "skills": [
     {
       "title": "Machine & Deep Learning",
-      "description": "I have extensive experience in Machine Learning and Deep Learning, applying these techniques in Computer Vision, Robotics, and NLP projects",
+      "description": "I have extensive experience in Machine Learning and Deep Learning, applying these techniques in Computer Vision, Robotics, and NLP projects. My expertise includes using PyTorch and TensorFlow for these domains.",
       "imgPath": "/img/ML.svg"
     },
     {
