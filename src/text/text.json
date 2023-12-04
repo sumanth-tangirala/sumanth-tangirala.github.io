@@ -303,7 +303,7 @@
         "Received the Best Project Award out of 30+ projects in the Software Engineering course"
       ],
       "techStack": ["TensorFlow", "Natural Language Toolkit (NLTK)", "Android", "ReactJS", "React Native", "Firebase", "NodeJS", "Python", "Javascript", "Java"],
-      "imgPath": "%MEDIA_URL%/img/summary.jpeg",
+      "imgPath": "%MEDIA_URL%/img/summary.png",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "January, 2019 - May, 2019",
