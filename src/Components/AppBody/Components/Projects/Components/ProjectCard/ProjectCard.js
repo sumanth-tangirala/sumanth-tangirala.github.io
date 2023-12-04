@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import cx from 'classnames';
 import {Button} from 'antd'
 
@@ -7,12 +7,28 @@ import styles from './ProjectCard.module.scss';
 import {GithubOutlined} from "@ant-design/icons";
 
 
-function ProjectCard({title, backgroundColor, imgPath, isSmall, textColor, githubURL, toggleModal, isModalOpen }) {
+function ProjectCard({
+        title,
+        backgroundColor,
+        imgPath,
+        isSmall,
+        textColor,
+        githubURL,
+        toggleModal,
+        isModalOpen,
+        contrast,
+    }) {
+
+    const style = useMemo(() => ({
+        backgroundImage: `url(${imgPath})`,
+        backgroundColor,
+        filter: contrast ? `contrast(${contrast})` : 'none',
+    }), [imgPath, backgroundColor, contrast]);
 
     return (
         <div
              className={cx(styles.container, {[styles.openCard]: isModalOpen, [styles.smallCard]: isSmall})}
-             style={{backgroundImage: `url(${imgPath})`, backgroundColor}}
+             style={style}
              onClick={toggleModal}
         >
             <div className={styles.cardInfo}>
