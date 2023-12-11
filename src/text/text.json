@@ -8,28 +8,28 @@
 
   "historyBannerImages": [
     {
-      "path": "%MEDIA_URL%/img/DAIICT.png",
-      "text": "DA-IICT"
-    },
-    {
-      "path": "%MEDIA_URL%/img/ISRO.png",
-      "text": "ISRO"
-    },
-    {
-      "path": "%MEDIA_URL%/img/WIMS2.png",
-      "text": "WIMS2 - University of Michigan"
-    },
-    {
-      "path": "%MEDIA_URL%/img/Tekion.svg",
-      "text": "Tekion"
+      "path": "%MEDIA_URL%/img/PRACSYS.png",
+      "text": "PRACSYS - Rutgers"
     },
     {
       "path": "%MEDIA_URL%/img/Rutgers.png",
       "text": "Rutgers"
     },
     {
-      "path": "%MEDIA_URL%/img/PRACSYS.png",
-      "text": "PRACSYS - Rutgers"
+      "path": "%MEDIA_URL%/img/Tekion.svg",
+      "text": "Tekion"
+    },
+    {
+      "path": "%MEDIA_URL%/img/WIMS2.png",
+      "text": "WIMS2 - University of Michigan"
+    },
+    {
+      "path": "%MEDIA_URL%/img/ISRO.png",
+      "text": "ISRO"
+    },
+    {
+      "path": "%MEDIA_URL%/img/DAIICT.png",
+      "text": "DA-IICT"
     }
   ],
 
