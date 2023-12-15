@@ -79,7 +79,7 @@
     },
     {
       "title": "Reinforcement Learning",
-      "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and HER-SAC at the PRACSYS lab",
+      "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and SAC-HER at the PRACSYS lab",
       "imgPath": "%MEDIA_URL%/img/RL.svg"
     },
     {
