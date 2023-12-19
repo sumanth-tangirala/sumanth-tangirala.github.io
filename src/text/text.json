@@ -186,7 +186,7 @@
         "Implemented a custom reward function to encourage the robot to avoid obstacles and reach the goal"
       ],
       "techStack": ["NVIDIA IsaacGym", "PyTorch", "Python"],
-      "imgPath": "%MEDIA_URL%/img/go1.mp4",
+      "imgPath": "%MEDIA_URL%/img/go1.gif",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim",
       "details": "September, 2023 - December, 2023"
@@ -213,7 +213,7 @@
         "Demonstrated the limitations of the RVO algorithm in complex environments with multiple agents and obstacles and proposed a prediction-based hierarchical planning approach to overcome these limitations"
       ],
       "techStack": ["MuJoCo", "Python"],
-      "imgPath": "%MEDIA_URL%/img/rvo.mp4",
+      "imgPath": "%MEDIA_URL%/img/rvo.gif",
       "textColor": "white",
       "backgroundColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/MuSHR-RVO-Social-Navigation/",
@@ -245,7 +245,7 @@
         "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
       ],
       "techStack": ["Robot Operating System (ROS)", "OpenCV", "NVIDIA Jetson", "Python", "C++"],
-      "imgPath": "%MEDIA_URL%/img/mushr.mp4",
+      "imgPath": "%MEDIA_URL%/img/mushr.gif",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2023 - August, 2023",

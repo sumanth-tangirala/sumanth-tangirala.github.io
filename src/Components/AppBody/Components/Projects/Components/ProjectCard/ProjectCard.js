@@ -19,16 +19,13 @@ function ProjectCard({
         isModalOpen,
         contrast,
     }) {
-    const isBackgroundVideo = useMemo(() => _includes(imgPath, 'mp4'), [imgPath]);
-
     const style = useMemo(() => {
-        const backgroundImage =  isBackgroundVideo ? undefined : `url(${imgPath})`;
         return ({
-            backgroundImage,
+            backgroundImage: `url(${imgPath})`,
             backgroundColor,
             filter: contrast ? `contrast(${contrast})` : 'none',
         })
-    }, [imgPath, backgroundColor, contrast, isBackgroundVideo]);
+    }, [imgPath, backgroundColor, contrast]);
 
     return (
         <div
@@ -36,13 +33,6 @@ function ProjectCard({
             style={style}
             onClick={toggleModal}
         >
-            {isBackgroundVideo && (
-                <div className={styles.videoContainer}>
-                    <video autoPlay muted loop>
-                        <source src={imgPath} type="video/mp4"/>
-                    </video>
-                </div>
-            )}
             <div className={styles.cardContent}>
                 <div className={styles.title} style={{color: textColor}}>{title}</div>
                 {githubURL &&
