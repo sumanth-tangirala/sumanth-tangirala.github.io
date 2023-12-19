@@ -5,7 +5,6 @@ import {Button} from 'antd'
 
 import styles from './ProjectCard.module.scss';
 import {GithubOutlined} from "@ant-design/icons";
-import _includes from "lodash/includes";
 
 
 function ProjectCard({

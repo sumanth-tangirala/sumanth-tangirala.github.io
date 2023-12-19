@@ -108,7 +108,7 @@ class ProjectModal extends React.Component {
             openKey,
             openProjectIdx,
         } = this.props;
-        const {title, githubURL } = _get(text, [openKey, openProjectIdx], {});
+        const { githubURL } = _get(text, [openKey, openProjectIdx], {});
         e.stopPropagation();
         window.open(githubURL, '_blank');
     }
