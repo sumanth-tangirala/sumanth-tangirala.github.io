@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 
 import cx from "classnames";
 import _map from "lodash/map";
@@ -7,6 +7,7 @@ import text from 'text';
 
 import styles from './Skills.module.scss';
 import {SECTION_TYPE_VS_NAME} from "../../../../constants";
+import {parse} from "helpers";
 
 function Skill({
     title,
@@ -19,8 +20,8 @@ function Skill({
             <div className={styles.skillImgContainer}>
                 <img src={imgPath} className={styles.skillImg} style={imgStyle} alt=""/>
             </div>
-            <span className={styles.skillTitle}>{title}</span>
-            <span className={styles.skillDescription}>{description}</span>
+            <span className={styles.skillTitle}>{parse(title)}</span>
+            <span className={styles.skillDescription}>{parse(description)}</span>
         </div>
     )
 }
@@ -45,4 +46,4 @@ function Skills({className, sectionRef, sectionHeadingClassName}) {
 
 Skills.propTypes = {};
 
-export default Skills;
+export default memo(Skills);

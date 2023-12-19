@@ -1,18 +1,18 @@
 {
   "name": "Sumanth Tangirala",
-  "landingPicturePath": "%MEDIA_URL%/img/landing.jpg",
-  "tagline": "Graduate Researcher | Rutgers University",
+  "landingPicturePath": "%MEDIA_URL%/img/landing.webp",
+  "tagline": "Robotics Researcher | Rutgers University",
   "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
   "resumeURL": "%DOCS_URL%/docs/SumanthTangirala-Resume.pdf",
 
   "historyBannerImages": [
     {
-      "path": "%MEDIA_URL%/img/PRACSYS.png",
+      "path": "%MEDIA_URL%/img/PRACSYS.webp",
       "text": "PRACSYS - Rutgers"
     },
     {
-      "path": "%MEDIA_URL%/img/Rutgers.png",
+      "path": "%MEDIA_URL%/img/Rutgers.webp",
       "text": "Rutgers"
     },
     {
@@ -20,30 +20,30 @@
       "text": "Tekion"
     },
     {
-      "path": "%MEDIA_URL%/img/WIMS2.png",
+      "path": "%MEDIA_URL%/img/WIMS2.webp",
       "text": "WIMS2 - University of Michigan"
     },
     {
-      "path": "%MEDIA_URL%/img/ISRO.png",
+      "path": "%MEDIA_URL%/img/ISRO.webp",
       "text": "ISRO"
     },
     {
-      "path": "%MEDIA_URL%/img/DAIICT.png",
+      "path": "%MEDIA_URL%/img/DAIICT.webp",
       "text": "DA-IICT"
     }
   ],
 
   "qualifications": [
-    "Robotics Researcher, PRACSYS Lab, Rutgers University"
+    "Robotics Researcher at PRACSYS Lab, Rutgers University"
   ],
-  "aboutPicturePath": "%MEDIA_URL%/img/about.jpg",
+  "aboutPicturePath": "%MEDIA_URL%/img/about.webp",
   "about": [
     "I am passionate about tackling complex, interdisciplinary challenges that have a tangible and positive impact on the real world.",
-    "My primary areas of focus currently are Reinforcement Learning, Robotics and Motion Planning.",
+    "My primary areas of focus currently are <yellow_bold>Reinforcement Learning, Robotics and Motion Planning.</yellow_bold>",
     "I am currently pursuing a thesis under the guidance of Professor Kostas Bekris, exploring robot motion planning algorithms for high-velocity robots with velocity goals."
   ],
   "qualificationDetails": [
-    "Masters of Science in Computer Science |  Rutgers University - New Brunswick",
+    "Master of Science in Computer Science |  Rutgers University",
     "Bachelor of Technology in Information and Communication Technology | DA-IICT"
   ],
 
@@ -51,7 +51,7 @@
     "conferencePapers": [
       {
         "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
-        "authors": "Tushar Gadhiya, Sumanth Tangirala, Anil K. Roy",
+        "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
         "arXiv": "https://arxiv.org/abs/2311.02887",
         "venue": "Pattern Recognition and Machine Intelligence: 8th International Conference, PReMI 2019, Tezpur, India, December 17-20, 2019; Proceedings, Part II, Dec 2019, Pages 331-339",
         "link": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37"
@@ -60,12 +60,12 @@
     "prePrints": [
       {
         "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
-        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, Sumanth Tangirala, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
+        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
         "arXiv": "https://arxiv.org/abs/2310.03246"
       },
       {
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
-        "authors": "Aravind Sivaramakrishnan, Noah R. Carver, Sumanth Tangirala, Kostas E. Bekris",
+        "authors": "Aravind Sivaramakrishnan, Noah R. Carver, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
         "arXiv": "https://arxiv.org/abs/2310.03239"
       }
     ]
@@ -74,7 +74,7 @@
   "skills": [
     {
       "title": "Machine & Deep Learning",
-      "description": "I have extensive experience in Machine Learning and Deep Learning, applying these techniques in Computer Vision, Robotics, and NLP projects. My expertise includes using PyTorch and TensorFlow for these domains.",
+      "description": "I have over five years of extensive experience in ML and DL, applying these in Computer Vision, Robotics, and NLP projects with PyTorch and TensorFlow",
       "imgPath": "%MEDIA_URL%/img/ML.svg"
     },
     {
@@ -84,17 +84,17 @@
     },
     {
       "title": "Robot Operating System",
-      "description": "My current research involves using ROS for robot communication and environment interaction, including developing a perception system in PRACSYS Lab's MuSHR platform",
+      "description": "In my current research, I use ROS for robot control and navigation, including developing a perception system for PRACSYS Lab's MuSHR platform",
       "imgPath": "%MEDIA_URL%/img/ROS.svg"
     },
     {
       "title": "Physics Simulation Engines",
-      "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for robot simulations and controller development",
+      "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for environments to simulate robots and develop robot controllers",
       "imgPath": "%MEDIA_URL%/img/DeepMind.svg"
     },
     {
       "title": "Computer Vision, OpenCV",
-      "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform utilizing AprilTags",
+      "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
       "imgPath": "%MEDIA_URL%/img/opencv.svg",
       "imgStyle": {
         "paddingBottom": "0.7rem"
@@ -103,22 +103,22 @@
     {
       "title": "Python, C++",
       "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields",
-      "imgPath": "%MEDIA_URL%/img/pythonCpp.png"
+      "imgPath": "%MEDIA_URL%/img/pythonCpp.webp"
     },
     {
       "title": "Internet of Things",
-      "description": "Over the last four years, I've developed IoT-based solutions for real-world challenges, including an autonomous environmental logging system and my work at Tekion Corp.",
+      "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and my work at Tekion Corp.",
       "imgPath": "%MEDIA_URL%/img/IoT.svg"
     },
     {
       "title": "Geospatial Imagery",
-      "description": "In my undergraduate research and internship at the Indian Space Research Organization, I developed data-based techniques for land cover classification using PolSAR imagery",
+      "description": "In my undergraduate research and internship at Indian Space Research Organization, I built ML methods for terrain classification with PolSAR data",
 
       "imgPath": "%MEDIA_URL%/img/GIS.svg"
     },
     {
       "title": "ReactJS, Javascript",
-      "description": "I have developed multiple web applications and websites using ReactJS and Javascript. My most notable projects being developing this website and my work at Tekion Corp.",
+      "description": "I have developed web applications and websites using ReactJS and Javascript. My most notable projects are this website and my work at Tekion Corp.",
       "imgPath": "%MEDIA_URL%/img/ReactJs.svg"
     }
   ],
@@ -129,14 +129,14 @@
       "desc": "I am researching robot motion planning algorithms for high-velocity robots in dynamic conditions using AI/ML and Reinforcement Learning techniques",
       "date": "January 2023 - Present",
       "miniDate": ["Jan 2023", "Now"],
-      "imgPath": "%MEDIA_URL%/img/PRACSYS.png"
+      "imgPath": "%MEDIA_URL%/img/PRACSYS.webp"
     },
     {
       "title": "Rutgers University",
       "desc": "As a graduate of Masters of Computer Science, Class of 2024, I continue to pursue my passion for AI/ML and Robotics",
       "date": "August 2022 - Present",
       "miniDate": ["Aug 2022", "Now"],
-      "imgPath": "%MEDIA_URL%/img/Rutgers.png"
+      "imgPath": "%MEDIA_URL%/img/Rutgers.webp"
     },
     {
       "title": "Tekion Corp.",
@@ -150,28 +150,28 @@
       "desc": "In a collaborative project between WIMS2 and Smart City Lab, DAIICT, I developed end-to-end IoT solutions for an environmental logging sensor network",
       "date": "May 2019 - November 2019",
       "miniDate": ["May 2019", "Nov 2019"],
-      "imgPath": "%MEDIA_URL%/img/WIMS2.png"
+      "imgPath": "%MEDIA_URL%/img/WIMS2.webp"
     },
     {
       "title": "Indian Space Research Organization",
       "desc": "During a Summer Internship, I developed a time-series Machine Learning technique for accurate land cover classification using satellite imagery and this tool continues to be used by ISRO in their ongoing projects",
       "date": "May 2019 - August 2019",
       "miniDate": ["May 2019", "Aug 2019"],
-      "imgPath": "%MEDIA_URL%/img/ISRO.png"
+      "imgPath": "%MEDIA_URL%/img/ISRO.webp"
     },
     {
       "title": "Smart City Lab, DA-IICT",
       "desc": "As a Research Assistant, I worked to advance the lab's goal of developing intelligent systems that use multi-modal data. My work was focused on PolSAR image segmentation and classification using Deep Learning techniques",
       "date": "August 2018 - December 2019",
       "miniDate": ["Aug 2018", "Dec 2019"],
-      "imgPath": "%MEDIA_URL%/img/DAIICT.png"
+      "imgPath": "%MEDIA_URL%/img/DAIICT.webp"
     },
     {
       "title": "DA-IICT",
       "desc": "I graduated with a Bachelor of Technology in Information and Communication Technology. I was also a member of the DA-IICT Google Developer Student Club, the Student Council and the Student Placement Cell",
       "date": "August 2016 - May 2020",
       "miniDate": ["Aug 2016", "May 2020"],
-      "imgPath": "%MEDIA_URL%/img/DAIICT.png"
+      "imgPath": "%MEDIA_URL%/img/DAIICT.webp"
     }
   ],
 
@@ -186,7 +186,7 @@
         "Implemented a custom reward function to encourage the robot to avoid obstacles and reach the goal"
       ],
       "techStack": ["NVIDIA IsaacGym", "PyTorch", "Python"],
-      "imgPath": "%MEDIA_URL%/img/go1.gif",
+      "imgPath": "%MEDIA_URL%/img/go1.mp4",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim",
       "details": "September, 2023 - December, 2023"
@@ -198,7 +198,7 @@
         "Achieved a 200x speedup over the sequential version of the algorithm for a 2K Image using CUDA on an NVIDIA GeForce GTX 1080 Ti"
       ],
       "techStack": ["NVIDIA CUDA", "C++"],
-      "imgPath": "%MEDIA_URL%/img/fuzzySLIC.jpg",
+      "imgPath": "%MEDIA_URL%/img/fuzzySLIC.webp",
       "textColor": "white",
       "backgroundColor": "black",
       "contrast": 1.5,
@@ -213,7 +213,7 @@
         "Demonstrated the limitations of the RVO algorithm in complex environments with multiple agents and obstacles and proposed a prediction-based hierarchical planning approach to overcome these limitations"
       ],
       "techStack": ["MuJoCo", "Python"],
-      "imgPath": "%MEDIA_URL%/img/rvo.gif",
+      "imgPath": "%MEDIA_URL%/img/rvo.mp4",
       "textColor": "white",
       "backgroundColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/MuSHR-RVO-Social-Navigation/",
@@ -231,7 +231,7 @@
         "The customer could then drop their NFS band in a dropbox which would detect exited customer to digitally checkout their purchase and charge the customer"
       ],
       "techStack": ["Raspberry Pi & Arduino", "Zigbee Network", "NFC tags and RFID readers","Pressure & LIDAR sensors", "Android Development", "Python", "Java","C++"],
-      "imgPath": "%MEDIA_URL%/img/amazonGo.png",
+      "imgPath": "%MEDIA_URL%/img/amazonGo.webp",
       "textColor": "black",
       "details": "January, 2019 - May, 2019",
       "contrast": 1.1
@@ -245,7 +245,7 @@
         "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
       ],
       "techStack": ["Robot Operating System (ROS)", "OpenCV", "NVIDIA Jetson", "Python", "C++"],
-      "imgPath": "%MEDIA_URL%/img/mushr.gif",
+      "imgPath": "%MEDIA_URL%/img/mushr.mp4",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2023 - August, 2023",
@@ -264,7 +264,7 @@
         "The technique continues to be used by ISRO in their ongoing projects"
       ],
       "techStack": ["TensorFlow","OpenCV", "Python", "C"],
-      "imgPath": "%MEDIA_URL%/img/polsar.jpg",
+      "imgPath": "%MEDIA_URL%/img/polsar.webp",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2019 - August, 2019",
@@ -283,7 +283,7 @@
         "The cloud server was developed using NodeJS and was responsible for storing the data and providing it to the web application on request"
       ],
       "techStack": ["Raspberry Pi", "Bluetooth-Low-Energy", "NodeJS & ExpressJS", "Tkinter GUI", "Python", "Javascript"],
-      "imgPath": "%MEDIA_URL%/img/raspi.jpg",
+      "imgPath": "%MEDIA_URL%/img/raspi.webp",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2019 - November, 2019",
@@ -303,7 +303,7 @@
         "Received the Best Project Award out of 30+ projects in the Software Engineering course"
       ],
       "techStack": ["TensorFlow", "Natural Language Toolkit (NLTK)", "Android", "ReactJS", "React Native", "Firebase", "NodeJS", "Python", "Javascript", "Java"],
-      "imgPath": "%MEDIA_URL%/img/summary.png",
+      "imgPath": "%MEDIA_URL%/img/summary.webp",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "January, 2019 - May, 2019",
@@ -318,7 +318,7 @@
         "The mobile application was developed using Android and used the Google Maps API to generate the routes from the waypoints"
       ],
       "techStack": ["TensorFlow", "Android", "Firebase", "NodeJS", "Python", "Javascript"],
-      "imgPath": "%MEDIA_URL%/img/protego.jpg",
+      "imgPath": "%MEDIA_URL%/img/protego.webp",
       "textColor": "black",
       "details": "June 2019",
       "contrast": 1.2
@@ -331,7 +331,7 @@
         "The hope is to then extend the script to port playlists from other music services such as Spotify and Apple Music"
       ],
       "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Python", "Linux Scripting"],
-      "imgPath": "%MEDIA_URL%/img/playlistPorter.png",
+      "imgPath": "%MEDIA_URL%/img/playlistPorter.webp",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter",
       "details": "August, 2017 - September, 2017",
@@ -347,7 +347,7 @@
         "The player process then uses the Selenium Webdriver to play the received songs and also processes the commands from the controller process to pause, play, skip and stop the playlist"
       ],
       "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Multi-Processing Parallelism", "Python", "Linux Scripting"],
-      "imgPath": "%MEDIA_URL%/img/musicPlayer.png",
+      "imgPath": "%MEDIA_URL%/img/musicPlayer.webp",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Cross-Platform-Playlist-Player",
       "details": "January, 2018 - May, 2018",
@@ -360,7 +360,7 @@
         "The application will allow users to share files with other users on the same network and also search for files on the network and download them"
       ],
       "techStack": ["Python", "Socket Programming"],
-      "imgPath": "%MEDIA_URL%/img/p2p.jpg",
+      "imgPath": "%MEDIA_URL%/img/p2p.webp",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/P2P",
       "details": "Ongoing Project | June, 2021 - Present",

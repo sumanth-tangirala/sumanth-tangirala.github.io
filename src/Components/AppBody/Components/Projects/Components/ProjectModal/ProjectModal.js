@@ -27,9 +27,9 @@ class ProjectModal extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const {openKey, openProjectIdx} = this.props;
+        const {openKey, openProjectIdx, isModalOpen} = this.props;
         const { openKey: prevOpenKey, openProjectIdx: prevOpenProjectIdx } = prevProps;
-        if ((openKey !== prevOpenKey || openProjectIdx !== prevOpenProjectIdx)) {
+        if (isModalOpen && (openKey !== prevOpenKey || openProjectIdx !== prevOpenProjectIdx)) {
             setTimeout(() => {
                 if (this.descriptionRef.current) {
                     this.handleScrollDisplayBehavior();
@@ -102,6 +102,16 @@ class ProjectModal extends React.Component {
             </div>
         );
     }
+
+    handleGithubClick = (e) => {
+        const {
+            openKey,
+            openProjectIdx,
+        } = this.props;
+        const {title, githubURL } = _get(text, [openKey, openProjectIdx], {});
+        e.stopPropagation();
+        window.open(githubURL, '_blank');
+    }
     render() {
 
         const {
@@ -123,7 +133,7 @@ class ProjectModal extends React.Component {
             <>
                 <Modal
                     open={isModalOpen}
-                    onCancel={() => toggleModal()}
+                    onCancel={toggleModal}
                     footer={null}
                     title={title}
                     destroyOnClose
@@ -150,10 +160,7 @@ class ProjectModal extends React.Component {
                             {githubURL && (<Button
                                 icon={<GithubOutlined/>}
                                 size="large"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    window.open(githubURL, '_blank');
-                                }}
+                                onClick={this.handleGithubClick}
                                 className={styles.githubButton}
                             />)}
                         </div>

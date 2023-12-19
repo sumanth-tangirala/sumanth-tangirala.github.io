@@ -10,21 +10,18 @@ $mobile_landscape_img_size: 10rem;
   @include flex;
   justify-content: flex-start;
 
-  @media screen and (max-height: $mobile_landscape_screen_height) {
-    min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
-  }
-}
-
-.about{
   @include flex();
   flex-direction: row;
   flex-grow: 1;
-  width: 100%;
   z-index: 2;
   background-color: $light_trans_matte_grey;
   backdrop-filter: blur(7px);
   padding: 5rem 0;
-  color: white
+
+  color: white;
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
+  }
 }
 
 .image {
@@ -41,6 +38,7 @@ $mobile_landscape_img_size: 10rem;
   align-items: flex-start;
   text-align: left;
   margin-right: 10rem;
+  text-shadow: 0.15rem 0.15rem .5rem rgba(0, 0, 0, .3);
 }
 
 .name {
@@ -85,7 +83,7 @@ $mobile_landscape_img_size: 10rem;
 }
 
 @media screen and (max-width: $tablet_screen_width) {
-  .about {
+  .container {
     flex-direction: column;
   }
 
@@ -116,9 +114,7 @@ $mobile_landscape_img_size: 10rem;
   }
   .container {
     min-height: calc(100vh - $nav_bar_height);
-  }
-  .about {
-    flex-direction: row;
+    lex-direction: row;
     padding: 0 2rem;
     width: calc(100% - 4rem) !important;
   }

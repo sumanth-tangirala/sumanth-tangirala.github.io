@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import cx from "classnames";
 
 import _map from "lodash/map";
@@ -38,28 +38,28 @@ function Projects({className, sectionRef}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [[openKey, openProjectIdx], setOpenProjectIdx] = useState([]);
 
-    const toggleModal = (key, projectIdx) => {
+    const toggleModal = useCallback((key, projectIdx) => {
         setIsModalOpen(!isModalOpen);
         setOpenProjectIdx([key, projectIdx]);
-    }
+    }, [isModalOpen]);
 
-    const handleLeft = () => {
+    const handleLeft = useCallback(() => {
         if (openKey === 'otherProjects' && openProjectIdx === 0) {
             setOpenProjectIdx(['keyProjects', _size(text['keyProjects']) - 1]);
         }
         else {
             setOpenProjectIdx([openKey, openProjectIdx - 1]);
         }
-    }
+    }, [openKey, openProjectIdx])
 
-    const handleRight = () => {
+    const handleRight = useCallback(() => {
         if (openKey === 'keyProjects' && openProjectIdx === _size(text['keyProjects']) - 1) {
             setOpenProjectIdx(['otherProjects', 0]);
         }
         else {
             setOpenProjectIdx([openKey, openProjectIdx + 1]);
         }
-    }
+    }, [openKey, openProjectIdx])
 
     return (
         <>
@@ -94,4 +94,4 @@ function Projects({className, sectionRef}) {
 
 Projects.propTypes = {};
 
-export default Projects;
+export default memo(Projects);

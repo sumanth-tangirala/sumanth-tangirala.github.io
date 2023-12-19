@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 
 import cx from 'classnames';
 
@@ -6,6 +6,7 @@ import styles from './Publications.module.scss';
 import _map from "lodash/map";
 import text from 'text';
 import {SECTION_TYPE_VS_NAME} from "../../../../constants";
+import {parse} from "helpers";
 
 function Publications({className, sectionRef, sectionHeadingClassName}) {
     const renderPublications = (publications) => (
@@ -14,13 +15,13 @@ function Publications({className, sectionRef, sectionHeadingClassName}) {
             _map(publications, (publication, idx) => (
                 <div key={idx} className={styles.publication}>
                     <div className={styles.publicationTitle}>
-                        {publication.title}
+                        {parse(publication.title)}
                     </div>
                     <div className={styles.publicationAuthors}>
-                        {publication.authors}
+                        {parse(publication.authors)}
                     </div>
                     {publication.venue && (<div className={styles.publicationVenue}>
-                        {publication.venue}
+                        {parse(publication.venue)}
                     </div>)}
                     <div className={styles.publicationLinks}>
                         {publication.link && (
@@ -72,4 +73,4 @@ function Publications({className, sectionRef, sectionHeadingClassName}) {
 
 Publications.propTypes = {};
 
-export default Publications;
+export default memo(Publications);

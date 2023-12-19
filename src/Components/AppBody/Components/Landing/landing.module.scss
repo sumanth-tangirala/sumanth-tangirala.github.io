@@ -4,17 +4,17 @@ $img_size: 16rem;
 $tablet_img_size: 12rem;
 $mobile_img_size: 9.2rem;
 $mobile_landscape_img_size: 7.2rem;
-$backgroundColor: transparent;
+$backgroundColor: $dark_trans_matte_grey;
 
 .landing{
   backdrop-filter: blur(4px);
   height: 100vh;
   @include flex();
   justify-content: center;
+  background: $backgroundColor;
 }
 
 .container {
-  background: $backgroundColor;
   @include flex();
   justify-content: center;
   align-items: center;
@@ -25,20 +25,23 @@ $backgroundColor: transparent;
   height: $img_size;
   width: $img_size;
   border-radius: 100%;
-  border: 0.4rem solid;
   margin-bottom: 3rem;
+  box-shadow: 0.25rem 0.25rem 1rem 0 rgba(0, 0, 0, .5);
 }
 
 .name {
   font-size: 4.8rem;
   text-align: center;
+  color: white;
+  text-shadow: 0.25rem 0.25rem .8rem rgba(0, 0, 0, .5);
 }
 
 .tagline{
-  color: $honolulu_blue;
+  color: $text_blue;
   font-size: 2rem;
   margin-top: 4rem;
   text-align: center;
+  text-shadow: 0.15rem 0.15rem .5rem rgba(0, 0, 0, .5);
 }
 
 @media screen and (max-width: $tablet_screen_width) {

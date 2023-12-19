@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 
 import _map from 'lodash/map';
 
@@ -25,4 +25,4 @@ function HistoryBanner({className, sectionRef}) {
 
 HistoryBanner.propTypes = {};
 
-export default HistoryBanner;
+export default memo(HistoryBanner);

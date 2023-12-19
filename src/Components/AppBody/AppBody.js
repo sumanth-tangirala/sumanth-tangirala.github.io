@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 
 import Landing from "./Components/Landing";
 import Skills from "./Components/Skills";
@@ -12,10 +12,6 @@ import styles from "./appBody.module.scss";
 import {SECTION_TYPES, SECTION_ORDER} from "../../constants";
 import _map from "lodash/map";
 import Publications from "./Components/Publications";
-
-AppBody.propTypes = {
-
-};
 
 const SECTION_TYPE_VS_COMPONENT = {
     [SECTION_TYPES.LANDING]: Landing,
@@ -33,7 +29,7 @@ const sections = _map(SECTION_ORDER, sectionType => ({
     sectionType,
 }))
 
-function AppBody({sectionRefs}) {
+const AppBody = memo(({sectionRefs}) => {
     return (
         <>
             {_map(sections, ({Component, sectionType}) => (
@@ -47,6 +43,6 @@ function AppBody({sectionRefs}) {
         </>
 
     );
-}
+});
 
 export default AppBody;

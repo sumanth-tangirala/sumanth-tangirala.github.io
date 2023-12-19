@@ -1,5 +1,4 @@
-import React from 'react';
-import text from 'text';
+import React, {memo} from 'react';
 import styles from './landing.module.scss';
 import cx from "classnames";
 import basicData from 'text';
@@ -8,16 +7,16 @@ function Landing({className, sectionRef}) {
     return (
         <div className={cx(styles.landing, className)} ref={sectionRef}>
             <div className={styles.container}>
-                <img src={text.landingPicturePath} className={styles.image} alt=""/>
+                <img src={basicData.landingPicturePath} className={styles.image} alt={basicData.name}/>
                 <div
-                    className={styles.name}
+                    className={cx(styles.name)}
                 >
                     {basicData.name}
                 </div>
-                <div className={styles.tagline}>{text.tagline}</div>
+                <div className={styles.tagline}>{basicData.tagline}</div>
             </div>
         </div>
     );
 }
 
-export default Landing;
+export default memo(Landing);

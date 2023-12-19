@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 
 import {FilePdfOutlined, GithubFilled, LinkedinFilled} from '@ant-design/icons';
 import {Button} from "antd";
@@ -72,4 +72,4 @@ function ContactMe({className, sectionRef}) {
 
 ContactMe.propTypes = {};
 
-export default ContactMe;
+export default memo(ContactMe);

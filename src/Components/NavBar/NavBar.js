@@ -1,4 +1,5 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
+import Media from 'react-media';
 import cx from 'classnames';
 import { Button, Dropdown } from 'antd';
 import { ReactComponent as MenuSvg } from './menu.svg';
@@ -20,7 +21,7 @@ const sectionMenuItems = _map(sectionsToDisplay, sectionType => ({
     label: (<span className={styles.menuItem}>{SECTION_TYPE_VS_NAME[sectionType]}</span>),
 }));
 
-function NavBar({className, navBarRef, handleNavigation}) {
+const NavBar = memo(({className, navBarRef, handleNavigation}) => {
 
     const sectionTypeVsNavigationFunc = useMemo(() => {
         const getHandleNavigation = (sectionType) => () => {
@@ -77,11 +78,20 @@ function NavBar({className, navBarRef, handleNavigation}) {
             >
                 {text.name}
             </div>
-            {renderActions()}
-            {renderMenu()}
+            <Media queries={{
+              small: "(max-width: 900px)",
+              large: "(min-width: 900px)"
+            }}>
+              {matches => (
+                  <>
+                      {matches.large && renderActions()}
+                      {matches.small && renderMenu()}
+                  </>
+              )}
+            </Media>
         </div>
     );
-}
+});
 
 NavBar.propTypes = {
 

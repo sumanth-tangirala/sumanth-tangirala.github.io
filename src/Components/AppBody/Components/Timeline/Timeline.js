@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import cx from "classnames";
 
 import _map from "lodash/map";
@@ -8,6 +8,7 @@ import text from 'text';
 
 import styles from './Timeline.module.scss';
 import {SECTION_TYPE_VS_NAME} from "../../../../constants";
+import {parse} from "helpers";
 
 function Timeline({className, sectionRef}) {
     const timelineText = text.timeline;
@@ -22,19 +23,19 @@ function Timeline({className, sectionRef}) {
                     <li className={styles.event} key={idx}>
                         <time className={styles.date}>
                             <span className={styles.largeDate}>
-                                {event.date}
+                                {parse(event.date)}
                             </span>
                             <span className={styles.miniDate}>
-                                <span className={styles.partMiniDate}>{event.miniDate[0]}</span>
+                                <span className={styles.partMiniDate}>{parse(event.miniDate[0])}</span>
                                 <span>-</span>
-                                <span className={styles.partMiniDate}>{event.miniDate[1]}</span>
+                                <span className={styles.partMiniDate}>{parse(event.miniDate[1])}</span>
 
                             </span>
                         </time>
                         <img src={event.imgPath} className={styles.eventImg} alt=""/>
                         <div className={styles.eventDetails}>
-                            <span className={styles.eventTitle}>{event.title}</span>
-                            <span className={styles.eventDescription}>{event.desc}</span>
+                            <span className={styles.eventTitle}>{parse(event.title)}</span>
+                            <span className={styles.eventDescription}>{parse(event.desc)}</span>
                         </div>
                     </li>
                 ))}
@@ -45,4 +46,4 @@ function Timeline({className, sectionRef}) {
 
 Timeline.propTypes = {};
 
-export default Timeline;
+export default memo(Timeline);

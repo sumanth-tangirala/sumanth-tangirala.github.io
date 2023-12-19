@@ -7,7 +7,7 @@ $skill_item_max_size: 23rem;
 .container{
   min-height: calc(100vh - $nav_bar_height);
   background: $dark_trans_matte_grey;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
   @include flex();
   @media screen and (max-height: $mobile_landscape_screen_height) {
     min-height: calc(100vh - $mini_nav_bar_height);
