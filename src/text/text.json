@@ -1,7 +1,7 @@
 {
   "name": "Sumanth Tangirala",
   "landingPicturePath": "%MEDIA_URL%/img//landing.webp",
-  "landingMobilePicturePath": "%MEDIA_URL%/img/mobile/landing.png",
+  "landingMobilePicturePath": "%MEDIA_URL%/img/mobile/landing.webp",
   "tagline": "Robotics Researcher | Rutgers University",
   "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
@@ -44,7 +44,7 @@
     "Robotics Researcher at PRACSYS Lab, Rutgers University"
   ],
   "aboutPicturePath": "%MEDIA_URL%/img/about.webp",
-  "aboutMobilePicturePath": "%MEDIA_URL%/img/mobile/about.png",
+  "aboutMobilePicturePath": "%MEDIA_URL%/img/mobile/about.webp",
   "about": [
     "I am passionate about tackling complex, interdisciplinary challenges that have a tangible and positive impact on the real world.",
     "My primary areas of focus currently are <yellow_bold>Reinforcement Learning, Robotics and Motion Planning.</yellow_bold>",
