@@ -1,0 +1,93 @@
+@import 'src/styles.module.scss';
+
+$img_size: 4rem;
+$small_img_size: 3rem;
+$skill_item_max_size: 23rem;
+$project_height: 20rem;
+
+.skillContainer{
+  flex-grow: 1;
+  width: 29%;
+}
+
+.skillCard {
+  @include flex();
+  border-radius: .2rem;
+  padding: 1.2rem;
+  padding-bottom: .8rem;
+  text-align: center;
+  justify-content: flex-start;
+  border: transparent 0.1rem solid;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  //cursor: pointer;
+  //&:hover{
+  //  border: 0.1rem solid $light_matte_grey;
+  //  & .arrow_down {
+  //    opacity: 1;
+  //  }
+  //}
+}
+
+.skillImgContainer {
+  background: white;
+  border-radius: 100%;
+  height: $img_size;
+  width: $img_size;
+  margin-bottom: .8rem;
+  @include flex;
+  justify-content: center;
+  padding: .8rem;
+  box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.5);
+}
+
+.skillImg{
+  //display: none;
+  max-height: 100%;
+  max-width: 100%;
+  flex-grow: 0;
+  stroke: $honolulu_blue;
+}
+
+.skillTitle{
+  @include item-title;
+  color: $hunyadi_yellow;
+}
+
+.skillDescription{
+  padding-top: .4rem;
+  @include item-description;
+  color: $text_grey;
+}
+
+.arrow_down {
+  margin-top: 1rem;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border-left: .5rem solid transparent;
+  border-right: .5rem solid transparent;
+  border-top: .5rem solid $text_grey;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+}
+
+@media screen and (max-width: $tablet_screen_width) {
+  .skillContainer{
+    width: 16rem;
+  }
+
+  .skillImgContainer {
+    height: $small_img_size !important;
+    width: $small_img_size !important;
+  }
+}
+
+@media screen and (max-width: $mobile_screen_width) {
+  .skillContainer{
+    //width: 20rem;
+  }
+}
+
+
+

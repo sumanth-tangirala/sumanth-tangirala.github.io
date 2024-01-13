@@ -7,3 +7,7 @@ export const parse = (text) => {
     text = _replace(text, '</yellow_bold>', '</span>');
     return htmlParse(text);
 }
+
+export const mobileDesktopSwitcher = ({mobile, desktop}) => {
+    return window.innerWidth < 750 ? mobile : desktop;
+}

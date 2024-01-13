@@ -6,25 +6,8 @@ import _map from "lodash/map";
 import text from 'text';
 
 import styles from './Skills.module.scss';
-import {SECTION_TYPE_VS_NAME} from "../../../../constants";
-import {parse} from "helpers";
-
-function Skill({
-    title,
-    description,
-    imgPath,
-    imgStyle,
-}) {
-    return (
-        <div className={styles.skillContainer}>
-            <div className={styles.skillImgContainer}>
-                <img src={imgPath} className={styles.skillImg} style={imgStyle} alt=""/>
-            </div>
-            <span className={styles.skillTitle}>{parse(title)}</span>
-            <span className={styles.skillDescription}>{parse(description)}</span>
-        </div>
-    )
-}
+import {SECTION_TYPE_VS_NAME} from "constants.js";
+import SkillCard from "./SkillCard";
 
 function Skills({className, sectionRef, sectionHeadingClassName}) {
     return (
@@ -34,8 +17,9 @@ function Skills({className, sectionRef, sectionHeadingClassName}) {
             </div>
             <div className={styles.skillsGrid}>
                 {_map(text.skills, (skill, idx) => (
-                <Skill
+                <SkillCard
                     key={idx}
+                    idx={idx}
                     {...skill}
                 />
             ))}

@@ -1,9 +1,5 @@
 @import 'src/styles.module.scss';
 
-$img_size: 4rem;
-$small_img_size: 3rem;
-$skill_item_max_size: 23rem;
-
 .container{
   min-height: calc(100vh - $nav_bar_height);
   background: $dark_trans_matte_grey;
@@ -26,63 +22,7 @@ $skill_item_max_size: 23rem;
   flex-direction: row;
   flex-wrap: wrap;
   padding: 1rem 1.2rem;
-  justify-content: space-evenly;
-  align-items: flex-start;
-}
-
-.skillContainer{
-  @include flex();
-  padding: .8rem;
-  width: 29%;
-  text-align: center;
-  justify-content: flex-start;
-}
-
-.skillImgContainer {
-  background: white;
-  border-radius: 100%;
-  height: $img_size;
-  width: $img_size;
-  margin-bottom: .8rem;
-  @include flex;
   justify-content: center;
-  padding: .8rem;
-  box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.5);
+  align-items: flex-start;
+  position: relative;
 }
-
-.skillImg{
-  //display: none;
-  max-height: 100%;
-  max-width: 100%;
-  flex-grow: 0;
-  stroke: $honolulu_blue;
-}
-
-.skillTitle{
-  @include item-title;
-  color: $hunyadi_yellow;
-}
-
-.skillDescription{
-  padding-top: .4rem;
-  @include item-description;
-  color: $text_grey;
-}
-
-@media screen and (max-width: $tablet_screen_width) {
-  .skillContainer{
-    width: 16rem;
-  }
-
-  .skillImgContainer {
-    height: $small_img_size !important;
-    width: $small_img_size !important;
-  }
-}
-
-@media screen and (max-width: $mobile_screen_width) {
-  .skillContainer{
-    //width: 20rem;
-  }
-}
-
