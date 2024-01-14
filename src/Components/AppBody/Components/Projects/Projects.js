@@ -1,7 +1,8 @@
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useCallback, useMemo, useState} from 'react';
 import cx from "classnames";
 
 import _map from "lodash/map";
+import _for from "lodash/forEach";
 import _curry from 'lodash/curry';
 
 import text from 'text';
@@ -12,7 +13,7 @@ import ProjectModal from './Components/ProjectModal/ProjectModal';
 import styles from './Projects.module.scss';
 import _size from "lodash/size";
 
-function ProjectSubSection({title, projects, isKey, toggleModal, openProjectIdx}) {
+function ProjectSubSection({title, projects, isKey, toggleModal, openProjectIdx, skillsById}) {
     return (
         <div className={styles.subSection}>
             <span className={styles.sectionHeading}>
@@ -25,6 +26,7 @@ function ProjectSubSection({title, projects, isKey, toggleModal, openProjectIdx}
                     toggleModal={() => toggleModal(index)}
                     isSmall={!isKey}
                     isModalOpen={openProjectIdx === index}
+                    skillsById={skillsById}
                     {...projectDetails}
                 />
             ))}
@@ -61,6 +63,14 @@ function Projects({className, sectionRef}) {
         }
     }, [openKey, openProjectIdx])
 
+    const skillsById = useMemo(() => {
+        const skillsById = {};
+        _for(text.skills, skill => {
+            skillsById[skill.id] = skill;
+        });
+        return skillsById;
+    }, [])
+
     return (
         <>
             <div className={cx(styles.container, className)} ref={sectionRef}>
@@ -71,12 +81,14 @@ function Projects({className, sectionRef}) {
                     isKey
                     toggleModal={_curry(toggleModal)('keyProjects')}
                     openProjectIdx={openKey === 'keyProjects' && openProjectIdx}
+                    skillsById={skillsById}
                 />
                 <ProjectSubSection
                     title={"Hobby Projects"}
                     projects={text.otherProjects}
                     toggleModal={_curry(toggleModal)('otherProjects')}
                     openProjectIdx={openKey === 'otherProjects' && openProjectIdx}
+                    skillsById={skillsById}
                 />
             </div>
             <ProjectModal

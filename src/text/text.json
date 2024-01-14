@@ -81,26 +81,31 @@
 
   "skills": [
     {
+      "id": "ml",
       "title": "Machine & Deep Learning",
       "description": "I have over five years of extensive experience in ML and DL, applying these in Computer Vision, Robotics, and NLP projects with PyTorch and TensorFlow",
       "imgPath": "%MEDIA_URL%/img//ML.svg"
     },
     {
+      "id": "rl",
       "title": "Reinforcement Learning",
       "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and SAC-HER at the PRACSYS lab",
       "imgPath": "%MEDIA_URL%/img//RL.svg"
     },
     {
+        "id": "ros",
       "title": "Robot Operating System",
       "description": "In my current research, I use ROS for robot control and navigation, including developing a perception system for PRACSYS Lab's MuSHR platform",
       "imgPath": "%MEDIA_URL%/img//ROS.svg"
     },
     {
+        "id": "mujoco",
       "title": "Physics Simulation Engines",
       "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for environments to simulate robots and develop robot controllers",
       "imgPath": "%MEDIA_URL%/img//DeepMind.svg"
     },
     {
+        "id": "cv",
       "title": "Computer Vision, OpenCV",
       "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
       "imgPath": "%MEDIA_URL%/img//opencv.svg",
@@ -109,22 +114,25 @@
       }
     },
     {
+        "id": "pythonCpp",
       "title": "Python, C++",
       "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields",
       "imgPath": "%MEDIA_URL%/img//pythonCpp.png"
     },
     {
+        "id": "iot",
       "title": "Internet of Things",
       "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and my work at Tekion Corp.",
       "imgPath": "%MEDIA_URL%/img//IoT.svg"
     },
     {
-      "title": "Geospatial Imagery",
-      "description": "In my undergraduate research and internship at Indian Space Research Organization, I built ML methods for terrain classification with PolSAR data",
-
-      "imgPath": "%MEDIA_URL%/img//GIS.svg"
+        "id": "cuda",
+      "title": "CUDA, Parallel Programming",
+      "description": "I have used CUDA C++ to parallelize image segmentation from scratch and have also used it on a high-level to accelerate the training of neural networks.",
+      "imgPath": "%MEDIA_URL%/img//cuda2.png"
     },
     {
+        "id": "reactjs",
       "title": "ReactJS, Javascript",
       "description": "I have developed web applications and websites using ReactJS and Javascript. My most notable projects are this website and my work at Tekion Corp.",
       "imgPath": "%MEDIA_URL%/img//ReactJs.svg"
@@ -197,7 +205,11 @@
       "imgPath": "%MEDIA_URL%/img//go1.gif",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim",
-      "details": "September, 2023 - December, 2023"
+      "details": "September, 2023 - December, 2023",
+      "skills": [
+        "rl",
+        "mujoco"
+      ]
     },
     {
       "title": "GPU Parallelization of Fuzzy SuperPixel Segmentation ",
@@ -211,7 +223,11 @@
       "backgroundColor": "black",
       "contrast": 1.5,
       "githubURL": "https://github.com/sumanth-tangirala/Fuzzy-SLIC-CUDA-Parallelization",
-      "details": "August, 2019 - December, 2019"
+      "details": "August, 2019 - December, 2019",
+      "skills": [
+          "cuda",
+          "pythonCpp"
+      ]
     },
     {
       "title": "Social Navigation of MuSHR using RVO Avoidance",
@@ -226,7 +242,11 @@
       "backgroundColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/MuSHR-RVO-Social-Navigation/",
       "details": "Jan, 2023 - May, 2023",
-      "contrast": 1.3
+      "contrast": 1.3,
+      "skills": [
+        "mujoco",
+        "rl"
+      ]
     },
     {
       "title": "Just Walk Out Shopping",
@@ -242,7 +262,11 @@
       "imgPath": "%MEDIA_URL%/img//amazonGo.png",
       "textColor": "black",
       "details": "January, 2019 - May, 2019",
-      "contrast": 1.1
+      "contrast": 1.1,
+      "skills": [
+        "iot",
+        "pythonCpp"
+      ]
     },
     {
       "title": "External Perception System for Autonomous Navigation with MuSHR",
@@ -257,7 +281,11 @@
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2023 - August, 2023",
-      "contrast": 1.5
+      "contrast": 1.5,
+      "skills": [
+        "ros",
+        "cv"
+      ]
     },
     {
       "title": "Land Cover Classification using Time-Series Dual-Polarized SAR Imagery",
@@ -276,7 +304,11 @@
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2019 - August, 2019",
-      "contrast": 1.3
+      "contrast": 1.3,
+      "skills": [
+        "ml",
+        "cv"
+      ]
     },
     {
       "title": "Autonomous Environmental Logging IoT System",
@@ -295,7 +327,11 @@
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2019 - November, 2019",
-      "contrast": 1.5
+      "contrast": 1.5,
+      "skills": [
+        "iot",
+        "pythonCpp"
+      ]
     }
   ],
 

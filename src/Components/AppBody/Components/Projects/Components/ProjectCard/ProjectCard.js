@@ -14,9 +14,11 @@ function ProjectCard({
         isSmall,
         textColor,
         githubURL,
+        skills,
         toggleModal,
         isModalOpen,
         contrast,
+        skillsById
     }) {
     const style = useMemo(() => {
         return ({
@@ -45,6 +47,15 @@ function ProjectCard({
                         className={styles.githubButton}
                     />
                 }
+                {/*{*/}
+                {/*    skills && skills.length > 0 &&*/}
+                {/*    <div className={styles.skills}>*/}
+                {/*        {skills.map((skill, idx) => (*/}
+                {/*            <div key={idx} className={styles.skill}>{skill}</div>*/}
+                {/*        ))}*/}
+                {/*    </div>*/}
+                {/*}*/}
+
             </div>
         </div>
     );
