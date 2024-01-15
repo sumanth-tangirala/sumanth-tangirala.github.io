@@ -5,12 +5,14 @@ import {Button} from 'antd'
 
 import styles from './ProjectCard.module.scss';
 import {GithubOutlined} from "@ant-design/icons";
+import {isMobile} from "../../../../../../helpers";
 
 
 function ProjectCard({
         title,
         backgroundColor,
         imgPath,
+        mobileImgPath,
         isSmall,
         textColor,
         githubURL,
@@ -20,6 +22,8 @@ function ProjectCard({
         contrast,
         skillsById
     }) {
+    imgPath = mobileImgPath && isMobile()  ? mobileImgPath : imgPath;
+
     const style = useMemo(() => {
         return ({
             backgroundImage: `url(${imgPath})`,

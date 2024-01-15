@@ -8,6 +8,10 @@ export const parse = (text) => {
     return htmlParse(text);
 }
 
+export const isMobile = () => {
+    return window.innerWidth < 750;
+}
+
 export const mobileDesktopSwitcher = ({mobile, desktop}) => {
-    return window.innerWidth < 750 ? mobile : desktop;
+    return isMobile() ? mobile : desktop;
 }
