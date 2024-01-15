@@ -129,7 +129,7 @@
         "id": "cuda",
       "title": "CUDA, Parallel Programming",
       "description": "I have used CUDA C++ to parallelize image segmentation from scratch and have also used it on a high-level to accelerate the training of neural networks.",
-      "imgPath": "%MEDIA_URL%/img//cuda2.png"
+      "imgPath": "%MEDIA_URL%/img//cuda.png"
     },
     {
         "id": "reactjs",
