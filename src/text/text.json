@@ -6,7 +6,6 @@
   "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
   "resumeURL": "%DOCS_URL%/docs/SumanthTangirala-Resume.pdf",
-
   "historyBannerImages": [
     {
       "path": "%MEDIA_URL%/img//PRACSYS.png",
@@ -39,7 +38,6 @@
       "url": "https://www.daiict.ac.in/"
     }
   ],
-
   "qualifications": [
     "Robotics Researcher at PRACSYS Lab, Rutgers University"
   ],
@@ -54,145 +52,218 @@
     "Master of Science in Computer Science |  Rutgers University",
     "Bachelor of Technology in Information and Communication Technology | DA-IICT"
   ],
-
   "publications": {
     "conferencePapers": [
       {
+        "id": "stackedAutoencoder",
         "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
         "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
         "arXiv": "https://arxiv.org/abs/2311.02887",
-        "venue": "Pattern Recognition and Machine Intelligence: 8th International Conference, PReMI 2019, Tezpur, India, December 17-20, 2019; Proceedings, Part II, Dec 2019, Pages 331-339",
+        "venue": "Proceedings of the 2019 Internation Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
         "link": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37"
+      },
+      {
+        "id": "morals",
+        "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
+        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
+        "arXiv": "https://arxiv.org/abs/2310.03246",
+        "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024"
       }
     ],
     "prePrints": [
+
       {
-        "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
-        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
-        "arXiv": "https://arxiv.org/abs/2310.03246"
-      },
-      {
+        "id": "rogue",
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
         "authors": "Aravind Sivaramakrishnan, Noah R. Carver, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
         "arXiv": "https://arxiv.org/abs/2310.03239"
       }
     ]
   },
-
   "skills": [
     {
       "id": "ml",
       "title": "Machine & Deep Learning",
       "description": "I have over five years of extensive experience in ML and DL, applying these in Computer Vision, Robotics, and NLP projects with PyTorch and TensorFlow",
-      "imgPath": "%MEDIA_URL%/img//ML.svg"
+      "imgPath": "%MEDIA_URL%/img//ML.svg",
+      "publications": [
+        "stackedAutoencoder",
+        "rogue",
+        "morals"
+      ],
+      "projects": [
+        "unitree",
+        "perception",
+        "isro"
+      ]
     },
     {
       "id": "rl",
       "title": "Reinforcement Learning",
       "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and SAC-HER at the PRACSYS lab",
-      "imgPath": "%MEDIA_URL%/img//RL.svg"
+      "imgPath": "%MEDIA_URL%/img//RL.svg",
+      "projects": [
+        "unitree",
+        "perception"
+      ],
+      "publications": [
+        "morals",
+        "rogue"
+      ]
     },
     {
-        "id": "ros",
+      "id": "ros",
       "title": "Robot Operating System",
       "description": "In my current research, I use ROS for robot control and navigation, including developing a perception system for PRACSYS Lab's MuSHR platform",
-      "imgPath": "%MEDIA_URL%/img//ROS.svg"
+      "imgPath": "%MEDIA_URL%/img//ROS.svg",
+      "projects": [
+        "perception"
+      ]
     },
     {
-        "id": "mujoco",
+      "id": "mujoco",
       "title": "Physics Simulation Engines",
       "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for environments to simulate robots and develop robot controllers",
-      "imgPath": "%MEDIA_URL%/img//DeepMind.svg"
+      "imgPath": "%MEDIA_URL%/img//DeepMind.svg",
+      "projects": [
+        "unitree",
+        "rvo"
+      ],
+      "publications": [
+        "morals",
+        "rogue"
+      ]
     },
     {
-        "id": "cv",
+      "id": "cv",
       "title": "Computer Vision, OpenCV",
       "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
       "imgPath": "%MEDIA_URL%/img//opencv.svg",
       "imgStyle": {
         "paddingBottom": "0.7rem"
-      }
+      },
+      "projects": [
+        "perception"
+      ]
     },
     {
-        "id": "pythonCpp",
+      "id": "pythonCpp",
       "title": "Python, C++",
       "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields",
-      "imgPath": "%MEDIA_URL%/img//pythonCpp.png"
+      "imgPath": "%MEDIA_URL%/img//pythonCpp.png",
+      "projects": [
+        "unitree",
+        "rvo",
+        "gpuslic"
+      ],
+      "publications": [
+        "stackedAutoencoder",
+        "morals",
+        "rogue"
+      ]
     },
     {
-        "id": "iot",
+      "id": "iot",
       "title": "Internet of Things",
       "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and my work at Tekion Corp.",
-      "imgPath": "%MEDIA_URL%/img//IoT.svg"
+      "imgPath": "%MEDIA_URL%/img//IoT.svg",
+      "projects": [
+        "wims2",
+        "amazonGo",
+        "perception"
+      ]
     },
     {
-        "id": "cuda",
+      "id": "cuda",
       "title": "CUDA, Parallel Programming",
       "description": "I have used CUDA C++ to parallelize image segmentation from scratch and have also used it on a high-level to accelerate the training of neural networks.",
-      "imgPath": "%MEDIA_URL%/img//cuda.png"
+      "imgPath": "%MEDIA_URL%/img//cuda.png",
+      "projects": [
+        "gpuslic"
+      ]
     },
     {
-        "id": "reactjs",
+      "id": "reactjs",
       "title": "ReactJS, Javascript",
       "description": "I have developed web applications and websites using ReactJS and Javascript. My most notable projects are this website and my work at Tekion Corp.",
       "imgPath": "%MEDIA_URL%/img//ReactJs.svg"
     }
   ],
-
   "timeline": [
     {
       "title": "PRACSYS Lab, Rutgers University",
       "desc": "I am researching robot motion planning algorithms for high-velocity robots in dynamic conditions using AI/ML and Reinforcement Learning techniques",
       "date": "January 2023 - Present",
-      "miniDate": ["Jan 2023", "Now"],
+      "miniDate": [
+        "Jan 2023",
+        "Now"
+      ],
       "imgPath": "%MEDIA_URL%/img//PRACSYS.png"
     },
     {
       "title": "Rutgers University",
       "desc": "As a graduate of Masters of Computer Science, Class of 2024, I continue to pursue my passion for AI/ML and Robotics",
       "date": "August 2022 - Present",
-      "miniDate": ["Aug 2022", "Now"],
+      "miniDate": [
+        "Aug 2022",
+        "Now"
+      ],
       "imgPath": "%MEDIA_URL%/img//Rutgers.png"
     },
     {
       "title": "Tekion Corp.",
       "desc": "Starting with a Winter 2020 software engineering internship and advancing to a full-time role as Software Engineer, I worked on building data-driven products for the automotive industry using Machine Learning and Computer Vision tools",
       "date": "January 2020 - July 2022",
-      "miniDate": ["Jan 2020", "July 2022"],
+      "miniDate": [
+        "Jan 2020",
+        "July 2022"
+      ],
       "imgPath": "%MEDIA_URL%/img//Tekion.svg"
     },
     {
       "title": "Center of WIMS2, University of Michigan",
       "desc": "In a collaborative project between WIMS2 and Smart City Lab, DAIICT, I developed end-to-end IoT solutions for an environmental logging sensor network",
       "date": "May 2019 - November 2019",
-      "miniDate": ["May 2019", "Nov 2019"],
+      "miniDate": [
+        "May 2019",
+        "Nov 2019"
+      ],
       "imgPath": "%MEDIA_URL%/img//WIMS2.png"
     },
     {
       "title": "Indian Space Research Organization",
       "desc": "During a Summer Internship, I developed a time-series Machine Learning technique for accurate land cover classification using satellite imagery and this tool continues to be used by ISRO in their ongoing projects",
       "date": "May 2019 - August 2019",
-      "miniDate": ["May 2019", "Aug 2019"],
+      "miniDate": [
+        "May 2019",
+        "Aug 2019"
+      ],
       "imgPath": "%MEDIA_URL%/img//ISRO.png"
     },
     {
       "title": "Smart City Lab, DA-IICT",
       "desc": "As a Research Assistant, I worked to advance the lab's goal of developing intelligent systems that use multi-modal data. My work was focused on PolSAR image segmentation and classification using Deep Learning techniques",
       "date": "August 2018 - December 2019",
-      "miniDate": ["Aug 2018", "Dec 2019"],
+      "miniDate": [
+        "Aug 2018",
+        "Dec 2019"
+      ],
       "imgPath": "%MEDIA_URL%/img//DAIICT.png"
     },
     {
       "title": "DA-IICT",
       "desc": "I graduated with a Bachelor of Technology in Information and Communication Technology. I was also a member of the DA-IICT Google Developer Student Club, the Student Council and the Student Placement Cell",
       "date": "August 2016 - May 2020",
-      "miniDate": ["Aug 2016", "May 2020"],
+      "miniDate": [
+        "Aug 2016",
+        "May 2020"
+      ],
       "imgPath": "%MEDIA_URL%/img//DAIICT.png"
     }
   ],
-
   "keyProjects": [
     {
+      "id": "unitree",
       "title": "Obstacle Navigation with Unitree Go1 Robot",
       "longDesc": [
         "Trained a two-fold controller policy for a robot dog to navigate an environment with obstacles simulated in NVIDIA IsaacGym",
@@ -201,7 +272,11 @@
         "Trained the controller policies using PyTorch, an Actor-Critic network and Proximal Policy Optimization to navigate the robot in the environment",
         "Implemented a custom reward function to encourage the robot to avoid obstacles and reach the goal"
       ],
-      "techStack": ["NVIDIA IsaacGym", "PyTorch", "Python"],
+      "techStack": [
+        "NVIDIA IsaacGym",
+        "PyTorch",
+        "Python"
+      ],
       "imgPath": "%MEDIA_URL%/img//go1.gif",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//go1.gif",
       "textColor": "black",
@@ -213,12 +288,16 @@
       ]
     },
     {
+      "id": "gpuslic",
       "title": "GPU Parallelization of Fuzzy SuperPixel Segmentation ",
       "longDesc": [
         "Designed and implemented a GPU parallelized strategy for the Fuzzy Simple Linear Iterative Clustering (SLIC) algorithm",
         "Achieved a 200x speedup over the sequential version of the algorithm for a 2K Image using CUDA on an NVIDIA GeForce GTX 1080 Ti"
       ],
-      "techStack": ["NVIDIA CUDA", "C++"],
+      "techStack": [
+        "NVIDIA CUDA",
+        "C++"
+      ],
       "imgPath": "%MEDIA_URL%/img//fuzzySLIC.jpg",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//fuzzySLIC.jpg",
       "textColor": "white",
@@ -227,18 +306,22 @@
       "githubURL": "https://github.com/sumanth-tangirala/Fuzzy-SLIC-CUDA-Parallelization",
       "details": "August, 2019 - December, 2019",
       "skills": [
-          "cuda",
-          "pythonCpp"
+        "cuda",
+        "pythonCpp"
       ]
     },
     {
+      "id": "rvo",
       "title": "Social Navigation of MuSHR using RVO Avoidance",
       "longDesc": [
         "Built a simulation environment for the MuSHR platform with obstacles using MuJoCo and a collision detection algorithm",
         "Used the Reciprocal Velocity Obstacle (RVO) algorithm to come up with a controller for the MuSHR platform capable of navigating and reaching goals while avoiding other agents and obstacles",
         "Demonstrated the limitations of the RVO algorithm in complex environments with multiple agents and obstacles and proposed a prediction-based hierarchical planning approach to overcome these limitations"
       ],
-      "techStack": ["MuJoCo", "Python"],
+      "techStack": [
+        "MuJoCo",
+        "Python"
+      ],
       "imgPath": "%MEDIA_URL%/img//rvo.gif",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//rvo.gif",
       "textColor": "white",
@@ -252,6 +335,7 @@
       ]
     },
     {
+      "id": "amazonGo",
       "title": "Just Walk Out Shopping",
       "longDesc": [
         "Developed a prototype for an automated shopping system inspired by Amazon Go that uses sensors and an in-store communication network to track customers and their purchases",
@@ -261,7 +345,16 @@
         "The aisle processor, an Arduino, would then communicate with the main processor hub, a Raspberry Pi, through the Zigbee network to update the customer's cart",
         "The customer could then drop their NFS band in a dropbox which would detect exited customer to digitally checkout their purchase and charge the customer"
       ],
-      "techStack": ["Raspberry Pi & Arduino", "Zigbee Network", "NFC tags and RFID readers","Pressure & LIDAR sensors", "Android Development", "Python", "Java","C++"],
+      "techStack": [
+        "Raspberry Pi & Arduino",
+        "Zigbee Network",
+        "NFC tags and RFID readers",
+        "Pressure & LIDAR sensors",
+        "Android Development",
+        "Python",
+        "Java",
+        "C++"
+      ],
       "imgPath": "%MEDIA_URL%/img//amazonGo.png",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//amazonGo.png",
       "textColor": "black",
@@ -273,6 +366,7 @@
       ]
     },
     {
+      "id": "perception",
       "title": "External Perception System for Autonomous Navigation with MuSHR",
       "longDesc": [
         "Contributed to development of an external perception system in the PRACSYS lab for the MuSHR platform to enable training of closed-loop control policies for mobile robots",
@@ -280,7 +374,13 @@
         "Built Robot Operating System (ROS) services to communicate the location of the robot and the boundaries to the robot",
         "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
       ],
-      "techStack": ["Robot Operating System (ROS)", "OpenCV", "NVIDIA Jetson", "Python", "C++"],
+      "techStack": [
+        "Robot Operating System (ROS)",
+        "OpenCV",
+        "NVIDIA Jetson",
+        "Python",
+        "C++"
+      ],
       "imgPath": "%MEDIA_URL%/img//mushr.gif",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//mushr.gif",
       "textColor": "white",
@@ -293,6 +393,7 @@
       ]
     },
     {
+      "id": "isro",
       "title": "Land Cover Classification using Time-Series Dual-Polarized SAR Imagery",
       "longDesc": [
         "Dual-Polarized SAR imagery techniques for land cover classification are limited and Fully-Polarimetric SAR images are not available for all regions",
@@ -304,7 +405,12 @@
         "The technique achieved an accuracy of 91.2% for the classification of Cotton and Groundnut crops",
         "The technique continues to be used by ISRO in their ongoing projects"
       ],
-      "techStack": ["TensorFlow","OpenCV", "Python", "C"],
+      "techStack": [
+        "TensorFlow",
+        "OpenCV",
+        "Python",
+        "C"
+      ],
       "imgPath": "%MEDIA_URL%/img//polsar.jpg",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//polsar.jpg",
       "textColor": "white",
@@ -317,6 +423,7 @@
       ]
     },
     {
+      "id": "wims2",
       "title": "Autonomous Environmental Logging IoT System",
       "longDesc": [
         "Developed an end-to-end IoT solution that acted as an external unit for the ELM7 environmental logging sensor developed by the WIMS2 Lab at the University of Michigan",
@@ -328,7 +435,14 @@
         "The Raspberry Pi was responsible for receiving controls and operating in one of the three modes - Single, Batch and Continuous - where the mode determined the frequency of data collection. This data would then be relayed to the cloud server with a frequency determined by the mode",
         "The cloud server was developed using NodeJS and was responsible for storing the data and providing it to the web application on request"
       ],
-      "techStack": ["Raspberry Pi", "Bluetooth-Low-Energy", "NodeJS & ExpressJS", "Tkinter GUI", "Python", "Javascript"],
+      "techStack": [
+        "Raspberry Pi",
+        "Bluetooth-Low-Energy",
+        "NodeJS & ExpressJS",
+        "Tkinter GUI",
+        "Python",
+        "Javascript"
+      ],
       "imgPath": "%MEDIA_URL%/img//raspi.jpg",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//raspi.jpg",
       "textColor": "white",
@@ -341,9 +455,9 @@
       ]
     }
   ],
-
   "otherProjects": [
     {
+      "id": "summary",
       "title": "Summary Bot",
       "longDesc": [
         "Led a team of 10 students as Project Manager to develop a multi-platform application that can summarize long text passages and email threads using Natural Language Processing (NLP) techniques",
@@ -353,7 +467,18 @@
         "The Android module was developed using React Native and the Web module was developed using ReactJS with Firebase used as the backend for both modules",
         "Received the Best Project Award out of 30+ projects in the Software Engineering course"
       ],
-      "techStack": ["TensorFlow", "Natural Language Toolkit (NLTK)", "Android", "ReactJS", "React Native", "Firebase", "NodeJS", "Python", "Javascript", "Java"],
+      "techStack": [
+        "TensorFlow",
+        "Natural Language Toolkit (NLTK)",
+        "Android",
+        "ReactJS",
+        "React Native",
+        "Firebase",
+        "NodeJS",
+        "Python",
+        "Javascript",
+        "Java"
+      ],
       "imgPath": "%MEDIA_URL%/img//summary.png",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//summary.png",
       "textColor": "white",
@@ -362,6 +487,7 @@
       "contrast": 1.5
     },
     {
+      "id": "protego",
       "title": "Protego - Safe Transit Planner",
       "longDesc": [
         "This project was developed as a part of the AngelHack Bangalore 2018 and was one of the 5 projects selected for the final round",
@@ -369,7 +495,14 @@
         "The Machine Learning application used historical crime data to predict the safety of a discretized map of the city and the mobile application used this data to suggest routes built with waypoints in safe regions of the city using a A* search algorithm with the safety score as the heuristic",
         "The mobile application was developed using Android and used the Google Maps API to generate the routes from the waypoints"
       ],
-      "techStack": ["TensorFlow", "Android", "Firebase", "NodeJS", "Python", "Javascript"],
+      "techStack": [
+        "TensorFlow",
+        "Android",
+        "Firebase",
+        "NodeJS",
+        "Python",
+        "Javascript"
+      ],
       "imgPath": "%MEDIA_URL%/img//protego.jpg",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//protego.jpg",
       "textColor": "black",
@@ -377,13 +510,19 @@
       "contrast": 1.2
     },
     {
+      "id": "playlistPorter",
       "title": "Playlist Porter",
       "longDesc": [
         "Faced with the problem of switching from Saavn, an Indian music streaming service, developed a web scraping project to port playlists from Saavn to other music streaming services such as YouTube and Spotify",
         "The script uses Selenium WebDriver to automate the process of logging into the user's YouTube and Spotify accounts and BeautifulSoup 4 to scrape the playlists from the user's accounts",
         "The hope is to then extend the script to port playlists from other music services such as Spotify and Apple Music"
       ],
-      "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Python", "Linux Scripting"],
+      "techStack": [
+        "Selenium WebDriver",
+        "BeautifulSoup 4",
+        "Python",
+        "Linux Scripting"
+      ],
       "imgPath": "%MEDIA_URL%/img//playlistPorter.png",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//playlistPorter.png",
       "textColor": "black",
@@ -392,6 +531,7 @@
       "contrast": 1.1
     },
     {
+      "id": "musicPlayer",
       "title": "Parallelized Shell Media Player",
       "longDesc": [
         "Developed as a way to experiment with Parallelism in Python, this project is a cross-platform music player that can play playlists from Saavn, an Indian music streaming service, on YouTube",
@@ -400,7 +540,13 @@
         "The scraper processes waits for inputs on playlists to play and uses BeautifulSoup4 to automate the process of logging into the user's Saavn account and BeautifulSoup 4 to scrape the playlist from the user's account to forward a list of songs to the player process",
         "The player process then uses the Selenium Webdriver to play the received songs and also processes the commands from the controller process to pause, play, skip and stop the playlist"
       ],
-      "techStack": ["Selenium WebDriver", "BeautifulSoup 4", "Multi-Processing Parallelism", "Python", "Linux Scripting"],
+      "techStack": [
+        "Selenium WebDriver",
+        "BeautifulSoup 4",
+        "Multi-Processing Parallelism",
+        "Python",
+        "Linux Scripting"
+      ],
       "imgPath": "%MEDIA_URL%/img//musicPlayer.png",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//musicPlayer.png",
       "textColor": "black",
@@ -409,12 +555,16 @@
       "contrast": 1.1
     },
     {
+      "id": "p2p",
       "title": "P2P File Sharing (Work in Progress)",
       "longDesc": [
         "This project is an attempt to learn about Peer-to-Peer (P2P) networks and replicate the functionality of BitTorrent. This project is also an attempt to develop a completely decentralized P2P network (if such a thing is possible)",
         "The application will allow users to share files with other users on the same network and also search for files on the network and download them"
       ],
-      "techStack": ["Python", "Socket Programming"],
+      "techStack": [
+        "Python",
+        "Socket Programming"
+      ],
       "imgPath": "%MEDIA_URL%/img//p2p.jpg",
       "mobileImgPath": "%MEDIA_URL%/img/mobile//p2p.jpg",
       "textColor": "black",
@@ -423,5 +573,4 @@
       "contrast": 1.1
     }
   ]
-
 }
