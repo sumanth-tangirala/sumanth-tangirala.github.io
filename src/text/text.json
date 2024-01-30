@@ -55,19 +55,19 @@
   "publications": {
     "conferencePapers": [
       {
+        "id": "morals",
+        "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
+        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
+        "arXiv": "https://arxiv.org/abs/2310.03246",
+        "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024"
+      },
+      {
         "id": "stackedAutoencoder",
         "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
         "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
         "arXiv": "https://arxiv.org/abs/2311.02887",
         "venue": "Proceedings of the 2019 Internation Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
         "link": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37"
-      },
-      {
-        "id": "morals",
-        "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
-        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
-        "arXiv": "https://arxiv.org/abs/2310.03246",
-        "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024"
       }
     ],
     "prePrints": [
