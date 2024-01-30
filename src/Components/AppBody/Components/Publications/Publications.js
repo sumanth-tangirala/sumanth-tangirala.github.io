@@ -26,7 +26,7 @@ function Publications({className, sectionRef, sectionHeadingClassName}) {
                         </div>)}
                         <div className={styles.publicationLinks}>
                             {publication.link && (
-                                <div className={styles.publicationArXiv}>
+                                <div className={styles.publicationLink}>
                                     [
                                     <a href={publication.link} target="_blank" rel="noopener noreferrer">
                                         link
@@ -35,10 +35,19 @@ function Publications({className, sectionRef, sectionHeadingClassName}) {
                                 </div>
                             )}
                             {publication.arXiv && (
-                                <div className={styles.publicationArXiv}>
+                                <div className={styles.publicationLink}>
                                     [
                                     <a href={publication.arXiv} target="_blank" rel="noopener noreferrer">
                                         arXiv
+                                    </a>
+                                    ]
+                                </div>
+                            )}
+                            {publication.code && (
+                                <div className={styles.publicationLink}>
+                                    [
+                                    <a href={publication.code} target="_blank" rel="noopener noreferrer">
+                                        Code
                                     </a>
                                     ]
                                 </div>
