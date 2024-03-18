@@ -1,68 +1,97 @@
-import React, {useMemo} from 'react';
-import cx from 'classnames';
-import {Button} from 'antd'
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import cx from "classnames";
+import { Button } from "antd";
 
+import styles from "./ProjectCard.module.scss";
+import { GithubOutlined } from "@ant-design/icons";
+import { isMobile } from "../../../../../../helpers";
 
-import styles from './ProjectCard.module.scss';
-import {GithubOutlined} from "@ant-design/icons";
-import {isMobile} from "../../../../../../helpers";
-
+const DEFAULT_TEXT_COLOR = "#fbb13c";
+// const DEFAULT_TEXT_COLOR = "black";
 
 function ProjectCard({
-        title,
-        backgroundColor,
-        imgPath,
-        mobileImgPath,
-        isSmall,
-        textColor,
-        githubURL,
-        skills,
-        toggleModal,
-        isModalOpen,
-        contrast,
-        skillsById
-    }) {
-    imgPath = mobileImgPath && isMobile()  ? mobileImgPath : imgPath;
+  title,
+  backgroundColor,
+  imgPath,
+  mobileImgPath,
+  isSmall,
+  isVerySmall,
+  textColor: actualTextColor,
+  githubURL,
+  toggleCardDetails,
+  selectedIdx,
+  isDetailsVisible,
+  contrast,
+  cardRef,
+  idx,
+}) {
+  const [textColor, setTextColor] = useState(DEFAULT_TEXT_COLOR);
 
-    const style = useMemo(() => {
-        return ({
-            backgroundImage: `url(${imgPath})`,
-            backgroundColor,
-            filter: contrast ? `contrast(${contrast})` : 'none',
-        })
-    }, [imgPath, backgroundColor, contrast]);
+  imgPath = mobileImgPath && isMobile() ? mobileImgPath : imgPath;
 
-    return (
-        <div
-            className={cx(styles.container, {[styles.openCard]: isModalOpen, [styles.smallCard]: isSmall})}
-            style={style}
-            onClick={toggleModal}
-        >
-            <div className={styles.cardContent}>
-                <div className={styles.title} style={{color: textColor}}>{title}</div>
-                {githubURL &&
-                    <Button
-                        icon={<GithubOutlined/>}
-                        size="large"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            window.open(githubURL, '_blank');
-                        }}
-                        className={styles.githubButton}
-                    />
-                }
-                {/*{*/}
-                {/*    skills && skills.length > 0 &&*/}
-                {/*    <div className={styles.skills}>*/}
-                {/*        {skills.map((skill, idx) => (*/}
-                {/*            <div key={idx} className={styles.skill}>{skill}</div>*/}
-                {/*        ))}*/}
-                {/*    </div>*/}
-                {/*}*/}
+  const handleClick = useCallback(() => {
+    toggleCardDetails(idx);
+  }, [toggleCardDetails, idx]);
 
-            </div>
+  const style = useMemo(() => {
+    return {
+      backgroundImage: `url(${imgPath})`,
+      backgroundColor,
+    };
+  }, [imgPath, backgroundColor, contrast]);
+
+  const handleMoveEnter = useCallback(() => {
+    if (selectedIdx === idx) return;
+    setTextColor(actualTextColor);
+  }, [textColor, selectedIdx, idx]);
+
+  const handleMoveLeave = useCallback(() => {
+    if (selectedIdx === idx) return;
+    setTextColor(DEFAULT_TEXT_COLOR);
+  }, [textColor, selectedIdx, idx]);
+
+  useEffect(() => {
+    if (selectedIdx === idx) {
+      setTextColor(actualTextColor);
+    } else {
+      setTextColor(DEFAULT_TEXT_COLOR);
+    }
+  }, [selectedIdx, idx]);
+
+  return (
+    <div
+      className={cx(styles.container, {
+        [styles.openCard]: isDetailsVisible && idx === selectedIdx,
+        [styles.smallCard]: isSmall && !isVerySmall,
+        [styles.verySmallCard]: isVerySmall,
+      })}
+      onClick={handleClick}
+      onMouseEnter={handleMoveEnter}
+      onMouseLeave={handleMoveLeave}
+      ref={cardRef}
+    >
+      <div className={styles.backgroundImage} style={style} />
+      <div className={styles.cardContent}>
+        <div className={styles.title} style={{ color: textColor }}>
+          {title}
         </div>
-    );
+        {githubURL && (
+          <Button
+            icon={<GithubOutlined />}
+            size="large"
+            onClick={(e) => {
+              if (isDetailsVisible) return;
+              e.stopPropagation();
+              window.open(githubURL, "_blank");
+            }}
+            className={cx(styles.githubButton, {
+              [styles.hidden]: isDetailsVisible,
+            })}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
 
 ProjectCard.propTypes = {};

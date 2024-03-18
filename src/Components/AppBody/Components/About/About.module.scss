@@ -5,7 +5,7 @@ $tablet_img_size: 16rem;
 $mobile_img_size: 12rem;
 $mobile_landscape_img_size: 10rem;
 
-.container{
+.container {
   width: 100%;
   @include flex;
   justify-content: flex-start;
@@ -51,7 +51,8 @@ $mobile_landscape_img_size: 10rem;
   margin-bottom: 1.2rem;
   font-weight: 400;
   font-size: 1.6rem;
-  & *{
+
+  & * {
     margin-bottom: .5rem;
   }
 }
@@ -63,6 +64,7 @@ $mobile_landscape_img_size: 10rem;
 
 .aboutParagraphItem {
   font-size: 1.2rem;
+
   &:not(:first-child) {
     margin-top: .8rem;
   }
@@ -77,6 +79,7 @@ $mobile_landscape_img_size: 10rem;
 .qualificationDetailItem {
   font-size: 1.3rem;
   font-weight: 500;
+
   &:not(:first-child) {
     margin-top: .8rem;
   }
@@ -101,14 +104,14 @@ $mobile_landscape_img_size: 10rem;
     margin-left: 2rem !important;
     margin-right: 2rem !important;
   }
-  .name{
+  .name {
     width: 100%;
     text-align: center;
   }
 }
 
 @media screen and (max-height: $mobile_landscape_screen_height) {
-  .name{
+  .name {
     width: 100%;
     text-align: center;
   }

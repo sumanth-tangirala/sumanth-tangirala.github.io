@@ -1,0 +1,58 @@
+@import 'src/styles.module.scss';
+
+.container {
+  color: white;
+  font-size: 1.2rem;
+  @include flex;
+  @include full-height;
+  justify-content: flex-start;
+}
+
+.extraProjectDetails {
+  text-align: center;
+  color: $text_blue;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.techStackSection {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  @include full-width;
+}
+
+.techStack {
+  margin-top: .4rem;
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+
+.description {
+  flex-grow: 1;
+}
+
+.projectDetails {
+  @include full-height;
+  @include flex;
+  justify-content: flex-start;
+
+  padding: 0 .5rem 0 1.5rem;
+
+  li {
+    margin: 1rem 0;
+    width: 100%;
+  }
+}
+
+.githubButton {
+  color: white;
+  background: transparent;
+  border-color: white;
+  transition: opacity 1s ease, color .2s ease, border-color .2s ease;
+
+  &:hover {
+    color: $text_blue !important;
+    border-color: $text_blue !important;
+  }
+}

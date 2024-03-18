@@ -6,6 +6,10 @@
   flex-grow: 1;
   min-height: 10rem;
   position: relative;
+
+  &:global(.ant-modal-wrap) {
+    overflow: hidden;
+  }
 }
 
 .modalRightPanel {
@@ -25,29 +29,35 @@
 }
 
 .modalLeftButton {
+  @include transition;
   border: solid black 1px !important;
   top: 0;
   left: 0;
+
   &:global(.ant-btn) {
     box-shadow: none;
     background: none;
   }
+
   &.disabled {
-    border-color: grey !important;
+    border-color: #a19e9e !important;
   }
 }
 
 .modalRightButton {
+  @include transition;
   border: solid black 1px !important;
   top: 0;
   right: 0;
   position: absolute;
+
   &:global(.ant-btn) {
     box-shadow: none;
     background: none;
   }
+
   &.disabled {
-    border-color: #ffffff !important;
+    border-color: #a19e9e !important;
   }
 }
 
@@ -78,6 +88,7 @@
 .description {
   max-height: 40vh;
   overflow-y: auto;
+
   &:before,
   &:after {
     content: "";

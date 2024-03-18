@@ -5,9 +5,18 @@ $small_img_size: 3rem;
 $skill_item_max_size: 23rem;
 $project_height: 20rem;
 
-.skillContainer{
-  flex-grow: 1;
-  width: 29%;
+
+.skillContainer {
+  width: 23rem;
+  transition: .2s ease-in-out;
+
+  &.transparent {
+    opacity: 40%;
+
+    &:hover {
+      opacity: 100%;
+    }
+  }
 }
 
 .skillCard {
@@ -23,9 +32,6 @@ $project_height: 20rem;
   //cursor: pointer;
   //&:hover{
   //  border: 0.1rem solid $light_matte_grey;
-  //  & .arrow_down {
-  //    opacity: 1;
-  //  }
   //}
 }
 
@@ -41,7 +47,7 @@ $project_height: 20rem;
   box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.5);
 }
 
-.skillImg{
+.skillImg {
   //display: none;
   max-height: 100%;
   max-width: 100%;
@@ -49,12 +55,12 @@ $project_height: 20rem;
   stroke: $honolulu_blue;
 }
 
-.skillTitle{
+.skillTitle {
   @include item-title;
   color: $hunyadi_yellow;
 }
 
-.skillDescription{
+.skillDescription {
   padding-top: .4rem;
   @include item-description;
   color: $text_grey;
@@ -73,7 +79,7 @@ $project_height: 20rem;
 }
 
 @media screen and (max-width: $tablet_screen_width) {
-  .skillContainer{
+  .skillContainer {
     width: 16rem;
   }
 
@@ -84,7 +90,7 @@ $project_height: 20rem;
 }
 
 @media screen and (max-width: $mobile_screen_width) {
-  .skillContainer{
+  .skillContainer {
     //width: 20rem;
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
-import {Button, Modal} from "antd";
-import {GithubOutlined, LeftOutlined, RightOutlined} from "@ant-design/icons";
+import { Button, Modal } from "antd";
+import { GithubOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import cx from "classnames";
 
 import _get from "lodash/get";
@@ -11,164 +11,172 @@ import _map from "lodash/map";
 
 import styles from "./ProjectModal.module.scss";
 
-import text from 'text';
+import text from "text";
 
 class ProjectModal extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            isDescriptionOverflowing: false,
-            isDownScrollable: false,
-            isUpScrollable: false,
-        };
-        this.descriptionRef = React.createRef();
+    this.state = {
+      isDescriptionOverflowing: false,
+      isDownScrollable: false,
+      isUpScrollable: false,
+    };
+    this.descriptionRef = React.createRef();
+  }
 
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {openKey, openProjectIdx, isModalOpen} = this.props;
-        const { openKey: prevOpenKey, openProjectIdx: prevOpenProjectIdx } = prevProps;
-        if (isModalOpen && (openKey !== prevOpenKey || openProjectIdx !== prevOpenProjectIdx)) {
-            setTimeout(() => {
-                if (this.descriptionRef.current) {
-                    this.handleScrollDisplayBehavior();
-                }
-            }, 1);
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { openKey, openProjectIdx, isModalOpen } = this.props;
+    const { openKey: prevOpenKey, openProjectIdx: prevOpenProjectIdx } =
+      prevProps;
+    if (
+      isModalOpen &&
+      (openKey !== prevOpenKey || openProjectIdx !== prevOpenProjectIdx)
+    ) {
+      setTimeout(() => {
+        if (this.descriptionRef.current) {
+          this.handleScrollDisplayBehavior();
         }
+      }, 1);
     }
+  }
 
-    handleScrollDisplayBehavior = () => {
-        const isDescriptionOverflowingState = this.descriptionRef.current.scrollHeight > this.descriptionRef.current.clientHeight
+  handleScrollDisplayBehavior = () => {
+    const isDescriptionOverflowingState =
+      this.descriptionRef.current.scrollHeight >
+      this.descriptionRef.current.clientHeight;
 
-        this.setState({
-            isDescriptionOverflowing: isDescriptionOverflowingState,
-            isDownScrollable: isDescriptionOverflowingState,
-            isUpScrollable: false,
-        });
-    }
+    this.setState({
+      isDescriptionOverflowing: isDescriptionOverflowingState,
+      isDownScrollable: isDescriptionOverflowingState,
+      isUpScrollable: false,
+    });
+  };
 
-    handleScroll = (e) => {
-        if (!this.state.isDescriptionOverflowing) return;
+  handleScroll = (e) => {
+    if (!this.state.isDescriptionOverflowing) return;
 
-        const {scrollTop, scrollHeight, clientHeight} = e.target;
-        this.setState({
-            isDownScrollable: scrollTop + clientHeight < scrollHeight,
-            isUpScrollable: scrollTop > 0,
-        });
-    }
+    const { scrollTop, scrollHeight, clientHeight } = e.target;
+    this.setState({
+      isDownScrollable: scrollTop + clientHeight < scrollHeight,
+      isUpScrollable: scrollTop > 0,
+    });
+  };
 
-    renderContent = () => {
-        const {
-            openKey,
-            openProjectIdx,
-        } = this.props;
+  renderContent = () => {
+    const { openKey, openProjectIdx } = this.props;
 
-        const {
-            isDownScrollable,
-            isUpScrollable,
-        } = this.state
+    const { isDownScrollable, isUpScrollable } = this.state;
 
-        const { techStack, longDesc, details} = _get(text, [openKey, openProjectIdx], {});
-        return (
-            <div className={styles.modalContent}>
-                <div className={styles.extraProjectDetails}>{details}</div>
-                <div className={styles.descriptionContainer}>
-                    <div
-                        className={cx(styles.description, {
-                            [styles.downScrollable]: isDownScrollable,
-                            [styles.upScrollable]: isUpScrollable,
-                        })}
-                        ref={this.descriptionRef}
-                        onScroll={this.handleScroll}
-                    >
-                        {!_isList(longDesc) ? longDesc : (
-                            <ul className={styles.projectDetails}>
-                                {_map(longDesc, (desc, idx) => (
-                                    <li key={idx}>{desc}</li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                </div>
-                {techStack && (<div className={styles.techStackSection}>
-                    <b>Technologies Used: </b>
-                    <ul className={styles.techStack}>
-                        {_map(techStack, (tech, idx) => (
-                            <li key={idx}>{tech}</li>
-                        ))}
-                    </ul>
-                </div>)}
+    const { techStack, longDesc, details } = _get(
+      text,
+      [openKey, openProjectIdx],
+      {},
+    );
+    return (
+      <div className={styles.modalContent}>
+        <div className={styles.extraProjectDetails}>{details}</div>
+        <div className={styles.descriptionContainer}>
+          <div
+            className={cx(styles.description, {
+              [styles.downScrollable]: isDownScrollable,
+              [styles.upScrollable]: isUpScrollable,
+            })}
+            ref={this.descriptionRef}
+            onScroll={this.handleScroll}
+          >
+            {!_isList(longDesc) ? (
+              longDesc
+            ) : (
+              <ul className={styles.projectDetails}>
+                {_map(longDesc, (desc, idx) => (
+                  <li key={idx}>{desc}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+        {techStack && (
+          <div className={styles.techStackSection}>
+            <b>Technologies Used: </b>
+            <ul className={styles.techStack}>
+              {_map(techStack, (tech, idx) => (
+                <li key={idx}>{tech}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  handleGithubClick = (e) => {
+    const { openKey, openProjectIdx } = this.props;
+    const { githubURL } = _get(text, [openKey, openProjectIdx], {});
+    e.stopPropagation();
+    window.open(githubURL, "_blank");
+  };
+
+  render() {
+    const {
+      isModalOpen,
+      toggleModal,
+      openKey,
+      openProjectIdx,
+      handleLeft,
+      handleRight,
+      hasLeft,
+      hasRight,
+    } = this.props;
+
+    const { title, githubURL } = _get(text, [openKey, openProjectIdx], {});
+
+    return (
+      <>
+        <Modal
+          open={isModalOpen}
+          onCancel={toggleModal}
+          footer={null}
+          title={title}
+          destroyOnClose
+        >
+          <div className={styles.modalContainer}>
+            <div className={styles.modalLeftPanel}>
+              <Button
+                icon={<LeftOutlined />}
+                disabled={!hasLeft}
+                className={cx(styles.modalLeftButton, {
+                  [styles.disabled]: !hasLeft,
+                })}
+                onClick={handleLeft}
+                size="large"
+              />
             </div>
-        );
-    }
-
-    handleGithubClick = (e) => {
-        const {
-            openKey,
-            openProjectIdx,
-        } = this.props;
-        const { githubURL } = _get(text, [openKey, openProjectIdx], {});
-        e.stopPropagation();
-        window.open(githubURL, '_blank');
-    }
-    render() {
-
-        const {
-            isModalOpen,
-            toggleModal,
-            openKey,
-            openProjectIdx,
-            handleLeft,
-            handleRight
-        } = this.props;
-
-        const {title, githubURL } = _get(text, [openKey, openProjectIdx], {});
-
-
-        const hasLeft = openKey === 'otherProjects' || openProjectIdx > 0;
-        const hasRight = openKey === 'keyProjects' || openProjectIdx < _size(text[openKey])- 1;
-
-        return (
-            <>
-                <Modal
-                    open={isModalOpen}
-                    onCancel={toggleModal}
-                    footer={null}
-                    title={title}
-                    destroyOnClose
-                >
-                    <div className={styles.modalContainer}>
-                        <div className={styles.modalLeftPanel}>
-                            <Button
-                                icon={<LeftOutlined />}
-                                disabled={!hasLeft}
-                                className={cx(styles.modalLeftButton, {[styles.disabled]: !hasLeft})}
-                                onClick={handleLeft}
-                                size="large"
-                            />
-                        </div>
-                        {this.renderContent()}
-                        <div className={styles.modalRightPanel}>
-                            <Button
-                                icon={<RightOutlined />}
-                                disabled={!hasRight}
-                                className={cx(styles.modalRightButton, {[styles.disabled]: !hasRight})}
-                                onClick={handleRight}
-                                size="large"
-                            />
-                            {githubURL && (<Button
-                                icon={<GithubOutlined/>}
-                                size="large"
-                                onClick={this.handleGithubClick}
-                                className={styles.githubButton}
-                            />)}
-                        </div>
-
-                    </div>
-                </Modal>
-            </>
-        )
-    }
+            {this.renderContent()}
+            <div className={styles.modalRightPanel}>
+              <Button
+                icon={<RightOutlined />}
+                disabled={!hasRight}
+                className={cx(styles.modalRightButton, {
+                  [styles.disabled]: !hasRight,
+                })}
+                onClick={handleRight}
+                size="large"
+              />
+              {githubURL && (
+                <Button
+                  icon={<GithubOutlined />}
+                  size="large"
+                  onClick={this.handleGithubClick}
+                  className={styles.githubButton}
+                />
+              )}
+            </div>
+          </div>
+        </Modal>
+      </>
+    );
+  }
 }
+
 export default ProjectModal;

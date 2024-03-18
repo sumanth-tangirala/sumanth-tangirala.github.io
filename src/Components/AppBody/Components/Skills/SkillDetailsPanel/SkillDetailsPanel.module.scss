@@ -1,0 +1,37 @@
+@import 'src/styles.module.scss';
+
+.content {
+  @include full-width;
+  @include flex;
+  overflow-y: scroll;
+  justify-content: flex-start;
+  padding-top: .4rem;
+  padding-bottom: 1rem;
+}
+
+.subSection {
+  flex-grow: 1;
+  @include full-width;
+}
+
+.subSectionHeading {
+  color: white;
+  @include item-title;
+  margin-bottom: .8rem;
+}
+
+.projectsSubGrid {
+  @include flex();
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: calc(100% - 4rem) !important;
+
+  &:first-child {
+    margin-top: 2rem;
+    justify-content: center;
+  }
+
+  &:not(:first-child) {
+    justify-content: center;
+  }
+}

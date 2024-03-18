@@ -1,1 +1,1 @@
-export {default} from './SkillCard';
+export { default } from "./SkillCard";

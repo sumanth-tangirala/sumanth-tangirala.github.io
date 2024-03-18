@@ -1,0 +1,57 @@
+@import 'src/styles.module.scss';
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.container {
+  @include flex;
+  @include full-height;
+  padding: .5rem;
+  padding-left: 1.6rem;
+}
+
+.skillDetailHeading {
+  margin: 1rem 0;
+  @include flex;
+  justify-content: center;
+  animation: fadeIn 250ms;
+  width: 100%;
+}
+
+.sectionHeading {
+  color: $hunyadi_yellow;
+  @include item-title;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-right: 3.2rem;
+}
+
+.closeDetailsButton {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  font-size: 1.6rem;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: .2s ease-in-out;
+  box-shadow: none;
+
+  &:hover {
+    color: $hunyadi_yellow !important;
+  }
+}
+
+.content {
+  animation: fadeIn 250ms;
+  padding-bottom: 0.8rem;
+}
+

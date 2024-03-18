@@ -5,7 +5,7 @@ $img_max_width: 10rem;
 $tablet_img_max_height: 6rem;
 $tablet_img_max_width: 9rem;
 
-.container{
+.container {
   z-index: 2;
   min-height: $min_history_banner_height;
   width: 100%;
@@ -17,7 +17,7 @@ $tablet_img_max_width: 9rem;
   flex-wrap: wrap;
 }
 
-.image{
+.image {
   max-height: $img_max_height;
   max-width: $img_max_width;
   padding: .8rem .4rem;

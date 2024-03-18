@@ -5,7 +5,12 @@
   width: 100%;
   padding: 2.4rem 0;
   backdrop-filter: blur(10px);
-  //text-shadow: 0.1rem 0.1rem .5rem rgba(0, 0, 0, .1);
+}
+
+.smallFont {
+  & * {
+    font-size: .9rem;
+  }
 }
 
 .content {
@@ -23,9 +28,10 @@
 }
 
 .publication {
-  &:not(:first-child){
+  &:not(:first-child) {
     margin-top: 2rem;
   }
+
   & > * {
     margin: 0.5rem 0;
   }
@@ -36,23 +42,16 @@
   font-weight: 500;
 }
 
-.publicationAuthors {
-
-}
-
 .publicationVenue {
   white-space: break-spaces;
   font-style: oblique;
-}
-
-.publicationYear {
-
 }
 
 .publicationLinks {
   @include flex;
   flex-direction: row;
   justify-content: flex-start;
+
   & > * {
     margin-right: .3rem;
   }

@@ -1,1 +1,1 @@
-export {default} from './HistoryBanner';
+export { default } from "./HistoryBanner";

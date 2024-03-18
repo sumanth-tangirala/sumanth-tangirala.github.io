@@ -15,15 +15,6 @@
   }
 }
 
-.sectionHeading {
-  @include section-heading;
-  justify-self: flex-start !important;
-  color: white;
-  padding-top: 1.2rem;
-  text-align: center;
-  justify-self: flex-start;
-}
-
 .projects {
   flex-grow: 1;
   @include flex();
@@ -32,9 +23,16 @@
 
 .subSection {
   @include flex;
+
+  &:not(:first-child) {
+    & .projectsSubGrid {
+      padding-top: 0;
+      margin-top: 0;
+    }
+  }
 }
 
-.projectsSubGrid{
+.projectsSubGrid {
   @include flex();
   flex-direction: row;
   flex-wrap: wrap;
@@ -42,12 +40,12 @@
   width: calc(100% - 4rem) !important;
   margin: 1.5rem 0 2rem 0;
 
-  &:first-child{
+  &:first-child {
     margin-top: 2rem;
     justify-content: center;
   }
 
-  &:not(:first-child){
+  &:not(:first-child) {
     justify-content: center;
   }
 }

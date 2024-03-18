@@ -3,120 +3,124 @@
 $menu_icon_size: 1.6rem;
 $mini_menu_icon_size: 1.2rem;
 
-.container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: $nav_bar_height;
-    flex-shrink: 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: $honolulu_blue;
-    color: black;
-    position: fixed;
-    z-index: 4;
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: $nav_bar_height;
+  flex-shrink: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: $honolulu_blue;
+  color: black;
+  position: fixed;
+  z-index: 4;
 }
 
 .name {
-    white-space: nowrap;
-    user-select: none;
-    margin-left: 2.4rem;
-    font-size: 2.4rem;
-    cursor: pointer;
-    transition: all .2s ease;
-    color: white;
-    -webkit-transition: all .2s ease;
-    &:hover {
-        color: $hunyadi_yellow !important;
-    }
+  white-space: nowrap;
+  user-select: none;
+  margin-left: 2.4rem;
+  font-size: 2.4rem;
+  cursor: pointer;
+  transition: all .2s ease;
+  color: white;
+  -webkit-transition: all .2s ease;
+
+  &:hover {
+    color: $hunyadi_yellow !important;
+  }
 }
 
 .actions {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-left: 3rem;
-    flex-grow: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 3rem;
+  flex-grow: 1;
 }
 
 .navBarItem {
-    color: azure;
-    font-size: 1rem;
-    &:hover {
-        color: $hunyadi_yellow !important;
-    }
+  color: azure;
+  font-size: 1rem;
 
-    &:global(.ant-btn) {
-        padding-left: .6rem;
-        padding-right: .6rem;
-        padding-bottom: 0;
-    }
+  &:hover {
+    color: $hunyadi_yellow !important;
+  }
+
+  &:global(.ant-btn) {
+    padding-left: .6rem;
+    padding-right: .6rem;
+    padding-bottom: 0;
+  }
 }
 
 .menu {
-    margin-right: 1.6rem;
-    cursor: pointer;
-    z-index: inherit;
+  margin-right: 1.6rem;
+  cursor: pointer;
+  z-index: inherit;
 }
 
 .menuIcon {
-    height: $menu_icon_size;
-    width: $menu_icon_size;
-    stroke: white;
-    &:hover{
-        stroke: $hunyadi_yellow !important;
-    }
+  height: $menu_icon_size;
+  width: $menu_icon_size;
+  stroke: white;
+
+  &:hover {
+    stroke: $hunyadi_yellow !important;
+  }
 }
 
 
 :global(.ant-dropdown-menu-item) {
-    transition: all .2s ease;
-    -webkit-transition: all .2s ease;
-    &:hover{
-        color: $hunyadi_yellow !important;
-    }
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+
+  &:hover {
+    color: $hunyadi_yellow !important;
+  }
 }
 
 .menuItem {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 @media screen and (max-width: $tablet_screen_width) {
-    .name {
-        font-size: 2rem;
-        margin-left: 1.2rem;
-    }
-    .actions {
-        display: none;
-    }
+  .name {
+    font-size: 2rem;
+    margin-left: 1.2rem;
+  }
+  .actions {
+    display: none;
+  }
 }
 
 @media screen and (min-width: calc($tablet_screen_width + 1px)) {
-    .menu {
-        display: none;
-    }
+  .menu {
+    display: none;
+  }
 }
 
 @media screen and (max-width: $mini_mobile_screen_width) {
-    .name {
-        font-size: 1.6rem;
-        margin-left: 1rem;
-    }
+  .name {
+    font-size: 1.6rem;
+    margin-left: 1rem;
+  }
 }
 
 @media screen and (max-height: $mobile_landscape_screen_height) {
-    .name {
-        font-size: 1.6rem;
-        margin-left: 1rem;
-    }
+  .name {
+    font-size: 1.6rem;
+    margin-left: 1rem;
+  }
 
-    .menuIcon {
-        height: $mini_menu_icon_size;
-        width: $mini_menu_icon_size;
-    }
+  .menuIcon {
+    height: $mini_menu_icon_size;
+    width: $mini_menu_icon_size;
+  }
 
-    .container {
-        height: $mini_nav_bar_height;
-    }
+  .container {
+    height: $mini_nav_bar_height;
+  }
 }

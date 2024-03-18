@@ -12,15 +12,19 @@ $mobile_landscape_screen_height: 650px;
 $mini_mobile_screen_width: 360px;
 $min_history_banner_height: 9.6rem;
 
-@mixin flex{
+@mixin flex {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
 
-@mixin full-width{
+@mixin full-width {
   width: 100%;
+}
+
+@mixin full-height {
+  height: 100%;
 }
 
 @mixin section-heading {
@@ -39,6 +43,14 @@ $min_history_banner_height: 9.6rem;
   @media screen and (max-width: $mobile_screen_width) {
     font-size: 1.2rem;
   }
+}
+
+@mixin resize-transition {
+  transition: width 1s ease-in-out, height 1s ease-in-out;
+}
+
+@mixin transition {
+  transition: .3s ease-in-out;
 }
 
 @mixin item-mini-title {
@@ -70,6 +82,7 @@ $argentinian_blue: #57b8ff;
 $tigers_eye_brown: #b66d0d;
 $text_yellow: #fcc923;
 $hunyadi_yellow: #fbb13c;
+$hunyadi_yellow_trans: rgba(251, 177, 60, 0.8);
 $tomato_red: #fe6847;
 $dutch_white: #e8dab2;
 $payne_grey: #4F6D7A;
@@ -81,6 +94,7 @@ $burnt_red: #DD6E42;
 $chrome_yellow: #fcbc1d;
 $dark_chrome_yellow: #fca31d;
 $light_matte_grey: #4f525d;
+$mid_matte_grey: #3c3d3f;
 $matte_grey: #202124;
 $light_trans_matte_grey: #20212488;
 $dark_trans_matte_grey: #202124DF;

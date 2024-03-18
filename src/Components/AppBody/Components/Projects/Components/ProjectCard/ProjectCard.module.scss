@@ -1,7 +1,8 @@
-@import "../../../../../../styles.module";
+@import "styles.module";
 
 $max_card_size: 16rem;
 $small_card_size: 13rem;
+$very_small_card_size: 10rem;
 $tablet_card_size: 12rem;
 $tablet_small_card_size: 10rem;
 $mobile_card_width: 9rem;
@@ -13,18 +14,18 @@ $mobile_landscape_small_card_height: 8rem;
 
 .container {
   @include flex;
-  background: rgba(255, 255, 255,100) no-repeat center;
-  background-size: 100%;
   width: $max_card_size;
+  min-width: $max_card_size;
   height: $max_card_size;
+  min-height: $max_card_size;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
-  box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0.15rem 0.15rem 0.35rem 0.25rem rgba(0, 0, 0, 0.6);
   border-radius: .4rem;
   margin: 1.2rem;
   position: relative;
 
-  &.smallCard{
+  &.smallCard {
     width: $small_card_size;
     height: $small_card_size;
     margin: .8rem;
@@ -32,82 +33,33 @@ $mobile_landscape_small_card_height: 8rem;
 
   }
 
-  @media screen and (max-width: $tablet_screen_width) {
-    width: $tablet_card_size;
-    height: $tablet_card_size;
-    &.smallCard {
-      width: $tablet_small_card_size;
-      height: $tablet_small_card_size;
-      & .title {
-        font-size: 1.2rem;
-      }
-      & .githubButton {
-        bottom: .2rem;
-        right: .2rem;
-        &:global(.ant-btn) {
-          font-size: .7rem;
-          height: 2rem;
-          width: 2rem;
-        }
-      }
-    }
-  }
-  
-  @media screen and (max-width: $mobile_screen_width) {
-    width: $mobile_card_width;
+  &.verySmallCard {
+    width: $very_small_card_size;
+    height: $very_small_card_size;
     margin: .6rem;
-    &.smallCard {
-      width: $mobile_small_card_width;
-      height: $mobile_small_card_height;
-      & .title {
-        font-size: 1rem;
-      }
 
-      & .githubButton {
-        bottom: .2rem;
-        right: .2rem;
-        &:global(.ant-btn) {
-          font-size: .7rem;
-          height: 2rem;
-          width: 2rem;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-height: $mobile_landscape_screen_height) {
-    width: $mobile_landscape_card_size;
-    &.smallCard {
-      width: $mobile_landscape_small_card_width;
-      height: $mobile_landscape_small_card_height;
-      & .title {
-        font-size: 1rem;
-      }
-
-      & .githubButton {
-        bottom: .2rem;
-        right: .2rem;
-        &:global(.ant-btn) {
-          font-size: .7rem;
-          height: 2rem;
-          width: 2rem;
-        }
-      }
-    }
-  }
-
-  @media (pointer:coarse) {
-    &:not(.openCard) {
-      box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.3) !important;
-      transform: none !important;
+    & .title {
+      font-size: 1rem;
     }
   }
 }
 
 .openCard, .container:hover {
-  box-shadow: .2rem .2rem .3rem .2rem rgba(0,0,0,.5);
+  box-shadow: 0.25rem 0.25rem 0.4rem 0.3rem rgba(0, 0, 0, 1);
   transform: translate3d(0, -0.4rem, 0);
   cursor: pointer;
+
+  & .backgroundImage {
+    filter: saturate(1) contrast(1.2);
+  }
+
+  & .title{
+    color: black;
+  }
+
+  & .cardContent {
+    border: 0.2rem solid $hunyadi_yellow_trans;
+  }
 }
 
 .cardContent {
@@ -119,8 +71,9 @@ $mobile_landscape_small_card_height: 8rem;
   width: 100%;
   @include flex;
   background-color: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(5px);
   border-radius: .4rem;
+  border: 0.15rem solid $hunyadi_yellow_trans;
   color: black;
 }
 
@@ -128,13 +81,11 @@ $mobile_landscape_small_card_height: 8rem;
   flex-grow: 1;
   @include item-title;
   font-weight: 500;
-  color: white;
   margin: .4rem 0 0.4rem 0;
   border-radius: 0.2rem;
   padding: 0.2rem 0.4rem;
   text-align: center;
-  text-shadow: 0.15rem 0.15rem .5rem rgba(0, 0, 0, .5);
-
+  transition: .2s ease;
 }
 
 .description {
@@ -146,10 +97,126 @@ $mobile_landscape_small_card_height: 8rem;
   margin-bottom: 1rem;
 }
 
+.backgroundImage {
+  position: absolute;
+  filter: saturate(0) contrast(1.5);
+  background: rgba(255, 255, 255, 100) no-repeat center;
+  background-size: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  border-radius: 0.4rem;
+  transition: .2s ease;
+}
+
 .githubButton {
   position: absolute;
   bottom: .5rem;
   right: .5rem;
   background: transparent;
   border-color: black;
+  transition: opacity 1s ease, color .2s ease, border-color .2s ease;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &:hover {
+    color: $honolulu_blue !important;
+    border-color: $honolulu_blue !important;
+  }
 }
+
+@media screen and (max-width: $tablet_screen_width) {
+  .container {
+    width: $tablet_card_size;
+    height: $tablet_card_size;
+
+    &.smallCard {
+      width: $tablet_small_card_size;
+      height: $tablet_small_card_size;
+
+      & .title {
+        font-size: 1.2rem;
+      }
+
+      & .githubButton {
+        bottom: .2rem;
+        right: .2rem;
+
+        &:global(.ant-btn) {
+          font-size: .7rem;
+          height: 2rem;
+          width: 2rem;
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: $mobile_screen_width) {
+  .container {
+    width: $mobile_card_width;
+    margin: .6rem;
+
+    &.smallCard {
+      width: $mobile_small_card_width;
+      height: $mobile_small_card_height;
+
+      & .title {
+        font-size: 1rem;
+      }
+
+      & .githubButton {
+        bottom: .2rem;
+        right: .2rem;
+
+        &:global(.ant-btn) {
+          font-size: .7rem;
+          height: 2rem;
+          width: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-height: $mobile_landscape_screen_height) {
+  .container {
+    width: $mobile_landscape_card_size;
+
+    &.smallCard {
+      width: $mobile_landscape_small_card_width;
+      height: $mobile_landscape_small_card_height;
+
+      & .title {
+        font-size: 1rem;
+      }
+
+      & .githubButton {
+        bottom: .2rem;
+        right: .2rem;
+
+        &:global(.ant-btn) {
+          font-size: .7rem;
+          height: 2rem;
+          width: 2rem;
+        }
+      }
+    }
+  }
+}
+
+@media (pointer: coarse) {
+  .container {
+    &:not(.openCard) {
+      box-shadow: 0.1rem 0.1rem 0.3rem 0.2rem rgba(0, 0, 0, 0.6) !important;
+      transform: none !important;
+    }
+  }
+}
+
+

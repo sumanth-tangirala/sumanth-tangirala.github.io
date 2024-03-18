@@ -1,0 +1,94 @@
+@import 'src/styles.module.scss';
+
+$item_list_width: 30rem;
+
+.container {
+  @include flex();
+  @include resize-transition;
+  min-height: calc(100vh - $nav_bar_height);
+  background: $dark_trans_matte_grey;
+  backdrop-filter: blur(4px);
+  align-items: stretch;
+  flex-direction: row;
+  width: 100%;
+
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    min-height: calc(100vh - $mini_nav_bar_height);
+    padding: 0 2rem;
+    width: calc(100% - 4rem) !important;
+  }
+}
+
+.itemsContainer {
+  @include flex;
+  @include resize-transition;
+
+  flex-grow: 1;
+  position: relative;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.sectionHeading {
+  color: white;
+  margin: 1rem 0;
+  @include flex;
+  @include resize-transition;
+}
+
+.itemsGrid {
+  @include resize-transition;
+  @include flex;
+
+  flex-grow: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1rem 10%;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: inset $dark_trans_matte_grey 0 0 1rem 0.8rem;
+  background: $light_trans_matte_grey;
+  margin-bottom: 1rem;
+  border-radius: .4rem;
+}
+
+.itemDetails {
+  @include resize-transition;
+  width: 0;
+}
+
+.itemDetailsContent {
+  @include full-width;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  //box-shadow: inset $dark_trans_matte_grey 0 0 1rem 0.8rem;
+  //background: $light_trans_matte_grey;
+  //border-radius: .4rem;
+}
+
+
+.detailsVisible {
+  &.container {
+    height: calc(100vh - $nav_bar_height);
+  }
+
+  & .itemsContainer {
+    width: $item_list_width;
+  }
+
+  & .itemDetails {
+    width: calc(100% - $item_list_width);
+  }
+
+  & .itemsGrid {
+    width: calc(100%);
+    padding: 1rem 0 1rem 0;
+    overflow: scroll;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: .4rem;
+    margin-bottom: 1rem;
+  }
+}

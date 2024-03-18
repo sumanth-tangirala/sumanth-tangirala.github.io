@@ -1,31 +1,37 @@
-import React, {memo} from 'react';
+import React, { memo } from "react";
 
 import cx from "classnames";
-import _map from "lodash/map";
 
-import text from 'text';
+import ItemGrid from "../../../ItemGrid";
 
-import styles from './Skills.module.scss';
-import {SECTION_TYPE_VS_NAME} from "constants.js";
+import text from "text";
 import SkillCard from "./SkillCard";
+import { SECTION_TYPES } from "../../../../constants";
+import SkillDetailsPanel from "./SkillDetailsPanel";
 
-function Skills({className, sectionRef, sectionHeadingClassName}) {
+const DISABLE_CARD_DETAILS = true;
+
+class Skills extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDetailsVisible: false,
+    };
+  }
+
+  render() {
     return (
-        <div className={cx(styles.container, className)} ref={sectionRef}>
-            <div className={cx(sectionHeadingClassName, styles.sectionHeading)}>
-                {SECTION_TYPE_VS_NAME['SKILLS']}
-            </div>
-            <div className={styles.skillsGrid}>
-                {_map(text.skills, (skill, idx) => (
-                <SkillCard
-                    key={idx}
-                    idx={idx}
-                    {...skill}
-                />
-            ))}
-            </div>
-        </div>
+      <ItemGrid
+        containerRef={this.props.sectionRef}
+        items={text.skills}
+        itemCardComponent={SkillCard}
+        itemDetailsContentComponent={SkillDetailsPanel}
+        sectionName={SECTION_TYPES.SKILLS}
+        sectionHeadingClassName={this.props.sectionHeadingClassName}
+        disableCardDetails={DISABLE_CARD_DETAILS}
+      />
     );
+  }
 }
 
 Skills.propTypes = {};

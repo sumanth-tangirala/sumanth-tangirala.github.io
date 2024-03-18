@@ -6,7 +6,7 @@ $mobile_img_size: 10rem;
 $mobile_landscape_img_size: 7.2rem;
 $backgroundColor: $dark_trans_matte_grey;
 
-.landing{
+.landing {
   backdrop-filter: blur(4px);
   height: 100vh;
   @include flex();
@@ -36,7 +36,7 @@ $backgroundColor: $dark_trans_matte_grey;
   text-shadow: 0.25rem 0.25rem .8rem rgba(0, 0, 0, .5);
 }
 
-.tagline{
+.tagline {
   color: $text_blue;
   font-size: 2rem;
   margin-top: 4rem;
@@ -45,7 +45,7 @@ $backgroundColor: $dark_trans_matte_grey;
 }
 
 @media screen and (max-width: $tablet_screen_width) {
-  .image{
+  .image {
     height: $tablet_img_size;
     width: $tablet_img_size;
     margin-bottom: 2rem;
@@ -55,23 +55,23 @@ $backgroundColor: $dark_trans_matte_grey;
     font-size: 4rem;
   }
 
-  .tagline{
+  .tagline {
     font-size: 2rem;
     margin-top: 2rem;
   }
-  .container{
+  .container {
     max-width: 70%;
   }
 }
 
 @media screen and (max-width: $mobile_screen_width) {
-    .image{
-      height: $mobile_img_size;
-      width: $mobile_img_size;
-      margin-bottom: 2rem;
-    }
+  .image {
+    height: $mobile_img_size;
+    width: $mobile_img_size;
+    margin-bottom: 2rem;
+  }
 
-  .tagline{
+  .tagline {
     font-size: 1.6rem;
     margin-top: 1.6rem;
   }
@@ -80,7 +80,7 @@ $backgroundColor: $dark_trans_matte_grey;
     font-size: 3.2rem;
   }
 
-  .container{
+  .container {
     padding-left: .6rem;
     padding-right: .6rem;
     max-width: 60%;
@@ -88,7 +88,7 @@ $backgroundColor: $dark_trans_matte_grey;
 }
 
 @media screen and (max-height: $mobile_landscape_screen_height) {
-  .image{
+  .image {
     height: $mobile_landscape_img_size;
     width: $mobile_landscape_img_size;
     margin-bottom: 1rem;

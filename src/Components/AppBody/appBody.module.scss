@@ -1,11 +1,13 @@
 @import 'src/styles.module.scss';
 
 .childSection {
-    scroll-snap-align: start;
-    @include full-width;
-    overflow: hidden;
+  @include full-width;
+  @include resize-transition;
+
+  scroll-snap-align: start;
+  overflow: hidden;
 }
 
 .sectionHeading {
-    @include section-heading;
+  @include section-heading;
 }
