@@ -1,15 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import styles from "./ProjectDetailsPanel.module.scss";
-import cx from "classnames";
 import _isList from "lodash/isArray";
 import _map from "lodash/map";
 import { GithubOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
 function ProjectDetailsPanel({ item }) {
-  const { techStack, longDesc, details, githubURL } = item;
+  const { techStack, longDesc, githubURL } = item;
 
   return (
     <div className={styles.container}>

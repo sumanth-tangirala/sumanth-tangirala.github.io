@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 
 import styles from "./ItemDetailsPanel.module.scss";
 import { CloseOutlined } from "@ant-design/icons";

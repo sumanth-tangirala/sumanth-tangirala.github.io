@@ -1,16 +1,7 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
-import cx from "classnames";
-
-import _keyBy from "lodash/keyBy";
-import _curry from "lodash/curry";
+import React, { memo } from "react";
 
 import text from "text";
 
-import ProjectModal from "./Components/ProjectModal/ProjectModal";
-
-import styles from "./Projects.module.scss";
-import _size from "lodash/size";
-import ProjectSubSection from "./ProjectsSubSection";
 import { SECTION_TYPES } from "../../../../constants";
 import ItemGrid from "../../../ItemGrid/ItemGrid";
 import ProjectCard from "./Components/ProjectCard";

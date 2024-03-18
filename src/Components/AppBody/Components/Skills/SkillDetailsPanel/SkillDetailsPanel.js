@@ -1,29 +1,17 @@
-import React, { useCallback, useMemo, useState } from "react";
-
-import _size from "lodash/size";
-import _map from "lodash/map";
-
-import PublicationItem from "../../Publications/PublicationItem";
-import ProjectModal from "../../Projects/Components/ProjectModal";
+import React from "react";
 
 import styles from "./SkillDetailsPanel.module.scss";
-import ProjectCard from "../../Projects/Components/ProjectCard";
 
 function SkillDetailsPanel({ projectsById, publicationsById, item: skill }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [[openKey, openProjectIdx], setOpenProjectIdx] = useState([]);
-  const [hasLeft, setHasLeft] = useState(false);
-  const [hasRight, setHasRight] = useState(false);
-
-  const {
-    title,
-    // description,
-    // imgPath,
-    // imgStyle,
-    projects,
-    publications,
-  } = skill;
-
+  // const {
+  //   title,
+  //   description,
+  //   imgPath,
+  //   imgStyle,
+  //   projects,
+  //   publications,
+  // } = skill;
+  //
   // const skillProjects = useMemo(
   //   () => _map(projects, (projectId) => projectsById[projectId]),
   //   [projects, projectsById],

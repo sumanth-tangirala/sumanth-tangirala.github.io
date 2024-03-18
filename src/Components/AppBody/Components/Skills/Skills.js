@@ -1,7 +1,5 @@
 import React, { memo } from "react";
 
-import cx from "classnames";
-
 import ItemGrid from "../../../ItemGrid";
 
 import text from "text";

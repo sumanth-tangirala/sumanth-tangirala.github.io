@@ -38,17 +38,17 @@ function ProjectCard({
       backgroundImage: `url(${imgPath})`,
       backgroundColor,
     };
-  }, [imgPath, backgroundColor, contrast]);
+  }, [imgPath, backgroundColor]);
 
   const handleMoveEnter = useCallback(() => {
     if (selectedIdx === idx) return;
     setTextColor(actualTextColor);
-  }, [textColor, selectedIdx, idx]);
+  }, [selectedIdx, idx, actualTextColor]);
 
   const handleMoveLeave = useCallback(() => {
     if (selectedIdx === idx) return;
     setTextColor(DEFAULT_TEXT_COLOR);
-  }, [textColor, selectedIdx, idx]);
+  }, [selectedIdx, idx]);
 
   useEffect(() => {
     if (selectedIdx === idx) {
@@ -56,7 +56,7 @@ function ProjectCard({
     } else {
       setTextColor(DEFAULT_TEXT_COLOR);
     }
-  }, [selectedIdx, idx]);
+  }, [selectedIdx, idx, actualTextColor]);
 
   return (
     <div
