@@ -7,11 +7,11 @@ $mobile_landscape_img_size: 7.2rem;
 $backgroundColor: $dark_trans_matte_grey;
 
 .landing {
-  backdrop-filter: blur(4px);
   height: 100vh;
   @include flex();
   justify-content: center;
-  background: $backgroundColor;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .container {
@@ -37,7 +37,7 @@ $backgroundColor: $dark_trans_matte_grey;
 }
 
 .tagline {
-  color: $text_blue;
+  color: $hunyadi_yellow;
   font-size: 2rem;
   margin-top: 4rem;
   text-align: center;

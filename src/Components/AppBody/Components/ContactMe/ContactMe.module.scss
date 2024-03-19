@@ -3,10 +3,7 @@
 $img_size: 2.8rem;
 
 .container {
-  background: transparent;
-  backdrop-filter: blur(7px);
   height: 28rem;
-  width: 100%;
   @include flex();
   @media screen and (max-height: $mobile_landscape_screen_height) {
     height: 24rem;
@@ -36,7 +33,7 @@ $img_size: 2.8rem;
 }
 
 .emailText {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: 500;
   padding-right: .8rem;
   @media screen and (max-width: $mobile_screen_width) {
@@ -47,8 +44,9 @@ $img_size: 2.8rem;
 
 .emailId {
   text-decoration: none;
-  font-size: 1.2rem;
-  color: $honolulu_blue;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: $text_blue;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
 

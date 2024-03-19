@@ -22,7 +22,7 @@ $mobile_landscape_small_card_height: 8rem;
   -webkit-transition: all .2s ease;
   box-shadow: 0.15rem 0.15rem 0.35rem 0.25rem rgba(0, 0, 0, 0.6);
   border-radius: .4rem;
-  margin: 1.2rem;
+  margin: 1.6rem;
   position: relative;
 
   &.smallCard {
@@ -55,10 +55,12 @@ $mobile_landscape_small_card_height: 8rem;
 
   & .title{
     color: black;
+    background: none;
   }
 
   & .cardContent {
-    border: 0.2rem solid $hunyadi_yellow_trans;
+    //background-color: rgba(32, 33, 36, 0.3);
+    background-color: unset;
   }
 }
 
@@ -70,20 +72,19 @@ $mobile_landscape_small_card_height: 8rem;
   flex-grow: 1;
   width: 100%;
   @include flex;
-  background-color: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(5px);
+  justify-content: flex-start;
+  background-color: $light_trans_matte_grey;
+  backdrop-filter: blur(2px);
   border-radius: .4rem;
   border: 0.15rem solid $hunyadi_yellow_trans;
   color: black;
 }
 
 .title {
-  flex-grow: 1;
   @include item-title;
   font-weight: 500;
-  margin: .4rem 0 0.4rem 0;
+  padding: .5rem .5rem 0 .5rem;
   border-radius: 0.2rem;
-  padding: 0.2rem 0.4rem;
   text-align: center;
   transition: .2s ease;
 }
@@ -99,7 +100,7 @@ $mobile_landscape_small_card_height: 8rem;
 
 .backgroundImage {
   position: absolute;
-  filter: saturate(0) contrast(1.5);
+  filter: saturate(0);
   background: rgba(255, 255, 255, 100) no-repeat center;
   background-size: 100%;
   top: 0;
@@ -116,7 +117,8 @@ $mobile_landscape_small_card_height: 8rem;
   bottom: .5rem;
   right: .5rem;
   background: transparent;
-  border-color: black;
+  color: white !important;
+  border-color: white;
   transition: opacity 1s ease, color .2s ease, border-color .2s ease;
 
   &.hidden {
@@ -124,8 +126,9 @@ $mobile_landscape_small_card_height: 8rem;
   }
 
   &:hover {
-    color: $honolulu_blue !important;
-    border-color: $honolulu_blue !important;
+    color: $ink_blue !important;
+    border-color: $ink_blue !important;
+
   }
 }
 

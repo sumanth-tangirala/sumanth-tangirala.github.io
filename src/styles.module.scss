@@ -1,4 +1,4 @@
-$nav_bar_height: 4rem;
+$nav_bar_height: 8rem;
 $mini_nav_bar_height: 2.8rem;
 $backgroundColor: white;
 $mobile_width: 750px;
@@ -46,7 +46,7 @@ $min_history_banner_height: 9.6rem;
 }
 
 @mixin resize-transition {
-  transition: width 1s ease-in-out, height 1s ease-in-out;
+  transition: width .5s ease-in-out, height .5s ease-in-out;
 }
 
 @mixin transition {
@@ -79,6 +79,7 @@ $min_history_banner_height: 9.6rem;
 $honolulu_blue: #2176ae;
 $text_blue: #48A6E9;
 $argentinian_blue: #57b8ff;
+$ink_blue: #16264C;
 $tigers_eye_brown: #b66d0d;
 $text_yellow: #fcc923;
 $hunyadi_yellow: #fbb13c;
@@ -93,7 +94,7 @@ $aluminium: #a7adba;
 $burnt_red: #DD6E42;
 $chrome_yellow: #fcbc1d;
 $dark_chrome_yellow: #fca31d;
-$light_matte_grey: #4f525d;
+$light_matte_grey: #3b3e46;
 $mid_matte_grey: #3c3d3f;
 $matte_grey: #202124;
 $light_trans_matte_grey: #20212488;

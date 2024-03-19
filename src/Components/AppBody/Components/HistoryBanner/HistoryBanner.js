@@ -26,7 +26,7 @@ function HistoryBanner({ className, sectionRef }) {
   );
 
   return (
-    <div className={cx(styles.container, className)} ref={sectionRef}>
+    <div className={cx(styles.container)} ref={sectionRef}>
       {imagesComponents}
     </div>
   );

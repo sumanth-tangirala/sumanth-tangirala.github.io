@@ -3,7 +3,7 @@ import cx from "classnames";
 import styles from "./Publications.module.scss";
 import { parse } from "../../../../helpers";
 
-function PublicationItem({ publication, idx, color = "black", smallFont }) {
+function PublicationItem({ publication, idx, color = "white", smallFont }) {
   return (
     <div
       key={idx}
@@ -19,14 +19,15 @@ function PublicationItem({ publication, idx, color = "black", smallFont }) {
           {parse(publication.venue)}
         </div>
       )}
-      <div className={styles.publicationLinks}>
+      <div className={styles.publicationLinksContainer}>
         {publication.link && (
-          <div className={styles.publicationArXiv}>
+          <div>
             [
             <a
               href={publication.link}
               target="_blank"
               rel="noopener noreferrer"
+              className={styles.publicationLink}
             >
               link
             </a>
@@ -34,12 +35,13 @@ function PublicationItem({ publication, idx, color = "black", smallFont }) {
           </div>
         )}
         {publication.arXiv && (
-          <div className={styles.publicationArXiv}>
+          <div>
             [
             <a
               href={publication.arXiv}
               target="_blank"
               rel="noopener noreferrer"
+              className={styles.publicationLink}
             >
               arXiv
             </a>

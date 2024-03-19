@@ -10,6 +10,8 @@ import { SECTION_TYPE_VS_NAME } from "constants.js";
 import { scrollParentToChild } from "helpers";
 import ItemDetailsPanel from "./ItemDetailsPanel";
 import PropTypes from "prop-types";
+import { RightOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 class ItemGrid extends React.Component {
   constructor(props) {
@@ -34,12 +36,11 @@ class ItemGrid extends React.Component {
       this.props.containerRef.current.scrollIntoView({ behavior: "smooth" });
       setTimeout(() => {
         if (this.itemRefs[idx].current) {
-          console.log("hi");
           scrollParentToChild(
             this.gridRef.current,
             this.itemRefs[idx].current,
+            10,
             100,
-            150,
           );
         } else {
           console.warn("No ref found for idx", idx);
@@ -72,7 +73,13 @@ class ItemGrid extends React.Component {
           {SECTION_TYPE_VS_NAME[this.props.sectionName]}
         </div>
 
-        <div className={cx(styles.itemsGrid)} ref={this.gridRef}>
+        <div
+          className={cx(
+            styles.itemsGridContainer,
+            this.props.itemsGridClassName,
+          )}
+          ref={this.gridRef}
+        >
           {_map(this.props.items, (Item, idx) => (
             <ItemCard
               cardRef={this.itemRefs[idx]}

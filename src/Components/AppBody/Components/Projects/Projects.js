@@ -2,6 +2,7 @@ import React, { memo } from "react";
 
 import text from "text";
 
+import styles from "./Projects.module.scss";
 import { SECTION_TYPES } from "../../../../constants";
 import ItemGrid from "../../../ItemGrid/ItemGrid";
 import ProjectCard from "./Components/ProjectCard";
@@ -17,6 +18,8 @@ function Projects({ className, sectionRef, sectionHeadingClassName }) {
         itemDetailsContentComponent={ProjectDetailsPanel}
         sectionName={SECTION_TYPES.PROJECTS}
         sectionHeadingClassName={sectionHeadingClassName}
+        className={className}
+        itemsGridClassName={styles.itemsGrid}
       />
     </>
   );

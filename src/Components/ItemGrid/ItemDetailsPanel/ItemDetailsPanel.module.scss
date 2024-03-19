@@ -4,6 +4,43 @@
   0% {
     opacity: 0;
   }
+
+  10% {
+    opacity: 0.1;
+  }
+
+  20% {
+    opacity: 0.2;
+  }
+
+  30% {
+    opacity: 0.3;
+  }
+
+  40% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  60% {
+    opacity: 0.6;
+  }
+
+  70% {
+    opacity: 0.7;
+  }
+
+  80% {
+    opacity: 0.8;
+  }
+
+  90% {
+    opacity: 0.9;
+  }
+
   100% {
     opacity: 1;
   }
@@ -13,8 +50,25 @@
 .container {
   @include flex;
   @include full-height;
-  padding: .5rem;
-  padding-left: 1.6rem;
+
+  //&.visibleContainer {
+  //  padding: .5rem .5rem .5rem 0;
+  //}
+}
+
+.detailsContainer {
+  @include flex;
+  @include full-height;
+  flex-direction: row;
+  padding: 1rem 0;
+}
+
+.contentContainer {
+  @include full-height;
+  width: 100%;
+  flex-grow: 1;
+  @include flex;
+  padding-left: 0.6rem;
 }
 
 .skillDetailHeading {
@@ -34,10 +88,10 @@
 }
 
 .closeDetailsButton {
-  position: absolute;
-  top: 1.5rem;
-  right: 1rem;
-  font-size: 1.6rem;
+  width: 2rem !important;
+  height: 5rem !important;
+  margin-right: .6rem !important;
+  font-size: 1.4rem !important;
   color: white;
   background: transparent;
   border: none;

@@ -1,11 +1,11 @@
 @import 'src/styles.module.scss';
 
-$color1: white;
+$color1: $light_matte_grey;
 $color2: transparent;
-$color3: $dark_chrome_yellow;
+$color3: $hunyadi_yellow;
 $color4: transparent;
-$text_color1: $matte_grey;
-$text_color2: black;
+$text_color1: white;
+$text_color2: white;
 $text_color4: $color2;
 
 $img_size: 8rem;
@@ -14,20 +14,17 @@ $border_size: 1rem;
 
 
 .container {
-  width: 100%;
   z-index: 3;
   position: relative;
   @include flex();
-  backdrop-filter: blur(8px);
 }
 
 .sectionTitle {
-  border: .8rem solid $color3;
   border-radius: 2rem;
   padding: 1rem;
   @include section-heading;
-  background: white;
-  margin-top: 1rem;
+  background: transparent;
+  margin: 1rem 0 2rem 0;
 }
 
 .timeline {
@@ -41,14 +38,14 @@ $border_size: 1rem;
 
 
   &.evenCount {
-    background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% + .5rem) 0/1.5rem 1.5rem no-repeat,
-    radial-gradient(farthest-side at bottom left, $color3 98%, #0000) calc(50% + .5rem) 100%/1rem 1rem no-repeat,
+    background: radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
+    radial-gradient(farthest-side at top left, $color3 98%, #0000) calc(50% + 1.6rem) 100%/1.5rem 1.5rem no-repeat,
     linear-gradient(90deg, $color2 50%, $color4 0);
   }
 
   &.oddCount {
-    background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% + .5rem) 0/1.5rem 1.5rem no-repeat,
-    radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50% + .3rem) 100%/1rem 1rem no-repeat,
+    background: radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
+    radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% + .3rem) 100%/1.5rem 1.5rem no-repeat,
     linear-gradient(90deg, $color2 50%, $color4 0);
   }
 }
@@ -96,7 +93,6 @@ $border_size: 1rem;
 
   &:nth-child(even) .date {
     left: auto;
-    color: black !important;
     right: calc(100% + 5rem);
   }
 
@@ -122,7 +118,7 @@ $border_size: 1rem;
 }
 
 .date {
-  color: black;
+  color: white;
   position: absolute;
   @include item-description;
   left: calc(100% + 5rem);
@@ -137,7 +133,7 @@ $border_size: 1rem;
     top: calc(50% - .5rem);
     right: calc(100% + .5rem);
     width: 3.5rem;
-    background: repeating-linear-gradient(-90deg, black 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+    background: repeating-linear-gradient(-90deg, white 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
   }
 
   & .miniDate {

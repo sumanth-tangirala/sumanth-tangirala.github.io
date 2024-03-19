@@ -6,21 +6,25 @@ $tablet_img_max_height: 6rem;
 $tablet_img_max_width: 9rem;
 
 .container {
-  z-index: 2;
   min-height: $min_history_banner_height;
-  width: 100%;
-  backdrop-filter: blur(8px);
-  //background-color: $light_trans_matte_grey;
-  box-shadow: 0 -0.05rem .8rem 0.2rem rgba(0, 0, 0, 0.2);
+  //backdrop-filter: blur(0px) !important;
+  //background-color: $matte_grey !important;
+  //box-shadow: 0 -0.05rem .8rem 0.2rem rgba(0, 0, 0, 0.2);
+  box-shadow: inset rgba(0, 0, 0, 0.3) 0 0 1rem 0.8rem;
+  background: $light_trans_matte_grey;
   @include flex;
   flex-direction: row;
   flex-wrap: wrap;
+  border-radius: 6rem;
+  margin: 0 3vw;
+  padding: .2rem 0;
 }
 
 .image {
   max-height: $img_max_height;
   max-width: $img_max_width;
-  padding: .8rem .4rem;
+  padding: 1rem 1rem;
+  border-radius: 1rem;
 }
 
 @media screen and (max-width: $tablet_screen_width) {

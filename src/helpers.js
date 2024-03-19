@@ -77,10 +77,10 @@ export const scrollParentToChild = (parent, child, time, discretization) => {
     const scrollBot = childRect.bottom - parentRect.bottom;
     if (Math.abs(scrollTop) < Math.abs(scrollBot)) {
       // we're near the top of the list
-      scrollAmount = scrollTop;
+      scrollAmount = scrollTop - 20;
     } else {
       // we're near the bottom of the list
-      scrollAmount = scrollBot;
+      scrollAmount = scrollBot + 20;
     }
   }
 

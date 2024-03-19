@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import styles from "./ItemDetailsPanel.module.scss";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, RightOutlined } from "@ant-design/icons";
 import cx from "classnames";
 import { Button } from "antd";
 
@@ -20,28 +20,34 @@ function ItemDetailsPanel({
     else {
       setTimeout(() => {
         setIsDetailsVisible(isVisible);
-      }, 1000);
+      }, 600);
     }
   }, [isVisible]);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={cx(styles.container, {
+        [styles.visibleContainer]: isDetailsVisible,
+      })}
+    >
       {isDetailsVisible && isVisible && (
-        <>
-          <div className={styles.skillDetailHeading}>
-            <div className={cx(styles.sectionHeading)}>{item.title}</div>
-            <Button
-              icon={<CloseOutlined />}
-              type="text"
-              className={cx(styles.closeDetailsButton)}
-              onClick={closeDetailsPanel}
-              size="large"
-            />
+        <div className={styles.detailsContainer}>
+          <Button
+            icon={<RightOutlined />}
+            type="text"
+            className={cx(styles.closeDetailsButton)}
+            onClick={closeDetailsPanel}
+            size="large"
+          />
+          <div className={styles.contentContainer}>
+            <div className={styles.skillDetailHeading}>
+              <div className={cx(styles.sectionHeading)}>{item.title}</div>
+            </div>
+            <div className={cx(itemDetailsContentClassname, styles.content)}>
+              <ItemDetailsContentComponent item={item} />
+            </div>
           </div>
-          <div className={cx(itemDetailsContentClassname, styles.content)}>
-            <ItemDetailsContentComponent item={item} />
-          </div>
-        </>
+        </div>
       )}
     </div>
   );

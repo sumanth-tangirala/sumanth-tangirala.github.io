@@ -27,6 +27,7 @@ class Skills extends React.Component {
         sectionName={SECTION_TYPES.SKILLS}
         sectionHeadingClassName={this.props.sectionHeadingClassName}
         disableCardDetails={DISABLE_CARD_DETAILS}
+        className={this.props.className}
       />
     );
   }

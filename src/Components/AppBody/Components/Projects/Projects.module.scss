@@ -1,52 +1,6 @@
 @import 'src/styles.module.scss';
 
-.container {
-  background: $dark_trans_matte_grey;
-  backdrop-filter: blur(4px);
-  width: 100%;
-  min-height: calc(100vh - $nav_bar_height);
-  @include flex();
-  box-shadow: 0 0.7rem 0.8rem 0.2rem rgba(0, 0, 0, 0.2);
-  z-index: 2;
-  position: relative;
-
-  @media screen and (max-height: $mobile_landscape_screen_height) {
-    min-height: calc(100vh - $mini_nav_bar_height);
-  }
+.itemsGrid {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
-
-.projects {
-  flex-grow: 1;
-  @include flex();
-  justify-content: center !important;
-}
-
-.subSection {
-  @include flex;
-
-  &:not(:first-child) {
-    & .projectsSubGrid {
-      padding-top: 0;
-      margin-top: 0;
-    }
-  }
-}
-
-.projectsSubGrid {
-  @include flex();
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 0 2rem;
-  width: calc(100% - 4rem) !important;
-  margin: 1.5rem 0 2rem 0;
-
-  &:first-child {
-    margin-top: 2rem;
-    justify-content: center;
-  }
-
-  &:not(:first-child) {
-    justify-content: center;
-  }
-}
-

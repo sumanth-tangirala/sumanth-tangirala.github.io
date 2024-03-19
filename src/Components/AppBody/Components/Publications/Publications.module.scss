@@ -2,9 +2,6 @@
 
 .sectionContainer {
   @include flex;
-  width: 100%;
-  padding: 2.4rem 0;
-  backdrop-filter: blur(10px);
 }
 
 .smallFont {
@@ -22,12 +19,15 @@
 
 .subSectionTitle {
   @include item-title;
+  color: $hunyadi_yellow;
+  font-size: 1.6rem;
   margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.6rem;
   font-weight: 500;
 }
 
 .publication {
+  padding-left: 1rem;
   &:not(:first-child) {
     margin-top: 2rem;
   }
@@ -38,21 +38,34 @@
 }
 
 .publicationTitle {
-  font-style: italic;
   font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.publicationAuthors {
+  margin-top: 1rem;
+  font-size: 1.1rem;
 }
 
 .publicationVenue {
+  margin-top: 1rem;
   white-space: break-spaces;
   font-style: oblique;
 }
 
-.publicationLinks {
+.publicationLinksContainer {
   @include flex;
+  margin-top: 1rem;
   flex-direction: row;
   justify-content: flex-start;
+
+  color: $text_blue;
 
   & > * {
     margin-right: .3rem;
   }
+}
+
+.publicationLink {
+  color: $text_blue;
 }
