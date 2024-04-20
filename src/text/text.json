@@ -65,7 +65,7 @@
       {
         "id": "morals",
         "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
-        "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
+        "authors": "Ewerton R. Vieira*, Aravind Sivaramakrishnan*, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
         "arXiv": "https://arxiv.org/abs/2310.03246",
         "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024",
         "website": "https://prx-kinodynamic.github.io/projects/morals"
