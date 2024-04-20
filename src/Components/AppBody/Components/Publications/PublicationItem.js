@@ -20,6 +20,20 @@ function PublicationItem({ publication, idx, color = "white", smallFont }) {
         </div>
       )}
       <div className={styles.publicationLinksContainer}>
+        {publication.website && (
+          <div>
+            [
+            <a
+              href={publication.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.publicationLink}
+            >
+              Website
+            </a>
+            ]
+          </div>
+        )}
         {publication.link && (
           <div>
             [
@@ -29,7 +43,7 @@ function PublicationItem({ publication, idx, color = "white", smallFont }) {
               rel="noopener noreferrer"
               className={styles.publicationLink}
             >
-              link
+              Link
             </a>
             ]
           </div>

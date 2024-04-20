@@ -2,7 +2,7 @@
   "name": "Sumanth Tangirala",
   "landingPicturePath": "%MEDIA_URL%/img//landing.webp",
   "landingMobilePicturePath": "%MEDIA_URL%/img/mobile/landing.webp",
-  "tagline": "Robotics Researcher | Rutgers University",
+  "tagline": "<no_wrap>Robotics Researcher</no_wrap><no_wrap>Rutgers University</no_wrap>",
   "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
   "resumeURL": "%DOCS_URL%/docs/SumanthTangirala-Resume.pdf",
@@ -67,7 +67,8 @@
         "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
         "authors": "Ewerton R. Vieira, Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
         "arXiv": "https://arxiv.org/abs/2310.03246",
-        "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024"
+        "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024",
+        "website": "https://prx-kinodynamic.github.io/projects/morals"
       }
     ],
     "prePrints": [
