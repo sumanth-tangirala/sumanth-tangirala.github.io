@@ -10,6 +10,11 @@ export const parse = (text) => {
     '<span style="color:#fcc923;font-weight: 500;">',
   );
   text = _replace(text, "</yellow_bold>", "</span>");
+
+  text = _replace(text, "<no_wrap>", '<span style="white-space: nowrap;">');
+
+  text = _replace(text, "</no_wrap>", "</span>");
+
   return htmlParse(text);
 };
 
