@@ -10,58 +10,70 @@ function PublicationItem({ publication, idx, color = "white", smallFont }) {
       className={cx(styles.publication, { [styles.smallFont]: smallFont })}
       style={{ color }}
     >
-      <div className={styles.publicationTitle}>{parse(publication.title)}</div>
-      <div className={styles.publicationAuthors}>
-        {parse(publication.authors)}
+      <div className={styles.publicationImageContainer}>
+        <img
+          src={publication.imageURL}
+          alt=""
+          className={styles.publicationImage}
+        />
       </div>
-      {publication.venue && (
-        <div className={styles.publicationVenue}>
-          {parse(publication.venue)}
+
+      <div>
+        <div className={styles.publicationTitle}>
+          {parse(publication.title)}
         </div>
-      )}
-      <div className={styles.publicationLinksContainer}>
-        {publication.website && (
-          <div>
-            [
-            <a
-              href={publication.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.publicationLink}
-            >
-              Website
-            </a>
-            ]
+        <div className={styles.publicationAuthors}>
+          {parse(publication.authors)}
+        </div>
+        {publication.venue && (
+          <div className={styles.publicationVenue}>
+            {parse(publication.venue)}
           </div>
         )}
-        {publication.link && (
-          <div>
-            [
-            <a
-              href={publication.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.publicationLink}
-            >
-              Link
-            </a>
-            ]
-          </div>
-        )}
-        {publication.arXiv && (
-          <div>
-            [
-            <a
-              href={publication.arXiv}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.publicationLink}
-            >
-              arXiv
-            </a>
-            ]
-          </div>
-        )}
+        <div className={styles.publicationLinksContainer}>
+          {publication.website && (
+            <div>
+              [
+              <a
+                href={publication.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.publicationLink}
+              >
+                Website
+              </a>
+              ]
+            </div>
+          )}
+          {publication.link && (
+            <div>
+              [
+              <a
+                href={publication.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.publicationLink}
+              >
+                Link
+              </a>
+              ]
+            </div>
+          )}
+          {publication.arXiv && (
+            <div>
+              [
+              <a
+                href={publication.arXiv}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.publicationLink}
+              >
+                arXiv
+              </a>
+              ]
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
