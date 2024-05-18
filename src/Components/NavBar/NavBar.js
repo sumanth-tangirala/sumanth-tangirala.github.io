@@ -59,14 +59,13 @@ const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
   const renderActions = () => (
     <div className={styles.actions}>
       {_map(sectionsToDisplay, (sectionType) => (
-        <Button
-          type="link"
+        <div
           onClick={sectionTypeVsNavigationFunc[sectionType]}
           className={styles.navBarItem}
           key={sectionType}
         >
           {SECTION_TYPE_VS_NAME[sectionType]}
-        </Button>
+        </div>
       ))}
     </div>
   );
@@ -92,14 +91,14 @@ const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
       </div>
       <Media
         queries={{
-          small: "(max-width: 900px)",
-          large: "(min-width: 900px)",
+          small: "(max-width: 750px)",
+          large: "(min-width: 750px)",
         }}
       >
         {(matches) => (
           <>
-            {matches.large && renderActions()}
             {matches.small && renderMenu()}
+            {matches.large && renderActions()}
           </>
         )}
       </Media>

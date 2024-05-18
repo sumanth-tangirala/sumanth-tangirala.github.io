@@ -1,15 +1,19 @@
 $nav_bar_height: 8rem;
 $mini_nav_bar_height: 2.8rem;
-$backgroundColor: white;
-$mobile_width: 750px;
+
 $item_title_font_size: 1.4rem;
 $item_mini_title_font_size: 1.2rem;
 $item_desc_font_size: 1rem;
-$tablet_screen_width: 900px;
-$tablet_landscape_screen_width: 1000px;
-$mobile_screen_width: 720px;
-$mobile_landscape_screen_height: 650px;
+
 $mini_mobile_screen_width: 360px;
+$mobile_screen_width: 720px;
+$mobile_landscape_width: 750px;
+$tablet_screen_width: 900px;
+$tablet_landscape_screen_width: 1150px;
+$small_desktop_landscape_screen_width: 1400px;
+
+$mobile_landscape_screen_height: 650px;
+
 $min_history_banner_height: 9.6rem;
 
 @mixin flex {
