@@ -1,8 +1,8 @@
 @import 'src/styles.module.scss';
 
 $img_size: 20rem;
-$tablet_img_size: 16rem;
-$mobile_img_size: 12rem;
+$tablet_img_size: 18rem;
+$mobile_img_size: 15rem;
 $mobile_landscape_img_size: 10rem;
 
 .container {
@@ -93,10 +93,10 @@ $mobile_landscape_img_size: 10rem;
   }
 }
 
-@media screen and (max-width: calc($tablet_landscape_screen_width + 100px)) {
+@media screen and (max-width: calc($tablet_landscape_screen_width)) {
   .image {
     height: $mobile_img_size;
-    margin: 0 0 0 1rem;
+    margin: 0 0 1rem 1rem;
   }
   .text {
     margin-left: 2rem !important;
