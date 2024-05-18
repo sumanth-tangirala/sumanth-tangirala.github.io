@@ -17,7 +17,8 @@ $tablet_img_max_width: 9rem;
   flex-wrap: wrap;
   border-radius: 6rem;
   margin: 0 3vw;
-  padding: .2rem 0;
+  padding: .5rem 2rem;
+  min-width: calc($img_max_width + 2rem); ;
 }
 
 .image {
@@ -31,6 +32,11 @@ $tablet_img_max_width: 9rem;
   .image {
     max-height: $tablet_img_max_height;
     max-width: $tablet_img_max_width;
+    padding-top: 2rem;
+  }
+
+  .container {
+    padding: 1rem 2rem;
   }
 }
 

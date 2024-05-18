@@ -11,6 +11,8 @@
 }
 
 .content {
+  padding: 0 1rem;
+  width: calc(100vw - 4rem);
   margin: 2rem 0;
   text-align: left;
   overflow: hidden;
@@ -29,19 +31,24 @@
 .publication {
   @include flex;
   flex-direction: row;
+
   &:not(:first-child) {
     margin-top: 2rem;
   }
 }
 
 .publicationImageContainer {
-  min-width: 25%;
-  max-width: 25%;
+  width: 25%;
   margin-right: 2rem;
+  @include flex;
 }
 
 .publicationImage {
   width: 100%;
+}
+
+.publicationDetails {
+  width: 75%;
 }
 
 .publicationTitle {
@@ -75,4 +82,24 @@
 
 .publicationLink {
   color: $text_blue;
+}
+
+@media screen and (max-width: $tablet_screen_width) {
+  .publication {
+    flex-direction: column;
+  }
+
+  .publicationImageContainer {
+    width: 70%;
+    margin-bottom: 1rem;
+  }
+
+  .publicationImage {
+    width: unset;
+    max-height: 12rem;
+  }
+
+  .publicationDetails {
+    @include full-width;
+  }
 }

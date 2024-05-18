@@ -18,7 +18,7 @@ function PublicationItem({ publication, idx, color = "white", smallFont }) {
         />
       </div>
 
-      <div>
+      <div className={styles.publicationDetails}>
         <div className={styles.publicationTitle}>
           {parse(publication.title)}
         </div>
