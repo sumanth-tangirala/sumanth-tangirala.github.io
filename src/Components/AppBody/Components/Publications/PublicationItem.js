@@ -4,6 +4,24 @@ import styles from "./Publications.module.scss";
 import { parse } from "../../../../helpers";
 
 function PublicationItem({ publication, idx, color = "white", smallFont }) {
+  const renderLink = (key, text) => {
+    if (!publication[key]) return null;
+    return (
+      <div>
+        [
+        <a
+          href={publication[key]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.publicationLink}
+        >
+          {text}
+        </a>
+        ]
+      </div>
+    );
+  };
+
   return (
     <div
       key={idx}
@@ -30,49 +48,18 @@ function PublicationItem({ publication, idx, color = "white", smallFont }) {
             {parse(publication.venue)}
           </div>
         )}
+        {publication.award && (
+          <div className={styles.publicationAward}>
+            {parse(publication.award)}
+          </div>
+        )}
         <div className={styles.publicationLinksContainer}>
-          {publication.website && (
-            <div>
-              [
-              <a
-                href={publication.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.publicationLink}
-              >
-                Website
-              </a>
-              ]
-            </div>
-          )}
-          {publication.link && (
-            <div>
-              [
-              <a
-                href={publication.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.publicationLink}
-              >
-                Link
-              </a>
-              ]
-            </div>
-          )}
-          {publication.arXiv && (
-            <div>
-              [
-              <a
-                href={publication.arXiv}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.publicationLink}
-              >
-                arXiv
-              </a>
-              ]
-            </div>
-          )}
+          {renderLink("websiteURL", "Website")}
+          {renderLink("linkURL", "Link")}
+          {renderLink("arXivURL", "arXiv")}
+          {renderLink("paperURL", "Paper")}
+          {renderLink("codeURL", "Code")}
+          {renderLink("videoURL", "Video")}
         </div>
       </div>
     </div>
