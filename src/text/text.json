@@ -58,19 +58,24 @@
         "id": "stackedAutoencoder",
         "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
         "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
-        "arXiv": "https://arxiv.org/abs/2311.02887",
+        "arXivURL": "https://arxiv.org/abs/2311.02887",
         "venue": "Proceedings of the 2019 Internation Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
-        "link": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
-        "imageURL": "%MEDIA_URL%/img/stacked_polsar.png"
+        "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
+        "imageURL": "%MEDIA_URL%/img/stacked_polsar.png",
+        "paperURL": "https://arxiv.org/pdf/2311.02887"
       },
       {
         "id": "morals",
         "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
         "authors": "Ewerton R. Vieira*, Aravind Sivaramakrishnan*, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
-        "arXiv": "https://arxiv.org/abs/2310.03246",
         "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024",
-        "website": "https://prx-kinodynamic.github.io/projects/morals",
-        "imageURL": "%MEDIA_URL%/img/morals.jpeg"
+        "award": "Finalist for the IEEE ICRA Best Paper Award in Automation, 2024",
+        "imageURL": "%MEDIA_URL%/img/morals.jpeg",
+        "websiteURL": "https://prx-kinodynamic.github.io/projects/morals",
+        "arXivURL": "https://arxiv.org/abs/2310.03246",
+        "videoURL": "https://www.youtube.com/watch?v=l3znwTe7cwU",
+        "codeURL": "https://github.com/Ewerton-Vieira/MORALS",
+        "paperURL": "https://arxiv.org/pdf/2310.03246"
       }
     ],
     "prePrints": [
@@ -78,8 +83,10 @@
         "id": "rogue",
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
         "authors": "Aravind Sivaramakrishnan, Noah R. Carver, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
-        "arXiv": "https://arxiv.org/abs/2310.03239",
-        "imageURL": "%MEDIA_URL%/img/rogue.png"
+        "arXivURL": "https://arxiv.org/abs/2310.03239",
+        "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
+        "imageURL": "%MEDIA_URL%/img/rogue.png",
+        "paperURL": "https://arxiv.org/pdf/2310.03239"
       }
     ]
   },
