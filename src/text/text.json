@@ -76,18 +76,19 @@
         "videoURL": "https://www.youtube.com/watch?v=l3znwTe7cwU",
         "codeURL": "https://github.com/Ewerton-Vieira/MORALS",
         "paperURL": "https://arxiv.org/pdf/2310.03246"
-      }
-    ],
-    "prePrints": [
+      },
       {
         "id": "rogue",
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
-        "authors": "Aravind Sivaramakrishnan, Noah R. Carver, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
-        "arXivURL": "https://arxiv.org/abs/2310.03239",
-        "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
+        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Noah R. Carver, Kostas E. Bekris",
+        "venue": "Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2024",
         "imageURL": "%MEDIA_URL%/img/rogue.png",
+        "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
+        "arXivURL": "https://arxiv.org/abs/2310.03239",
         "paperURL": "https://arxiv.org/pdf/2310.03239"
       }
+    ],
+    "prePrints": [
     ]
   },
   "skills": [
