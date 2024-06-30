@@ -10,6 +10,7 @@ import PublicationItem from "./PublicationItem";
 import _size from "lodash/size";
 
 function Publications({ className, sectionRef, sectionHeadingClassName }) {
+  const shouldRenderPrePrints =  _size(text.publications.prePrints) > 0;
   const renderPublications = useCallback(
     (publications) => (
       <div>
@@ -20,6 +21,7 @@ function Publications({ className, sectionRef, sectionHeadingClassName }) {
     ),
     [],
   );
+  
 
   const prePrintsTitle =
     _size(text.publications.prePrints) > 1 ? "Preprints" : "Preprint";
@@ -34,8 +36,10 @@ function Publications({ className, sectionRef, sectionHeadingClassName }) {
         {SECTION_TYPE_VS_NAME["PUBLICATIONS"]}
       </div>
       <div className={styles.content}>
-        <div className={styles.subSectionTitle}>{`${prePrintsTitle}:`}</div>
-        {renderPublications(text.publications.prePrints)}
+        {shouldRenderPrePrints && (
+          <div className={styles.subSectionTitle}>{`${prePrintsTitle}:`}</div>
+          {renderPublications(text.publications.prePrints)}
+        )}
         <div className={styles.subSectionTitle}>{`${confPapersTitle}:`}</div>
         {renderPublications(text.publications.conferencePapers)}
       </div>
