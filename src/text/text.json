@@ -49,20 +49,21 @@
     "Currently pursuing a thesis under the guidance of Professor Kostas Bekris, exploring <yellow_bold> robot kinodynamic motion planning </yellow_bold> algorithms for high-velocity robots with first-order goals."
   ],
   "qualificationDetails": [
-    "Master of Science in Computer Science |  Rutgers University",
-    "Bachelor of Technology in Information and Communication Technology | DA-IICT"
+    "Ph.D. in Computer Science |  Rutgers University (2024 - Now)",
+    "Master of Science in Computer Science |  Rutgers University (2022-2024)",
+    "Bachelor of Technology in Information and Communication Technology | DA-IICT (2016-2020)"
   ],
   "publications": {
     "conferencePapers": [
       {
-        "id": "stackedAutoencoder",
-        "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
-        "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
-        "arXivURL": "https://arxiv.org/abs/2311.02887",
-        "venue": "Proceedings of the 2019 Internation Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
-        "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
-        "imageURL": "%MEDIA_URL%/img/stacked_polsar.png",
-        "paperURL": "https://arxiv.org/pdf/2311.02887"
+        "id": "rogue",
+        "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
+        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Noah R. Carver, Kostas E. Bekris",
+        "venue": "Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2024",
+        "imageURL": "%MEDIA_URL%/img/rogue.png",
+        "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
+        "arXivURL": "https://arxiv.org/abs/2310.03239",
+        "paperURL": "https://arxiv.org/pdf/2310.03239"
       },
       {
         "id": "morals",
@@ -78,14 +79,14 @@
         "paperURL": "https://arxiv.org/pdf/2310.03246"
       },
       {
-        "id": "rogue",
-        "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
-        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Noah R. Carver, Kostas E. Bekris",
-        "venue": "Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2024",
-        "imageURL": "%MEDIA_URL%/img/rogue.png",
-        "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
-        "arXivURL": "https://arxiv.org/abs/2310.03239",
-        "paperURL": "https://arxiv.org/pdf/2310.03239"
+        "id": "stackedAutoencoder",
+        "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
+        "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
+        "arXivURL": "https://arxiv.org/abs/2311.02887",
+        "venue": "Proceedings of the 2019 Internation Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
+        "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
+        "imageURL": "%MEDIA_URL%/img/stacked_polsar.png",
+        "paperURL": "https://arxiv.org/pdf/2311.02887"
       }
     ],
     "prePrints": [
