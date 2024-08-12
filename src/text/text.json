@@ -1,39 +1,39 @@
 {
   "name": "Sumanth Tangirala",
-  "landingPicturePath": "%MEDIA_URL%/img//landing.webp",
-  "landingMobilePicturePath": "%MEDIA_URL%/img/mobile/landing.webp",
+  "landingPicturePath": "%IMG_URL%//landing.webp",
+  "landingMobilePicturePath": "%IMG_URL%/mobile/landing.webp",
   "tagline": "<no_wrap>Robotics Researcher</no_wrap><no_wrap>Rutgers University</no_wrap>",
   "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
-  "resumeURL": "%DOCS_URL%/docs/SumanthTangirala-Resume.pdf",
+  "resumeURL": "%DOCS_URL%/SumanthTangirala-Resume.pdf",
   "historyBannerImages": [
     {
-      "path": "%MEDIA_URL%/img//PRACSYS.png",
+      "path": "%IMG_URL%//PRACSYS.png",
       "text": "PRACSYS - Rutgers",
       "url": "https://robotics.cs.rutgers.edu/pracsys"
     },
     {
-      "path": "%MEDIA_URL%/img//Rutgers.png",
+      "path": "%IMG_URL%//Rutgers.png",
       "text": "Rutgers",
       "url": "https://www.rutgers.edu/"
     },
     {
-      "path": "%MEDIA_URL%/img//Tekion.svg",
+      "path": "%IMG_URL%//Tekion.svg",
       "text": "Tekion",
       "url": "https://tekion.com/"
     },
     {
-      "path": "%MEDIA_URL%/img//WIMS2.png",
+      "path": "%IMG_URL%//WIMS2.png",
       "text": "WIMS2 - University of Michigan",
       "url": "https://ece.engin.umich.edu/stories/wireless-integrated-microsensing-and-systems-wims2-in-california"
     },
     {
-      "path": "%MEDIA_URL%/img//ISRO.png",
+      "path": "%IMG_URL%//ISRO.png",
       "text": "ISRO",
       "url": "https://www.isro.gov.in/"
     },
     {
-      "path": "%MEDIA_URL%/img//DAIICT.png",
+      "path": "%IMG_URL%//DAIICT.png",
       "text": "DA-IICT",
       "url": "https://www.daiict.ac.in/"
     }
@@ -41,8 +41,8 @@
   "qualifications": [
     "Robotics Researcher at PRACSYS Lab, Rutgers University"
   ],
-  "aboutPicturePath": "%MEDIA_URL%/img/about.webp",
-  "aboutMobilePicturePath": "%MEDIA_URL%/img/mobile/about.webp",
+  "aboutPicturePath": "%IMG_URL%/about.webp",
+  "aboutMobilePicturePath": "%IMG_URL%/mobile/about.webp",
   "about": [
     "Passionate about tackling complex, interdisciplinary challenges that have a tangible and positive impact on the real world.",
     "Primary Areas of Focus: <yellow_bold>Robotics, Motion Planning, and Reinforcement Learning.</yellow_bold>",
@@ -60,7 +60,7 @@
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
         "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Noah R. Carver, Kostas E. Bekris",
         "venue": "Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2024",
-        "imageURL": "%MEDIA_URL%/img/rogue.png",
+        "imageURL": "%IMG_URL%/rogue.png",
         "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
         "arXivURL": "https://arxiv.org/abs/2310.03239",
         "paperURL": "https://arxiv.org/pdf/2310.03239"
@@ -71,7 +71,7 @@
         "authors": "Ewerton R. Vieira*, Aravind Sivaramakrishnan*, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
         "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024",
         "award": "Finalist for the IEEE ICRA Best Paper Award in Automation, 2024",
-        "imageURL": "%MEDIA_URL%/img/morals.jpeg",
+        "imageURL": "%IMG_URL%/morals.jpeg",
         "websiteURL": "https://prx-kinodynamic.github.io/projects/morals",
         "arXivURL": "https://arxiv.org/abs/2310.03246",
         "videoURL": "https://www.youtube.com/watch?v=l3znwTe7cwU",
@@ -85,11 +85,18 @@
         "arXivURL": "https://arxiv.org/abs/2311.02887",
         "venue": "Proceedings of the 2019 International Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
         "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
-        "imageURL": "%MEDIA_URL%/img/stacked_polsar.png",
+        "imageURL": "%IMG_URL%/stacked_polsar.png",
         "paperURL": "https://arxiv.org/pdf/2311.02887"
       }
     ],
     "prePrints": [
+      {
+        "id": "robotMotionGenState",
+        "title": "The State of Robot Motion Generation",
+        "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
+        "imageURL": "%IMG_URL%/somg.png",
+        "paperURL": "%DOCS_URL%/The_State_of_Robot_Motion_Generation.pdf"
+      }
     ]
   },
   "skills": [
@@ -97,7 +104,7 @@
       "id": "ml",
       "title": "Machine & Deep Learning",
       "description": "I have over five years of extensive experience in ML and DL, applying these in Computer Vision, Robotics, and NLP projects with PyTorch and TensorFlow",
-      "imgPath": "%MEDIA_URL%/img//ML.svg",
+      "imgPath": "%IMG_URL%//ML.svg",
       "publications": [
         "stackedAutoencoder",
         "rogue",
@@ -113,7 +120,7 @@
       "id": "rl",
       "title": "Reinforcement Learning",
       "description": "I've spent the past year focusing on Reinforcement Learning for robot motion planning, primarily using PPO and SAC-HER at the PRACSYS lab",
-      "imgPath": "%MEDIA_URL%/img//RL.svg",
+      "imgPath": "%IMG_URL%//RL.svg",
       "projects": [
         "unitree",
         "perception"
@@ -127,7 +134,7 @@
       "id": "ros",
       "title": "Robot Operating System",
       "description": "In my current research, I use ROS for robot control and navigation, including developing a perception system for PRACSYS Lab's MuSHR platform",
-      "imgPath": "%MEDIA_URL%/img//ROS.svg",
+      "imgPath": "%IMG_URL%//ROS.svg",
       "projects": [
         "perception"
       ]
@@ -136,7 +143,7 @@
       "id": "mujoco",
       "title": "Physics Simulation Engines",
       "description": "My current work extensively involves using MuJoCo and NVIDIA IsaacGym for environments to simulate robots and develop robot controllers",
-      "imgPath": "%MEDIA_URL%/img//DeepMind.svg",
+      "imgPath": "%IMG_URL%//DeepMind.svg",
       "projects": [
         "unitree",
         "rvo"
@@ -150,7 +157,7 @@
       "id": "cv",
       "title": "Computer Vision, OpenCV",
       "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
-      "imgPath": "%MEDIA_URL%/img//opencv.svg",
+      "imgPath": "%IMG_URL%//opencv.svg",
       "imgStyle": {
         "paddingBottom": "0.7rem"
       },
@@ -162,7 +169,7 @@
       "id": "pythonCpp",
       "title": "Python, C++",
       "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields",
-      "imgPath": "%MEDIA_URL%/img//pythonCpp.png",
+      "imgPath": "%IMG_URL%//pythonCpp.png",
       "projects": [
         "unitree",
         "rvo",
@@ -178,7 +185,7 @@
       "id": "iot",
       "title": "Internet of Things",
       "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and my work at Tekion Corp.",
-      "imgPath": "%MEDIA_URL%/img//IoT.svg",
+      "imgPath": "%IMG_URL%//IoT.svg",
       "projects": [
         "wims2",
         "amazonGo",
@@ -189,7 +196,7 @@
       "id": "cuda",
       "title": "CUDA, Parallel Programming",
       "description": "I have used CUDA C++ to parallelize image segmentation from scratch and have also used it on a high-level to accelerate the training of neural networks.",
-      "imgPath": "%MEDIA_URL%/img//cuda.png",
+      "imgPath": "%IMG_URL%//cuda.png",
       "projects": [
         "gpuslic"
       ]
@@ -198,7 +205,7 @@
       "id": "reactjs",
       "title": "ReactJS, Javascript",
       "description": "I have developed web applications and websites using ReactJS and Javascript. My most notable projects are this website and my work at Tekion Corp.",
-      "imgPath": "%MEDIA_URL%/img//ReactJs.svg"
+      "imgPath": "%IMG_URL%//ReactJs.svg"
     }
   ],
   "timeline": [
@@ -210,7 +217,7 @@
         "Jan 2023",
         "Now"
       ],
-      "imgPath": "%MEDIA_URL%/img//PRACSYS.png"
+      "imgPath": "%IMG_URL%//PRACSYS.png"
     },
     {
       "title": "Rutgers University",
@@ -220,7 +227,7 @@
         "Aug 2022",
         "Now"
       ],
-      "imgPath": "%MEDIA_URL%/img//Rutgers.png"
+      "imgPath": "%IMG_URL%//Rutgers.png"
     },
     {
       "title": "Tekion Corp.",
@@ -230,7 +237,7 @@
         "Jan 2020",
         "July 2022"
       ],
-      "imgPath": "%MEDIA_URL%/img//Tekion.svg"
+      "imgPath": "%IMG_URL%//Tekion.svg"
     },
     {
       "title": "Center of WIMS2, University of Michigan",
@@ -240,7 +247,7 @@
         "May 2019",
         "Nov 2019"
       ],
-      "imgPath": "%MEDIA_URL%/img//WIMS2.png"
+      "imgPath": "%IMG_URL%//WIMS2.png"
     },
     {
       "title": "Indian Space Research Organization",
@@ -250,7 +257,7 @@
         "May 2019",
         "Aug 2019"
       ],
-      "imgPath": "%MEDIA_URL%/img//ISRO.png"
+      "imgPath": "%IMG_URL%//ISRO.png"
     },
     {
       "title": "Smart City Lab, DA-IICT",
@@ -260,7 +267,7 @@
         "Aug 2018",
         "Dec 2019"
       ],
-      "imgPath": "%MEDIA_URL%/img//DAIICT.png"
+      "imgPath": "%IMG_URL%//DAIICT.png"
     },
     {
       "title": "DA-IICT",
@@ -270,7 +277,7 @@
         "Aug 2016",
         "May 2020"
       ],
-      "imgPath": "%MEDIA_URL%/img//DAIICT.png"
+      "imgPath": "%IMG_URL%//DAIICT.png"
     }
   ],
   "projects": [
@@ -289,8 +296,8 @@
         "PyTorch",
         "Python"
       ],
-      "imgPath": "%MEDIA_URL%/img//go1.gif",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//go1.gif",
+      "imgPath": "%IMG_URL%//go1.gif",
+      "mobileImgPath": "%IMG_URL%/mobile//go1.gif",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Obstacle-Navigation-with-Go1-Sim",
       "details": "September, 2023 - December, 2023",
@@ -310,8 +317,8 @@
         "NVIDIA CUDA",
         "C++"
       ],
-      "imgPath": "%MEDIA_URL%/img//fuzzySLIC.jpg",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//fuzzySLIC.jpg",
+      "imgPath": "%IMG_URL%//fuzzySLIC.jpg",
+      "mobileImgPath": "%IMG_URL%/mobile//fuzzySLIC.jpg",
       "textColor": "white",
       "backgroundColor": "black",
       "contrast": 1.5,
@@ -334,8 +341,8 @@
         "MuJoCo",
         "Python"
       ],
-      "imgPath": "%MEDIA_URL%/img//rvo.gif",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//rvo.gif",
+      "imgPath": "%IMG_URL%//rvo.gif",
+      "mobileImgPath": "%IMG_URL%/mobile//rvo.gif",
       "textColor": "white",
       "backgroundColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/MuSHR-RVO-Social-Navigation/",
@@ -367,8 +374,8 @@
         "Java",
         "C++"
       ],
-      "imgPath": "%MEDIA_URL%/img//amazonGo.png",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//amazonGo.png",
+      "imgPath": "%IMG_URL%//amazonGo.png",
+      "mobileImgPath": "%IMG_URL%/mobile//amazonGo.png",
       "textColor": "black",
       "details": "January, 2019 - May, 2019",
       "contrast": 1.1,
@@ -393,8 +400,8 @@
         "Python",
         "C++"
       ],
-      "imgPath": "%MEDIA_URL%/img//mushr.gif",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//mushr.gif",
+      "imgPath": "%IMG_URL%//mushr.gif",
+      "mobileImgPath": "%IMG_URL%/mobile//mushr.gif",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2023 - August, 2023",
@@ -423,8 +430,8 @@
         "Python",
         "C"
       ],
-      "imgPath": "%MEDIA_URL%/img//polsar.jpg",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//polsar.jpg",
+      "imgPath": "%IMG_URL%//polsar.jpg",
+      "mobileImgPath": "%IMG_URL%/mobile//polsar.jpg",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2019 - August, 2019",
@@ -455,8 +462,8 @@
         "Python",
         "Javascript"
       ],
-      "imgPath": "%MEDIA_URL%/img//raspi.jpg",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//raspi.jpg",
+      "imgPath": "%IMG_URL%//raspi.jpg",
+      "mobileImgPath": "%IMG_URL%/mobile//raspi.jpg",
       "textColor": "white",
       "backgroundColor": "black",
       "details": "May, 2019 - November, 2019",
@@ -491,8 +498,8 @@
         "Javascript",
         "Java"
       ],
-      "imgPath": "%MEDIA_URL%/img//summary.png",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//summary.png",
+      "imgPath": "%IMG_URL%//summary.png",
+      "mobileImgPath": "%IMG_URL%/mobile//summary.png",
       "textColor": "black",
       "backgroundColor": "white",
       "details": "January, 2019 - May, 2019",
@@ -515,8 +522,8 @@
         "Python",
         "Javascript"
       ],
-      "imgPath": "%MEDIA_URL%/img//protego.jpg",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//protego.jpg",
+      "imgPath": "%IMG_URL%//protego.jpg",
+      "mobileImgPath": "%IMG_URL%/mobile//protego.jpg",
       "textColor": "black",
       "details": "June 2019",
       "contrast": 1.2
@@ -535,8 +542,8 @@
         "Python",
         "Linux Scripting"
       ],
-      "imgPath": "%MEDIA_URL%/img//playlistPorter.png",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//playlistPorter.png",
+      "imgPath": "%IMG_URL%//playlistPorter.png",
+      "mobileImgPath": "%IMG_URL%/mobile//playlistPorter.png",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter",
       "details": "August, 2017 - September, 2017",
@@ -559,8 +566,8 @@
         "Python",
         "Linux Scripting"
       ],
-      "imgPath": "%MEDIA_URL%/img//musicPlayer.png",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//musicPlayer.png",
+      "imgPath": "%IMG_URL%//musicPlayer.png",
+      "mobileImgPath": "%IMG_URL%/mobile//musicPlayer.png",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/Cross-Platform-Playlist-Player",
       "details": "January, 2018 - May, 2018",
@@ -577,8 +584,8 @@
         "Python",
         "Socket Programming"
       ],
-      "imgPath": "%MEDIA_URL%/img//p2p.jpg",
-      "mobileImgPath": "%MEDIA_URL%/img/mobile//p2p.jpg",
+      "imgPath": "%IMG_URL%//p2p.jpg",
+      "mobileImgPath": "%IMG_URL%/mobile//p2p.jpg",
       "textColor": "black",
       "githubURL": "https://github.com/sumanth-tangirala/P2P",
       "details": "Ongoing Project | June, 2021 - Present",
