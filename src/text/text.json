@@ -23,11 +23,6 @@
       "url": "https://tekion.com/"
     },
     {
-      "path": "%IMG_URL%//WIMS2.png",
-      "text": "WIMS2 - University of Michigan",
-      "url": "https://ece.engin.umich.edu/stories/wireless-integrated-microsensing-and-systems-wims2-in-california"
-    },
-    {
       "path": "%IMG_URL%//ISRO.png",
       "text": "ISRO",
       "url": "https://www.isro.gov.in/"
@@ -154,18 +149,6 @@
       ]
     },
     {
-      "id": "cv",
-      "title": "Computer Vision, OpenCV",
-      "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
-      "imgPath": "%IMG_URL%//opencv.svg",
-      "imgStyle": {
-        "paddingBottom": "0.7rem"
-      },
-      "projects": [
-        "perception"
-      ]
-    },
-    {
       "id": "pythonCpp",
       "title": "Python, C++",
       "description": "With over seven years of expertise in Python and C++, I have applied these programming languages in diverse projects spanning various fields",
@@ -182,17 +165,6 @@
       ]
     },
     {
-      "id": "iot",
-      "title": "Internet of Things",
-      "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and a Amazon-Go prototype.",
-      "imgPath": "%IMG_URL%//IoT.svg",
-      "projects": [
-        "wims2",
-        "amazonGo",
-        "perception"
-      ]
-    },
-    {
       "id": "cuda",
       "title": "CUDA, Parallel Programming",
       "description": "I have used CUDA C++ to parallelize image segmentation from scratch and have also used it on a high-level to accelerate the training of neural networks.",
@@ -200,12 +172,6 @@
       "projects": [
         "gpuslic"
       ]
-    },
-    {
-      "id": "reactjs",
-      "title": "ReactJS, Javascript",
-      "description": "I have developed web applications and websites using ReactJS and Javascript. My most notable projects are this website and my work at Tekion Corp.",
-      "imgPath": "%IMG_URL%//ReactJs.svg"
     }
   ],
   "timeline": [
@@ -385,33 +351,6 @@
       ]
     },
     {
-      "id": "perception",
-      "title": "External Perception System for Autonomous Robot Navigation",
-      "longDesc": [
-        "Contributed to development of an external perception system in the PRACSYS lab for the MuSHR platform to enable training of closed-loop control policies for mobile robots",
-        "Used AprilTags to localize the robot and the boundaries in the environment which were then processed using OpenCV to estimate the pose and location of the robot and the boundaries",
-        "Built Robot Operating System (ROS) services to communicate the location of the robot and the boundaries to the robot",
-        "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
-      ],
-      "techStack": [
-        "Robot Operating System (ROS)",
-        "OpenCV",
-        "NVIDIA Jetson",
-        "Python",
-        "C++"
-      ],
-      "imgPath": "%IMG_URL%//mushr.gif",
-      "mobileImgPath": "%IMG_URL%/mobile//mushr.gif",
-      "textColor": "white",
-      "backgroundColor": "black",
-      "details": "May, 2023 - August, 2023",
-      "contrast": 1.5,
-      "skills": [
-        "ros",
-        "cv"
-      ]
-    },
-    {
       "id": "isro",
       "title": "Land Cover Classification using GeoSpatial Imagery",
       "longDesc": [
@@ -440,8 +379,11 @@
         "ml",
         "cv"
       ]
-    },
-    {
+    }
+  ],
+  "archive": {
+    "projects": [
+      {
       "id": "wims2",
       "title": "Autonomous Environmental Logging IoT System",
       "longDesc": [
@@ -472,124 +414,188 @@
         "iot",
         "pythonCpp"
       ]
-    }
+    },
+      {
+      "id": "perception",
+      "title": "External Perception System for Autonomous Robot Navigation",
+      "longDesc": [
+        "Contributed to development of an external perception system in the PRACSYS lab for the MuSHR platform to enable training of closed-loop control policies for mobile robots",
+        "Used AprilTags to localize the robot and the boundaries in the environment which were then processed using OpenCV to estimate the pose and location of the robot and the boundaries",
+        "Built Robot Operating System (ROS) services to communicate the location of the robot and the boundaries to the robot",
+        "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
+      ],
+      "techStack": [
+        "Robot Operating System (ROS)",
+        "OpenCV",
+        "NVIDIA Jetson",
+        "Python",
+        "C++"
+      ],
+      "imgPath": "%IMG_URL%//mushr.gif",
+      "mobileImgPath": "%IMG_URL%/mobile//mushr.gif",
+      "textColor": "white",
+      "backgroundColor": "black",
+      "details": "May, 2023 - August, 2023",
+      "contrast": 1.5,
+      "skills": [
+        "ros",
+        "cv"
+      ]
+    },
+      {
+        "id": "summary",
+        "title": "Summary Bot",
+        "longDesc": [
+          "Led a team of 10 students as Project Manager to develop a multi-platform application that can summarize long text passages and email threads using Natural Language Processing (NLP) techniques",
+          "Split the project into 4 modules - NLP, Android, Web Development. Assigned each module a lead and a team of 2-3 students. I personally led the NLP module",
+          "Conducted weekly scrum meetings among module leads for a collaborative development environment and managed the project using Agile methodology",
+          "The NLP module was developed using Tensorflow and NLTK and used a combination of extractive and abstractive summarization techniques to summarize long text passages",
+          "The Android module was developed using React Native and the Web module was developed using ReactJS with Firebase used as the backend for both modules",
+          "Received the Best Project Award out of 30+ projects in the Software Engineering course"
+        ],
+        "techStack": [
+          "TensorFlow",
+          "Natural Language Toolkit (NLTK)",
+          "Android",
+          "ReactJS",
+          "React Native",
+          "Firebase",
+          "NodeJS",
+          "Python",
+          "Javascript",
+          "Java"
+        ],
+        "imgPath": "%IMG_URL%//summary.png",
+        "mobileImgPath": "%IMG_URL%/mobile//summary.png",
+        "textColor": "black",
+        "backgroundColor": "white",
+        "details": "January, 2019 - May, 2019",
+        "contrast": 1.5
+      },
+      {
+        "id": "protego",
+        "title": "Protego - Safe Transit Planner",
+        "longDesc": [
+          "This project was developed as a part of the AngelHack Bangalore 2018 and was one of the 5 projects selected for the final round",
+          "Inspired by a late night drive through a shady part of Bangalore before the day of the hackathon, my team and I developed a mobile application that uses Machine Learning to suggest safe routes to the user",
+          "The Machine Learning application used historical crime data to predict the safety of a discretized map of the city and the mobile application used this data to suggest routes built with waypoints in safe regions of the city using a A* search algorithm with the safety score as the heuristic",
+          "The mobile application was developed using Android and used the Google Maps API to generate the routes from the waypoints"
+        ],
+        "techStack": [
+          "TensorFlow",
+          "Android",
+          "Firebase",
+          "NodeJS",
+          "Python",
+          "Javascript"
+        ],
+        "imgPath": "%IMG_URL%//protego.jpg",
+        "mobileImgPath": "%IMG_URL%/mobile//protego.jpg",
+        "textColor": "black",
+        "details": "June 2019",
+        "contrast": 1.2
+      },
+      {
+        "id": "playlistPorter",
+        "title": "Playlist Porter",
+        "longDesc": [
+          "Faced with the problem of switching from Saavn, an Indian music streaming service, developed a web scraping project to port playlists from Saavn to other music streaming services such as YouTube and Spotify",
+          "The script uses Selenium WebDriver to automate the process of logging into the user's YouTube and Spotify accounts and BeautifulSoup 4 to scrape the playlists from the user's accounts",
+          "The hope is to then extend the script to port playlists from other music services such as Spotify and Apple Music"
+        ],
+        "techStack": [
+          "Selenium WebDriver",
+          "BeautifulSoup 4",
+          "Python",
+          "Linux Scripting"
+        ],
+        "imgPath": "%IMG_URL%//playlistPorter.png",
+        "mobileImgPath": "%IMG_URL%/mobile//playlistPorter.png",
+        "textColor": "black",
+        "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter",
+        "details": "August, 2017 - September, 2017",
+        "contrast": 1.1
+      },
+      {
+        "id": "musicPlayer",
+        "title": "Parallelized Shell Media Player",
+        "longDesc": [
+          "Developed as a way to experiment with Parallelism in Python, this project is a cross-platform music player that can play playlists from Saavn, an Indian music streaming service, on YouTube",
+          "The application consists of a scraper process, a player process and a controller process which communicate using Pipes",
+          "The controller process waits for command line inputs from the user and sends the appropriate commands to the player and scraper processes",
+          "The scraper processes waits for inputs on playlists to play and uses BeautifulSoup4 to automate the process of logging into the user's Saavn account and BeautifulSoup 4 to scrape the playlist from the user's account to forward a list of songs to the player process",
+          "The player process then uses the Selenium Webdriver to play the received songs and also processes the commands from the controller process to pause, play, skip and stop the playlist"
+        ],
+        "techStack": [
+          "Selenium WebDriver",
+          "BeautifulSoup 4",
+          "Multi-Processing Parallelism",
+          "Python",
+          "Linux Scripting"
+        ],
+        "imgPath": "%IMG_URL%//musicPlayer.png",
+        "mobileImgPath": "%IMG_URL%/mobile//musicPlayer.png",
+        "textColor": "black",
+        "githubURL": "https://github.com/sumanth-tangirala/Cross-Platform-Playlist-Player",
+        "details": "January, 2018 - May, 2018",
+        "contrast": 1.1
+      },
+      {
+        "id": "p2p",
+        "title": "P2P File Sharing (Work in Progress)",
+        "longDesc": [
+          "This project is an attempt to learn about Peer-to-Peer (P2P) networks and replicate the functionality of BitTorrent. This project is also an attempt to develop a completely decentralized P2P network (if such a thing is possible)",
+          "The application will allow users to share files with other users on the same network and also search for files on the network and download them"
+        ],
+        "techStack": [
+          "Python",
+          "Socket Programming"
+        ],
+        "imgPath": "%IMG_URL%//p2p.jpg",
+        "mobileImgPath": "%IMG_URL%/mobile//p2p.jpg",
+        "textColor": "black",
+        "githubURL": "https://github.com/sumanth-tangirala/P2P",
+        "details": "Ongoing Project | June, 2021 - Present",
+        "contrast": 1.1
+      }
   ],
-  "otherProjects": [
-    {
-      "id": "summary",
-      "title": "Summary Bot",
-      "longDesc": [
-        "Led a team of 10 students as Project Manager to develop a multi-platform application that can summarize long text passages and email threads using Natural Language Processing (NLP) techniques",
-        "Split the project into 4 modules - NLP, Android, Web Development. Assigned each module a lead and a team of 2-3 students. I personally led the NLP module",
-        "Conducted weekly scrum meetings among module leads for a collaborative development environment and managed the project using Agile methodology",
-        "The NLP module was developed using Tensorflow and NLTK and used a combination of extractive and abstractive summarization techniques to summarize long text passages",
-        "The Android module was developed using React Native and the Web module was developed using ReactJS with Firebase used as the backend for both modules",
-        "Received the Best Project Award out of 30+ projects in the Software Engineering course"
-      ],
-      "techStack": [
-        "TensorFlow",
-        "Natural Language Toolkit (NLTK)",
-        "Android",
-        "ReactJS",
-        "React Native",
-        "Firebase",
-        "NodeJS",
-        "Python",
-        "Javascript",
-        "Java"
-      ],
-      "imgPath": "%IMG_URL%//summary.png",
-      "mobileImgPath": "%IMG_URL%/mobile//summary.png",
-      "textColor": "black",
-      "backgroundColor": "white",
-      "details": "January, 2019 - May, 2019",
-      "contrast": 1.5
-    },
-    {
-      "id": "protego",
-      "title": "Protego - Safe Transit Planner",
-      "longDesc": [
-        "This project was developed as a part of the AngelHack Bangalore 2018 and was one of the 5 projects selected for the final round",
-        "Inspired by a late night drive through a shady part of Bangalore before the day of the hackathon, my team and I developed a mobile application that uses Machine Learning to suggest safe routes to the user",
-        "The Machine Learning application used historical crime data to predict the safety of a discretized map of the city and the mobile application used this data to suggest routes built with waypoints in safe regions of the city using a A* search algorithm with the safety score as the heuristic",
-        "The mobile application was developed using Android and used the Google Maps API to generate the routes from the waypoints"
-      ],
-      "techStack": [
-        "TensorFlow",
-        "Android",
-        "Firebase",
-        "NodeJS",
-        "Python",
-        "Javascript"
-      ],
-      "imgPath": "%IMG_URL%//protego.jpg",
-      "mobileImgPath": "%IMG_URL%/mobile//protego.jpg",
-      "textColor": "black",
-      "details": "June 2019",
-      "contrast": 1.2
-    },
-    {
-      "id": "playlistPorter",
-      "title": "Playlist Porter",
-      "longDesc": [
-        "Faced with the problem of switching from Saavn, an Indian music streaming service, developed a web scraping project to port playlists from Saavn to other music streaming services such as YouTube and Spotify",
-        "The script uses Selenium WebDriver to automate the process of logging into the user's YouTube and Spotify accounts and BeautifulSoup 4 to scrape the playlists from the user's accounts",
-        "The hope is to then extend the script to port playlists from other music services such as Spotify and Apple Music"
-      ],
-      "techStack": [
-        "Selenium WebDriver",
-        "BeautifulSoup 4",
-        "Python",
-        "Linux Scripting"
-      ],
-      "imgPath": "%IMG_URL%//playlistPorter.png",
-      "mobileImgPath": "%IMG_URL%/mobile//playlistPorter.png",
-      "textColor": "black",
-      "githubURL": "https://github.com/sumanth-tangirala/Playlist-Porter",
-      "details": "August, 2017 - September, 2017",
-      "contrast": 1.1
-    },
-    {
-      "id": "musicPlayer",
-      "title": "Parallelized Shell Media Player",
-      "longDesc": [
-        "Developed as a way to experiment with Parallelism in Python, this project is a cross-platform music player that can play playlists from Saavn, an Indian music streaming service, on YouTube",
-        "The application consists of a scraper process, a player process and a controller process which communicate using Pipes",
-        "The controller process waits for command line inputs from the user and sends the appropriate commands to the player and scraper processes",
-        "The scraper processes waits for inputs on playlists to play and uses BeautifulSoup4 to automate the process of logging into the user's Saavn account and BeautifulSoup 4 to scrape the playlist from the user's account to forward a list of songs to the player process",
-        "The player process then uses the Selenium Webdriver to play the received songs and also processes the commands from the controller process to pause, play, skip and stop the playlist"
-      ],
-      "techStack": [
-        "Selenium WebDriver",
-        "BeautifulSoup 4",
-        "Multi-Processing Parallelism",
-        "Python",
-        "Linux Scripting"
-      ],
-      "imgPath": "%IMG_URL%//musicPlayer.png",
-      "mobileImgPath": "%IMG_URL%/mobile//musicPlayer.png",
-      "textColor": "black",
-      "githubURL": "https://github.com/sumanth-tangirala/Cross-Platform-Playlist-Player",
-      "details": "January, 2018 - May, 2018",
-      "contrast": 1.1
-    },
-    {
-      "id": "p2p",
-      "title": "P2P File Sharing (Work in Progress)",
-      "longDesc": [
-        "This project is an attempt to learn about Peer-to-Peer (P2P) networks and replicate the functionality of BitTorrent. This project is also an attempt to develop a completely decentralized P2P network (if such a thing is possible)",
-        "The application will allow users to share files with other users on the same network and also search for files on the network and download them"
-      ],
-      "techStack": [
-        "Python",
-        "Socket Programming"
-      ],
-      "imgPath": "%IMG_URL%//p2p.jpg",
-      "mobileImgPath": "%IMG_URL%/mobile//p2p.jpg",
-      "textColor": "black",
-      "githubURL": "https://github.com/sumanth-tangirala/P2P",
-      "details": "Ongoing Project | June, 2021 - Present",
-      "contrast": 1.1
+    "skills": [
+      {
+        "id": "iot",
+        "title": "Internet of Things",
+        "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and a Amazon-Go prototype.",
+        "imgPath": "%IMG_URL%//IoT.svg",
+        "projects": [
+          "wims2",
+          "amazonGo",
+          "perception"
+        ]
+      },
+      {
+        "id": "reactjs",
+        "title": "ReactJS, Javascript",
+        "description": "I have developed web applications and websites using ReactJS and Javascript. My most notable projects are this website and my work at Tekion Corp.",
+        "imgPath": "%IMG_URL%//ReactJs.svg"
+      },
+      {
+      "id": "cv",
+      "title": "Computer Vision, OpenCV",
+      "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
+      "imgPath": "%IMG_URL%//opencv.svg",
+      "imgStyle": {
+        "paddingBottom": "0.7rem"
+      },
+      "projects": [
+        "perception"
+      ]
     }
-  ]
+    ],
+    "historyBannerImages": [
+      {
+      "path": "%IMG_URL%//WIMS2.png",
+      "text": "WIMS2 - University of Michigan",
+      "url": "https://ece.engin.umich.edu/stories/wireless-integrated-microsensing-and-systems-wims2-in-california"
+    }
+    ]
+  }
 }
