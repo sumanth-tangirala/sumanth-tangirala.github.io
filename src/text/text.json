@@ -184,7 +184,7 @@
     {
       "id": "iot",
       "title": "Internet of Things",
-      "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and my work at Tekion Corp.",
+      "description": "Over the last four years, I've developed IoT-based solutions, including an autonomous environmental logging system and a Amazon-Go prototype.",
       "imgPath": "%IMG_URL%//IoT.svg",
       "projects": [
         "wims2",
@@ -231,7 +231,7 @@
     },
     {
       "title": "Tekion Corp.",
-      "desc": "Starting with a Winter 2020 software engineering internship and advancing to a full-time role as Software Engineer, I worked on building data-driven products for the automotive industry using Machine Learning and Computer Vision tools",
+      "desc": "Starting with a Winter 2020 software engineering internship and advancing to a full-time role as Software Engineer, I developed significant frontend components for a leading Dealership Management System.",
       "date": "January 2020 - July 2022",
       "miniDate": [
         "Jan 2020",
