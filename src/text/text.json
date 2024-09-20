@@ -89,7 +89,7 @@
         "id": "kraft",
         "title": "KRAFT: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
         "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
-        "imageURL": "%IMG_URL%/kraft.png",
+        "imageURL": "%IMG_URL%/kraft.gif",
         "arXivURL": "https://arxiv.org/abs/2409.11522",
         "paperURL": "https://arxiv.org/pdf/2409.11522"
       },
