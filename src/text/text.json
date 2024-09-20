@@ -62,7 +62,7 @@
       },
       {
         "id": "morals",
-        "title": "MORALS: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
+        "title": "<tt>MORALS</tt>: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
         "authors": "Ewerton R. Vieira*, Aravind Sivaramakrishnan*, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
         "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024",
         "award": "Finalist for the IEEE ICRA Best Paper Award in Automation, 2024",
@@ -87,7 +87,7 @@
     "prePrints": [
       {
         "id": "kraft",
-        "title": "KRAFT: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
+        "title": "<tt>KRAFT</tt>: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
         "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
         "imageURL": "%IMG_URL%/kraft.gif",
         "arXivURL": "https://arxiv.org/abs/2409.11522",
