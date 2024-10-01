@@ -49,6 +49,16 @@
     "Bachelor of Technology in Information and Communication Technology | DA-IICT (2016-2020)"
   ],
   "publications": {
+    "prePrints": [
+      {
+        "id": "kraft",
+        "title": "<tt>KRAFT</tt>: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
+        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
+        "imageURL": "%IMG_URL%/kraft.gif",
+        "arXivURL": "https://arxiv.org/abs/2409.11522",
+        "paperURL": "https://arxiv.org/pdf/2409.11522"
+      }
+    ],
     "conferencePapers": [
       {
         "id": "robotMotionGenState",
@@ -90,16 +100,6 @@
         "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
         "imageURL": "%IMG_URL%/stacked_polsar.png",
         "paperURL": "https://arxiv.org/pdf/2311.02887"
-      }
-    ],
-    "prePrints": [
-      {
-        "id": "kraft",
-        "title": "<tt>KRAFT</tt>: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
-        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
-        "imageURL": "%IMG_URL%/kraft.gif",
-        "arXivURL": "https://arxiv.org/abs/2409.11522",
-        "paperURL": "https://arxiv.org/pdf/2409.11522"
       }
     ]
   },
