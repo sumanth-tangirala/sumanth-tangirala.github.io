@@ -51,6 +51,14 @@
   "publications": {
     "conferencePapers": [
       {
+        "id": "robotMotionGenState",
+        "title": "The State of Robot Motion Generation",
+        "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
+        "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2024",
+        "imageURL": "%IMG_URL%/somg.png",
+        "paperURL": "%DOCS_URL%/The_State_of_Robot_Motion_Generation.pdf"
+      },
+      {
         "id": "rogue",
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
         "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Noah R. Carver, Kostas E. Bekris",
@@ -92,13 +100,6 @@
         "imageURL": "%IMG_URL%/kraft.gif",
         "arXivURL": "https://arxiv.org/abs/2409.11522",
         "paperURL": "https://arxiv.org/pdf/2409.11522"
-      },
-      {
-        "id": "robotMotionGenState",
-        "title": "The State of Robot Motion Generation",
-        "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
-        "imageURL": "%IMG_URL%/somg.png",
-        "paperURL": "%DOCS_URL%/The_State_of_Robot_Motion_Generation.pdf"
       }
     ]
   },
