@@ -21,6 +21,10 @@ function ContactMe({ className, sectionRef }) {
     window.open(text.githubURL, "_blank");
   }, []);
 
+  const openResume = useCallback(() => {
+    window.open(text.resumeURL, "_blank");
+  }, []);
+
   return (
     <div className={cx(styles.container, className)} ref={sectionRef}>
       <span className={styles.sectionHeading}>Contact Me</span>
@@ -50,9 +54,7 @@ function ContactMe({ className, sectionRef }) {
         <Button
           icon={<FilePdfOutlined />}
           className={styles.resume}
-          onClick={() => {
-            window.open(text.resumeURL, "_blank");
-          }}
+          onClick={openResume}
         >
           Resume
         </Button>
