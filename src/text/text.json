@@ -66,7 +66,8 @@
         "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2024",
         "imageURL": "%IMG_URL%/somg.png",
-        "paperURL": "%DOCS_URL%/The_State_of_Robot_Motion_Generation.pdf"
+        "paperURL": "https://arxiv.org/pdf/2410.12172",
+        "arXivURL": "https://arxiv.org/abs/2410.12172"
       },
       {
         "id": "rogue",
