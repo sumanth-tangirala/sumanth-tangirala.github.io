@@ -1,7 +1,7 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import Media from "react-media";
 import cx from "classnames";
-import { Button, Dropdown } from "antd";
+import { Dropdown } from "antd";
 import { ReactComponent as MenuSvg } from "./menu.svg";
 
 import _filter from "lodash/filter";
@@ -24,12 +24,20 @@ const sectionsToDisplay = _filter(
     !_includes([SECTION_TYPES.LANDING, SECTION_TYPES.HISTORY], sectionType),
 );
 
-const sectionMenuItems = _map(sectionsToDisplay, (sectionType) => ({
-  key: sectionType,
-  label: (
-    <span className={styles.menuItem}>{SECTION_TYPE_VS_NAME[sectionType]}</span>
-  ),
-}));
+const sectionMenuItems = [
+  ..._map(sectionsToDisplay, (sectionType) => ({
+    key: sectionType,
+    label: (
+      <span className={styles.menuItem}>
+        {SECTION_TYPE_VS_NAME[sectionType]}
+      </span>
+    ),
+  })),
+  {
+    key: "Resume",
+    label: <span className={styles.menuItem}>Resume</span>,
+  },
+];
 
 const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
   const sectionTypeVsNavigationFunc = useMemo(() => {
@@ -47,14 +55,22 @@ const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
     );
   }, [handleNavigation]);
 
+  const openResume = useCallback(() => {
+    window.open(text.resumeURL, "_blank");
+  }, []);
+
   const dropDownMenuProp = useMemo(() => {
     return {
       items: sectionMenuItems,
       onClick: ({ key: sectionType }) => {
+        if (sectionType === "Resume") {
+          openResume();
+          return;
+        }
         handleNavigation(sectionType);
       },
     };
-  }, [handleNavigation]);
+  }, [handleNavigation, openResume]);
 
   const renderActions = () => (
     <div className={styles.actions}>
@@ -67,6 +83,9 @@ const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
           {SECTION_TYPE_VS_NAME[sectionType]}
         </div>
       ))}
+      <div className={styles.navBarItem} onClick={openResume}>
+        Resume
+      </div>
     </div>
   );
 
