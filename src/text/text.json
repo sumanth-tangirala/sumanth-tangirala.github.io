@@ -65,7 +65,7 @@
         "title": "Kinodynamic Trajectory Following with <tt>STELA</tt>: Simultaneous Trajectory Estimation & Local Adaptation",
         "authors": "Edgar Granados, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
         "venue": "Proceedings of the Robotics: Science and Systems (RSS), 2025",
-        "imageURL": "%IMG_URL%/stela.png"
+        "imageURL": "%IMG_URL%/stela.gif"
       },
       {
         "id": "robotMotionGenState",
