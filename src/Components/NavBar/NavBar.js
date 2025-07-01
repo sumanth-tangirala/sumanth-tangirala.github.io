@@ -111,14 +111,12 @@ const NavBar = memo(({ className, navBarRef, handleNavigation, showName }) => {
       )}
       ref={navBarRef}
     >
-      {showName && (
-        <div
-          className={styles.name}
-          onClick={sectionTypeVsNavigationFunc[SECTION_TYPES.LANDING]}
-        >
-          {text.name}
-        </div>
-      )}
+      <div
+        className={cx(styles.name, { [styles.nameHidden]: !showName })}
+        onClick={sectionTypeVsNavigationFunc[SECTION_TYPES.LANDING]}
+      >
+        {text.name}
+      </div>
       <Media
         queries={{
           small: "(max-width: 750px)",
