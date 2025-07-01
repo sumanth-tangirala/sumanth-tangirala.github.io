@@ -122,14 +122,14 @@ $mobile_landscape_img_size: 10rem;
   &::before {
     content: "";
     position: absolute;
-    left: -6px;
+    
     top: 50%;
     transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
+    left: -7px;
+    width: 12px;
+    height: 12px;
     background: $hunyadi_yellow;
     border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.8);
   }
 
   .degree {
@@ -192,9 +192,9 @@ $mobile_landscape_img_size: 10rem;
     font-size: 1.1rem;
 
     &::before {
-      left: -4px;
-      width: 6px;
-      height: 6px;
+      left: -7px;
+      width: 12px;
+      height: 12px;
     }
 
     .degree {
@@ -236,8 +236,9 @@ $mobile_landscape_img_size: 10rem;
     font-size: 1rem;
 
     &::before {
-      width: 5px;
-      height: 5px;
+      left: -7px;
+      width: 12px;
+      height: 12px;
     }
 
     .degree {

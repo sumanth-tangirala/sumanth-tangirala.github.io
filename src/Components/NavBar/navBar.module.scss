@@ -127,7 +127,7 @@ $mini_menu_icon_size: 1.2rem;
   }
 
   .navBarItem {
-    font-size: .9rem;
+    font-size: 1rem;
     padding-left: .5rem;
     padding-right: .5rem;
   }
@@ -141,7 +141,7 @@ $mini_menu_icon_size: 1.2rem;
   }
 
   .name {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     margin-left: 1.2rem;
   }
 
@@ -159,14 +159,14 @@ $mini_menu_icon_size: 1.2rem;
 
 @media screen and (max-width: $tablet_screen_width) {
   .name {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     margin-left: 1.2rem;
   }
 
   .navBarItem {
     padding-left: .2rem;
     padding-right: .2rem;
-    font-size: .7rem;
+    font-size: .9rem;
   }
 
   .container.collapsed {
@@ -232,7 +232,7 @@ $mini_menu_icon_size: 1.2rem;
   }
 
   .name {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     margin-left: 1rem;
   }
 }
@@ -255,7 +255,7 @@ $mini_menu_icon_size: 1.2rem;
 
 @media screen and (max-width: $mobile_landscape_width) {
   .name {
-    font-size: 1rem;
+    font-size: 1.6rem;
     margin-left: 1.2rem;
   }
 
@@ -303,5 +303,41 @@ $mini_menu_icon_size: 1.2rem;
     justify-content: center;
     margin-left: 0;
     margin-right: 0;
+  }
+}
+
+// Show full menu (instead of hamburger) once we reach mobile-landscape width (≥ 750px)
+@media screen and (min-width: $mobile_landscape_width) {
+  .navBarItem {
+    padding: 0 .4rem;
+  }
+
+  .container {
+    width: 80%;
+    left: 10%;
+    right: 10%;
+  }
+
+  .container.collapsed {
+    width: 60%;
+    left: 20%;
+    right: 20%;
+    justify-content: center;
+
+    // Hide hamburger icon and reveal the normal action items
+    .menu {
+      display: none;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .navBarItem {
+      padding: 0 .6rem;
+    }
   }
 }
