@@ -28,8 +28,21 @@
 }
 
 .publication {
-  @include flex;
-  flex-direction: row;
+  @include transition;
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  background: $light_trans_matte_grey;
+  border: none;
+  border-radius: .6rem;
+  padding: 1.2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.55);
+  }
 
   &:not(:first-child) {
     margin-top: 2rem;
@@ -37,19 +50,25 @@
 }
 
 .publicationImageContainer {
-  width: 25%;
-  margin-right: 2rem;
+  width: 100%;
   @include flex;
 }
 
 .publicationImage {
   width: 100%;
-  border: 0.15rem solid $hunyadi_yellow_trans;
-  max-height: 11rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 0.15rem solid rgba(251, 177, 60, 0.4);
+  border-radius: .4rem;
+  transition: transform .15s ease-in-out;
+
+  &:hover {
+    transform: scale(1.04);
+  }
 }
 
 .publicationDetails {
-  width: 75%;
+  width: 100%;
 }
 
 .publicationTitle {
@@ -80,30 +99,38 @@
   margin-top: 1rem;
   flex-direction: row;
   justify-content: flex-start;
-
-  color: $text_blue;
-
-  & > * {
-    margin-right: .3rem;
-  }
+  flex-wrap: wrap;
+  gap: .5rem;
 }
 
 .publicationLink {
-  color: $text_blue;
+  display: inline-block;
+  padding: .25rem .6rem;
+  border: 1px solid $hunyadi_yellow;
+  border-radius: .3rem;
+  color: $hunyadi_yellow;
+  text-decoration: none;
+  transition: background .15s ease-in-out, color .15s ease-in-out, text-decoration .15s ease-in-out;
+
+  &:hover {
+    background: $hunyadi_yellow;
+    color: $matte_grey;
+    text-decoration: underline;
+  }
 }
 
 @media screen and (max-width: $tablet_screen_width) {
   .publication {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .publicationImageContainer {
-    width: 70%;
+    width: 100%;
     margin-bottom: 1rem;
   }
 
   .publicationImage {
-    width: unset;
+    width: 100%;
     max-height: 12rem;
   }
 

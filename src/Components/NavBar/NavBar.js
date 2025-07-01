@@ -18,17 +18,14 @@ import {
 } from "../../constants";
 import _map from "lodash/map";
 
-const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
+const NavBar = memo(({ className, navBarRef, handleNavigation, showName }) => {
   const sectionsToDisplay = useMemo(() => {
-    const sectionsToHide = [SECTION_TYPES.LANDING, SECTION_TYPES.HISTORY];
-    if (text.hideProjects) {
-      sectionsToHide.push(SECTION_TYPES.PROJECTS);
-    }
+    const sectionsToHide = [SECTION_TYPES.LANDING, SECTION_TYPES.HISTORY, ...((text.hiddenSections) || [])];
     return _filter(
       SECTION_ORDER,
       (sectionType) => !_includes(sectionsToHide, sectionType),
     );
-  }, [text.hideProjects]);
+  }, [text.hiddenSections]);
 
   const sectionMenuItems = useMemo(() => [
     ..._map(sectionsToDisplay, (sectionType) => ({
@@ -99,19 +96,29 @@ const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
       placement="bottomRight"
       className={styles.menu}
       trigger="click"
+      overlayClassName={styles.darkDropdown}
     >
       <MenuSvg className={styles.menuIcon} />
     </Dropdown>
   );
 
   return (
-    <div className={cx(styles.container, className)} ref={navBarRef}>
-      <div
-        className={styles.name}
-        onClick={sectionTypeVsNavigationFunc[SECTION_TYPES.LANDING]}
-      >
-        {text.name}
-      </div>
+    <div
+      className={cx(
+        styles.container,
+        { [styles.collapsed]: !showName },
+        className,
+      )}
+      ref={navBarRef}
+    >
+      {showName && (
+        <div
+          className={styles.name}
+          onClick={sectionTypeVsNavigationFunc[SECTION_TYPES.LANDING]}
+        >
+          {text.name}
+        </div>
+      )}
       <Media
         queries={{
           small: "(max-width: 750px)",

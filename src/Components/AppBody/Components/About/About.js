@@ -23,7 +23,7 @@ function About({ className, sectionRef }) {
       })}
 
       <div className={styles.text}>
-        <span className={styles.name}>{parse(text.name)}</span>
+        {/* <span className={styles.name}>{parse(text.name)}</span> */}
         <div className={styles.qualifications}>
           {_map(text.qualifications, (qual, idx) => (
             <div key={idx}>{parse(qual)}</div>
@@ -38,9 +38,10 @@ function About({ className, sectionRef }) {
         </div>
         <div className={styles.qualificationDetails}>
           {_map(text.qualificationDetails, (qualificationDetail, idx) => (
-            <span className={styles.qualificationDetailItem} key={idx}>
-              {parse(qualificationDetail)}
-            </span>
+            <div className={styles.qualificationDetailItem} key={idx}>
+              <div className={styles.degree}>{parse(qualificationDetail.degree)}</div>
+              <div className={styles.university}>{parse(qualificationDetail.university)}</div>
+            </div>
           ))}
         </div>
       </div>

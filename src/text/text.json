@@ -40,14 +40,22 @@
   "aboutPicturePath": "%IMG_URL%/about.webp",
   "aboutMobilePicturePath": "%IMG_URL%/mobile/about.webp",
   "about": [
-    "Passionate about tackling complex, interdisciplinary challenges that have a tangible and positive impact on the real world.",
     "Primary Areas of Focus: <yellow_bold>Robotics, Safe and Verifiable Motion Planning.</yellow_bold>",
     "Pursuing a PhD thesis under Professor Kostas Bekris, focusing on <yellow_bold> safety verification of robot policies </yellow_bold> and <yellow_bold> safe kinodynamic motion planning </yellow_bold> for high-dynamics robots."
   ],
   "qualificationDetails": [
-    "Ph.D. in Computer Science |  Rutgers University (2024 - Now)",
-    "Master of Science in Computer Science |  Rutgers University (2022-2024)",
-    "Bachelor of Technology in Information and Communication Technology | DA-IICT (2016-2020)"
+    {
+      "degree": "Ph.D. in Computer Science",
+      "university": "Rutgers University (2024 - Now)"
+    },
+    {
+      "degree": "Master of Science in Computer Science",
+      "university": "Rutgers University (2022-2024)"
+    },
+    {
+      "degree": "Bachelor of Technology in Information and Communication Technology",
+      "university": "DA-IICT (2016-2020)"
+    }
   ],
   "publications": {
     "prePrints": [
@@ -109,7 +117,7 @@
         "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
         "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
         "arXivURL": "https://arxiv.org/abs/2311.02887",
-        "venue": "Proceedings of the 2019 International Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
+        "venue": "Proceedings of the International Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
         "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
         "imageURL": "%IMG_URL%/stacked_polsar.png",
         "paperURL": "https://arxiv.org/pdf/2311.02887"
@@ -277,6 +285,10 @@
       ],
       "imgPath": "%IMG_URL%//DAIICT.png"
     }
+  ],
+  "hiddenSections": [
+    "SKILLS",
+    "PROJECTS"
   ],
   "hideProjects": true,
   "projects": [

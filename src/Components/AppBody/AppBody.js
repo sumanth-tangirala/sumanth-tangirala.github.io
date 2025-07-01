@@ -7,6 +7,7 @@ import Projects from "./Components/Projects";
 import About from "./Components/About";
 import ContactMe from "./Components/ContactMe";
 import HistoryBanner from "./Components/HistoryBanner";
+import text from "text";
 
 import styles from "./appBody.module.scss";
 import { SECTION_TYPES, SECTION_ORDER } from "../../constants";
@@ -24,12 +25,18 @@ const SECTION_TYPE_VS_COMPONENT = {
   [SECTION_TYPES.CONTACT]: ContactMe,
 };
 
-const sections = _map(SECTION_ORDER, (sectionType) => ({
+// Determine visible sections at runtime based on `text.hiddenSections`
+const getVisibleSections = () => {
+  const hidden = text.hiddenSections || [];
+  return SECTION_ORDER.filter((sectionType) => !hidden.includes(sectionType));
+};
+
+const sections = _map(getVisibleSections(), (sectionType) => ({
   Component: SECTION_TYPE_VS_COMPONENT[sectionType],
   sectionType,
 }));
 
-const AppBody = memo(({ sectionRefs }) => {
+const AppBody = memo(({ sectionRefs, landingNameRef }) => {
   return (
     <>
       {_map(sections, ({ Component, sectionType }) => (
@@ -38,6 +45,7 @@ const AppBody = memo(({ sectionRefs }) => {
           className={styles.childSection}
           sectionRef={sectionRefs[sectionType]}
           sectionHeadingClassName={styles.sectionHeading}
+          {...(sectionType === SECTION_TYPES.LANDING ? { nameRef: landingNameRef } : {})}
         />
       ))}
     </>

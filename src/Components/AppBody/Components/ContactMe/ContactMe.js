@@ -10,6 +10,7 @@ import { Button } from "antd";
 import text from "text";
 
 import styles from "./ContactMe.module.scss";
+import { SECTION_TYPES } from "../../../../constants";
 import cx from "classnames";
 
 function ContactMe({ className, sectionRef }) {
@@ -27,9 +28,13 @@ function ContactMe({ className, sectionRef }) {
 
   return (
     <div className={cx(styles.container, className)} ref={sectionRef}>
-      <div className={cx(styles.contentWrapper, {
-        [styles.skillsBackground]: text.hideProjects
-      })}>
+      <div
+        className={cx(styles.contentWrapper, {
+          [styles.skillsBackground]: (text.hiddenSections || []).includes(
+            SECTION_TYPES.PROJECTS,
+          ),
+        })}
+      >
         <span className={styles.sectionHeading}>Contact Me</span>
         <div className={styles.emailsContainer}>
           <span className={styles.emailText}>Email:</span>

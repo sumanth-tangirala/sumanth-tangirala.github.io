@@ -7,18 +7,14 @@ function PublicationItem({ publication, idx, color = "white", smallFont }) {
   const renderLink = (key, text) => {
     if (!publication[key]) return null;
     return (
-      <div>
-        [
-        <a
-          href={publication[key]}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.publicationLink}
-        >
-          {text}
-        </a>
-        ]
-      </div>
+      <a
+        href={publication[key]}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.publicationLink}
+      >
+        {text}
+      </a>
     );
   };
 
@@ -31,7 +27,7 @@ function PublicationItem({ publication, idx, color = "white", smallFont }) {
       <div className={styles.publicationImageContainer}>
         <img
           src={publication.imageURL}
-          alt=""
+          alt={publication.alt || publication.title || "publication-thumbnail"}
           className={styles.publicationImage}
         />
       </div>

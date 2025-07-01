@@ -15,6 +15,7 @@ $mobile_landscape_img_size: 10rem;
   //min-height: calc(100vh - $nav_bar_height - $min_history_banner_height);
 
   color: white;
+
   @media screen and (max-height: $mobile_landscape_screen_height) {
     min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
   }
@@ -25,6 +26,7 @@ $mobile_landscape_img_size: 10rem;
   max-height: 80%;
   border: white solid 0.3rem;
   margin: 1rem 6rem 1rem 0;
+  margin-bottom: auto;
 }
 
 .text {
@@ -41,27 +43,53 @@ $mobile_landscape_img_size: 10rem;
   font-weight: 450;
   margin-bottom: .8rem;
   color: $hunyadi_yellow;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 0.5rem;
+  width: 100%;
 }
 
 .qualifications {
   margin-bottom: 1.2rem;
   font-weight: 400;
   font-size: 1.6rem;
-  margin-top: 1.2rem;
+  margin-top: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.2rem;
+  width: 100%;
 
-  & * {
-    margin-bottom: .5rem;
+  &>div {
+    margin-bottom: .8rem;
+    line-height: 1.4;
+
+    &:first-child {
+      font-weight: 500;
+      font-size: 1.7rem;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    &:last-child {
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: 0.3rem;
+    }
   }
 }
 
 .aboutParagraphs {
   @include flex;
   align-items: flex-start;
-  margin-top: 1.2rem;
+  margin-top: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.2rem;
+  width: 100%;
 }
 
 .aboutParagraphItem {
   font-size: 1.2rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
 
   &:not(:first-child) {
     margin-top: 1.6rem;
@@ -70,16 +98,50 @@ $mobile_landscape_img_size: 10rem;
 
 .qualificationDetails {
   @include flex;
-  margin-top: 2.4rem;
+  margin-top: 1.8rem;
   align-items: flex-start;
+  gap: 1.5rem;
 }
 
 .qualificationDetailItem {
-  font-size: 1.3rem;
-  font-weight: 500;
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid $hunyadi_yellow;
+  border-radius: 0 6px 6px 0;
+  position: relative;
+  width: 100%;
+  flex: 1;
 
   &:not(:first-child) {
-    margin-top: 1.2rem;
+    margin-top: 0;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: $hunyadi_yellow;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.8);
+  }
+
+  .degree {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 0.3rem;
+  }
+
+  .university {
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
   }
 }
 
@@ -97,14 +159,51 @@ $mobile_landscape_img_size: 10rem;
   .image {
     height: $mobile_img_size;
     margin: 0 0 1rem 1rem;
+    margin-bottom: auto;
   }
+
   .text {
+    margin-top: 1rem;
     margin-left: 2rem !important;
     margin-right: 2rem !important;
   }
+
   .name {
     width: 100%;
     text-align: center;
+  }
+
+  .qualifications {
+    &>div {
+      &:first-child {
+        font-size: 1.5rem;
+        text-align: center;
+      }
+
+      &:last-child {
+        font-size: 1.3rem;
+        text-align: center;
+      }
+    }
+  }
+
+  .qualificationDetailItem {
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+
+    &::before {
+      left: -4px;
+      width: 6px;
+      height: 6px;
+    }
+
+    .degree {
+      font-size: 1.1rem;
+    }
+
+    .university {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -113,9 +212,10 @@ $mobile_landscape_img_size: 10rem;
     width: 100%;
     text-align: center;
   }
+
   .container {
     min-height: calc(100vh - $nav_bar_height);
-    lex-direction: row;
+    flex-direction: row;
     padding: 0 2rem;
     width: calc(100% - 4rem) !important;
   }
@@ -126,7 +226,40 @@ $mobile_landscape_img_size: 10rem;
   }
 
   .text {
+    margin-top: 1rem;
     margin-left: 2rem !important;
     margin-right: 2rem !important;
+  }
+
+  .qualificationDetailItem {
+    padding: 0.6rem 0.8rem;
+    font-size: 1rem;
+
+    &::before {
+      width: 5px;
+      height: 5px;
+    }
+
+    .degree {
+      font-size: 1rem;
+    }
+
+    .university {
+      font-size: 0.9rem;
+    }
+  }
+
+  .qualifications {
+    margin-top: 0.6rem;
+
+    &>div {
+      &:first-child {
+        font-size: 1.4rem;
+      }
+
+      &:last-child {
+        font-size: 1.2rem;
+      }
+    }
   }
 }

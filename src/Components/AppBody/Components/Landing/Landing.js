@@ -4,7 +4,7 @@ import cx from "classnames";
 import basicData from "text";
 import { mobileDesktopSwitcher, parse } from "../../../../helpers";
 
-function Landing({ className, sectionRef }) {
+function Landing({ className, sectionRef, nameRef }) {
   return (
     <div className={cx(styles.landing, className)} ref={sectionRef}>
       <div className={styles.container}>
@@ -25,7 +25,7 @@ function Landing({ className, sectionRef }) {
           ),
         })}
 
-        <div className={cx(styles.name)}>{basicData.name}</div>
+        <div className={cx(styles.name)} ref={nameRef}>{basicData.name}</div>
         <div className={styles.tagline}>{parse(basicData.tagline)}</div>
       </div>
     </div>

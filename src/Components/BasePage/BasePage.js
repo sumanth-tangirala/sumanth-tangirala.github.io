@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useEffect, useState } from "react";
 
 import NavBar from "../NavBar";
 import AppBody from "../AppBody";
@@ -13,6 +13,7 @@ const SECTION_TYPE_VS_SECTION_TYPE_TO_SCROLL_TO = {
 
 function BasePage() {
   const navBarRef = useRef();
+  const landingNameRef = useRef();
 
   const landingSectionRef = useRef();
   const historySectionRef = useRef();
@@ -22,6 +23,8 @@ function BasePage() {
   const projectsSectionRef = useRef();
   const contactSectionRef = useRef();
   const publicationsSectionRef = useRef();
+
+  const [showName, setShowName] = useState(false);
 
   const sectionRefs = useMemo(
     () => ({
@@ -47,10 +50,30 @@ function BasePage() {
     [sectionRefs],
   );
 
+  /* Observe the landing name visibility to toggle nav title */
+  useEffect(() => {
+    const target = landingNameRef.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowName(!entry.isIntersecting);
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [landingNameRef]);
+
   return (
     <>
-      <NavBar navBarRef={navBarRef} handleNavigation={onNavigation} />
-      <AppBody sectionRefs={sectionRefs} />
+      <NavBar
+        navBarRef={navBarRef}
+        handleNavigation={onNavigation}
+        showName={showName}
+      />
+      <AppBody sectionRefs={sectionRefs} landingNameRef={landingNameRef} />
     </>
   );
 }

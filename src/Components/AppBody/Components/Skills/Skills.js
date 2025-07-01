@@ -18,6 +18,10 @@ class Skills extends React.Component {
   }
 
   render() {
+    if ((text.hiddenSections || []).includes(SECTION_TYPES.SKILLS)) {
+      return null;
+    }
+
     return (
       <ItemGrid
         containerRef={this.props.sectionRef}
