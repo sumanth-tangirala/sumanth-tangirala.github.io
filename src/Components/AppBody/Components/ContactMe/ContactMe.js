@@ -27,37 +27,41 @@ function ContactMe({ className, sectionRef }) {
 
   return (
     <div className={cx(styles.container, className)} ref={sectionRef}>
-      <span className={styles.sectionHeading}>Contact Me</span>
-      <div className={styles.emailsContainer}>
-        <span className={styles.emailText}>Email:</span>
-        <a href="mailto: tangiralasumanth@gmail.com" className={styles.emailId}>
-          tangiralasumanth@gmail.com
-        </a>
-        <span className={styles.emailDivider}>||</span>
-        <a href="mailto: sumanth.t@rutgers.edu" className={styles.emailId}>
-          sumanth.t@rutgers.edu
-        </a>
-      </div>
-      <div className={styles.socialMediaLinks}>
-        <Button
-          shape="circle"
-          icon={<LinkedinFilled />}
-          className={styles.socialMediaImg}
-          onClick={openLinkedin}
-        />
-        <Button
-          shape="circle"
-          icon={<GithubFilled />}
-          className={styles.socialMediaImg}
-          onClick={openGithub}
-        />
-        <Button
-          icon={<FilePdfOutlined />}
-          className={styles.resume}
-          onClick={openResume}
-        >
-          Resume
-        </Button>
+      <div className={cx(styles.contentWrapper, {
+        [styles.skillsBackground]: text.hideProjects
+      })}>
+        <span className={styles.sectionHeading}>Contact Me</span>
+        <div className={styles.emailsContainer}>
+          <span className={styles.emailText}>Email:</span>
+          <a href="mailto: tangiralasumanth@gmail.com" className={styles.emailId}>
+            tangiralasumanth@gmail.com
+          </a>
+          <span className={styles.emailDivider}>||</span>
+          <a href="mailto: sumanth.t@rutgers.edu" className={styles.emailId}>
+            sumanth.t@rutgers.edu
+          </a>
+        </div>
+        <div className={styles.socialMediaLinks}>
+          <Button
+            shape="circle"
+            icon={<LinkedinFilled />}
+            className={styles.socialMediaImg}
+            onClick={openLinkedin}
+          />
+          <Button
+            shape="circle"
+            icon={<GithubFilled />}
+            className={styles.socialMediaImg}
+            onClick={openGithub}
+          />
+          <Button
+            icon={<FilePdfOutlined />}
+            className={styles.resume}
+            onClick={openResume}
+          >
+            Resume
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -18,28 +18,32 @@ import {
 } from "../../constants";
 import _map from "lodash/map";
 
-const sectionsToDisplay = _filter(
-  SECTION_ORDER,
-  (sectionType) =>
-    !_includes([SECTION_TYPES.LANDING, SECTION_TYPES.HISTORY], sectionType),
-);
-
-const sectionMenuItems = [
-  ..._map(sectionsToDisplay, (sectionType) => ({
-    key: sectionType,
-    label: (
-      <span className={styles.menuItem}>
-        {SECTION_TYPE_VS_NAME[sectionType]}
-      </span>
-    ),
-  })),
-  {
-    key: "Resume",
-    label: <span className={styles.menuItem}>Resume</span>,
-  },
-];
-
 const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
+  const sectionsToDisplay = useMemo(() => {
+    const sectionsToHide = [SECTION_TYPES.LANDING, SECTION_TYPES.HISTORY];
+    if (text.hideProjects) {
+      sectionsToHide.push(SECTION_TYPES.PROJECTS);
+    }
+    return _filter(
+      SECTION_ORDER,
+      (sectionType) => !_includes(sectionsToHide, sectionType),
+    );
+  }, [text.hideProjects]);
+
+  const sectionMenuItems = useMemo(() => [
+    ..._map(sectionsToDisplay, (sectionType) => ({
+      key: sectionType,
+      label: (
+        <span className={styles.menuItem}>
+          {SECTION_TYPE_VS_NAME[sectionType]}
+        </span>
+      ),
+    })),
+    {
+      key: "Resume",
+      label: <span className={styles.menuItem}>Resume</span>,
+    },
+  ], [sectionsToDisplay]);
   const sectionTypeVsNavigationFunc = useMemo(() => {
     const getHandleNavigation = (sectionType) => () => {
       handleNavigation(sectionType);
@@ -128,7 +132,7 @@ const NavBar = memo(({ className, navBarRef, handleNavigation }) => {
 NavBar.propTypes = {};
 
 NavBar.defaultProps = {
-  handleNavigation: () => {},
+  handleNavigation: () => { },
 };
 
 export default NavBar;

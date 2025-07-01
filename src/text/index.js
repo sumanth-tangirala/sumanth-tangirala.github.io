@@ -7,6 +7,7 @@ const imgURL = `${mediaURL}/img`;
 
 const updatedText = JSON.stringify(rawText)
   .replaceAll("%MEDIA_URL%", mediaURL)
+  .replaceAll("%DEBUG_LOCAL_IMG_URL%", "/debug_imgs")
   .replaceAll("%IMG_URL%", imgURL)
   .replaceAll("%DOCS_URL%", docsURL);
 

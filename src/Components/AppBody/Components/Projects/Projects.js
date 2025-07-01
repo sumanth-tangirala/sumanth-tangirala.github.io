@@ -9,6 +9,10 @@ import ProjectCard from "./Components/ProjectCard";
 import ProjectDetailsPanel from "./Components/ProjectDetailsPanel";
 
 function Projects({ className, sectionRef, sectionHeadingClassName }) {
+  if (text.hideProjects) {
+    return null;
+  }
+
   return (
     <>
       <ItemGrid

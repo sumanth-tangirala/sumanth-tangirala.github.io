@@ -13,9 +13,9 @@
       "url": "https://robotics.cs.rutgers.edu/pracsys"
     },
     {
-      "path": "%IMG_URL%//Rutgers.png",
-      "text": "Rutgers",
-      "url": "https://www.rutgers.edu/"
+      "path": "%IMG_URL%//zoox-vert.svg",
+      "text": "Zoox Inc.",
+      "url": "https://zoox.com/"
     },
     {
       "path": "%IMG_URL%//Tekion.svg",
@@ -34,14 +34,15 @@
     }
   ],
   "qualifications": [
-    "Robotics Researcher at PRACSYS Lab, Rutgers University"
+    "Robotics PhD Student, PRACSYS Lab - Rutgers University",
+    "Prediction Intern, Zoox Inc."
   ],
   "aboutPicturePath": "%IMG_URL%/about.webp",
   "aboutMobilePicturePath": "%IMG_URL%/mobile/about.webp",
   "about": [
     "Passionate about tackling complex, interdisciplinary challenges that have a tangible and positive impact on the real world.",
-    "Primary Areas of Focus: <yellow_bold>Robotics, Motion Planning, and Reinforcement Learning.</yellow_bold>",
-    "Currently pursuing a thesis under the guidance of Professor Kostas Bekris, exploring <yellow_bold> robot kinodynamic motion planning </yellow_bold> algorithms for high-velocity robots with first-order goals."
+    "Primary Areas of Focus: <yellow_bold>Robotics, Safe and Verifiable Motion Planning.</yellow_bold>",
+    "Pursuing a PhD thesis under Professor Kostas Bekris, focusing on <yellow_bold> safety verification of robot policies </yellow_bold> and <yellow_bold> safe kinodynamic motion planning </yellow_bold> for high-dynamics robots."
   ],
   "qualificationDetails": [
     "Ph.D. in Computer Science |  Rutgers University (2024 - Now)",
@@ -64,7 +65,7 @@
         "id": "stela",
         "title": "Kinodynamic Trajectory Following with <tt>STELA</tt>: Simultaneous Trajectory Estimation & Local Adaptation",
         "authors": "Edgar Granados, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
-        "venue": "Proceedings of the Robotics: Science and Systems (RSS), 2025",
+        "venue": "Proceedings of the Robotics: Science and Systems (RSS) Conference, 2025",
         "imageURL": "%IMG_URL%/stela.gif",
         "arxivURL": "https://arxiv.org/abs/2504.20009",
         "websiteURL": "https://prx-kinodynamic.github.io/projects/stela",
@@ -198,13 +199,23 @@
   "timeline": [
     {
       "title": "PRACSYS Lab, Rutgers University",
-      "desc": "I am researching robot motion planning algorithms for high-velocity robots in dynamic conditions using AI/ML and Reinforcement Learning techniques",
+      "desc": "I am researching robot motion planning algorithms for high-velocity robots in dynamic conditions using a mixture of Learning and Classical methods",
       "date": "January 2023 - Present",
       "miniDate": [
         "Jan 2023",
         "Now"
       ],
       "imgPath": "%IMG_URL%//PRACSYS.png"
+    },
+    {
+      "title": "Zoox Inc.",
+      "desc": "I am working in the Offline Driving Intelligence team, developing prediction and safety verification methods for autonomous vehicles",
+      "date": "June 2024 - Present",
+      "miniDate": [
+        "June 2024",
+        "Now"
+      ],
+      "imgPath": "%IMG_URL%//zoox-hor.svg"
     },
     {
       "title": "Rutgers University",
@@ -267,6 +278,7 @@
       "imgPath": "%IMG_URL%//DAIICT.png"
     }
   ],
+  "hideProjects": true,
   "projects": [
     {
       "id": "unitree",
@@ -405,64 +417,64 @@
   "archive": {
     "projects": [
       {
-      "id": "wims2",
-      "title": "Autonomous Environmental Logging IoT System",
-      "longDesc": [
-        "Developed an end-to-end IoT solution that acted as an external unit for the ELM7 environmental logging sensor developed by the WIMS2 Lab at the University of Michigan",
-        "This work was a part of a collaborative project between WIMS2 and Smart City Lab, DAIICT, and my work was advised by Dr. Yogesh Gianchandani, Director of WIMS2 Lab, University of Michigan",
-        "The sensor was aimed to measure environmental parameters in remote dangerous locations such as mines and the end-to-end system was aimed to provide a way to monitor such sites remotely",
-        "The system consisted of a gateway in the form of a Raspberry Pi, a cloud server and a client-side desktop GUI",
-        "The Raspberry Pi was connected to the ELM7 sensor through Bluetooth Low Energy (BLE) protocol and the cloud server was connected to the Raspberry Pi through a WiFi network",
-        "The GUI was developed using Tkinter and was responsible for sending control commands to the Raspberry Pi and displaying the data received from the sensor",
-        "The Raspberry Pi was responsible for receiving controls and operating in one of the three modes - Single, Batch and Continuous - where the mode determined the frequency of data collection. This data would then be relayed to the cloud server with a frequency determined by the mode",
-        "The cloud server was developed using NodeJS and was responsible for storing the data and providing it to the web application on request"
-      ],
-      "techStack": [
-        "Raspberry Pi",
-        "Bluetooth-Low-Energy",
-        "NodeJS & ExpressJS",
-        "Tkinter GUI",
-        "Python",
-        "Javascript"
-      ],
-      "imgPath": "%IMG_URL%//raspi.jpg",
-      "mobileImgPath": "%IMG_URL%/mobile//raspi.jpg",
-      "textColor": "white",
-      "backgroundColor": "black",
-      "details": "May, 2019 - November, 2019",
-      "contrast": 1.5,
-      "skills": [
-        "iot",
-        "pythonCpp"
-      ]
-    },
+        "id": "wims2",
+        "title": "Autonomous Environmental Logging IoT System",
+        "longDesc": [
+          "Developed an end-to-end IoT solution that acted as an external unit for the ELM7 environmental logging sensor developed by the WIMS2 Lab at the University of Michigan",
+          "This work was a part of a collaborative project between WIMS2 and Smart City Lab, DAIICT, and my work was advised by Dr. Yogesh Gianchandani, Director of WIMS2 Lab, University of Michigan",
+          "The sensor was aimed to measure environmental parameters in remote dangerous locations such as mines and the end-to-end system was aimed to provide a way to monitor such sites remotely",
+          "The system consisted of a gateway in the form of a Raspberry Pi, a cloud server and a client-side desktop GUI",
+          "The Raspberry Pi was connected to the ELM7 sensor through Bluetooth Low Energy (BLE) protocol and the cloud server was connected to the Raspberry Pi through a WiFi network",
+          "The GUI was developed using Tkinter and was responsible for sending control commands to the Raspberry Pi and displaying the data received from the sensor",
+          "The Raspberry Pi was responsible for receiving controls and operating in one of the three modes - Single, Batch and Continuous - where the mode determined the frequency of data collection. This data would then be relayed to the cloud server with a frequency determined by the mode",
+          "The cloud server was developed using NodeJS and was responsible for storing the data and providing it to the web application on request"
+        ],
+        "techStack": [
+          "Raspberry Pi",
+          "Bluetooth-Low-Energy",
+          "NodeJS & ExpressJS",
+          "Tkinter GUI",
+          "Python",
+          "Javascript"
+        ],
+        "imgPath": "%IMG_URL%//raspi.jpg",
+        "mobileImgPath": "%IMG_URL%/mobile//raspi.jpg",
+        "textColor": "white",
+        "backgroundColor": "black",
+        "details": "May, 2019 - November, 2019",
+        "contrast": 1.5,
+        "skills": [
+          "iot",
+          "pythonCpp"
+        ]
+      },
       {
-      "id": "perception",
-      "title": "External Perception System for Autonomous Robot Navigation",
-      "longDesc": [
-        "Contributed to development of an external perception system in the PRACSYS lab for the MuSHR platform to enable training of closed-loop control policies for mobile robots",
-        "Used AprilTags to localize the robot and the boundaries in the environment which were then processed using OpenCV to estimate the pose and location of the robot and the boundaries",
-        "Built Robot Operating System (ROS) services to communicate the location of the robot and the boundaries to the robot",
-        "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
-      ],
-      "techStack": [
-        "Robot Operating System (ROS)",
-        "OpenCV",
-        "NVIDIA Jetson",
-        "Python",
-        "C++"
-      ],
-      "imgPath": "%IMG_URL%//mushr.gif",
-      "mobileImgPath": "%IMG_URL%/mobile//mushr.gif",
-      "textColor": "white",
-      "backgroundColor": "black",
-      "details": "May, 2023 - August, 2023",
-      "contrast": 1.5,
-      "skills": [
-        "ros",
-        "cv"
-      ]
-    },
+        "id": "perception",
+        "title": "External Perception System for Autonomous Robot Navigation",
+        "longDesc": [
+          "Contributed to development of an external perception system in the PRACSYS lab for the MuSHR platform to enable training of closed-loop control policies for mobile robots",
+          "Used AprilTags to localize the robot and the boundaries in the environment which were then processed using OpenCV to estimate the pose and location of the robot and the boundaries",
+          "Built Robot Operating System (ROS) services to communicate the location of the robot and the boundaries to the robot",
+          "Developed the system in C++ for efficiency to achieve an optimal message rate of 30+Hz"
+        ],
+        "techStack": [
+          "Robot Operating System (ROS)",
+          "OpenCV",
+          "NVIDIA Jetson",
+          "Python",
+          "C++"
+        ],
+        "imgPath": "%IMG_URL%//mushr.gif",
+        "mobileImgPath": "%IMG_URL%/mobile//mushr.gif",
+        "textColor": "white",
+        "backgroundColor": "black",
+        "details": "May, 2023 - August, 2023",
+        "contrast": 1.5,
+        "skills": [
+          "ros",
+          "cv"
+        ]
+      },
       {
         "id": "summary",
         "title": "Summary Bot",
@@ -579,7 +591,7 @@
         "details": "Ongoing Project | June, 2021 - Present",
         "contrast": 1.1
       }
-  ],
+    ],
     "skills": [
       {
         "id": "iot",
@@ -599,24 +611,24 @@
         "imgPath": "%IMG_URL%//ReactJs.svg"
       },
       {
-      "id": "cv",
-      "title": "Computer Vision, OpenCV",
-      "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
-      "imgPath": "%IMG_URL%//opencv.svg",
-      "imgStyle": {
-        "paddingBottom": "0.7rem"
-      },
-      "projects": [
-        "perception"
-      ]
-    }
+        "id": "cv",
+        "title": "Computer Vision, OpenCV",
+        "description": "My studies in Computer Vision have been applied in Robotics and IoT projects, notably in developing a perception system for the MuSHR platform",
+        "imgPath": "%IMG_URL%//opencv.svg",
+        "imgStyle": {
+          "paddingBottom": "0.7rem"
+        },
+        "projects": [
+          "perception"
+        ]
+      }
     ],
     "historyBannerImages": [
       {
-      "path": "%IMG_URL%//WIMS2.png",
-      "text": "WIMS2 - University of Michigan",
-      "url": "https://ece.engin.umich.edu/stories/wireless-integrated-microsensing-and-systems-wims2-in-california"
-    }
+        "path": "%IMG_URL%//WIMS2.png",
+        "text": "WIMS2 - University of Michigan",
+        "url": "https://ece.engin.umich.edu/stories/wireless-integrated-microsensing-and-systems-wims2-in-california"
+      }
     ]
   }
 }
