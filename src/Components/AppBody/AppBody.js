@@ -36,7 +36,7 @@ const sections = _map(getVisibleSections(), (sectionType) => ({
   sectionType,
 }));
 
-const AppBody = memo(({ sectionRefs, landingNameRef }) => {
+const AppBody = memo(({ sectionRefs, landingNameRef, handleNavigation }) => {
   return (
     <>
       {_map(sections, ({ Component, sectionType }) => (
@@ -45,7 +45,11 @@ const AppBody = memo(({ sectionRefs, landingNameRef }) => {
           className={styles.childSection}
           sectionRef={sectionRefs[sectionType]}
           sectionHeadingClassName={styles.sectionHeading}
-          {...(sectionType === SECTION_TYPES.LANDING ? { nameRef: landingNameRef } : {})}
+          {
+          ...(sectionType === SECTION_TYPES.LANDING
+            ? { nameRef: landingNameRef, handleNavigation }
+            : {})
+          }
         />
       ))}
     </>

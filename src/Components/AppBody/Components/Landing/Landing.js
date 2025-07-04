@@ -4,24 +4,33 @@ import cx from "classnames";
 import basicData from "text";
 import { mobileDesktopSwitcher, parse } from "../../../../helpers";
 import { motion } from "framer-motion";
+import { SECTION_TYPES } from "../../../../constants";
 
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.2 },
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: {
+      type: "spring",
+      stiffness: 90,
+      damping: 15,
+      mass: 0.6,
+    },
   },
 };
 
-function Landing({ className, sectionRef, nameRef }) {
+function Landing({ className, sectionRef, nameRef, handleNavigation }) {
   return (
     <div className={cx(styles.landing, className)} ref={sectionRef}>
       <motion.div
@@ -58,6 +67,24 @@ function Landing({ className, sectionRef, nameRef }) {
         </motion.div>
         <motion.div className={styles.tagline} variants={itemVariants}>
           {parse(basicData.tagline)}
+        </motion.div>
+
+        {/* Action Buttons */}
+        <motion.div className={styles.actions} variants={itemVariants}>
+          <motion.button
+            className={styles.actionButton}
+            variants={itemVariants}
+            onClick={() => handleNavigation && handleNavigation(SECTION_TYPES.PUBLICATIONS)}
+          >
+            View Work
+          </motion.button>
+          <motion.button
+            className={styles.actionButton}
+            variants={itemVariants}
+            onClick={() => handleNavigation && handleNavigation(SECTION_TYPES.CONTACT)}
+          >
+            Get in Touch
+          </motion.button>
         </motion.div>
       </motion.div>
     </div>

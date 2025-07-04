@@ -5,6 +5,7 @@ $tablet_img_size: 10rem;
 $mobile_img_size: 10rem;
 $mobile_landscape_img_size: 7.2rem;
 $backgroundColor: $dark_trans_matte_grey;
+$button_height: 3rem;
 
 .landing {
   height: 100vh;
@@ -39,7 +40,7 @@ $backgroundColor: $dark_trans_matte_grey;
 .tagline {
   color: $hunyadi_yellow;
   font-size: 2rem;
-  margin-top: 4rem;
+  margin-top: 2.5rem;
   text-align: center;
   text-shadow: 0.15rem 0.15rem .5rem rgba(0, 0, 0, .5);
   @include flex;
@@ -47,7 +48,7 @@ $backgroundColor: $dark_trans_matte_grey;
   flex-wrap: wrap;
 }
 
-@media screen and (min-width: $tablet_screen_width + 1) {
+@media screen and (min-width: ($tablet_screen_width + 1)) {
   .tagline {
 
     //  Add a line between the tagline spans
@@ -120,5 +121,44 @@ $backgroundColor: $dark_trans_matte_grey;
   .tagline {
     font-size: 1.2rem;
     margin-top: 1rem;
+  }
+}
+
+.actions {
+  @include flex;
+  flex-direction: row;
+  gap: 1.6rem;
+  margin-top: 5rem;
+
+  @media screen and (max-width: $mobile_screen_width) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.actionButton {
+  @include transition;
+  padding: 0.45rem 1.6rem;
+  border: 1px solid #fbb13c36;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1.1rem;
+  font-weight: 200 !important;
+  letter-spacing: 0.04rem;
+  cursor: pointer;
+  transform: translateY(0);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+
+  &:hover {
+    background: $hunyadi_yellow;
+    color: $matte_grey;
+    box-shadow: 0 4px 8px rgba(251, 177, 60, 0.3);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(251, 177, 60, 0.25);
   }
 }

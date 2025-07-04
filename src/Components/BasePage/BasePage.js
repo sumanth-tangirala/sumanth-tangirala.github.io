@@ -73,7 +73,11 @@ function BasePage() {
         handleNavigation={onNavigation}
         showName={showName}
       />
-      <AppBody sectionRefs={sectionRefs} landingNameRef={landingNameRef} />
+      <AppBody
+        sectionRefs={sectionRefs}
+        landingNameRef={landingNameRef}
+        handleNavigation={onNavigation}
+      />
     </>
   );
 }
