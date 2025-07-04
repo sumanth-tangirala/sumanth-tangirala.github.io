@@ -1,265 +1,144 @@
 @import 'src/styles.module.scss';
 
-$color1: $backgroundGray;
-$color2: transparent;
-$color3: $hunyadi_yellow;
-$color4: transparent;
-$text_color1: white;
-$text_color2: white;
-$text_color4: $color2;
-
-$img_size: 8rem;
-
-$border_size: 1rem;
-
-
-.container {
-  z-index: 3;
-  position: relative;
-  @include flex();
+.sectionContainer {
+  margin: 4rem 0;
 }
 
 .sectionTitle {
-  border-radius: 2rem;
-  padding: 1rem;
-  @include section-heading;
-  background: transparent;
-  margin: 1rem 0 2rem 0;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
-.timeline {
-  width: 100%;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.timelineGrid {
   display: grid;
-  grid-template-columns: repeat(3, 14rem);
-  justify-content: center;
-
-
-  &.evenCount {
-    background: radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
-    radial-gradient(farthest-side at top left, $color3 98%, #0000) calc(50% + 1.6rem) 100%/1.5rem 1.5rem no-repeat,
-    linear-gradient(90deg, $color2 50%, $color4 0);
-  }
-
-  &.oddCount {
-    background: radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
-    radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50% + .3rem) 100%/1.5rem 1.5rem no-repeat,
-    linear-gradient(90deg, $color2 50%, $color4 0);
-  }
+  grid-template-columns: 10% 1fr;
+  gap: 2rem;
+  padding: 0 1rem;
+  margin: 3.2rem 0 0 0;
 }
 
-.event {
-  @include flex;
-  width: 37rem;
-  flex-direction: row;
-  grid-column: span 2;
-  text-align: center;
-  border-radius: 4.5rem;
-  color: $text_color1;
-  font-size: 1.6rem;
-  line-height: 1.5rem;
+/* Track styles */
+.trackWrapper {
   position: relative;
-  padding: .75rem;
-  border: $border_size solid #0000;
-  background: linear-gradient($color1 0 0) content-box, linear-gradient(0, var(--c) 0, var(--c) 0) padding-box, linear-gradient(var(--d, 90deg), #0000 75%, $color3 0) border-box;
-
-  &:nth-child(even) {
-    grid-column-end: -1;
-    flex-direction: row-reverse;
-    --d: -90deg;
-    --c: #fcc923;
-    left: calc(50% - 16rem);
-
-
-    & .eventImg {
-      padding-right: 1rem;
-    }
-  }
-
-  &:nth-child(odd) {
-    --c: #fcc923;
-    left: calc(50% - 22.6rem);
-
-    & .eventImg {
-      padding-left: 1rem;
-    }
-  }
-
-  &:not(:last-child) {
-    margin-bottom: -$border_size;
-  }
-
-  &:nth-child(even) .date {
-    left: auto;
-    right: calc(100% + 5rem);
-  }
-
-  &:nth-child(even) .date:before {
-    right: auto;
-    left: calc(100% + .5rem);
-    background: repeating-linear-gradient(90deg, $text_color2 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
-  }
-
-  &:first-child {
-    margin-top: 0rem;
-  }
+  height: 100%;
 }
 
-.eventImg {
-  max-height: $img_size;
-  max-width: $img_size;
-}
-
-.eventDetails {
-  @include flex;
-  padding: 1rem;
-}
-
-.date {
-  color: white;
+.yearAxis {
   position: absolute;
-  @include item-description;
-  left: calc(100% + 5rem);
-  top: 50%;
-  transform: translateY(-50%);
-  white-space: nowrap;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: $hunyadi_yellow;
+}
 
-  &:before {
-    content: "";
-    position: absolute;
-    height: 1rem;
-    top: calc(50% - .5rem);
-    right: calc(100% + .5rem);
-    width: 3.5rem;
-    background: repeating-linear-gradient(-90deg, white 0 .5rem, #0000 0 1rem) 50%/100% .2rem no-repeat;
+.bar {
+  position: absolute;
+  width: 4px;
+  border-radius: 2px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bar.isHighlighted {
+  opacity: 1;
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* Card column */
+.cardColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  @include transition;
+  display: grid;
+  grid-template-columns: 25% 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  background: rgba(0, 0, 0, 0.4);
+  border: 0.08rem solid rgba(255, 255, 255, 0.138);
+  border-left: 0.3rem solid var(--item-color);
+  border-radius: 0.6rem;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.55);
+  }
+}
+
+.card.isHighlighted {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.cardImageContainer {
+  width: 100%;
+  @include flex;
+  align-self: center;
+}
+
+.cardImage {
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  object-fit: contain;
+}
+
+.cardDetails {
+  width: 100%;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.cardTitle {
+  font-weight: 600;
+}
+
+.cardDates {
+  font-size: 0.85rem;
+  color: #777777;
+}
+
+.cardBody {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .timelineGrid {
+    display: block;
   }
 
-  & .miniDate {
+  .trackWrapper {
     display: none;
   }
-}
 
-.eventTitle {
-  @include item-title;
-  font-size: 1.4rem;
-  font-weight: 500;
-}
-
-.eventDescription {
-  @include item-description;
-  padding-top: .6rem;
-}
-
-@media screen and (max-width: $tablet_screen_width) {
-  .event {
-    width: 25rem;
-    margin-top: -.05rem;
-
-    &:first-child {
-      margin-top: -.2rem;
-    }
-
-    &:nth-child(odd) {
-      left: calc(50% - 14.5rem);
-    }
-
-    &:nth-child(even) {
-      flex-direction: column;
-      left: calc(50% - 14rem);
-    }
+  .card {
+    grid-template-columns: 1fr;
+    border-left: 0.3rem solid var(--item-color);
   }
 
-}
-
-@media screen and (max-width: $mobile_screen_width) {
-  .timeline {
-    &.evenCount {
-      background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
-      radial-gradient(farthest-side at bottom left, $color3 98%, #0000) calc(50% + 1.25rem) 100%/1rem 1rem no-repeat,
-      linear-gradient(90deg, $color2 50%, $color4 0);
-    }
-
-    &.oddCount {
-      background: radial-gradient(farthest-side at top right, $color3 98%, #0000) calc(50%) 0/1.5rem 1.5rem no-repeat,
-      radial-gradient(farthest-side at bottom right, $color3 98%, #0000) calc(50% - .75rem) 100%/1rem 1rem no-repeat,
-      linear-gradient(90deg, $color2 50%, $color4 0);
-    }
-
-  }
-  .event {
-    width: 13.5rem;
-    flex-direction: column;
-
-    //margin-top: -.2rem;
-    border-radius: 4rem;
-
-    &:nth-child(odd) {
-      left: calc(50% - 6rem);
-    }
-
-    &:nth-child(even) {
-      flex-direction: column;
-      left: calc(50% - 10.9rem);
-    }
-
-    &:nth-child(even) .date {
-      left: auto;
-      color: $text_color2 !important;
-      right: calc(100% + 2rem);
-      padding-left: 0;
-      padding-right: 1rem;
-    }
-
-    &:nth-child(even) .date:before {
-      left: calc(100% - .5rem);
-    }
-  }
-
-  .date {
-    left: calc(100% + 1.25rem);
-    padding-left: 1rem;
-    white-space: break-spaces;
-
-    &:before {
-      width: 2.5rem;
-      right: calc(100% - .5rem);
-    }
-
-    & .miniDate {
-      display: flex;
-    }
-
-    & .largeDate {
-      display: none;
-    }
-  }
-
-  .eventImg {
-    max-height: 6rem;
-    max-width: 6rem;
-    margin: 1rem 0 0;
-    padding: 0 !important;
+  .cardImage {
+    max-width: 40%;
   }
 }
 
-.miniDate {
-  @include flex();
-  flex-direction: row;
-  justify-content: center;
+/* Year labels alongside axis */
+.yearLabel {
+  position: absolute;
+  left: -0.5rem;
+  transform: translateX(-100%) translateY(-50%);
+  font-size: 0.75rem;
+  color: $hunyadi_yellow;
 }
-
-.partMiniDate {
-  white-space: initial;
-  text-align: center;
-
-  &:first-child {
-    margin-right: .5rem;
-  }
-
-  &:last-child {
-    margin-left: .5rem;
-  }
-}
-

@@ -41,7 +41,7 @@ function ContactMe({ className, sectionRef }) {
           <a href="mailto: tangiralasumanth@gmail.com" className={styles.emailId}>
             tangiralasumanth@gmail.com
           </a>
-          <span className={styles.emailDivider}>||</span>
+          <span className={styles.emailDivider}>·</span>
           <a href="mailto: sumanth.t@rutgers.edu" className={styles.emailId}>
             sumanth.t@rutgers.edu
           </a>
@@ -51,17 +51,23 @@ function ContactMe({ className, sectionRef }) {
             shape="circle"
             icon={<LinkedinFilled />}
             className={styles.socialMediaImg}
+            type="default"
+            ghost
             onClick={openLinkedin}
           />
           <Button
             shape="circle"
             icon={<GithubFilled />}
             className={styles.socialMediaImg}
+            type="default"
+            ghost
             onClick={openGithub}
           />
           <Button
             icon={<FilePdfOutlined />}
             className={styles.resume}
+            type="default"
+            ghost
             onClick={openResume}
           >
             Resume

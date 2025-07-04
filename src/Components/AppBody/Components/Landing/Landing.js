@@ -3,31 +3,63 @@ import styles from "./landing.module.scss";
 import cx from "classnames";
 import basicData from "text";
 import { mobileDesktopSwitcher, parse } from "../../../../helpers";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.2 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 function Landing({ className, sectionRef, nameRef }) {
   return (
     <div className={cx(styles.landing, className)} ref={sectionRef}>
-      <div className={styles.container}>
+      <motion.div
+        className={styles.container}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {mobileDesktopSwitcher({
           mobile: (
-            <img
+            <motion.img
               src={basicData.landingMobilePicturePath}
               className={styles.image}
               alt={basicData.name}
+              variants={itemVariants}
             />
           ),
           desktop: (
-            <img
+            <motion.img
               src={basicData.landingPicturePath}
               className={styles.image}
               alt={basicData.name}
+              variants={itemVariants}
             />
           ),
         })}
 
-        <div className={cx(styles.name)} ref={nameRef}>{basicData.name}</div>
-        <div className={styles.tagline}>{parse(basicData.tagline)}</div>
-      </div>
+        <motion.div
+          className={cx(styles.name)}
+          variants={itemVariants}
+          ref={nameRef}
+        >
+          {basicData.name}
+        </motion.div>
+        <motion.div className={styles.tagline} variants={itemVariants}>
+          {parse(basicData.tagline)}
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

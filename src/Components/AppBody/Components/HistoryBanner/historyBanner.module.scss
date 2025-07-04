@@ -7,32 +7,35 @@ $tablet_img_max_width: 9rem;
 
 .container {
   min-height: $min_history_banner_height;
-  //backdrop-filter: blur(0px) !important;
-  //background-color: $matte_grey !important;
-  //box-shadow: 0 -0.05rem .8rem 0.2rem rgba(0, 0, 0, 0.2);
-  box-shadow: inset rgba(0, 0, 0, 0.3) 0 0 1rem 0.8rem;
-  background: $light_trans_matte_grey;
+  position: relative;
+  backdrop-filter: blur(1rem);
+  background: rgba(0, 0, 0, 0.4);
+  border: .08rem solid $hunyadi_yellow;
+  box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.35);
   @include flex;
   flex-direction: row;
   flex-wrap: wrap;
   border-radius: 6rem;
   margin: 0 3vw;
   padding: .5rem 2rem;
-  min-width: calc($img_max_width + 2rem); ;
+  min-width: calc($img_max_width + 2rem);
+  ;
 }
 
 .image {
-  max-height: $img_max_height;
-  max-width: $img_max_width;
+  aspect-ratio: 3/2;
+  width: $img_max_width;
+  height: auto;
+  object-fit: contain;
   padding: 1rem 1rem;
   border-radius: 1rem;
 }
 
 @media screen and (max-width: $tablet_screen_width) {
   .image {
-    max-height: $tablet_img_max_height;
-    max-width: $tablet_img_max_width;
-    padding-top: 2rem;
+    width: $tablet_img_max_width;
+    aspect-ratio: 3/2;
+    height: auto;
   }
 
   .container {
@@ -44,5 +47,25 @@ $tablet_img_max_width: 9rem;
   .container {
     padding: 0 2rem;
     width: calc(100% - 4rem) !important;
+  }
+}
+
+@media screen and (max-width: $mobile_screen_width) {
+  .container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 1rem;
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE/Edge
+  }
+
+  .container::-webkit-scrollbar {
+    display: none; // Chrome/Safari
+  }
+
+  .image {
+    width: 8rem;
+    aspect-ratio: 3/2;
+    height: auto;
   }
 }

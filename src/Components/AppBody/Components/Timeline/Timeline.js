@@ -1,57 +1,42 @@
-import React, { memo } from "react";
+import React, { memo, useState, useCallback } from "react";
 import cx from "classnames";
-
-import _map from "lodash/map";
-import _size from "lodash/size";
-
-import text from "text";
-
 import styles from "./Timeline.module.scss";
+import _map from "lodash/map";
+import _sortBy from "lodash/sortBy";
+import text from "text";
 import { SECTION_TYPE_VS_NAME } from "../../../../constants";
-import { parse } from "helpers";
+import Track from "./Track";
+import TimelineCard from "./TimelineCard";
 
-function Timeline({ className, sectionRef }) {
-  const timelineText = text.timeline;
-  const isEven = _size(timelineText) % 2 === 0;
+function Timeline({ className, sectionRef, sectionHeadingClassName }) {
+  const timelineItems = _sortBy(text.timeline, (item) => item.startDate).reverse();
+
+  const [activeId, setActiveId] = useState(null);
+
+  const handleHover = useCallback((id) => {
+    setActiveId(id);
+  }, []);
+
   return (
-    <div className={cx(styles.container, className)} ref={sectionRef}>
-      <div className={styles.sectionTitle}>
+    <div className={cx(className, styles.sectionContainer)} ref={sectionRef}>
+      <div className={sectionHeadingClassName}>
         {SECTION_TYPE_VS_NAME["TIMELINE"]}
       </div>
-      <ul
-        className={cx(styles.timeline, {
-          [styles.evenCount]: isEven,
-          [styles.oddCount]: !isEven,
-        })}
-      >
-        {_map(timelineText, (event, idx) => (
-          <li className={styles.event} key={idx}>
-            <time className={styles.date}>
-              <span className={styles.largeDate}>{parse(event.date)}</span>
-              <span className={styles.miniDate}>
-                <span className={styles.partMiniDate}>
-                  {parse(event.miniDate[0])}
-                </span>
-                <span>-</span>
-                <span className={styles.partMiniDate}>
-                  {parse(event.miniDate[1])}
-                </span>
-              </span>
-            </time>
-            <img src={event.imgPath} className={styles.eventImg} alt="" />
-            <div className={styles.eventDetails}>
-              <span className={styles.eventTitle}>{parse(event.title)}</span>
-              <span className={styles.eventDescription}>
-                {parse(event.desc)}
-              </span>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div className={styles.timelineGrid}>
+        <Track items={timelineItems} activeId={activeId} onHover={handleHover} />
+        <div className={styles.cardColumn}>
+          {_map(timelineItems, (item) => (
+            <TimelineCard
+              key={item.id}
+              item={item}
+              activeId={activeId}
+              onHover={handleHover}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
-
-Timeline.propTypes = {};
 
 export default memo(Timeline);

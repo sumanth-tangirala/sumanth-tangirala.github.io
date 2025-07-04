@@ -13,7 +13,7 @@
       "url": "https://robotics.cs.rutgers.edu/pracsys"
     },
     {
-      "path": "%IMG_URL%//zoox-vert.svg",
+      "path": "%IMG_URL%//zoox-hor.svg",
       "text": "Zoox Inc.",
       "url": "https://zoox.com/"
     },
@@ -206,83 +206,53 @@
   ],
   "timeline": [
     {
-      "title": "PRACSYS Lab, Rutgers University",
-      "desc": "I am researching robot motion planning algorithms for high-velocity robots in dynamic conditions using a mixture of Learning and Classical methods",
-      "date": "January 2023 - Present",
-      "miniDate": [
-        "Jan 2023",
-        "Now"
-      ],
+      "title": "Rutgers University & PRACSYS Lab",
+      "id": "rutgers",
+      "startDate": "2022-08-01",
+      "endDate": "present",
+      "color": "#cc0133",
+      "desc": "Ph.D. student in Computer Science researching robot motion planning at the PRACSYS Lab. Completed M.S. in Computer Science (2022–2024) and currently pursuing doctoral research (2024–present).",
+      "date": "August 2022 - Present",
       "imgPath": "%IMG_URL%//PRACSYS.png"
     },
     {
       "title": "Zoox Inc.",
+      "id": "zoox",
+      "startDate": "2024-06-01",
+      "endDate": "present",
+      "color": "#64d5b3",
       "desc": "I am working in the Offline Driving Intelligence team, developing prediction and safety verification methods for autonomous vehicles",
       "date": "June 2024 - Present",
-      "miniDate": [
-        "June 2024",
-        "Now"
-      ],
       "imgPath": "%IMG_URL%//zoox-hor.svg"
     },
     {
-      "title": "Rutgers University",
-      "desc": "As a graduate of Masters of Computer Science, Class of 2024, I continue to pursue my passion for AI/ML and Robotics",
-      "date": "August 2022 - Present",
-      "miniDate": [
-        "Aug 2022",
-        "Now"
-      ],
-      "imgPath": "%IMG_URL%//Rutgers.png"
-    },
-    {
       "title": "Tekion Corp.",
+      "id": "tekion",
+      "startDate": "2020-01-01",
+      "endDate": "2022-07-31",
+      "color": "#00debb",
       "desc": "Starting with a Winter 2020 software engineering internship and advancing to a full-time role as Software Engineer, I developed significant frontend components for a leading Dealership Management System.",
       "date": "January 2020 - July 2022",
-      "miniDate": [
-        "Jan 2020",
-        "July 2022"
-      ],
       "imgPath": "%IMG_URL%//Tekion.svg"
     },
     {
-      "title": "Center of WIMS2, University of Michigan",
-      "desc": "In a collaborative project between WIMS2 and Smart City Lab, DAIICT, I developed end-to-end IoT solutions for an environmental logging sensor network",
-      "date": "May 2019 - November 2019",
-      "miniDate": [
-        "May 2019",
-        "Nov 2019"
-      ],
-      "imgPath": "%IMG_URL%//WIMS2.png"
-    },
-    {
       "title": "Indian Space Research Organization",
+      "id": "isroExp",
+      "startDate": "2019-05-01",
+      "endDate": "2019-08-31",
+      "color": "#f4730e",
       "desc": "During a Summer Internship, I developed a time-series Machine Learning technique for accurate land cover classification using satellite imagery and this tool continues to be used by ISRO in their ongoing projects",
       "date": "May 2019 - August 2019",
-      "miniDate": [
-        "May 2019",
-        "Aug 2019"
-      ],
       "imgPath": "%IMG_URL%//ISRO.png"
     },
     {
-      "title": "Smart City Lab, DA-IICT",
-      "desc": "As a Research Assistant, I worked to advance the lab's goal of developing intelligent systems that use multi-modal data. My work was focused on PolSAR image segmentation and classification using Deep Learning techniques",
-      "date": "August 2018 - December 2019",
-      "miniDate": [
-        "Aug 2018",
-        "Dec 2019"
-      ],
-      "imgPath": "%IMG_URL%//DAIICT.png"
-    },
-    {
       "title": "DA-IICT",
-      "desc": "I graduated with a Bachelor of Technology in Information and Communication Technology. I was also a member of the DA-IICT Google Developer Student Club, the Student Council and the Student Placement Cell",
+      "id": "daiict",
+      "startDate": "2016-08-01",
+      "endDate": "2020-05-31",
+      "color": "#0060b6",
+      "desc": "Completed B.Tech in Information and Communication Technology and served as a Research Assistant at the Smart City Lab focusing on PolSAR image segmentation and classification using Deep Learning techniques.",
       "date": "August 2016 - May 2020",
-      "miniDate": [
-        "Aug 2016",
-        "May 2020"
-      ],
       "imgPath": "%IMG_URL%//DAIICT.png"
     }
   ],

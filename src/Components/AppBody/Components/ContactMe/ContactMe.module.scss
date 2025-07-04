@@ -3,24 +3,30 @@
 $img_size: 2.8rem;
 
 .container {
-  height: 28rem;
+  padding: 2rem 0;
   @include flex();
 
-  @media screen and (max-height: $mobile_landscape_screen_height) {
-    height: 24rem;
-  }
+  @media screen and (max-height: $mobile_landscape_screen_height) {}
 }
 
 .contentWrapper {
   @include flex();
-  @include full-width;
+  width: 90%;
+  max-width: 70rem;
+  margin-left: auto;
+  margin-right: auto;
+  // Match HistoryBanner styling for consistent look
+  backdrop-filter: blur(1rem);
+  background: rgba(0, 0, 0, 0.4);
+  border: 0.08rem solid $hunyadi_yellow;
+  box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.35);
+  border-radius: 6rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 2rem 1.2rem;
 
   &.skillsBackground {
-    background: $light_trans_matte_grey;
-    box-shadow: inset rgba(0, 0, 0, 0.3) 0 0 1rem 0.8rem;
-    border-radius: 0.8rem;
-    margin: 0 10%;
-    padding: 2rem 1.2rem;
+    // keep same background if modifier applied (same color already)
   }
 }
 
@@ -87,6 +93,7 @@ $img_size: 2.8rem;
 .socialMediaLinks {
   @include flex;
   flex-direction: row;
+  gap: 2rem;
   padding-bottom: 0.8rem;
 
   @media screen and (max-height: $mobile_landscape_screen_height) {
@@ -98,12 +105,10 @@ $img_size: 2.8rem;
   height: 4rem !important;
   width: 4rem !important;
   font-size: 2rem;
-
-  &:not(:last-child) {
-    margin-right: 2rem;
-  }
+  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 
   &:hover {
+    transform: scale(1.12);
     color: $hunyadi_yellow !important;
     border-color: $hunyadi_yellow !important;
   }
@@ -120,8 +125,10 @@ $img_size: 2.8rem;
   font-size: 1.2rem;
   @include flex;
   flex-direction: row;
+  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 
   &:hover {
+    transform: scale(1.05);
     color: $acrobat_red !important;
     border-color: $acrobat_red !important;
   }
