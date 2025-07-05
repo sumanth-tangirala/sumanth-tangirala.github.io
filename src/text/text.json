@@ -208,7 +208,7 @@
     {
       "title": "Rutgers University & PRACSYS Lab",
       "id": "rutgers",
-      "startDate": "2022-08-01",
+      "startDate": "2022-09-02",
       "endDate": "present",
       "color": "#cc0133",
       "desc": "Ph.D. student in Computer Science researching robot motion planning at the PRACSYS Lab. Completed M.S. in Computer Science (2022–2024) and currently pursuing doctoral research (2024–present).",
@@ -218,9 +218,9 @@
     {
       "title": "Zoox Inc.",
       "id": "zoox",
-      "startDate": "2024-06-01",
+      "startDate": "2024-06-16",
       "endDate": "present",
-      "color": "#64d5b3",
+      "color": "#ffffff",
       "desc": "I am working in the Offline Driving Intelligence team, developing prediction and safety verification methods for autonomous vehicles",
       "date": "June 2024 - Present",
       "imgPath": "%IMG_URL%//zoox-hor.svg"
@@ -228,7 +228,7 @@
     {
       "title": "Tekion Corp.",
       "id": "tekion",
-      "startDate": "2020-01-01",
+      "startDate": "2020-01-02",
       "endDate": "2022-07-31",
       "color": "#00debb",
       "desc": "Starting with a Winter 2020 software engineering internship and advancing to a full-time role as Software Engineer, I developed significant frontend components for a leading Dealership Management System.",
