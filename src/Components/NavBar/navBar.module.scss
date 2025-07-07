@@ -13,7 +13,7 @@ $mini_menu_icon_size: 1.2rem;
   right: 20%;
   width: 60%;
   // background: #111112ed;
-  background: #000000ee;
+  background: #000000e9;
   backdrop-filter: blur(20px);
   position: fixed;
   border-radius: 2rem;
@@ -27,8 +27,28 @@ $mini_menu_icon_size: 1.2rem;
   &:hover {
     transform: translate3d(0, 0.1rem, 0);
     box-shadow: 0.2rem 0.2rem 0.5rem 0.1rem rgba(255, 255, 255, 0.025);
-    // background: #111112;
     border-color: rgba(255, 255, 255, 0.3)
+  }
+
+  &.collapsed {
+    width: 40%;
+    left: 30%;
+    right: 30%;
+    justify-content: center;
+    border-color: transparent;
+    background: #000000cc !important;
+    box-shadow: none;
+
+    .actions {
+      justify-content: center;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    &:hover {
+      transform: none;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
   }
 }
 
@@ -298,23 +318,6 @@ $mini_menu_icon_size: 1.2rem;
 }
 
 // Center content in collapsed state for larger screens
-.collapsed {
-  width: 40%;
-  left: 30%;
-  right: 30%;
-  justify-content: center;
-  border-color: transparent;
-
-  .actions {
-    justify-content: center;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  &:hover {
-    transform: none;
-  }
-}
 
 // Show full menu (instead of hamburger) once we reach mobile-landscape width (≥ 750px)
 @media screen and (min-width: $mobile_landscape_width) {

@@ -9,16 +9,12 @@ $mobile_landscape_img_size: 10rem;
   @include flex;
   justify-content: flex-start;
   margin-top: 7rem;
-  flex-direction: row;
+  flex-direction: column;
   flex-grow: 1;
   z-index: 2;
   //min-height: calc(100vh - $nav_bar_height - $min_history_banner_height);
 
   color: white;
-
-  @media screen and (max-height: $mobile_landscape_screen_height) {
-    min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
-  }
 }
 
 .image {
@@ -43,7 +39,7 @@ $mobile_landscape_img_size: 10rem;
   font-weight: 450;
   margin-bottom: .8rem;
   color: $hunyadi_yellow;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid $card_border_color;
   padding-bottom: 0.5rem;
   width: 100%;
 }
@@ -53,7 +49,7 @@ $mobile_landscape_img_size: 10rem;
   font-weight: 400;
   font-size: 1.6rem;
   margin-top: 0.8rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid $card_border_color;
   padding-bottom: 1.2rem;
   width: 100%;
 
@@ -80,7 +76,6 @@ $mobile_landscape_img_size: 10rem;
   @include flex;
   align-items: flex-start;
   margin-top: 0.8rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 1.2rem;
   width: 100%;
 }
@@ -96,19 +91,20 @@ $mobile_landscape_img_size: 10rem;
   }
 }
 
-.qualificationDetails {
+.educationDetails {
   @include flex;
   margin-top: 1.8rem;
   align-items: flex-start;
   gap: 1.5rem;
+  // width: 100%;
 }
 
-.qualificationDetailItem {
+.educationDetailItem {
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.5;
   padding: 1rem 1.2rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: $card_background;
   border-left: 3px solid $hunyadi_yellow;
   border-radius: 0 6px 6px 0;
   position: relative;
@@ -122,7 +118,7 @@ $mobile_landscape_img_size: 10rem;
   &::before {
     content: "";
     position: absolute;
-    
+
     top: 50%;
     transform: translateY(-50%);
     left: -7px;
@@ -145,83 +141,48 @@ $mobile_landscape_img_size: 10rem;
   }
 }
 
-@media screen and (max-width: $tablet_screen_width) {
+.topSection {
+  @include flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+// @media screen and (max-width: $tablet_screen_width) {
+//   .container {
+//     flex-direction: column;
+//   }
+
+//   .image {
+//     height: $tablet_img_size;
+//   }
+
+//   .topSection {
+//     flex-direction: column;
+//   }
+// }
+
+@media screen and (max-width: calc($tablet_landscape_screen_width)) {
+
   .container {
     flex-direction: column;
+    min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
+    min-height: calc(100vh - $nav_bar_height);
+    padding: 0 2rem;
+    // width: calc(100% - 4rem) !important;
+  }
+
+  .topSection {
+    flex-direction: column;
+  }
+
+  .name {
+    width: 100%;
+    text-align: center;
   }
 
   .image {
     height: $tablet_img_size;
-  }
-}
-
-@media screen and (max-width: calc($tablet_landscape_screen_width)) {
-  .image {
-    height: $mobile_img_size;
-    margin: 0 0 1rem 1rem;
-    margin-bottom: auto;
-  }
-
-  .text {
-    margin-top: 1rem;
-    margin-left: 2rem !important;
-    margin-right: 2rem !important;
-  }
-
-  .name {
-    width: 100%;
-    text-align: center;
-  }
-
-  .qualifications {
-    &>div {
-      &:first-child {
-        font-size: 1.5rem;
-        text-align: center;
-      }
-
-      &:last-child {
-        font-size: 1.3rem;
-        text-align: center;
-      }
-    }
-  }
-
-  .qualificationDetailItem {
-    padding: 0.8rem 1rem;
-    font-size: 1.1rem;
-
-    &::before {
-      left: -7px;
-      width: 12px;
-      height: 12px;
-    }
-
-    .degree {
-      font-size: 1.1rem;
-    }
-
-    .university {
-      font-size: 1rem;
-    }
-  }
-}
-
-@media screen and (max-height: $mobile_landscape_screen_height) {
-  .name {
-    width: 100%;
-    text-align: center;
-  }
-
-  .container {
-    min-height: calc(100vh - $nav_bar_height);
-    flex-direction: row;
-    padding: 0 2rem;
-    width: calc(100% - 4rem) !important;
-  }
-
-  .image {
-    height: $mobile_landscape_img_size;
     margin: 0 0 1rem 0;
   }
 
@@ -231,7 +192,7 @@ $mobile_landscape_img_size: 10rem;
     margin-right: 2rem !important;
   }
 
-  .qualificationDetailItem {
+  .educationDetailItem {
     padding: 0.6rem 0.8rem;
     font-size: 1rem;
 
@@ -262,5 +223,12 @@ $mobile_landscape_img_size: 10rem;
         font-size: 1.2rem;
       }
     }
+  }
+}
+
+@media screen and (max-width: $mobile_screen_width) {
+  .image {
+    height: $mobile_img_size;
+    margin: 0 0 1rem 0;
   }
 }

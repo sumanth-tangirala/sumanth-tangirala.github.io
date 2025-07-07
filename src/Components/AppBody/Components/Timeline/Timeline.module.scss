@@ -57,8 +57,8 @@
   grid-template-columns: 25% 1fr;
   gap: 1.5rem;
   align-items: start;
-  background: rgba(0, 0, 0, 0.4);
-  border: 0.08rem solid rgba(255, 255, 255, 0.138);
+  background: $card_background;
+  border: $card_border_size solid $card_border_color;
   border-left: 0.3rem solid var(--item-color);
   border-radius: 0.6rem;
   padding: 1.2rem;
