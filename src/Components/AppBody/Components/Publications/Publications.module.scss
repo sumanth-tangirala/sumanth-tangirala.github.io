@@ -34,7 +34,6 @@
   grid-template-columns: 25% 1fr;
   gap: 1.5rem;
   align-items: start;
-  background: $card_background;
   border: $card_border_size solid $card_border_color;
   border-radius: .6rem;
   padding: 1.2rem;
@@ -59,7 +58,6 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border: 0.15rem solid rgba(251, 177, 60, 0.4);
   border-radius: .4rem;
   transition: transform .15s ease-in-out;
 

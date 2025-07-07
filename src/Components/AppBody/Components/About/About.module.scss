@@ -104,7 +104,7 @@ $mobile_landscape_img_size: 10rem;
   font-weight: 400;
   line-height: 1.5;
   padding: 1rem 1.2rem;
-  background: $card_background;
+  background: #111111;
   border-left: 3px solid $hunyadi_yellow;
   border-radius: 0 6px 6px 0;
   position: relative;
@@ -169,7 +169,6 @@ $mobile_landscape_img_size: 10rem;
     min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
     min-height: calc(100vh - $nav_bar_height);
     padding: 0 2rem;
-    // width: calc(100% - 4rem) !important;
   }
 
   .topSection {

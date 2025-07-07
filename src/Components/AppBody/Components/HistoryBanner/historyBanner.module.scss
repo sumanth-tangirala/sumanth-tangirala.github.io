@@ -9,7 +9,6 @@ $tablet_img_max_width: 9rem;
   min-height: $min_history_banner_height;
   position: relative;
   backdrop-filter: blur(1rem);
-  background: rgba(0, 0, 0, 0.4);
   border: .08rem solid $hunyadi_yellow;
   box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.35);
   @include flex;
