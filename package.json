@@ -50,6 +50,8 @@
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.5",
+    "react-icons": "^5.5.0",
     "react-media": "^1.10.0",
     "react-refresh": "^0.11.0",
     "resolve": "^1.20.0",
@@ -69,7 +71,7 @@
   "devDependencies": {
     "@svgr/webpack": "8.0.1",
     "gh-pages": "^6.3.0",
-    "sass": "1.58.3",
+    "sass": "^1.58.3",
     "url-loader": "^4.1.1"
   },
   "scripts": {
