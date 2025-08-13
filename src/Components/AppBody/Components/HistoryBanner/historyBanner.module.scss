@@ -9,7 +9,7 @@ $tablet_img_max_width: 9rem;
   min-height: $min_history_banner_height;
   position: relative;
   backdrop-filter: blur(1rem);
-  border: .08rem solid $hunyadi_yellow;
+  border: 1px solid $primary_color;
   box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.35);
   @include flex;
   flex-direction: row;
@@ -18,7 +18,6 @@ $tablet_img_max_width: 9rem;
   margin: 0 3vw;
   padding: .5rem 2rem;
   min-width: calc($img_max_width + 2rem);
-  ;
 }
 
 .image {

@@ -2,18 +2,18 @@ import htmlParse from "html-react-parser";
 
 import _replace from "lodash/replace";
 import _isNil from "lodash/isNil";
+import { PRIMARY_COLOR } from "./constants";
 
 export const parse = (text) => {
-  text = _replace(
-    text,
-    "<yellow_bold>",
-    '<span style="color:#fcc923;font-weight: 500;">',
+  text = text.replaceAll(
+    "<highlight>",
+    `<span style="color:${PRIMARY_COLOR};font-weight: 500;">`,
   );
-  text = _replace(text, "</yellow_bold>", "</span>");
+  text = text.replaceAll("</highlight>", "</span>");
 
-  text = _replace(text, "<no_wrap>", '<span style="white-space: nowrap;">');
+  text = text.replaceAll("<no_wrap>", '<span style="white-space: nowrap;">');
 
-  text = _replace(text, "</no_wrap>", "</span>");
+  text = text.replaceAll("</no_wrap>", "</span>");
 
   return htmlParse(text);
 };
@@ -38,8 +38,6 @@ const scroll_element = (
   setTimeout(() => {
     if (!_isNil(scrollValues[count])) {
       element.scrollTop = scrollValues[count];
-    } else {
-      console.log(count, scrollValues, scrollValues.length);
     }
 
     if (count < discretization - 1) {

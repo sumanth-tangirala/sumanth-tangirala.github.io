@@ -21,7 +21,7 @@
 
 .subSectionTitle {
   @include item-title;
-  color: $hunyadi_yellow;
+  color: $primary_color;
   font-size: 1.6rem;
   margin-top: 2rem;
   margin-bottom: 1.6rem;
@@ -105,14 +105,14 @@
 .publicationLink {
   display: inline-block;
   padding: .25rem .6rem;
-  border: 1px solid $hunyadi_yellow;
+  border: 1px solid $primary_color;
   border-radius: .3rem;
-  color: $hunyadi_yellow;
+  color: $primary_color;
   text-decoration: none;
   transition: background .15s ease-in-out, color .15s ease-in-out, text-decoration .15s ease-in-out;
 
   &:hover {
-    background: $hunyadi_yellow;
+    background: $primary_color;
     color: $matte_grey;
     text-decoration: underline;
   }

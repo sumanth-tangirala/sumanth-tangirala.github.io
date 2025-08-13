@@ -18,16 +18,12 @@ $img_size: 2.8rem;
   // Match HistoryBanner styling for consistent look
   backdrop-filter: blur(1rem);
   background: rgba(0, 0, 0, 0.4);
-  border: 0.08rem solid $hunyadi_yellow;
+  border: 0.08rem solid $primary_color;
   box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.35);
-  border-radius: 6rem;
+  border-radius: 3rem;
   margin-top: 0;
   margin-bottom: 0;
   padding: 2rem 1.2rem;
-
-  &.skillsBackground {
-    // keep same background if modifier applied (same color already)
-  }
 }
 
 .sectionHeading {
@@ -71,12 +67,9 @@ $img_size: 2.8rem;
   text-decoration: none;
   font-size: 1.4rem;
   font-weight: 500;
-  color: $text_blue;
-  transition: all .2s ease;
-  -webkit-transition: all .2s ease;
+  color: $primary_color;
 
   &:hover {
-    color: $hunyadi_yellow;
     text-decoration: underline;
   }
 }
@@ -108,9 +101,9 @@ $img_size: 2.8rem;
   transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    transform: scale(1.12);
-    color: $hunyadi_yellow !important;
-    border-color: $hunyadi_yellow !important;
+    transform: scale(1.02);
+    color: $primary_color !important;
+    border-color: $primary_color !important;
   }
 
   @media screen and (max-width: $mobile_screen_width) {
@@ -128,7 +121,7 @@ $img_size: 2.8rem;
   transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.015);
     color: $acrobat_red !important;
     border-color: $acrobat_red !important;
   }

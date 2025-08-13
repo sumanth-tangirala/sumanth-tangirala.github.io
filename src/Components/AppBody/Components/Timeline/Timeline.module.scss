@@ -29,7 +29,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: $hunyadi_yellow;
+  background: $primary_color;
 }
 
 .bar {
@@ -42,7 +42,7 @@
 
 .bar.isHighlighted {
   opacity: 1;
-  box-shadow: 0 0 6px currentColor;
+  box-shadow: 0px 0px 4px -1px currentColor;
 }
 
 /* Card column */
@@ -105,7 +105,7 @@
 
 .cardDates {
   font-size: 0.85rem;
-  color: #777777;
+  color: #cccccc;
 }
 
 .cardBody {
@@ -140,5 +140,5 @@
   left: -0.5rem;
   transform: translateX(-100%) translateY(-50%);
   font-size: 0.75rem;
-  color: $hunyadi_yellow;
+  color: $primary_color;
 }

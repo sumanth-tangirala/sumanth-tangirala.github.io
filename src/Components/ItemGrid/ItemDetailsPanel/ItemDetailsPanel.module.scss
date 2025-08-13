@@ -80,7 +80,7 @@
 }
 
 .sectionHeading {
-  color: $hunyadi_yellow;
+  color: $primary_color;
   @include item-title;
   font-size: 1.8rem;
   text-align: center;
@@ -100,7 +100,7 @@
   box-shadow: none;
 
   &:hover {
-    color: $hunyadi_yellow !important;
+    color: $primary_color !important;
   }
 }
 

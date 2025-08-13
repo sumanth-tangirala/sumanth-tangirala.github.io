@@ -10,8 +10,6 @@ import { SECTION_TYPE_VS_NAME } from "constants.js";
 import { scrollParentToChild } from "helpers";
 import ItemDetailsPanel from "./ItemDetailsPanel";
 import PropTypes from "prop-types";
-import { RightOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 
 class ItemGrid extends React.Component {
   constructor(props) {

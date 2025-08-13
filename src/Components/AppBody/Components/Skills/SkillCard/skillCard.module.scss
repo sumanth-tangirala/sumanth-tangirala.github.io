@@ -29,10 +29,6 @@ $project_height: 20rem;
   border: transparent 0.1rem solid;
   transition: all .2s ease;
   -webkit-transition: all .2s ease;
-  //cursor: pointer;
-  //&:hover{
-  //  border: 0.1rem solid $light_matte_grey;
-  //}
 }
 
 .skillImgContainer {
@@ -48,7 +44,6 @@ $project_height: 20rem;
 }
 
 .skillImg {
-  //display: none;
   max-height: 100%;
   max-width: 100%;
   flex-grow: 0;
@@ -57,7 +52,7 @@ $project_height: 20rem;
 
 .skillTitle {
   @include item-title;
-  color: $hunyadi_yellow;
+  color: $primary_color;
 }
 
 .skillDescription {
@@ -94,6 +89,3 @@ $project_height: 20rem;
     //width: 20rem;
   }
 }
-
-
-

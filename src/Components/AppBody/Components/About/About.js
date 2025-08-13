@@ -24,7 +24,6 @@ function About({ className, sectionRef }) {
         })}
 
         <div className={styles.text}>
-          {/* <span className={styles.name}>{parse(text.name)}</span> */}
           <div className={styles.qualifications}>
             {_map(text.qualifications, (qual, idx) => (
               <div key={idx}>{parse(qual)}</div>

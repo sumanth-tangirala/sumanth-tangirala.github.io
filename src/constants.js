@@ -28,3 +28,5 @@ export const SECTION_TYPE_VS_NAME = {
   [SECTION_TYPES.CONTACT]: "Contact",
   [SECTION_TYPES.PUBLICATIONS]: "Publications",
 };
+
+export const PRIMARY_COLOR = "#fbb13c"

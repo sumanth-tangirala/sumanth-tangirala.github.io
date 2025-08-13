@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import styles from "./ItemDetailsPanel.module.scss";
-import { CloseOutlined, RightOutlined } from "@ant-design/icons";
+import { RightOutlined } from "@ant-design/icons";
 import cx from "classnames";
 import { Button } from "antd";
 
