@@ -10,19 +10,6 @@ function About({ className, sectionRef }) {
   return (
     <div className={cx(styles.container, className)} ref={sectionRef}>
       <div className={styles.topSection}>
-        {mobileDesktopSwitcher({
-          mobile: (
-            <img
-              src={text.aboutMobilePicturePath}
-              className={styles.image}
-              alt=""
-            />
-          ),
-          desktop: (
-            <img src={text.aboutPicturePath} className={styles.image} alt="" />
-          ),
-        })}
-
         <div className={styles.text}>
           <div className={styles.qualifications}>
             {_map(text.qualifications, (qual, idx) => (

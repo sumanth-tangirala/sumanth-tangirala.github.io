@@ -7,10 +7,6 @@ import { SECTION_TYPES } from "../../constants";
 
 BasePage.propTypes = {};
 
-const SECTION_TYPE_VS_SECTION_TYPE_TO_SCROLL_TO = {
-  [SECTION_TYPES.ABOUT]: SECTION_TYPES.HISTORY,
-};
-
 function BasePage() {
   const navBarRef = useRef();
   const landingNameRef = useRef();
@@ -42,9 +38,7 @@ function BasePage() {
 
   const onNavigation = useCallback(
     (section) => {
-      const sectionToScrollTo =
-        SECTION_TYPE_VS_SECTION_TYPE_TO_SCROLL_TO[section] || section;
-      const sectionRef = sectionRefs[sectionToScrollTo];
+      const sectionRef = sectionRefs[section];
       sectionRef.current.scrollIntoView({ behavior: "smooth" });
     },
     [sectionRefs],

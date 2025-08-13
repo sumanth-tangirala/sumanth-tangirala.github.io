@@ -8,11 +8,9 @@ $mobile_landscape_img_size: 10rem;
 .container {
   @include flex;
   justify-content: flex-start;
-  margin-top: 7rem;
   flex-direction: column;
   flex-grow: 1;
   z-index: 2;
-  //min-height: calc(100vh - $nav_bar_height - $min_history_banner_height);
 
   color: white;
 }
@@ -34,23 +32,15 @@ $mobile_landscape_img_size: 10rem;
   text-shadow: 0.15rem 0.15rem .5rem rgba(0, 0, 0, .3);
 }
 
-.name {
-  font-size: 2rem;
-  font-weight: 450;
-  margin-bottom: .8rem;
-  color: $primary_color;
-  border-bottom: 1px solid $card_border_color;
-  padding-bottom: 0.5rem;
-  width: 100%;
-}
-
 .qualifications {
   margin-bottom: 1.2rem;
   font-weight: 400;
   font-size: 1.6rem;
   margin-top: 0.8rem;
+  border-top: 1px solid $card_border_color;
+  padding-top: 1.6rem;
   border-bottom: 1px solid $card_border_color;
-  padding-bottom: 1.2rem;
+  padding-bottom: 1.6rem;
   width: 100%;
 
   &>div {
@@ -93,10 +83,11 @@ $mobile_landscape_img_size: 10rem;
 
 .educationDetails {
   @include flex;
+  flex-direction: column;
   margin-top: 1.8rem;
-  align-items: flex-start;
+  align-items: center;
+  width: 95%;
   gap: 1.5rem;
-  // width: 100%;
 }
 
 .educationDetailItem {
@@ -148,36 +139,15 @@ $mobile_landscape_img_size: 10rem;
   width: 100%;
 }
 
-// @media screen and (max-width: $tablet_screen_width) {
-//   .container {
-//     flex-direction: column;
-//   }
-
-//   .image {
-//     height: $tablet_img_size;
-//   }
-
-//   .topSection {
-//     flex-direction: column;
-//   }
-// }
-
 @media screen and (max-width: calc($tablet_landscape_screen_width)) {
 
   .container {
     flex-direction: column;
-    min-height: calc(100vh - $mini_nav_bar_height - $min_history_banner_height);
-    min-height: calc(100vh - $nav_bar_height);
     padding: 0 2rem;
   }
 
   .topSection {
     flex-direction: column;
-  }
-
-  .name {
-    width: 100%;
-    text-align: center;
   }
 
   .image {
@@ -187,8 +157,6 @@ $mobile_landscape_img_size: 10rem;
 
   .text {
     margin-top: 1rem;
-    margin-left: 2rem !important;
-    margin-right: 2rem !important;
   }
 
   .educationDetailItem {
@@ -199,10 +167,6 @@ $mobile_landscape_img_size: 10rem;
       left: -7px;
       width: 12px;
       height: 12px;
-    }
-
-    .degree {
-      font-size: 1rem;
     }
 
     .university {
