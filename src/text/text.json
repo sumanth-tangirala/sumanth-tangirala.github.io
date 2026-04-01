@@ -34,8 +34,7 @@
     }
   ],
   "qualifications": [
-    "Robotics PhD Student, PRACSYS Lab - Rutgers University",
-    "Prediction Intern, Zoox Inc."
+    "Robotics PhD Student, PRACSYS Lab - Rutgers University"
   ],
   "aboutPicturePath": "%IMG_URL%/about.webp",
   "aboutMobilePicturePath": "%IMG_URL%/mobile/about.webp",
@@ -219,10 +218,10 @@
       "title": "Zoox Inc.",
       "id": "zoox",
       "startDate": "2024-06-16",
-      "endDate": "present",
+      "endDate": "2024-09-05",
       "color": "#ffffff",
-      "desc": "I am working in the Offline Driving Intelligence team, developing prediction and safety verification methods for autonomous vehicles",
-      "date": "June 2024 - Present",
+      "desc": "Developed efficient methods to intelligently sample scenarios and evaluate the autonomy stack of self-driving cars through simulation and metrics computation",
+      "date": "June 2024 - September 2024",
       "imgPath": "%IMG_URL%//zoox-hor.svg"
     },
     {
@@ -238,7 +237,7 @@
     {
       "title": "Indian Space Research Organization",
       "id": "isroExp",
-      "startDate": "2019-05-01",
+      "startDate": "2019-05-15",
       "endDate": "2019-08-31",
       "color": "#f4730e",
       "desc": "During a Summer Internship, I developed a time-series Machine Learning technique for accurate land cover classification using satellite imagery and this tool continues to be used by ISRO in their ongoing projects",

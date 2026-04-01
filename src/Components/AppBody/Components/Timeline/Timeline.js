@@ -9,7 +9,13 @@ import Track from "./Track";
 import TimelineCard from "./TimelineCard";
 
 function Timeline({ className, sectionRef, sectionHeadingClassName }) {
-  const timelineItems = _sortBy(text.timeline, (item) => item.startDate).reverse();
+  const timelineItems = _sortBy(text.timeline, [
+    (item) => {
+      const end = String(item.endDate || "").toLowerCase();
+      return end === "present" || end === "now" ? 0 : 1;
+    },
+    (item) => -new Date(item.startDate).getTime(),
+  ]);
 
   const [activeId, setActiveId] = useState(null);
 
