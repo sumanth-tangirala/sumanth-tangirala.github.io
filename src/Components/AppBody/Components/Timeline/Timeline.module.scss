@@ -1,8 +1,6 @@
 @import 'src/styles.module.scss';
 
-.sectionContainer {
-  margin: 4rem 0;
-}
+
 
 .sectionTitle {
   font-size: 2rem;
@@ -13,8 +11,8 @@
   display: grid;
   grid-template-columns: 10% 1fr;
   gap: 2rem;
-  padding: 0 1rem;
-  margin: 3.2rem 0 0 0;
+  // Room for the year labels, which hang left of the axis, inside the column
+  padding-left: 2.5rem;
 }
 
 /* Track styles */
@@ -28,8 +26,8 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 2px;
-  background: $primary_color;
+  width: 1px;
+  background: $control_border_color;
 }
 
 .bar {
@@ -40,7 +38,19 @@
   transition: opacity 0.2s ease, box-shadow 0.2s ease;
 }
 
-.bar.isHighlighted {
+.dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  // Centred on the bar line (bars are 4px wide) and on the span's midpoint
+  transform: translate(-2px, -50%);
+  opacity: 0.6;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bar.isHighlighted,
+.dot.isHighlighted {
   opacity: 1;
   box-shadow: 0px 0px 4px -1px currentColor;
 }
@@ -57,22 +67,29 @@
   grid-template-columns: 25% 1fr;
   gap: 1.5rem;
   align-items: start;
+  position: relative;
+  overflow: hidden;
   border: $card_border_size solid $card_border_color;
-  border-left: 0.3rem solid var(--item-color);
-  border-radius: 0.6rem;
-  padding: 1.2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  border-radius: $card_radius;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.55);
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  // Faint glow of the organisation's colour, fading out to the right
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--item-color) 9%, transparent), transparent 45%),
+    $surface_color;
+
+  @include hover {
+    border-color: rgba(255, 255, 255, 0.2);
   }
 }
 
 .card.isHighlighted {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .cardImageContainer {
@@ -83,7 +100,7 @@
 
 .cardImage {
   width: 100%;
-  max-width: 11rem;
+  max-width: calc(11rem * var(--logo-scale, 1));
   height: auto;
   max-height: 100px;
   object-fit: contain;
@@ -100,24 +117,53 @@
 }
 
 .cardTitle {
-  font-weight: 600;
+  @include type-title;
+  margin: 0;
+}
+
+.cardRole {
+  @include type-meta;
+  margin-top: 0.15rem;
 }
 
 .cardDates {
-  font-size: 0.85rem;
-  color: #cccccc;
+  @include type-meta;
+  white-space: nowrap;
+  margin-left: 1rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .cardBody {
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  @include type-body;
+  color: $text_secondary;
+
+  li + li {
+    margin-top: 0.4rem;
+  }
+
+  // Links to the papers, quiet like the rest of the prose
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(216, 217, 221, 0.35);
+    text-underline-offset: 0.2em;
+    transition: color 0.15s $ease, text-decoration-color 0.15s $ease;
+
+    @include hover {
+      color: $primary_color;
+      text-decoration-color: currentColor;
+    }
+  }
 }
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .timelineGrid {
     display: block;
+    padding-left: 0;
   }
 
   .trackWrapper {
@@ -126,11 +172,25 @@
 
   .card {
     grid-template-columns: 1fr;
-    border-left: 0.3rem solid var(--item-color);
+    // Logo sits on top here, so the glow fades down from behind it
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--item-color) 12%, transparent), transparent 55%),
+      $surface_color;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .cardDates {
+    margin-left: 0;
   }
 
   .cardImage {
-    max-width: 40%;
+    max-width: calc(40% * var(--logo-scale, 1));
+    // Logos sit above the text here; square marks at 100px dwarfed wordmarks
+    max-height: 4rem;
   }
 }
 
@@ -139,6 +199,7 @@
   position: absolute;
   left: -0.5rem;
   transform: translateX(-100%) translateY(-50%);
-  font-size: 0.75rem;
-  color: $primary_color;
+  font-size: $type_label_size;
+  color: $text_muted;
+  font-variant-numeric: tabular-nums;
 }

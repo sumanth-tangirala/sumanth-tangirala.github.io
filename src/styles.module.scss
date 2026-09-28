@@ -16,6 +16,13 @@ $mobile_landscape_screen_height: 650px;
 
 $min_history_banner_height: 9.6rem;
 
+// Layout rhythm: one gap between top-level sections, one from heading to content
+$section_gap: 7rem;
+$heading_gap: 3rem;
+$column_gutter: 10vw;
+$mobile_column_gutter: 1rem;
+$card_radius: 16px;
+
 @mixin flex {
   display: flex;
   flex-direction: column;
@@ -31,10 +38,107 @@ $min_history_banner_height: 9.6rem;
   height: 100%;
 }
 
+$serif_font: 'Newsreader', Georgia, serif;
+// The hero name, the nav name and the copy that flies between them
+// (NameFlight) share one optical size, so a scaled copy matches both exactly
+$name_optical_size: 72;
+$ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+@mixin serif {
+  font-family: $serif_font;
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+}
+
+// Type system: one family (Newsreader, a web font, so it looks the same
+// everywhere, set at its optical size for each size), one style per role.
+// Display roles tighten the tracking; reading and interface text inherit
+// the family from body.
+$type_lead_size: 1.5rem;     // 24px  hero tagline, About lead
+$type_title_size: 1.375rem;  // 22px  every card title
+$type_body_size: 1.0625rem;  // 17px  all prose
+$type_ui_size: 0.9375rem;    // 15px  nav, buttons, chips
+$type_meta_size: 0.875rem;   // 14px  dates, venues, schools
+$type_label_size: 0.75rem;   // 12px  eyebrow labels, axis years
+
+@mixin type-lead {
+  @include serif;
+  font-size: $type_lead_size;
+  font-weight: 400;
+  line-height: 1.35;
+
+  @media screen and (max-width: $mobile_screen_width) {
+    font-size: 1.3rem;
+  }
+}
+
+@mixin type-title {
+  @include serif;
+  font-size: $type_title_size;
+  font-weight: 500;
+  line-height: 1.3;
+  color: $heading_color;
+
+  @media screen and (max-width: $mobile_screen_width) {
+    font-size: 1.25rem;
+  }
+}
+
+@mixin type-body {
+  font-size: $type_body_size;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+@mixin type-ui {
+  font-family: inherit;
+  font-size: $type_ui_size;
+  font-weight: 500;
+}
+
+@mixin type-meta {
+  font-size: $type_meta_size;
+  font-weight: 400;
+  line-height: 1.5;
+  color: $text_muted;
+}
+
+@mixin type-label {
+  font-size: $type_label_size;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+// Brand: the name in the nav pill
+@mixin type-brand {
+  @include serif;
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1;
+
+  @media screen and (max-width: $mobile_screen_width) {
+    font-size: 1.5rem;
+  }
+}
+
+// Section headings stay ~0.62 of the hero name's size on every device
 @mixin section-heading {
-  font-size: 2.4rem;
+  @include serif;
+  font-size: 2.6rem;
+
+  @media screen and (max-width: $tablet_screen_width) {
+    font-size: 2.25rem;
+  }
+
+  @media screen and (max-width: $mobile_screen_width) {
+    font-size: 2rem;
+  }
+
   font-weight: 500;
   text-align: center;
+  color: $heading_color;
+  margin: 0 0 $heading_gap;
 }
 
 @mixin item-title {
@@ -54,8 +158,21 @@ $min_history_banner_height: 9.6rem;
   transition: width .5s ease-in-out, height .5s ease-in-out;
 }
 
+// Hover styles only while the last input could hover: iOS keeps :hover on the
+// last thing tapped, which would leave washes stuck on. `touch-input` is set
+// from pointerType in index.js. Keyboard focus shares the styles.
+@mixin hover {
+  :global(html:not(.touch-input)) &:hover {
+    @content;
+  }
+
+  &:focus-visible {
+    @content;
+  }
+}
+
 @mixin transition {
-  transition: .3s ease-in-out;
+  transition: .26s $ease;
 }
 
 @mixin item-mini-title {
@@ -93,8 +210,19 @@ $light_trans_matte_grey: #20212488;
 $dark_trans_matte_grey: #202124DF;
 $acrobat_red: #b30b00;
 
-$card_border_size: 0.09rem;
-$card_border_color: rgba(255, 255, 255, 0.3);
+$card_border_size: 1px;
+$card_border_color: rgba(255, 255, 255, 0.12);
+$control_border_color: rgba(255, 255, 255, 0.2);
+
+$background_color: #111111;
+$surface_color: #161616;
+$heading_color: #f2f2f4;
+$text_color: #D8D9DD;
+$text_secondary: rgba(216, 217, 221, 0.84);
+$text_muted: rgba(216, 217, 221, 0.67);
+$hover_wash: rgba(255, 255, 255, 0.05);
+$primary_color_dim: rgba(251, 177, 60, 0.12);
+$primary_hover_color: #ffc261;
 
 // $primary_color: #24cfb5;
 // $primary_color_dull: #24cfb573;

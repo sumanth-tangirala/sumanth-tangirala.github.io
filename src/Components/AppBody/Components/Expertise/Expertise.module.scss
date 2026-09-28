@@ -1,0 +1,60 @@
+@import 'src/styles.module.scss';
+
+.container {
+  color: $text_color;
+}
+
+// One card, like an Education item: a label column and what goes with it
+.card {
+  margin: 0;
+  padding: 1.25rem;
+  background: $surface_color;
+  border: 1px solid $card_border_color;
+  border-radius: $card_radius;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 2rem;
+  row-gap: 0.75rem;
+}
+
+.row {
+  display: contents;
+}
+
+.label {
+  @include type-label;
+  color: $primary_color;
+  // Level with the first line of the items beside it
+  align-self: baseline;
+}
+
+.items {
+  @include type-body;
+  color: $text_secondary;
+  margin: 0;
+  align-self: baseline;
+}
+
+.item {
+  display: inline-block;
+  max-width: 100%;
+}
+
+// Phones: each label above its list, the areas spaced apart
+@media screen and (max-width: $mobile_screen_width) {
+  .card {
+    display: block;
+  }
+
+  .row {
+    display: block;
+
+    & + & {
+      margin-top: 1rem;
+    }
+  }
+
+  .label {
+    margin-bottom: 0.25rem;
+  }
+}

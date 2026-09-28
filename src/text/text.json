@@ -1,116 +1,145 @@
 {
   "name": "Sumanth Tangirala",
-  "landingPicturePath": "%IMG_URL%//landing.webp",
-  "landingMobilePicturePath": "%IMG_URL%/mobile/landing.webp",
-  "tagline": "<no_wrap>Robotics Researcher</no_wrap><no_wrap>Rutgers University</no_wrap>",
+  "landingPicturePath": "/img/landing.webp",
+  "landingMobilePicturePath": "/img/landing-480.webp",
+  "tagline": "<no_wrap>Robotics PhD Student</no_wrap><no_wrap>Rutgers University</no_wrap>",
   "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
-  "resumeURL": "%DOCS_URL%/SumanthTangirala-Resume.pdf",
+  "email": "tangiralasumanth@gmail.com",
+  "resumeURL": "/SumanthTangirala-Resume.pdf",
+  "scholarDashboardURL": "https://www.sumanthtangirala.com/scholar-dashboard/",
   "historyBannerImages": [
     {
-      "path": "%IMG_URL%//PRACSYS.png",
-      "text": "PRACSYS - Rutgers",
-      "url": "https://robotics.cs.rutgers.edu/pracsys"
+      "path": "/img/logos/PRACSYS.webp",
+      "text": "PRACSYS Lab, Rutgers University",
+      "url": "https://pracsys.cs.rutgers.edu/"
     },
     {
-      "path": "%IMG_URL%//zoox-hor.svg",
-      "text": "Zoox Inc.",
+      "path": "/img/logos/zoox-hor.svg",
+      "text": "Zoox",
+      "logoScale": 0.75,
       "url": "https://zoox.com/"
     },
     {
-      "path": "%IMG_URL%//Tekion.svg",
+      "path": "/img/logos/Tekion.svg",
       "text": "Tekion",
       "url": "https://tekion.com/"
     },
     {
-      "path": "%IMG_URL%//ISRO.png",
+      "path": "/img/logos/ISRO.webp",
       "text": "ISRO",
       "url": "https://www.isro.gov.in/"
     },
     {
-      "path": "%IMG_URL%//DAIICT.png",
+      "path": "/img/logos/DAIICT.webp",
       "text": "DA-IICT",
       "url": "https://www.daiict.ac.in/"
     }
   ],
-  "qualifications": [
-    "Robotics PhD Student, PRACSYS Lab - Rutgers University"
-  ],
+  "qualifications": [],
   "aboutPicturePath": "%IMG_URL%/about.webp",
   "aboutMobilePicturePath": "%IMG_URL%/mobile/about.webp",
   "about": [
-    "Primary Areas of Focus: <highlight>Robotics, Safe and Verifiable Motion Planning.</highlight>",
-    "Pursuing a PhD thesis under Professor Kostas Bekris, focusing on <highlight> safety verification of robot policies </highlight> and <highlight> safe kinodynamic motion planning </highlight> for high-dynamics robots."
+    "I work on <highlight><no_wrap>data-driven</no_wrap> reachability analysis for verifying robot controllers</highlight>. Instead of relying on a model of the controller, I use its own executions to estimate the states from which it <highlight>reaches its goal without failing</highlight>, and how likely it is to do so when the dynamics are noisy. These estimates can be calibrated to carry statistical guarantees. Because they only need data, they work for black-box controllers such as reinforcement learning or behavior cloning policies, whose internals can't be analyzed directly.",
+    "This builds on my earlier work in the lab on planning and control for robots with complex dynamics, and on estimating controllers' regions of attraction from data."
   ],
   "educationDetails": [
     {
-      "degree": "Ph.D. in Computer Science",
-      "university": "Rutgers University (2024 - Now)"
+      "degree": "PhD in Computer Science",
+      "school": "Rutgers University",
+      "dates": "2024 – Present",
+      "notes": [
+        "<no_wrap>NSF-NRT SOCRATES Fellow</no_wrap> <no_wrap>(2024 – 2026)</no_wrap>"
+      ],
+      "logo": "/img/logos/Rutgers.webp"
     },
     {
-      "degree": "Master of Science in Computer Science",
-      "university": "Rutgers University (2022-2024)"
+      "degree": "MS in Computer Science",
+      "school": "Rutgers University",
+      "dates": "2022 – 2024",
+      "notes": [
+        "Thesis: Safety and Efficiency for <no_wrap>High-dimensional</no_wrap> Robots: Integrating Learning, Planning, and Control",
+        "Outstanding Project and Outstanding Publication Awards from Rutgers CS for MORALS (2024)"
+      ],
+      "logo": "/img/logos/Rutgers.webp"
     },
     {
-      "degree": "Bachelor of Technology in Information and Communication Technology",
-      "university": "DA-IICT (2016-2020)"
+      "degree": "BTech in Information and Communication Technology",
+      "school": "DA-IICT (now Dhirubhai Ambani University)",
+      "dates": "2016 – 2020",
+      "notes": [],
+      "logo": "/img/logos/DAIICT.webp"
     }
   ],
   "publications": {
-    "prePrints": [
-      {
-        "id": "kraft",
-        "title": "<tt>KRAFT</tt>: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
-        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
-        "imageURL": "%IMG_URL%/kraft.gif",
-        "arXivURL": "https://arxiv.org/abs/2409.11522",
-        "paperURL": "https://arxiv.org/pdf/2409.11522"
-      }
-    ],
-    "conferencePapers": [
+    "items": [
       {
         "id": "stela",
         "title": "Kinodynamic Trajectory Following with <tt>STELA</tt>: Simultaneous Trajectory Estimation & Local Adaptation",
         "authors": "Edgar Granados, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
         "venue": "Proceedings of the Robotics: Science and Systems (RSS) Conference, 2025",
-        "imageURL": "%IMG_URL%/stela.gif",
-        "arxivURL": "https://arxiv.org/abs/2504.20009",
+        "imageURL": "/img/pubs/stela.webp",
+        "posterURL": "/img/pubs/stela-poster.webp",
+        "arXivURL": "https://arxiv.org/abs/2504.20009",
         "websiteURL": "https://prx-kinodynamic.github.io/projects/stela",
         "videoURL": "https://www.youtube.com/watch?v=VkaqiPceVl4",
-        "paperURL": "https://arxiv.org/pdf/2504.20009"
+        "paperURL": "https://arxiv.org/pdf/2504.20009",
+        "summary": "Keeps a robot on its planned trajectory despite noisy observations by jointly estimating its recent trajectory and adapting its controls. Both update online at 10 Hz or more.",
+        "role": "I implemented the STEAP (Simultaneous Trajectory Estimation and Planning) baseline."
       },
       {
         "id": "robotMotionGenState",
         "title": "The State of Robot Motion Generation",
         "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2024",
-        "imageURL": "%IMG_URL%/somg.png",
+        "imageURL": "/img/pubs/somg.webp",
         "paperURL": "https://arxiv.org/pdf/2410.12172",
-        "arXivURL": "https://arxiv.org/abs/2410.12172"
+        "arXivURL": "https://arxiv.org/abs/2410.12172",
+        "summary": "A survey of 50 years of methods for generating robot motion, from those built on explicit models to those that learn implicit ones, and the opportunities to combine them.",
+        "role": "I worked on the sections on explicit motion planning and control, and on reinforcement learning and behavior cloning."
+      },
+      {
+        "id": "kraft",
+        "title": "<tt>KRAFT</tt>: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
+        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
+        "imageURL": "/img/pubs/kraft.webp",
+        "posterURL": "/img/pubs/kraft-poster.webp",
+        "arXivURL": "https://arxiv.org/abs/2409.11522",
+        "paperURL": "https://arxiv.org/pdf/2409.11522",
+        "summary": "Executes planned trajectories safely with only a rough dynamics model tuned from data, combining kinodynamic replanning, feedback control, and a safety mechanism, for mobile robots on surfaces with unknown friction.",
+        "role": "I co-developed the method, proposed and implemented its safety mechanism (contingency checking), and ran the physical experiments on the MuSHR platform.",
+        "venue": "Preprint, 2024"
       },
       {
         "id": "rogue",
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
-        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Noah R. Carver, Kostas E. Bekris",
+        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Noah R. Carver, Kostas E. Bekris",
         "venue": "Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2024",
-        "imageURL": "%IMG_URL%/rogue.png",
+        "imageURL": "/img/pubs/rogue.webp",
         "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
         "arXivURL": "https://arxiv.org/abs/2310.03239",
-        "paperURL": "https://arxiv.org/pdf/2310.03239"
+        "paperURL": "https://arxiv.org/pdf/2310.03239",
+        "summary": "Speeds up planning for robots with complex dynamics by connecting a learned controller through a precomputed roadmap. Tested on vehicles driving over uneven terrain and on a quadrotor.",
+        "role": "I trained the quadrotor RL policy, and implemented and ran the RL-only baseline without the planner."
       },
       {
         "id": "morals",
         "title": "<tt>MORALS</tt>: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
         "authors": "Ewerton R. Vieira*, Aravind Sivaramakrishnan*, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
         "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024",
-        "award": "Finalist for the IEEE ICRA Best Paper Award in Automation, 2024",
-        "imageURL": "%IMG_URL%/morals.jpeg",
+        "award": "Finalist, ICRA 2024 Best Paper Award in Automation",
+        "imageURL": "/img/pubs/morals.webp",
         "websiteURL": "https://prx-kinodynamic.github.io/projects/morals",
         "arXivURL": "https://arxiv.org/abs/2310.03246",
         "videoURL": "https://www.youtube.com/watch?v=l3znwTe7cwU",
         "codeURL": "https://github.com/Ewerton-Vieira/MORALS",
-        "paperURL": "https://arxiv.org/pdf/2310.03246"
-      },
+        "paperURL": "https://arxiv.org/pdf/2310.03246",
+        "summary": "Estimates from data where a robot controller succeeds, known as its region of attraction, by analyzing its dynamics in a learned latent space. It scales to a 67-dimensional humanoid and a 96-dimensional three-fingered manipulator.",
+        "role": "I proposed and implemented the label-based contrastive training variant.",
+        "equalContribution": true
+      }
+    ],
+    "earlier": [
       {
         "id": "stackedAutoencoder",
         "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
@@ -118,8 +147,9 @@
         "arXivURL": "https://arxiv.org/abs/2311.02887",
         "venue": "Proceedings of the International Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
         "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",
-        "imageURL": "%IMG_URL%/stacked_polsar.png",
-        "paperURL": "https://arxiv.org/pdf/2311.02887"
+        "imageURL": "/img/pubs/stacked_polsar.webp",
+        "paperURL": "https://arxiv.org/pdf/2311.02887",
+        "summary": "Classifies land cover in multifrequency radar (PolSAR) images using autoencoder features and superpixels."
       }
     ]
   },
@@ -205,54 +235,117 @@
   ],
   "timeline": [
     {
-      "title": "Rutgers University & PRACSYS Lab",
+      "title": "Rutgers University",
       "id": "rutgers",
       "startDate": "2022-09-02",
       "endDate": "present",
       "color": "#cc0133",
-      "desc": "Ph.D. student in Computer Science researching robot motion planning at the PRACSYS Lab. Completed M.S. in Computer Science (2022–2024) and currently pursuing doctoral research (2024–present).",
-      "date": "August 2022 - Present",
-      "imgPath": "%IMG_URL%//PRACSYS.png"
+      "imgPath": "/img/logos/PRACSYS.webp",
+      "role": "Graduate Researcher, PRACSYS Lab",
+      "points": [
+        "Developing data-driven reachability methods that use only rollouts to estimate where black-box robot controllers reach their goals without failing, including under noisy dynamics.",
+        "Co-authored work on kinodynamic planning and control (<a href=\"#rogue\">IROS 2024</a>, <a href=\"#stela\">RSS 2025</a>) and on estimating controllers' regions of attraction (<a href=\"#morals\">ICRA 2024</a>)."
+      ]
     },
     {
-      "title": "Zoox Inc.",
+      "title": "Zoox",
       "id": "zoox",
-      "startDate": "2024-06-16",
-      "endDate": "2024-09-05",
+      "startDate": "2025-06-16",
+      "endDate": "2025-09-05",
       "color": "#ffffff",
-      "desc": "Developed efficient methods to intelligently sample scenarios and evaluate the autonomy stack of self-driving cars through simulation and metrics computation",
-      "date": "June 2024 - September 2024",
-      "imgPath": "%IMG_URL%//zoox-hor.svg"
+      "imgPath": "/img/logos/zoox-hor.svg",
+      "logoScale": 0.75,
+      "role": "Prediction Intern (Research)",
+      "points": [
+        "Owned a project to reduce how much simulation it takes to validate the autonomy stack, by estimating its performance metrics from a subset of the logged scenarios instead of all of them.",
+        "Modeled each metric as a Gaussian process over scenario embeddings and used Bayesian optimization to sample the rare events those metrics depend on, then compared this with stratified sampling.",
+        "The result was negative. Embeddings rich enough to predict the metrics were too high-dimensional for GPs to model well, and compressing them lost the signal."
+      ]
     },
     {
-      "title": "Tekion Corp.",
+      "title": "Tekion",
       "id": "tekion",
       "startDate": "2020-01-02",
       "endDate": "2022-07-31",
       "color": "#00debb",
-      "desc": "Starting with a Winter 2020 software engineering internship and advancing to a full-time role as Software Engineer, I developed significant frontend components for a leading Dealership Management System.",
-      "date": "January 2020 - July 2022",
-      "imgPath": "%IMG_URL%//Tekion.svg"
+      "imgPath": "/img/logos/Tekion.svg",
+      "role": "Software Engineer (intern, then full-time)",
+      "points": [
+        "Led the development of dealership management modules, including Kanban repair-order dashboards and vehicle history, and led the multilingual support work for global expansion.",
+        "Trained 25+ interns and mentored junior developers in React and Redux."
+      ]
     },
     {
-      "title": "Indian Space Research Organization",
+      "title": "ISRO",
       "id": "isroExp",
       "startDate": "2019-05-15",
       "endDate": "2019-08-31",
       "color": "#f4730e",
-      "desc": "During a Summer Internship, I developed a time-series Machine Learning technique for accurate land cover classification using satellite imagery and this tool continues to be used by ISRO in their ongoing projects",
-      "date": "May 2019 - August 2019",
-      "imgPath": "%IMG_URL%//ISRO.png"
+      "imgPath": "/img/logos/ISRO.webp",
+      "role": "Research Intern",
+      "points": [
+        "Trained an RNN-LSTM to separate groundnut and cotton fields from other land cover in radar satellite imagery, at 91.2% accuracy."
+      ]
     },
     {
       "title": "DA-IICT",
       "id": "daiict",
-      "startDate": "2016-08-01",
-      "endDate": "2020-05-31",
+      "startDate": "2018-09-01",
+      "endDate": "2019-12-31",
       "color": "#0060b6",
-      "desc": "Completed B.Tech in Information and Communication Technology and served as a Research Assistant at the Smart City Lab focusing on PolSAR image segmentation and classification using Deep Learning techniques.",
-      "date": "August 2016 - May 2020",
-      "imgPath": "%IMG_URL%//DAIICT.png"
+      "imgPath": "/img/logos/DAIICT.webp",
+      "role": "Research Assistant, Smart City Lab",
+      "points": [
+        "Developed deep-learning methods for segmenting and classifying radar (PolSAR) images, including a stacked-autoencoder and superpixel approach published at PReMI 2019."
+      ]
+    }
+  ],
+  "expertise": [
+    {
+      "label": "Verification & reachability",
+      "items": [
+        "Reach-avoid analysis",
+        "Regions of attraction",
+        "Statistical verification",
+        "Stochastic dynamics",
+        "Rare-event sampling (Bayesian optimization)"
+      ]
+    },
+    {
+      "label": "Learning",
+      "items": [
+        "Reinforcement learning",
+        "Behavior cloning",
+        "Generative models (flow matching, diffusion)"
+      ]
+    },
+    {
+      "label": "Uncertainty",
+      "items": [
+        "Epistemic vs. aleatoric uncertainty",
+        "Active learning",
+        "Deep ensembles",
+        "Conformal prediction"
+      ]
+    },
+    {
+      "label": "Planning & control",
+      "items": [
+        "Kinodynamic motion planning",
+        "Feedback control",
+        "System identification"
+      ]
+    },
+    {
+      "label": "Tools",
+      "items": [
+        "Python",
+        "C++",
+        "PyTorch",
+        "ROS",
+        "MuJoCo",
+        "Isaac Gym"
+      ]
     }
   ],
   "hiddenSections": [
@@ -611,5 +704,10 @@
         "url": "https://ece.engin.umich.edu/stories/wireless-integrated-microsensing-and-systems-wims2-in-california"
       }
     ]
-  }
+  },
+  "currently": [
+    "PhD student in <a href=\"https://www.cs.rutgers.edu/~kb572/\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Kostas Bekris</a>'s <a href=\"https://pracsys.cs.rutgers.edu/\" target=\"_blank\" rel=\"noopener noreferrer\">PRACSYS Lab</a>, <no_wrap>Rutgers University</no_wrap>"
+  ],
+  "scholarURL": "https://scholar.google.com/citations?user=f0iamjIAAAAJ&hl=en",
+  "availability": "Expected to graduate in May 2029, and open to internships and collaborations."
 }

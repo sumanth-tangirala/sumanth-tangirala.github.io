@@ -8,7 +8,7 @@ import { SECTION_TYPE_VS_NAME } from "../../../../constants";
 import Track from "./Track";
 import TimelineCard from "./TimelineCard";
 
-function Timeline({ className, sectionRef, sectionHeadingClassName }) {
+function Timeline({ className, sectionRef, sectionProps, sectionHeadingClassName }) {
   const timelineItems = _sortBy(text.timeline, [
     (item) => {
       const end = String(item.endDate || "").toLowerCase();
@@ -24,10 +24,10 @@ function Timeline({ className, sectionRef, sectionHeadingClassName }) {
   }, []);
 
   return (
-    <div className={cx(className, styles.sectionContainer)} ref={sectionRef}>
-      <div className={sectionHeadingClassName}>
+    <div className={cx(className, styles.sectionContainer)} ref={sectionRef} {...sectionProps}>
+      <h2 className={sectionHeadingClassName}>
         {SECTION_TYPE_VS_NAME["TIMELINE"]}
-      </div>
+      </h2>
       <div className={styles.timelineGrid}>
         <Track items={timelineItems} activeId={activeId} onHover={handleHover} />
         <div className={styles.cardColumn}>

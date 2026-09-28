@@ -12,6 +12,9 @@ function parseDate(dateStr) {
     return new Date(dateStr);
 }
 
+// Spans shorter than this read as stubs when drawn as bars, so they get a dot
+const MIN_BAR_DURATION_MS = 4 * 30 * 24 * 60 * 60 * 1000;
+
 function Track({ items, activeId, onHover }) {
     const now = new Date();
     // Determine the earliest start date across all items
@@ -32,7 +35,9 @@ function Track({ items, activeId, onHover }) {
     };
 
     return (
-        <div className={styles.trackWrapper}>
+        // A picture of the cards beside it: hidden from assistive tech and the
+        // keyboard, which get the same dates from the cards
+        <div className={styles.trackWrapper} aria-hidden>
             <div className={styles.yearAxis} />
 
             {/* Year labels */}
@@ -59,24 +64,22 @@ function Track({ items, activeId, onHover }) {
                 const height = bottom - top;
                 const gapPercent = 100 / (items.length + 1);
                 const leftPercent = gapPercent * (items.length - idx);
+                const isShort = endDate - startDate < MIN_BAR_DURATION_MS;
 
                 return (
                     <div
                         key={item.id}
-                        className={cx(styles.bar, {
+                        className={cx(isShort ? styles.dot : styles.bar, {
                             [styles.isHighlighted]: activeId === item.id,
                         })}
                         style={{
-                            top: `${top}%`,
-                            height: `${height}%`,
+                            top: `${isShort ? top + height / 2 : top}%`,
+                            height: isShort ? undefined : `${height}%`,
                             left: `${leftPercent}%`,
                             backgroundColor: item.color,
                         }}
                         onMouseEnter={() => onHover(item.id)}
                         onMouseLeave={() => onHover(null)}
-                        role="button"
-                        tabIndex={0}
-                        aria-label={`${item.title}: ${item.startDate} – ${item.endDate}`}
                     />
                 );
             })}

@@ -2,9 +2,10 @@ import React, { memo } from "react";
 import styles from "./landing.module.scss";
 import cx from "classnames";
 import basicData from "text";
-import { mobileDesktopSwitcher, parse } from "../../../../helpers";
+import { IS_PRERENDERED, mobileDesktopSwitcher, parse } from "../../../../helpers";
 import { motion } from "framer-motion";
-import { SECTION_TYPES } from "../../../../constants";
+import PlannerBackground from "./PlannerBackground";
+import ProfileLinks from "../../../ProfileLinks";
 
 const containerVariants = {
   hidden: {},
@@ -30,13 +31,17 @@ const itemVariants = {
   },
 };
 
-function Landing({ className, sectionRef, nameRef, handleNavigation }) {
+const PLANNER_OBSTACLE = { "data-planner-obstacle": "box" };
+
+function Landing({ className, sectionRef, sectionProps, nameRef }) {
   return (
-    <div className={cx(styles.landing, className)} ref={sectionRef}>
+    <div className={cx(styles.landing, className)} ref={sectionRef} {...sectionProps}>
+      <PlannerBackground heroRef={sectionRef} startDelay={IS_PRERENDERED ? 150 : 700} />
       <motion.div
         className={styles.container}
         variants={containerVariants}
-        initial="hidden"
+        // Prerendered HTML is already on screen: don't hide it to replay the entrance
+        initial={IS_PRERENDERED ? false : "hidden"}
         animate="visible"
       >
         {mobileDesktopSwitcher({
@@ -46,6 +51,7 @@ function Landing({ className, sectionRef, nameRef, handleNavigation }) {
               className={styles.image}
               alt={basicData.name}
               variants={itemVariants}
+              data-planner-obstacle="box"
             />
           ),
           desktop: (
@@ -54,37 +60,30 @@ function Landing({ className, sectionRef, nameRef, handleNavigation }) {
               className={styles.image}
               alt={basicData.name}
               variants={itemVariants}
+              data-planner-obstacle="box"
             />
           ),
         })}
 
-        <motion.div
+        <motion.h1
           className={cx(styles.name)}
           variants={itemVariants}
           ref={nameRef}
+          data-planner-obstacle="text"
         >
           {basicData.name}
-        </motion.div>
-        <motion.div className={styles.tagline} variants={itemVariants}>
+        </motion.h1>
+        <motion.div
+          className={styles.tagline}
+          variants={itemVariants}
+          data-planner-obstacle="text"
+          data-robot-start
+        >
           {parse(basicData.tagline)}
         </motion.div>
 
-        {/* Action Buttons */}
-        <motion.div className={styles.actions} variants={itemVariants}>
-          <motion.button
-            className={styles.actionButton}
-            variants={itemVariants}
-            onClick={() => handleNavigation && handleNavigation(SECTION_TYPES.PUBLICATIONS)}
-          >
-            View Work
-          </motion.button>
-          <motion.button
-            className={styles.actionButton}
-            variants={itemVariants}
-            onClick={() => handleNavigation && handleNavigation(SECTION_TYPES.CONTACT)}
-          >
-            Get in Touch
-          </motion.button>
+        <motion.div className={styles.links} variants={itemVariants}>
+          <ProfileLinks links={["email", "scholar", "linkedin", "github", "resume"]} linkProps={PLANNER_OBSTACLE} />
         </motion.div>
       </motion.div>
     </div>

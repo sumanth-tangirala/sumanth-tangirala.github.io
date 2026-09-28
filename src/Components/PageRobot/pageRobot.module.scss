@@ -1,0 +1,19 @@
+// The page robot's layer: at the top of the scroller's content, so it scrolls
+// with the page and the robot is left behind as the reader scrolls. Above
+// the sections (1), below the nav's scrim (3).
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}

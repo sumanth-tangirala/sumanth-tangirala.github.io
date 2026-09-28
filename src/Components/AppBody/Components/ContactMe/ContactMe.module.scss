@@ -3,7 +3,6 @@
 $img_size: 2.8rem;
 
 .container {
-  padding: 2rem 0;
   @include flex();
 
   @media screen and (max-height: $mobile_landscape_screen_height) {}
@@ -11,28 +10,24 @@ $img_size: 2.8rem;
 
 .contentWrapper {
   @include flex();
-  width: 90%;
-  max-width: 70rem;
-  margin-left: auto;
-  margin-right: auto;
-  // Match HistoryBanner styling for consistent look
-  backdrop-filter: blur(1rem);
-  background: rgba(0, 0, 0, 0.4);
-  border: 0.08rem solid $primary_color;
-  box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.35);
-  border-radius: 3rem;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding: 2rem 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
+  background: $surface_color; // plain, like every other card
+  border: 1px solid $card_border_color;
+  border-radius: $card_radius;
+  padding: 3rem 1.25rem;
 }
 
 .sectionHeading {
   @include section-heading;
-  padding-top: 0.8rem;
+  margin-bottom: 2rem;
+}
 
-  @media screen and (max-height: $mobile_landscape_screen_height) {
-    padding-top: 1.6rem;
-  }
+.availability {
+  @include type-body;
+  color: $text_secondary;
+  text-align: center;
+  margin: -1rem 0 2rem;
 }
 
 .emailsContainer {
@@ -41,7 +36,7 @@ $img_size: 2.8rem;
   @include flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 3rem 0;
+  margin: 0 0 2rem;
 
   @media screen and (max-width: $mobile_screen_width) {
     flex-direction: column;
@@ -52,86 +47,27 @@ $img_size: 2.8rem;
   }
 }
 
-.emailText {
-  font-size: 1.6rem;
-  font-weight: 500;
-  padding-right: .8rem;
-
-  @media screen and (max-width: $mobile_screen_width) {
-    padding-right: 0;
-    padding-bottom: .4rem;
-  }
-}
-
+// Underlined at rest too: amber alone shouldn't have to say "link"
 .emailId {
-  text-decoration: none;
-  font-size: 1.4rem;
-  font-weight: 500;
+  @include type-body;
   color: $primary_color;
+  text-decoration: underline;
+  text-decoration-color: rgba(251, 177, 60, 0.35);
+  text-underline-offset: 0.2em;
+  transition: color .15s $ease, text-decoration-color .15s $ease;
 
-  &:hover {
-    text-decoration: underline;
+  @include hover {
+    color: $primary_hover_color;
+    text-decoration-color: currentColor;
   }
 }
 
 .emailDivider {
-  font-size: 1.6rem;
+  @include type-body;
+  color: $text_muted;
   padding: 0 .8rem;
 
   @media screen and (max-width: $mobile_screen_width) {
     display: none;
-  }
-}
-
-.socialMediaLinks {
-  @include flex;
-  flex-direction: row;
-  gap: 2rem;
-  padding-bottom: 0.8rem;
-
-  @media screen and (max-height: $mobile_landscape_screen_height) {
-    padding-bottom: 9.2rem;
-  }
-}
-
-.socialMediaImg {
-  height: 4rem !important;
-  width: 4rem !important;
-  font-size: 2rem;
-  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-
-  &:hover {
-    transform: scale(1.02);
-    color: $primary_color !important;
-    border-color: $primary_color !important;
-  }
-
-  @media screen and (max-width: $mobile_screen_width) {
-    height: 3.2rem !important;
-    width: 3.2rem !important;
-    font-size: 1.5rem;
-  }
-}
-
-.resume {
-  height: 3.6rem !important;
-  font-size: 1.2rem;
-  @include flex;
-  flex-direction: row;
-  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-
-  &:hover {
-    transform: scale(1.015);
-    color: $acrobat_red !important;
-    border-color: $acrobat_red !important;
-  }
-
-  & :global(.anticon) {
-    font-size: 1.6rem;
-  }
-
-  @media screen and (max-width: $mobile_screen_width) {
-    height: 2.8rem !important;
-    font-size: 1rem;
   }
 }

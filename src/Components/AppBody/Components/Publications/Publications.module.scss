@@ -2,7 +2,6 @@
 
 .sectionContainer {
   @include flex;
-  margin-top: 8rem;
 }
 
 .smallFont {
@@ -12,20 +11,21 @@
 }
 
 .content {
-  padding: 0 1rem;
-  margin: 2rem 0 0 0;
+  width: 100%;
   text-align: left;
   overflow: hidden;
   white-space: pre-wrap;
 }
 
 .subSectionTitle {
-  @include item-title;
   color: $primary_color;
-  font-size: 1.6rem;
-  margin-top: 2rem;
-  margin-bottom: 1.6rem;
-  font-weight: 500;
+  @include type-label;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
 }
 
 .publication {
@@ -34,18 +34,13 @@
   grid-template-columns: 25% 1fr;
   gap: 1.5rem;
   align-items: start;
+  background: $surface_color;
   border: $card_border_size solid $card_border_color;
-  border-radius: .6rem;
-  padding: 1.2rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.55);
-  }
+  border-radius: $card_radius;
+  padding: 1.25rem;
 
   &:not(:first-child) {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 }
 
@@ -58,12 +53,8 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: .4rem;
-  transition: transform .15s ease-in-out;
-
-  &:hover {
-    transform: scale(1.04);
-  }
+  border-radius: 10px;
+  display: block;
 }
 
 .publicationDetails {
@@ -71,26 +62,65 @@
 }
 
 .publicationTitle {
-  font-weight: 500;
-  font-size: 1.4rem;
+  @include type-title;
+  margin: 0;
+
+  // System names were set in Courier (a fourth family); keep them in the
+  // title's serif, marked only by light tracking
+  tt {
+    font-family: inherit;
+    letter-spacing: 0.03em;
+  }
+}
+
+.publicationTitleLink {
+  color: inherit;
+  text-decoration: none;
+  transition: color .15s $ease;
+
+  @include hover {
+    color: $primary_hover_color;
+  }
 }
 
 .publicationAuthors {
-  margin-top: 1rem;
-  font-size: 1.1rem;
+  margin-top: 0.75rem;
+  @include type-body;
+  color: $text_secondary;
+
+  b {
+    color: $heading_color;
+    font-weight: 600;
+  }
 }
 
 .publicationVenue {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   white-space: break-spaces;
-  font-style: oblique;
+  @include type-meta;
 }
 
 .publicationAward {
-  margin-top: .5rem;
-  white-space: break-spaces;
-  font-weight: bold;
-  font-size: .9rem;
+  @include type-meta;
+  margin-top: 0.15rem;
+}
+
+// What the paper does, in plain words
+.publicationSummary {
+  @include type-body;
+  color: $text_secondary; // as all other prose
+  margin: 0.5rem 0 0;
+}
+
+// His part, a shade brighter than the summary above it
+.publicationRole {
+  @include type-body;
+  color: $text_color;
+  margin: 0.5rem 0 0;
+}
+
+.publicationNote {
+  white-space: nowrap;
 }
 
 .publicationLinksContainer {
@@ -103,18 +133,23 @@
 }
 
 .publicationLink {
-  display: inline-block;
-  padding: .25rem .6rem;
-  border: 1px solid $primary_color;
-  border-radius: .3rem;
+  display: inline-flex;
+  align-items: center;
+  height: 2.25rem;
+  padding: 0 0.9rem;
+  box-sizing: border-box;
+  border: 1px solid rgba(251, 177, 60, 0.45);
+  border-radius: 999px;
   color: $primary_color;
+  @include type-ui;
+  font-weight: 500;
   text-decoration: none;
-  transition: background .15s ease-in-out, color .15s ease-in-out, text-decoration .15s ease-in-out;
+  transition: background .15s $ease, color .15s $ease, border-color .15s $ease;
 
-  &:hover {
-    background: $primary_color;
-    color: $matte_grey;
-    text-decoration: underline;
+  @include hover {
+    background: $primary_color_dim;
+    border-color: $primary_color;
+    color: $primary_hover_color;
   }
 }
 
@@ -138,8 +173,3 @@
   }
 }
 
-@media screen and (max-width: $mobile_screen_width) {
-  .content {
-    width: calc(100vw - 4rem);
-  }
-}

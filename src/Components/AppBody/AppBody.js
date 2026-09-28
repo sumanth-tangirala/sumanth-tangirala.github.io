@@ -10,9 +10,11 @@ import HistoryBanner from "./Components/HistoryBanner";
 import text from "text";
 
 import styles from "./appBody.module.scss";
-import { SECTION_TYPES, SECTION_ORDER } from "../../constants";
+import { SECTION_TYPES, SECTION_ORDER, SECTION_TYPE_VS_ID, SECTION_TYPE_VS_NAME } from "../../constants";
 import _map from "lodash/map";
 import Publications from "./Components/Publications";
+import Education from "./Components/Education";
+import Expertise from "./Components/Expertise";
 
 const SECTION_TYPE_VS_COMPONENT = {
   [SECTION_TYPES.LANDING]: Landing,
@@ -22,6 +24,8 @@ const SECTION_TYPE_VS_COMPONENT = {
   [SECTION_TYPES.PUBLICATIONS]: Publications,
   [SECTION_TYPES.TIMELINE]: Timeline,
   [SECTION_TYPES.PROJECTS]: Projects,
+  [SECTION_TYPES.EDUCATION]: Education,
+  [SECTION_TYPES.EXPERTISE]: Expertise,
   [SECTION_TYPES.CONTACT]: ContactMe,
 };
 
@@ -36,14 +40,28 @@ const sections = _map(getVisibleSections(), (sectionType) => ({
   sectionType,
 }));
 
+// Each section is a labelled region, at its own address (#publications)
+const SECTION_LABELS = {
+  ...SECTION_TYPE_VS_NAME,
+  [SECTION_TYPES.LANDING]: "Introduction",
+  [SECTION_TYPES.HISTORY]: "Affiliations",
+};
+const sectionPropsOf = (sectionType) => ({
+  id: SECTION_TYPE_VS_ID[sectionType],
+  role: "region",
+  "aria-label": SECTION_LABELS[sectionType],
+});
+
 const AppBody = memo(({ sectionRefs, landingNameRef, handleNavigation }) => {
   return (
-    <>
+    // The skip link's target (focusable so focus lands in it)
+    <main id="main" tabIndex={-1} className={styles.main}>
       {_map(sections, ({ Component, sectionType }) => (
         <Component
           key={sectionType}
           className={styles.childSection}
           sectionRef={sectionRefs[sectionType]}
+          sectionProps={sectionPropsOf(sectionType)}
           sectionHeadingClassName={styles.sectionHeading}
           {
           ...(sectionType === SECTION_TYPES.LANDING
@@ -52,7 +70,7 @@ const AppBody = memo(({ sectionRefs, landingNameRef, handleNavigation }) => {
           }
         />
       ))}
-    </>
+    </main>
   );
 });
 

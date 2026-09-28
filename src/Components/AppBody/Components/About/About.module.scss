@@ -11,9 +11,8 @@ $mobile_landscape_img_size: 10rem;
   flex-direction: column;
   flex-grow: 1;
   z-index: 2;
-  margin-top: 1rem;
 
-  color: white;
+  color: $text_color;
 }
 
 .image {
@@ -26,117 +25,77 @@ $mobile_landscape_img_size: 10rem;
 
 .text {
   height: 100%;
-  flex-grow: .5;
   @include flex;
   align-items: flex-start;
   text-align: left;
-  text-shadow: 0.15rem 0.15rem .5rem rgba(0, 0, 0, .3);
+  // A comfortable reading measure (~80 characters), centred under the
+  // heading; the paragraphs and the "Currently" line share its left edge.
+  // Sized in the body font so `ch` matches the text.
+  font-size: $type_body_size;
+  width: 100%;
+  max-width: 68ch;
+  margin: 0 auto;
 }
 
 .qualifications {
-  margin-bottom: 1.2rem;
-  font-weight: 400;
-  font-size: 1.6rem;
-  margin-top: 0.8rem;
-  border-top: 1px solid $card_border_color;
-  padding-top: 1.6rem;
-  border-bottom: 1px solid $card_border_color;
-  padding-bottom: 1.6rem;
   width: 100%;
-
-  &>div {
-    margin-bottom: .8rem;
-    line-height: 1.4;
-
-    &:first-child {
-      font-weight: 500;
-      font-size: 1.7rem;
-      color: rgba(255, 255, 255, 0.95);
-    }
-
-    &:last-child {
-      font-weight: 400;
-      font-size: 1.5rem;
-      color: rgba(255, 255, 255, 0.85);
-      margin-top: 0.3rem;
-    }
-  }
+  @include type-lead;
+  color: $heading_color;
 }
 
 .aboutParagraphs {
   @include flex;
   align-items: flex-start;
-  margin-top: 0.8rem;
-  padding-bottom: 1.2rem;
   width: 100%;
 }
 
 .aboutParagraphItem {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 300;
+  @include type-body;
+  color: $text_secondary;
+  margin: 0;
 
   &:not(:first-child) {
-    margin-top: 1.6rem;
+    margin-top: 1rem;
   }
 }
 
-.educationDetails {
-  @include flex;
-  flex-direction: column;
-  margin-top: 1.8rem;
-  align-items: center;
-  width: 95%;
-  gap: 1.5rem;
+// His current role, at reading size: it's what a visitor most wants to know
+.currently {
+  @include type-body;
+  color: $text_secondary;
+  margin: 1.5rem 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.75rem;
+  align-items: baseline;
 }
 
-.educationDetailItem {
-  font-size: 1.25rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 1rem 1.2rem;
-  background: #111111;
-  border-left: 3px solid $primary_color;
-  border-radius: 0 6px 6px 0;
-  position: relative;
-  width: 100%;
-  flex: 1;
+.currentlyLabel {
+  @include type-label;
+  color: $primary_color;
+}
 
-  &:not(:first-child) {
-    margin-top: 0;
-  }
+.currentlyLine {
+  margin: 0;
 
-  &::before {
-    content: "";
-    position: absolute;
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: rgba(216, 217, 221, 0.35);
+    text-underline-offset: 0.2em;
+    transition: color 0.15s $ease, text-decoration-color 0.15s $ease;
 
-    top: 50%;
-    transform: translateY(-50%);
-    left: -7px;
-    width: 12px;
-    height: 12px;
-    background: $primary_color;
-    border-radius: 50%;
-  }
-
-  .degree {
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 0.3rem;
-  }
-
-  .university {
-    font-weight: 400;
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
+    @include hover {
+      color: $primary_color;
+      text-decoration-color: currentColor;
+    }
   }
 }
 
 .topSection {
   @include flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
 }
 
@@ -144,7 +103,6 @@ $mobile_landscape_img_size: 10rem;
 
   .container {
     flex-direction: column;
-    padding: 0 2rem;
   }
 
   .topSection {
@@ -160,34 +118,7 @@ $mobile_landscape_img_size: 10rem;
     margin-top: 1rem;
   }
 
-  .educationDetailItem {
-    padding: 0.6rem 0.8rem;
-    font-size: 1rem;
 
-    &::before {
-      left: -7px;
-      width: 12px;
-      height: 12px;
-    }
-
-    .university {
-      font-size: 0.9rem;
-    }
-  }
-
-  .qualifications {
-    margin-top: 0.6rem;
-
-    &>div {
-      &:first-child {
-        font-size: 1.4rem;
-      }
-
-      &:last-child {
-        font-size: 1.2rem;
-      }
-    }
-  }
 }
 
 @media screen and (max-width: $mobile_screen_width) {

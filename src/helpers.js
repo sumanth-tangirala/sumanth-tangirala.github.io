@@ -1,13 +1,12 @@
 import htmlParse from "html-react-parser";
 
-import _replace from "lodash/replace";
 import _isNil from "lodash/isNil";
 import { PRIMARY_COLOR } from "./constants";
 
 export const parse = (text) => {
   text = text.replaceAll(
     "<highlight>",
-    `<span style="color:${PRIMARY_COLOR};font-weight: 500;">`,
+    `<span style="color:${PRIMARY_COLOR};">`,
   );
   text = text.replaceAll("</highlight>", "</span>");
 
@@ -17,6 +16,12 @@ export const parse = (text) => {
 
   return htmlParse(text);
 };
+
+// True when build/index.html shipped prerendered markup (scripts/prerender.js).
+// Read at import time, before React replaces the markup.
+export const IS_PRERENDERED = Boolean(
+  document.getElementById("root")?.hasChildNodes(),
+);
 
 export const isMobile = () => {
   return window.innerWidth < 750;

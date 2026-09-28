@@ -1,53 +1,34 @@
-import React, { memo, useCallback } from "react";
-
+import React, { memo } from "react";
 import cx from "classnames";
-
-import styles from "./Publications.module.scss";
 import _map from "lodash/map";
+import _isEmpty from "lodash/isEmpty";
 import text from "text";
+import styles from "./Publications.module.scss";
 import { SECTION_TYPE_VS_NAME } from "../../../../constants";
 import PublicationItem from "./PublicationItem";
-import _size from "lodash/size";
 
-function Publications({ className, sectionRef, sectionHeadingClassName }) {
-  const shouldRenderPrePrints = _size(text.publications.prePrints) > 0;
-  const renderPublications = useCallback(
-    (publications) => (
-      <div>
-        {_map(publications, (publication, idx) => (
-          <PublicationItem key={idx} idx={idx} publication={publication} />
-        ))}
-      </div>
-    ),
-    [],
-  );
-
-  const prePrintsTitle =
-    _size(text.publications.prePrints) > 1 ? "Preprints" : "Preprint";
-  const confPapersTitle =
-    _size(text.publications.conferencePapers) > 1
-      ? "Conference Papers"
-      : "Conference Paper";
-
+function Publications({ className, sectionRef, sectionProps, sectionHeadingClassName }) {
+  const { items, earlier } = text.publications;
   return (
-    <div className={cx(className, styles.sectionContainer)} ref={sectionRef}>
-      <div className={cx(sectionHeadingClassName, styles.sectionTitle)}>
+    <div className={cx(className, styles.sectionContainer)} ref={sectionRef} {...sectionProps}>
+      <h2 className={cx(sectionHeadingClassName, styles.sectionTitle)}>
         {SECTION_TYPE_VS_NAME["PUBLICATIONS"]}
-      </div>
+      </h2>
       <div className={styles.content}>
-        {shouldRenderPrePrints && (
+        {_map(items, (publication) => (
+          <PublicationItem key={publication.id} publication={publication} />
+        ))}
+        {!_isEmpty(earlier) && (
           <>
-            <div className={styles.subSectionTitle}>{`${prePrintsTitle}:`}</div>
-            {renderPublications(text.publications.prePrints)}
+            <h3 className={styles.subSectionTitle}>Earlier work</h3>
+            {_map(earlier, (publication) => (
+              <PublicationItem key={publication.id} publication={publication} />
+            ))}
           </>
         )}
-        <div className={styles.subSectionTitle}>{`${confPapersTitle}:`}</div>
-        {renderPublications(text.publications.conferencePapers)}
       </div>
     </div>
   );
 }
-
-Publications.propTypes = {};
 
 export default memo(Publications);

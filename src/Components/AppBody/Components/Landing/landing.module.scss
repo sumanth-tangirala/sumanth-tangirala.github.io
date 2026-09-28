@@ -8,14 +8,19 @@ $backgroundColor: $dark_trans_matte_grey;
 $button_height: 3rem;
 
 .landing {
+  position: relative;
   height: 100vh;
+  height: 100dvh; // the screen actually shown (below phones' browser bars)
   @include flex();
   justify-content: center;
+  margin-top: 0 !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
 
 .container {
+  position: relative;
+  z-index: 1;
   @include flex();
   justify-content: center;
   align-items: center;
@@ -26,38 +31,42 @@ $button_height: 3rem;
   height: $img_size;
   width: $img_size;
   border-radius: 100%;
-  margin-bottom: 3rem;
-  box-shadow: 0.25rem 0.25rem 1rem 0 rgba(0, 0, 0, .5);
+  margin-bottom: 2.5rem;
+  // Faint amber halo instead of a hard drop shadow
+  box-shadow: 0 0 0 1px $card_border_color, 0 0 4rem 0.5rem rgba(251, 177, 60, 0.08);
 }
 
 .name {
-  font-size: 4.8rem;
+  @include serif;
+  font-variation-settings: "opsz" $name_optical_size;
+  font-size: 5rem;
+  font-weight: 500;
+  line-height: 1.05;
   text-align: center;
-  color: white;
-  text-shadow: 0.25rem 0.25rem .8rem rgba(0, 0, 0, .5);
+  color: $heading_color;
+  margin: 0;
 }
 
 .tagline {
+  // Display text shares the name's serif; sans is kept for UI and body
+  @include type-lead;
   color: $primary_color;
-  font-size: 2rem;
-  margin-top: 2.5rem;
+  margin-top: 1.25rem;
   text-align: center;
-  text-shadow: 0.15rem 0.15rem .5rem rgba(0, 0, 0, .5);
   @include flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-@media screen and (min-width: ($tablet_screen_width + 1)) {
+// One line with a dot separator where it fits; stacked lines on phones
+@media screen and (min-width: ($mobile_screen_width + 1)) {
   .tagline {
 
     //  Add a line between the tagline spans
     &>*:first-child::after {
-      content: '|';
-      width: 100%;
-      height: 0.1rem;
-      margin: 0 10px;
-
+      content: '·';
+      margin: 0 0.75rem;
+      color: rgba(251, 177, 60, 0.6);
     }
   }
 }
@@ -74,16 +83,15 @@ $button_height: 3rem;
   }
 
   .tagline {
-    font-size: 2rem;
-    margin-top: 2rem;
-  }
-
-  .container {
-    max-width: 70%;
+    margin-top: 1rem;
   }
 }
 
 @media screen and (max-width: $mobile_screen_width) {
+  .tagline {
+    flex-direction: column;
+  }
+
   .image {
     height: $mobile_img_size;
     width: $mobile_img_size;
@@ -91,8 +99,7 @@ $button_height: 3rem;
   }
 
   .tagline {
-    font-size: 1.6rem;
-    margin-top: 1.6rem;
+    margin-top: 1rem;
   }
 
   .name {
@@ -123,41 +130,24 @@ $button_height: 3rem;
   }
 }
 
-.actions {
-  @include flex;
-  flex-direction: row;
-  gap: 1.6rem;
-  margin-top: 5rem;
+// The profile links (ProfileLinks), set below the tagline
+.links {
+  margin-top: 2.5rem;
 
-  @media screen and (max-width: $mobile_screen_width) {
-    flex-direction: column;
-    width: 100%;
+  @media screen and (max-height: $mobile_landscape_screen_height) {
+    margin-top: 1.5rem;
   }
 }
 
-.actionButton {
-  @include transition;
-  padding: 0.45rem 1.6rem;
-  border: 1px solid $primary_color_dull;
-  border-radius: 2rem;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 1.1rem;
-  font-weight: 200 !important;
-  letter-spacing: 0.04rem;
-  cursor: pointer;
-  transform: translateY(0);
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-
-  &:hover {
-    background: $primary_color;
-    color: $matte_grey;
-    box-shadow: 0 4px 8px rgba(251, 177, 60, 0.3);
-    transform: translateY(-2px);
-  }
-
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(251, 177, 60, 0.25);
-  }
+// Live RRT* planner behind the hero (PlannerBackground.js). Faded in below the
+// nav band so nothing is cut by it, and out before the next section.
+.planner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 96px, #000 150px, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, transparent 96px, #000 150px, #000 90%, transparent 100%);
 }

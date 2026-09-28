@@ -1,0 +1,50 @@
+@import "src/styles.module";
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+
+  // Five controls must stay inside the 16px margins on the narrowest phones
+  @media screen and (max-width: $mini_mobile_screen_width) {
+    gap: 0.5rem;
+  }
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 1px solid $control_border_color;
+  color: $text_color;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: background .15s $ease, color .15s $ease, border-color .15s $ease;
+
+  svg {
+    display: block;
+  }
+
+  @include hover {
+    background: $hover_wash;
+    color: $primary_color;
+    border-color: rgba(251, 177, 60, 0.45);
+  }
+}
+
+.labelledLink {
+  width: auto;
+  gap: 0.5rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  @include type-ui;
+  font-weight: 500;
+
+  svg {
+    font-size: 1.1rem;
+  }
+}

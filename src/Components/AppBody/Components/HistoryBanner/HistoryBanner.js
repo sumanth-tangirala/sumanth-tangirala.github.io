@@ -7,7 +7,7 @@ import text from "text";
 import styles from "./historyBanner.module.scss";
 import cx from "classnames";
 
-function HistoryBanner({ className, sectionRef }) {
+function HistoryBanner({ className, sectionRef, sectionProps }) {
   const images = text.historyBannerImages;
 
   const imagesComponents = useMemo(
@@ -19,6 +19,8 @@ function HistoryBanner({ className, sectionRef }) {
             className={styles.image}
             alt={imageDetails.text}
             key={imageDetails.text}
+            // Optical size: tall wordmarks read heavier than others at equal width
+            style={imageDetails.logoScale ? { "--logo-scale": imageDetails.logoScale } : undefined}
           />
         );
       }),
@@ -26,7 +28,7 @@ function HistoryBanner({ className, sectionRef }) {
   );
 
   return (
-    <div className={cx(styles.container)} ref={sectionRef}>
+    <div className={cx(styles.container)} ref={sectionRef} {...sectionProps}>
       {imagesComponents}
     </div>
   );

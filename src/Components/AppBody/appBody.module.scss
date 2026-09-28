@@ -1,12 +1,28 @@
 @import 'src/styles.module.scss';
 
+.main:focus {
+  outline: none; // it takes focus only for the skip link
+}
+
 .childSection {
   @include resize-transition;
 
   scroll-snap-align: start;
   overflow: hidden;
-  padding: 0 10vw 4rem 10vw;
+  margin-top: $section_gap;
+  padding: 0 $column_gutter;
   z-index: 1;
+
+  // The page's end: room below the last section, plus the phone's home
+  // indicator where the page runs under it (viewport-fit=cover)
+  &:last-child {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media screen and (max-width: $mobile_screen_width) {
+    padding-left: $mobile_column_gutter;
+    padding-right: $mobile_column_gutter;
+  }
 }
 
 .sectionHeading {

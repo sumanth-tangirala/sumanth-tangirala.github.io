@@ -4,6 +4,18 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+// Mark the page while the last input was a finger, so hover styles (see the
+// `hover` mixin) don't stick after a tap. Keyed off pointerType rather than
+// (hover: none): an iPad with a trackpad or Pencil reports hover.
+const setTouchInput = (event) => {
+  document.documentElement.classList.toggle(
+    "touch-input",
+    event.pointerType === "touch",
+  );
+};
+window.addEventListener("pointerdown", setTouchInput, { passive: true });
+window.addEventListener("pointermove", setTouchInput, { passive: true });
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

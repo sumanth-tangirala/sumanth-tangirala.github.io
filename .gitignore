@@ -25,3 +25,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+
+# The résumé source lives in its own (Overleaf) repository; the site serves the built PDF
+/resume_latex

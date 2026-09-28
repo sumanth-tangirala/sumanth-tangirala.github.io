@@ -1,37 +1,47 @@
 import React, { memo } from "react";
-import { mobileDesktopSwitcher, parse } from "helpers";
+import { parse } from "helpers";
 
 import text from "text";
 import styles from "./About.module.scss";
 import cx from "classnames";
 import _map from "lodash/map";
+import _isEmpty from "lodash/isEmpty";
+import { SECTION_TYPES, SECTION_TYPE_VS_NAME } from "../../../../constants";
 
-function About({ className, sectionRef }) {
+function About({ className, sectionRef, sectionProps, sectionHeadingClassName }) {
   return (
-    <div className={cx(styles.container, className)} ref={sectionRef}>
+    <div className={cx(styles.container, className)} ref={sectionRef} {...sectionProps}>
+      <h2 className={sectionHeadingClassName}>{SECTION_TYPE_VS_NAME[SECTION_TYPES.ABOUT]}</h2>
       <div className={styles.topSection}>
         <div className={styles.text}>
-          <div className={styles.qualifications}>
-            {_map(text.qualifications, (qual, idx) => (
-              <div key={idx}>{parse(qual)}</div>
-            ))}
-          </div>
+          {!_isEmpty(text.qualifications) && (
+            <div className={styles.qualifications}>
+              {_map(text.qualifications, (qual, idx) => (
+                <div key={idx}>{parse(qual)}</div>
+              ))}
+            </div>
+          )}
           <div className={styles.aboutParagraphs}>
             {_map(text.about, (paragraph, idx) => (
-              <span className={styles.aboutParagraphItem} key={idx}>
+              <p className={styles.aboutParagraphItem} key={idx}>
                 {parse(paragraph)}
-              </span>
+              </p>
             ))}
           </div>
+          {text.currently && (
+            <div className={styles.currently}>
+              <span className={styles.currentlyLabel}>Currently</span>
+              {/* One line each, so a wrap never leaves a separator dangling */}
+              <div>
+                {text.currently.map((line) => (
+                  <p key={line} className={styles.currentlyLine}>
+                    {parse(line)}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-      <div className={styles.educationDetails}>
-        {_map(text.educationDetails, (educationDetail, idx) => (
-          <div className={styles.educationDetailItem} key={idx}>
-            <div className={styles.degree}>{parse(educationDetail.degree)}</div>
-            <div className={styles.university}>{parse(educationDetail.university)}</div>
-          </div>
-        ))}
       </div>
     </div>
   );

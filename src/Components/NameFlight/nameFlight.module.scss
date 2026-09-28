@@ -1,0 +1,26 @@
+@import "src/styles.module";
+
+// The copy of the name that flies from the hero to the nav pill. It must
+// render exactly like both ends: same face, weight, tracking and optical size
+// (see $name_optical_size), scaled by transform only.
+.flight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5; // above the nav pill (4)
+}
+
+.word {
+  position: absolute;
+  top: 0;
+  left: 0;
+  @include serif;
+  font-variation-settings: "opsz" $name_optical_size;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  color: $heading_color;
+  transform-origin: 0 0;
+  will-change: transform;
+  visibility: hidden;
+}
