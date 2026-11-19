@@ -101,7 +101,7 @@
         "title": "The State of Robot Motion Generation",
         "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2024",
-        "imageURL": "/img/pubs/somg.webp",
+        "imageURL": "/img/pubs/somg-models.webp",
         "paperURL": "https://arxiv.org/pdf/2410.12172",
         "arXivURL": "https://arxiv.org/abs/2410.12172",
         "summary": "A survey of 50 years of methods for generating robot motion, from those built on explicit models to those that learn implicit ones, and the opportunities to combine them.",
