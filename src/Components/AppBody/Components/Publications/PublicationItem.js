@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Publications.module.scss";
-import { parse } from "../../../../helpers";
+import { BODY_KEEP, parse } from "../../../../helpers";
 
 // Animated thumbnails are animated WebP: unlike video, an image always plays
 // and loops, with no play button, even in iOS Low Power Mode. With reduced
@@ -44,19 +44,24 @@ function PublicationItem({ publication }) {
           <div className={styles.publicationVenue}>
             {parse(publication.venue)}
             {publication.equalContribution && (
-              <span className={styles.publicationNote}> · * Equal contribution</span>
+              <>
+                {/* The dot stays with the venue and the note can start a new
+                    line on a narrow screen, never a line starting with "·" */}
+                {"\u00a0· "}
+                <span className={styles.publicationNote}>* Equal contribution</span>
+              </>
             )}
           </div>
         )}
         {publication.award && <div className={styles.publicationAward}>{publication.award}</div>}
         {publication.summary && (
-          <p className={styles.publicationSummary}>{publication.summary}</p>
+          <p className={styles.publicationSummary}>{parse(publication.summary, BODY_KEEP)}</p>
         )}
         {/* What he did on it: the part an author list can't say */}
         {publication.role && (
           <p className={styles.publicationRole}>
             <span className={styles.publicationRoleLabel}>My role</span>
-            {publication.role}
+            {parse(publication.role, BODY_KEEP)}
           </p>
         )}
         {pills.length > 0 && (

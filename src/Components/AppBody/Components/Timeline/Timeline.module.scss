@@ -124,6 +124,7 @@
 .cardRole {
   @include type-meta;
   margin-top: 0.15rem;
+  text-wrap: balance; // a short label that wraps splits evenly, never "… / Lab"
 }
 
 .cardDates {

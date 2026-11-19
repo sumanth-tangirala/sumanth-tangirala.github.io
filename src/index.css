@@ -5,6 +5,9 @@ body {
     font-optical-sizing: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* No paragraph ends on a line of one or two words: the browser rebalances
+       the last lines (Chrome 117+, Safari 26+; elsewhere it wraps as before) */
+    text-wrap: pretty;
 }
 
 code {

@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { parse } from "helpers";
+import { BODY_KEEP, parse } from "helpers";
 
 import text from "text";
 import styles from "./About.module.scss";
@@ -24,7 +24,7 @@ function About({ className, sectionRef, sectionProps, sectionHeadingClassName })
           <div className={styles.aboutParagraphs}>
             {_map(text.about, (paragraph, idx) => (
               <p className={styles.aboutParagraphItem} key={idx}>
-                {parse(paragraph)}
+                {parse(paragraph, BODY_KEEP)}
               </p>
             ))}
           </div>

@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import cx from "classnames";
 import styles from "./Timeline.module.scss";
-import { parse } from "../../../../helpers";
+import { BODY_KEEP, parse } from "../../../../helpers";
 
 function formatDate(dateStr) {
     if (dateStr === "present") {
@@ -48,7 +48,7 @@ function TimelineCard({ item, activeId, onHover }) {
                 </div>
                 <ul className={styles.cardBody}>
                     {item.points.map((point) => (
-                        <li key={point}>{parse(point)}</li>
+                        <li key={point}>{parse(point, BODY_KEEP)}</li>
                     ))}
                 </ul>
             </div>
