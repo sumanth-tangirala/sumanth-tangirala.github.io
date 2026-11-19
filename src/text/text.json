@@ -98,7 +98,7 @@
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2026",
         "imageURL": "/img/pubs/integrative.webp",
         "summary": "A follow-up to the 2024 survey that reviews methods combining explicit models with implicit, learned ones. It sorts them into four families by how tightly the two are coupled: sequential pipelines, parallel residuals, hierarchical decompositions, and embedded architectures.",
-        "role": "Fleshed out the taxonomy of integrative methods, finding the work that belongs under each family and proposing new splits within them."
+        "role": "Co-wrote the taxonomy of integrative methods, finding the work that belongs under each family and proposing new splits within them."
       },
       {
         "id": "stela",
@@ -111,7 +111,7 @@
         "websiteURL": "https://prx-kinodynamic.github.io/projects/stela",
         "videoURL": "https://www.youtube.com/watch?v=VkaqiPceVl4",
         "paperURL": "https://arxiv.org/pdf/2504.20009",
-        "summary": "Keeps a robot on its planned trajectory despite noisy observations by jointly estimating its recent trajectory and adapting its controls. Both update online at 10 Hz or more."
+        "summary": "A trajectory-tracking controller for robots with arbitrary dynamics: it keeps the robot on its planned trajectory despite noisy observations by jointly estimating its recent trajectory and adapting its controls. Unlike pure tracking, it can deviate from the plan to avoid obstacles. Estimation and control run online at 10 Hz or more."
       },
       {
         "id": "robotMotionGenState",
