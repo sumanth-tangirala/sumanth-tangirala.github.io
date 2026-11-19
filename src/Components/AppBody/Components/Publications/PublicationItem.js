@@ -18,6 +18,14 @@ const PILLS = [
   ["linkURL", "Springer"],
 ];
 
+// A line may break between authors but never inside a name ("Ying / Hung"):
+// the spaces within each name, outside any tag, become no-break spaces
+const keepNamesWhole = (authors = "") =>
+  authors
+    .split(", ")
+    .map((name) => name.replace(/ (?![^<]*>)/g, "\u00a0"))
+    .join(", ");
+
 function PublicationItem({ publication }) {
   const plainTitle = (publication.title || "").replace(/<[^>]+>/g, "");
   const pills = PILLS.filter(([key]) => publication[key]);
@@ -38,7 +46,7 @@ function PublicationItem({ publication }) {
         <h3 className={styles.publicationTitle}>{parse(publication.title)}</h3>
         {/* The citation reads as a byline under the title */}
         <div className={styles.publicationAuthors}>
-          {parse(publication.authors)}
+          {parse(keepNamesWhole(publication.authors))}
         </div>
         {publication.venue && (
           <div className={styles.publicationVenue}>

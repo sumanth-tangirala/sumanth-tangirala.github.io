@@ -76,7 +76,7 @@
       {
         "id": "parse",
         "title": "Uncertainty-Aware Reach-Avoid Estimation with Statistical Guarantees",
-        "authors": "<b>Sumanth Tangirala</b>*, Dhruv Metha Ramesh*, Ewerton R. Vieira, Abdeslam Boularias, Ying Hung, Kostas E. Bekris",
+        "authors": "<u>Sumanth Tangirala</u>*, Dhruv Metha Ramesh*, Ewerton R. Vieira, Abdeslam Boularias, Ying Hung, Kostas E. Bekris",
         "venue": "Under review at the Learning for Dynamics and Control Conference (L4DC), 2027",
         "equalContribution": true,
         "imageURL": "/img/pubs/parse.webp",
@@ -85,7 +85,7 @@
       {
         "id": "grape",
         "title": "<tt>GRAPE</tt>: Generative Reach-Avoid Probability Estimation for Black-Box Robot Controllers under Stochastic Dynamics",
-        "authors": "<b>Sumanth Tangirala</b>*, Dhruv Metha Ramesh*, Ewerton R. Vieira, Abdeslam Boularias, Ying Hung, Kostas E. Bekris",
+        "authors": "<u>Sumanth Tangirala</u>*, Dhruv Metha Ramesh*, Ewerton R. Vieira, Abdeslam Boularias, Ying Hung, Kostas E. Bekris",
         "venue": "Under review at the IEEE International Conference on Robotics and Automation (ICRA), 2027",
         "equalContribution": true,
         "imageURL": "/img/pubs/grape.webp",
@@ -94,7 +94,7 @@
       {
         "id": "integratingModels",
         "title": "Integrating Explicit and Implicit Models for Robot Motion Generation",
-        "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
+        "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <u>Sumanth Tangirala</u>",
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2026",
         "imageURL": "/img/pubs/integrative.webp",
         "summary": "A follow-up to the 2024 survey that reviews methods combining explicit models with implicit, learned ones. It sorts them into four families by how tightly the two are coupled: sequential pipelines, parallel residuals, hierarchical decompositions, and embedded architectures."
@@ -102,7 +102,7 @@
       {
         "id": "stela",
         "title": "Kinodynamic Trajectory Following with <tt>STELA</tt>: Simultaneous Trajectory Estimation & Local Adaptation",
-        "authors": "Edgar Granados, <b>Sumanth Tangirala</b>, Kostas E. Bekris",
+        "authors": "Edgar Granados, <u>Sumanth Tangirala</u>, Kostas E. Bekris",
         "venue": "Proceedings of the Robotics: Science and Systems (RSS) Conference, 2025",
         "imageURL": "/img/pubs/stela.webp",
         "posterURL": "/img/pubs/stela-poster.webp",
@@ -115,7 +115,7 @@
       {
         "id": "robotMotionGenState",
         "title": "The State of Robot Motion Generation",
-        "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
+        "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <u>Sumanth Tangirala</u>",
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2024",
         "imageURL": "/img/pubs/somg-models.webp",
         "paperURL": "https://arxiv.org/pdf/2410.12172",
@@ -125,7 +125,7 @@
       {
         "id": "kraft",
         "title": "<tt>KRAFT</tt>: Sampling-Based Kinodynamic Replanning and Feedback Control over Approximate, Identified Models of Vehicular Systems",
-        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
+        "authors": "Aravind Sivaramakrishnan, <u>Sumanth Tangirala</u>, Dhruv Metha Ramesh, Edgar Granados, Kostas E. Bekris",
         "imageURL": "/img/pubs/kraft.webp",
         "posterURL": "/img/pubs/kraft-poster.webp",
         "arXivURL": "https://arxiv.org/abs/2409.11522",
@@ -136,7 +136,7 @@
       {
         "id": "rogue",
         "title": "Roadmaps with Gaps over Controllers: Achieving Efficiency in Planning under Dynamics",
-        "authors": "Aravind Sivaramakrishnan, <b>Sumanth Tangirala</b>, Edgar Granados, Noah R. Carver, Kostas E. Bekris",
+        "authors": "Aravind Sivaramakrishnan, <u>Sumanth Tangirala</u>, Edgar Granados, Noah R. Carver, Kostas E. Bekris",
         "venue": "Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2024",
         "imageURL": "/img/pubs/rogue.webp",
         "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
@@ -147,7 +147,7 @@
       {
         "id": "morals",
         "title": "<tt>MORALS</tt>: Analysis of High-Dimensional Robot Controllers via Topological Tools in a Latent Space",
-        "authors": "Ewerton R. Vieira*, Aravind Sivaramakrishnan*, <b>Sumanth Tangirala</b>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
+        "authors": "Ewerton R. Vieira*, Aravind Sivaramakrishnan*, <u>Sumanth Tangirala</u>, Edgar Granados, Konstantin Mischaikow, Kostas E. Bekris",
         "venue": "Proceedings of the IEEE International Conference on Robotics and Automation (ICRA), 2024",
         "award": "Finalist, ICRA 2024 Best Paper Award in Automation",
         "imageURL": "/img/pubs/morals.webp",
@@ -164,7 +164,7 @@
       {
         "id": "stackedAutoencoder",
         "title": "Stacked Autoencoder Based Feature Extraction and Superpixel Generation for Multifrequency PolSAR Image Classification",
-        "authors": "Tushar Gadhiya, <b>Sumanth Tangirala</b>, Anil K. Roy",
+        "authors": "Tushar Gadhiya, <u>Sumanth Tangirala</u>, Anil K. Roy",
         "arXivURL": "https://arxiv.org/abs/2311.02887",
         "venue": "Proceedings of the International Conference on Pattern Recognition and Machine Intelligence (PReMI), 2019",
         "linkURL": "https://link.springer.com/chapter/10.1007/978-3-030-34872-4_37",

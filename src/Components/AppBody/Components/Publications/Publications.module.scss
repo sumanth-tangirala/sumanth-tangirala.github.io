@@ -81,9 +81,10 @@
   line-height: 1.5;
   color: $text_muted;
 
-  b {
-    color: $heading_color;
-    font-weight: 600;
+  // His name is underlined, as in the CV and résumé
+  u {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
   }
 }
 
