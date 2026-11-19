@@ -6,7 +6,7 @@
   "linkedinURL": "https://www.linkedin.com/in/tsumanth/",
   "githubURL": "https://github.com/sumanth-tangirala",
   "email": "tangiralasumanth@gmail.com",
-  "resumeURL": "/SumanthTangirala-Resume.pdf",
+  "resumeURL": "/SumanthTangirala-CV.pdf",
   "scholarDashboardURL": "https://www.sumanthtangirala.com/scholar-dashboard/",
   "historyBannerImages": [
     {
@@ -74,13 +74,31 @@
   "publications": {
     "items": [
       {
+        "id": "parse",
+        "title": "Uncertainty-Aware Reach-Avoid Estimation with Statistical Guarantees",
+        "authors": "<b>Sumanth Tangirala</b>*, Dhruv Metha Ramesh*, Ewerton R. Vieira, Abdeslam Boularias, Ying Hung, Kostas E. Bekris",
+        "venue": "Under review at the Learning for Dynamics and Control Conference (L4DC), 2027",
+        "equalContribution": true,
+        "imageURL": "/img/pubs/parse.webp",
+        "summary": "Predicts reach-avoid outcomes or abstains, with finite-sample bounds on the error rates of its predictions."
+      },
+      {
+        "id": "grape",
+        "title": "<tt>GRAPE</tt>: Generative Reach-Avoid Probability Estimation for Black-Box Robot Controllers under Stochastic Dynamics",
+        "authors": "<b>Sumanth Tangirala</b>*, Dhruv Metha Ramesh*, Ewerton R. Vieira, Abdeslam Boularias, Ying Hung, Kostas E. Bekris",
+        "venue": "Under review at the IEEE International Conference on Robotics and Automation (ICRA), 2027",
+        "equalContribution": true,
+        "imageURL": "/img/pubs/grape.webp",
+        "summary": "Estimates reach-avoid probabilities under stochastic dynamics from a flow-matching terminal-state model."
+      },
+      {
         "id": "integratingModels",
         "title": "Integrating Explicit and Implicit Models for Robot Motion Generation",
         "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2026",
         "imageURL": "/img/pubs/integrative.webp",
         "summary": "A follow-up to the 2024 survey that reviews methods combining explicit models with implicit, learned ones. It sorts them into four families by how tightly the two are coupled: sequential pipelines, parallel residuals, hierarchical decompositions, and embedded architectures.",
-        "role": "I fleshed out the taxonomy of integrative methods, finding the work that belongs under each family and proposing a few new splits, and made all of the paper's figures."
+        "role": "Fleshed out the taxonomy of integrative methods, finding the work that belongs under each family and proposing new splits within them."
       },
       {
         "id": "stela",
@@ -94,7 +112,7 @@
         "videoURL": "https://www.youtube.com/watch?v=VkaqiPceVl4",
         "paperURL": "https://arxiv.org/pdf/2504.20009",
         "summary": "Keeps a robot on its planned trajectory despite noisy observations by jointly estimating its recent trajectory and adapting its controls. Both update online at 10 Hz or more.",
-        "role": "I implemented the STEAP (Simultaneous Trajectory Estimation and Planning) baseline."
+        "role": "Implemented the STEAP (Simultaneous Trajectory Estimation and Planning) baseline."
       },
       {
         "id": "robotMotionGenState",
@@ -105,7 +123,7 @@
         "paperURL": "https://arxiv.org/pdf/2410.12172",
         "arXivURL": "https://arxiv.org/abs/2410.12172",
         "summary": "A survey of 50 years of methods for generating robot motion, from those built on explicit models to those that learn implicit ones, and the opportunities to combine them.",
-        "role": "I worked on the sections on explicit motion planning and control, and on reinforcement learning and behavior cloning."
+        "role": "Co-wrote the sections on explicit motion planning and control, reinforcement learning, and behavior cloning."
       },
       {
         "id": "kraft",
@@ -116,7 +134,7 @@
         "arXivURL": "https://arxiv.org/abs/2409.11522",
         "paperURL": "https://arxiv.org/pdf/2409.11522",
         "summary": "Executes planned trajectories safely with only a rough dynamics model tuned from data, combining kinodynamic replanning, feedback control, and a safety mechanism, for mobile robots on surfaces with unknown friction.",
-        "role": "I co-developed the method, proposed and implemented its safety mechanism (contingency checking), and ran the physical experiments on the MuSHR platform.",
+        "role": "Co-developed the method, proposed its contingency-checking safety mechanism, and ran the physical experiments on the MuSHR platform.",
         "venue": "Preprint, 2024"
       },
       {
@@ -129,7 +147,7 @@
         "arXivURL": "https://arxiv.org/abs/2310.03239",
         "paperURL": "https://arxiv.org/pdf/2310.03239",
         "summary": "Speeds up planning for robots with complex dynamics by connecting a learned controller through a precomputed roadmap. Tested on vehicles driving over uneven terrain and on a quadrotor.",
-        "role": "I trained the quadrotor RL policy, and implemented and ran the RL-only baseline without the planner."
+        "role": "Trained the quadrotor RL policy, and implemented and ran the RL-only baseline without the planner."
       },
       {
         "id": "morals",
@@ -144,7 +162,7 @@
         "codeURL": "https://github.com/Ewerton-Vieira/MORALS",
         "paperURL": "https://arxiv.org/pdf/2310.03246",
         "summary": "Estimates from data where a robot controller succeeds, known as its region of attraction, by analyzing its dynamics in a learned latent space. It scales to a 67-dimensional humanoid and a 96-dimensional three-fingered manipulator.",
-        "role": "I proposed and implemented the label-based contrastive training variant.",
+        "role": "Proposed and implemented a label-based contrastive training variant.",
         "equalContribution": true
       }
     ],
@@ -246,7 +264,7 @@
     {
       "title": "Rutgers University",
       "id": "rutgers",
-      "startDate": "2022-09-02",
+      "startDate": "2023-02-02",
       "endDate": "present",
       "color": "#cc0133",
       "imgPath": "/img/logos/PRACSYS.webp",

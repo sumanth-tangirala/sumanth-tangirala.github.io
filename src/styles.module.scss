@@ -223,6 +223,9 @@ $text_muted: rgba(216, 217, 221, 0.67);
 $hover_wash: rgba(255, 255, 255, 0.05);
 $primary_color_dim: rgba(251, 177, 60, 0.12);
 $primary_hover_color: #ffc261;
+// Amber for reading, not clicking: softer than the accent the pills and links
+// use, so a summary never looks like a link
+$summary_color: rgba(251, 196, 110, 0.88);
 
 // $primary_color: #24cfb5;
 // $primary_color_dull: #24cfb573;

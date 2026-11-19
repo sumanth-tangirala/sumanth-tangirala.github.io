@@ -20,6 +20,8 @@ import _map from "lodash/map";
 
 // Below this width the section links move into the menu
 const COMPACT_QUERY = "(max-width: 900px)";
+// The menu item that opens the résumé rather than scrolling to a section
+const RESUME_KEY = "resume";
 
 const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
@@ -78,6 +80,15 @@ const NavBar = memo(({ className, navBarRef, navNameRef, handleNavigation, showP
         </span>
       ),
     })),
+    // The résumé opens in a new tab, like the hero's Resume pill
+    {
+      key: RESUME_KEY,
+      label: (
+        <a href={text.resumeURL} target="_blank" rel="noopener noreferrer" className={styles.menuItem}>
+          Resume
+        </a>
+      ),
+    },
   ], [sectionsToDisplay]);
   // Links to each section's address; a click scrolls there smoothly instead
   const sectionTypeVsNavigationFunc = useMemo(() => {
@@ -99,9 +110,9 @@ const NavBar = memo(({ className, navBarRef, navNameRef, handleNavigation, showP
   const dropDownMenuProp = useMemo(() => {
     return {
       items: sectionMenuItems,
-      onClick: ({ key: sectionType }) => {
+      onClick: ({ key }) => {
         closeMenu();
-        handleNavigation(sectionType);
+        if (key !== RESUME_KEY) handleNavigation(key);
       },
     };
   }, [handleNavigation, sectionMenuItems, closeMenu]);
@@ -118,6 +129,9 @@ const NavBar = memo(({ className, navBarRef, navNameRef, handleNavigation, showP
           {SECTION_TYPE_VS_NAME[sectionType]}
         </a>
       ))}
+      <a href={text.resumeURL} target="_blank" rel="noopener noreferrer" className={styles.navBarItem}>
+        Resume
+      </a>
     </div>
   );
 

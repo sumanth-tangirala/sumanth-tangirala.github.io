@@ -2,24 +2,23 @@ import React from "react";
 import styles from "./Publications.module.scss";
 import { parse } from "../../../../helpers";
 
-// The title opens the project page, else the arXiv abstract; the pills list
-// every place the paper is available, so each paper shows the same set
-const TITLE_KEYS = ["websiteURL", "arXivURL", "linkURL", "paperURL"];
 // Animated thumbnails are animated WebP: unlike video, an image always plays
 // and loops, with no play button, even in iOS Low Power Mode. With reduced
 // motion they show a still (the poster) instead.
 const REDUCE_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Every place the paper is available, one pill each; the title itself is
+// not a link, so the pills are the one way in
 const PILLS = [
   ["paperURL", "PDF"],
   ["arXivURL", "arXiv"],
   ["codeURL", "Code"],
   ["videoURL", "Video"],
+  ["websiteURL", "Website"],
   ["linkURL", "Springer"],
 ];
 
 function PublicationItem({ publication }) {
-  const titleKey = TITLE_KEYS.find((key) => publication[key]);
   const plainTitle = (publication.title || "").replace(/<[^>]+>/g, "");
   const pills = PILLS.filter(([key]) => publication[key]);
 
@@ -36,25 +35,8 @@ function PublicationItem({ publication }) {
       </div>
 
       <div className={styles.publicationDetails}>
-        <h3 className={styles.publicationTitle}>
-          {titleKey ? (
-            <a
-              href={publication[titleKey]}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.publicationTitleLink}
-            >
-              {parse(publication.title)}
-            </a>
-          ) : (
-            parse(publication.title)
-          )}
-        </h3>
-        {publication.summary && (
-          <p className={styles.publicationSummary}>{publication.summary}</p>
-        )}
-        {/* What he did on it, in his words: the part an author list can't say */}
-        {publication.role && <p className={styles.publicationRole}>{publication.role}</p>}
+        <h3 className={styles.publicationTitle}>{parse(publication.title)}</h3>
+        {/* The citation reads as a byline under the title */}
         <div className={styles.publicationAuthors}>
           {parse(publication.authors)}
         </div>
@@ -67,6 +49,16 @@ function PublicationItem({ publication }) {
           </div>
         )}
         {publication.award && <div className={styles.publicationAward}>{publication.award}</div>}
+        {publication.summary && (
+          <p className={styles.publicationSummary}>{publication.summary}</p>
+        )}
+        {/* What he did on it: the part an author list can't say */}
+        {publication.role && (
+          <p className={styles.publicationRole}>
+            <span className={styles.publicationRoleLabel}>My role</span>
+            {publication.role}
+          </p>
+        )}
         {pills.length > 0 && (
           <div className={styles.publicationLinksContainer}>
             {pills.map(([key, label]) => (

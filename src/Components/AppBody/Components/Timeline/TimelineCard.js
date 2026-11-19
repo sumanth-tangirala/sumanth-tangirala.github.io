@@ -7,8 +7,10 @@ function formatDate(dateStr) {
     if (dateStr === "present") {
         return "Present";
     }
+    // "YYYY-MM-DD" parses as UTC midnight; format it in UTC too, or west of
+    // Greenwich the 1st of a month shows as the month before
     const date = new Date(dateStr);
-    return date.toLocaleString("default", { month: "short", year: "numeric" });
+    return date.toLocaleString("default", { month: "short", year: "numeric", timeZone: "UTC" });
 }
 
 function TimelineCard({ item, activeId, onHover }) {
