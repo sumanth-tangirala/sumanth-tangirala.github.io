@@ -57,13 +57,6 @@ function PublicationItem({ publication }) {
         {publication.summary && (
           <p className={styles.publicationSummary}>{parse(publication.summary, BODY_KEEP)}</p>
         )}
-        {/* What he did on it: the part an author list can't say */}
-        {publication.role && (
-          <p className={styles.publicationRole}>
-            <span className={styles.publicationRoleLabel}>My role</span>
-            {parse(publication.role, BODY_KEEP)}
-          </p>
-        )}
         {pills.length > 0 && (
           <div className={styles.publicationLinksContainer}>
             {pills.map(([key, label]) => (

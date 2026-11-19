@@ -97,8 +97,7 @@
         "authors": "Kostas E. Bekris, Joe Doerr, Patrick Meng, <b>Sumanth Tangirala</b>",
         "venue": "Proceedings of the International Symposium of Robotics Research (ISRR), 2026",
         "imageURL": "/img/pubs/integrative.webp",
-        "summary": "A follow-up to the 2024 survey that reviews methods combining explicit models with implicit, learned ones. It sorts them into four families by how tightly the two are coupled: sequential pipelines, parallel residuals, hierarchical decompositions, and embedded architectures.",
-        "role": "Co-wrote the taxonomy of integrative methods, finding the work that belongs under each family and proposing new splits within them."
+        "summary": "A follow-up to the 2024 survey that reviews methods combining explicit models with implicit, learned ones. It sorts them into four families by how tightly the two are coupled: sequential pipelines, parallel residuals, hierarchical decompositions, and embedded architectures."
       },
       {
         "id": "stela",
@@ -121,8 +120,7 @@
         "imageURL": "/img/pubs/somg-models.webp",
         "paperURL": "https://arxiv.org/pdf/2410.12172",
         "arXivURL": "https://arxiv.org/abs/2410.12172",
-        "summary": "A survey of 50 years of methods for generating robot motion, from those built on explicit models to those that learn implicit ones, and the opportunities to combine them.",
-        "role": "Co-wrote the sections on explicit motion planning and control, reinforcement learning, and behavior cloning."
+        "summary": "A survey of 50 years of methods for generating robot motion, from those built on explicit models to those that learn implicit ones, and the opportunities to combine them."
       },
       {
         "id": "kraft",
@@ -133,7 +131,6 @@
         "arXivURL": "https://arxiv.org/abs/2409.11522",
         "paperURL": "https://arxiv.org/pdf/2409.11522",
         "summary": "Executes planned trajectories safely with only a rough dynamics model tuned from data, combining kinodynamic replanning, feedback control, and a safety mechanism, for mobile robots on surfaces with unknown friction.",
-        "role": "Co-developed the method, proposed its contingency-checking safety mechanism, and ran the physical experiments on the MuSHR platform.",
         "venue": "Preprint, 2024"
       },
       {
@@ -160,7 +157,6 @@
         "codeURL": "https://github.com/Ewerton-Vieira/MORALS",
         "paperURL": "https://arxiv.org/pdf/2310.03246",
         "summary": "Estimates from data where a robot controller succeeds, known as its region of attraction, by analyzing its dynamics in a learned latent space. It scales to a 67-dimensional humanoid and a 96-dimensional three-fingered manipulator.",
-        "role": "Proposed and implemented a label-based contrastive training variant.",
         "equalContribution": true
       }
     ],

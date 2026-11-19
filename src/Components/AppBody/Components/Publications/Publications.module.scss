@@ -107,19 +107,6 @@
   margin: 0.9rem 0 0;
 }
 
-// His part, a shade brighter than the summary, after a quiet label
-.publicationRole {
-  @include type-body;
-  color: $text_color;
-  margin: 0.6rem 0 0;
-}
-
-.publicationRoleLabel {
-  @include type-label;
-  color: $text_muted;
-  margin-right: 0.6em;
-}
-
 .publicationNote {
   white-space: nowrap;
 }
