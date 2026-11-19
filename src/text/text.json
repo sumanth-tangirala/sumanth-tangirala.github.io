@@ -111,8 +111,7 @@
         "websiteURL": "https://prx-kinodynamic.github.io/projects/stela",
         "videoURL": "https://www.youtube.com/watch?v=VkaqiPceVl4",
         "paperURL": "https://arxiv.org/pdf/2504.20009",
-        "summary": "Keeps a robot on its planned trajectory despite noisy observations by jointly estimating its recent trajectory and adapting its controls. Both update online at 10 Hz or more.",
-        "role": "Implemented the STEAP (Simultaneous Trajectory Estimation and Planning) baseline."
+        "summary": "Keeps a robot on its planned trajectory despite noisy observations by jointly estimating its recent trajectory and adapting its controls. Both update online at 10 Hz or more."
       },
       {
         "id": "robotMotionGenState",
@@ -146,8 +145,7 @@
         "websiteURL": "https://prx-kinodynamic.github.io/projects/rogue",
         "arXivURL": "https://arxiv.org/abs/2310.03239",
         "paperURL": "https://arxiv.org/pdf/2310.03239",
-        "summary": "Speeds up planning for robots with complex dynamics by connecting a learned controller through a precomputed roadmap. Tested on vehicles driving over uneven terrain and on a quadrotor.",
-        "role": "Trained the quadrotor RL policy, and implemented and ran the RL-only baseline without the planner."
+        "summary": "Speeds up planning for robots with complex dynamics by connecting a learned controller through a precomputed roadmap. Tested on vehicles driving over uneven terrain and on a quadrotor."
       },
       {
         "id": "morals",
