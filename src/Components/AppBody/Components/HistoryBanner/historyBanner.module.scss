@@ -11,23 +11,17 @@
   margin: 3rem $column_gutter 0;
 }
 
-// One quiet grey row; each logo takes its own colour on hover (the
-// Experience cards keep the brand colours)
+// One quiet grey row (the Experience cards keep the brand colours). No hover:
+// the logos aren't links, and hover is kept for things that can be clicked
 .image {
   filter: grayscale(1) brightness(1.6);
   opacity: 0.75;
-  transition: filter 0.2s $ease, opacity 0.2s $ease;
   flex: 0 1 auto;
   min-width: 0;
   width: auto;
   max-width: calc(9rem * var(--logo-scale, 1));
   height: 4.5rem;
   object-fit: contain;
-
-  @include hover {
-    filter: none;
-    opacity: 1;
-  }
 }
 
 // Phones: row one is logo | gap | logo | gap | logo, with the two gap tracks
