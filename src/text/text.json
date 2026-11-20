@@ -41,8 +41,8 @@
   "aboutMobilePicturePath": "%IMG_URL%/mobile/about.webp",
   "about": [
     "I work on <highlight><no_wrap>data-driven</no_wrap> reachability analysis for verifying robot controllers</highlight>. Instead of relying on a model of the controller, I use its own executions to estimate the states from which it <highlight>reaches its goal without failing</highlight>, and how likely it is to do so when the dynamics are noisy. These estimates can be calibrated to carry statistical guarantees. Because they only need data, they work for black-box controllers such as reinforcement learning or behavior cloning policies, whose internals can't be analyzed directly.",
-    "This builds on my earlier work in the lab on planning and control for robots with complex dynamics, and on estimating controllers' regions of attraction from data.",
-    "I'm increasingly drawn to the problem running through all of this: <highlight>dealing with uncertainty</highlight>, whether it comes from limited data or from a system's inherent stochasticity. That means quantifying it, and then, where more data can help, choosing actions that reduce it, such as deciding which executions to run next."
+    "I'm increasingly drawn to the problem running through this work: <highlight>dealing with uncertainty</highlight>, whether it comes from limited data or from a system's inherent stochasticity. That means quantifying it, and then, where more data can help, choosing actions that reduce it, such as deciding which executions to run next.",
+    "All of this builds on my earlier work in the lab on planning and control for robots with complex dynamics, and on estimating controllers' regions of attraction from data."
   ],
   "educationDetails": [
     {
