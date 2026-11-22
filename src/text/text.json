@@ -267,7 +267,7 @@
       "points": [
         "Developing data-driven reachability methods that use only rollouts to estimate where black-box robot controllers reach their goals without failing, including under stochastic dynamics.",
         "Mentoring students in the lab, including on building robot hardware: a <a href=\"https://yourownrobot.ai\" target=\"_blank\" rel=\"noopener noreferrer\">YOR</a> open-source bimanual mobile manipulator, and a cartpole actuated by a UR5e arm.",
-        "Helped build an external perception system for the lab's MuSHR robots, used to train closed-loop control policies for mobile robots."
+        "Set up the communication and ROS layers and the AprilTag-based computer vision modules of the lab's external perception system for its MuSHR robots, used to train closed-loop control policies."
       ]
     },
     {
@@ -280,9 +280,9 @@
       "logoScale": 0.75,
       "role": "Prediction Intern (Research)",
       "points": [
-        "Owned a project to reduce how much simulation it takes to validate the autonomy stack, by estimating its performance metrics from a subset of the logged scenarios instead of all of them.",
-        "Modeled each metric as a Gaussian process over scenario embeddings and used Bayesian optimization to sample the rare events those metrics depend on, then compared this with stratified sampling.",
-        "The result was negative. Embeddings rich enough to predict the metrics were too high-dimensional for GPs to model well, and compressing them lost the signal."
+        "Studied whether the autonomy stack's performance metrics can be estimated from simulating a small subset of logged scenarios, to cut the simulation budget needed to validate it.",
+        "Modeled each metric as a Gaussian process over learned scenario embeddings and used Bayesian optimization to actively sample the rare events that drive it.",
+        "Identified the key design trade-off: embeddings compact enough for the GP yet rich enough to predict the metrics."
       ]
     },
     {
@@ -307,7 +307,7 @@
       "imgPath": "/img/logos/ISRO.webp",
       "role": "Research Intern",
       "points": [
-        "Trained an RNN-LSTM to separate groundnut and cotton fields from other land cover in radar satellite imagery, at 91.2% accuracy."
+        "Developed a framework to classify groundnut and cotton fields in radar satellite imagery with an RNN-LSTM at 91.2% accuracy, and collected the ground truth in the field."
       ]
     },
     {
@@ -489,8 +489,7 @@
         "This area predominantly has farmlands of Cotton and Groundnut, and information about the crop type and harvest days is crucial for the government to make informed decisions about the area",
         "I developed a time-series Machine Learning technique that used Dual-Polarized SAR imagery of the region and the ground truth data for accurate land cover classification",
         "The technique used a Recurrent Neural Networks (RNN) to learn the time-series patterns in the SAR imagery and a Convolutional Neural Network (CNN) to learn the spatial patterns in the imagery",
-        "The technique achieved an accuracy of 91.2% for the classification of Cotton and Groundnut crops",
-        "The technique continues to be used by ISRO in their ongoing projects"
+        "The technique achieved an accuracy of 91.2% for the classification of Cotton and Groundnut crops"
       ],
       "techStack": [
         "TensorFlow",
