@@ -9,13 +9,19 @@ import styles from "./nameFlight.module.scss";
 //
 // The two directions move differently, chosen when a flight sets off (a
 // reversal part-way retraces the flight it interrupts):
-// - Into the nav: one quick move, shrinking as it goes, from where the hero
-//   name was when it set off. It waits there rather than scroll up into the
-//   pill at full size, and leaves at once.
+// - Into the nav: one move, shrinking as it goes. It rides up with the page
+//   (so the text below doesn't run into it), easing off before the nav line
+//   rather than scroll up past it, and its size follows how far up it is,
+//   so it never reaches the pill at full size. It slides across over the
+//   flight's time, and while it would still cross the nav's links it eases
+//   off below them instead, rising into the line once clear of them.
 // - Back to the hero: it keeps the nav's size until it reaches the hero
 //   name's place, and only then grows into it. It drops to the hero name's
 //   line first and then travels across, below the photo, so it never
 //   crosses the photo.
+// Each part of the motion starts from rest, or moving with the page, and
+// comes to rest, and the stages overlap a little, so nothing launches
+// sideways at full speed or stops dead between stages.
 // The name can wrap in the hero (phones) but not in the nav, so while it
 // changes size the words also rearrange: each later word slides along to
 // where it sits in the nav line (clear of the words before it), and rises
@@ -27,31 +33,71 @@ import styles from "./nameFlight.module.scss";
 const WORDS = text.name.split(" ");
 const EDGE_MARGIN = 16; // the name never gets closer than this to the screen edges
 const GAP = 24; // px below the nav at which the name flies up into it
-// A whole flight each way; a reversal part-way takes its share
-const DOCK_MS = 360;
-const RETURN_MS = 520;
-const smoothstep = (t) => t * t * (3 - 2 * t);
-const easeOut = (t) => 1 - (1 - t) ** 3;
+// A whole flight each way; a reversal part-way takes its share. Long enough
+// that the dock's 450px across a laptop screen peaks near 30px a frame (an
+// ease-out over 360ms moved it 75px a frame, most of the way in four frames)
+const DOCK_MS = 480;
+const RETURN_MS = 640;
+const FRAME_MS = 1000 / 60;
 const clamp01 = (t) => Math.min(1, Math.max(0, t));
-const between = (p, a, b) => smoothstep(clamp01((p - a) / (b - a)));
 const lerp = (a, b, t) => a + (b - a) * t;
-// The return, as fractions of the flight's progress (0 = hero, 1 = nav), so
-// read from 1 down: a quick drop to the hero name's line (the first DROP of
-// it), then across (ACROSS), both at the nav's size, then grow in place
-// (GROW). The drop is quick because the page is usually still scrolling: a
-// slow one would trail above the hero name, over the photo, which on a phone
-// leaves no room beside it. Growing, the words first drop into their lines
-// (RISE), then slide apart (SLIDE).
-const DROP = 0.15;
-const ACROSS = [0.4, 0.9];
-const GROW = [0, 0.4];
-const SLIDE = [0, 0.22];
-const RISE = [0.18, 0.4];
-// The dock, as fractions of its eased progress: the words slide along, then
-// rise into the nav line, while the name shrinks a little ahead of the move
-const DOCK_SLIDE = [0, 0.55];
-const DOCK_RISE = [0.55, 1];
-const DOCK_SIZE = [0, 0.7];
+const smoothstep = (t) => t * t * (3 - 2 * t);
+// Space kept between the docking name and the nav's first link (or button),
+// where the nav itself leaves that much
+const CONTROL_GAP = 12;
+// Once clear of the links, it rises into the nav line over up to this many
+// px of its travel across (the room left before its place in the nav): over
+// less, at full speed, it would hop up in a frame
+const CLEAR_EASE = 96;
+
+// CSS's cubic-bezier(x1, y1, x2, y2), as a function of time (0 to 1)
+const cubicBezier = (x1, y1, x2, y2) => {
+  const at = (a, b, t) => 3 * a * t * (1 - t) ** 2 + 3 * b * t * t * (1 - t) + t ** 3;
+  return (x) => {
+    let lo = 0;
+    let hi = 1;
+    for (let i = 0; i < 20; i++) {
+      const mid = (lo + hi) / 2;
+      if (at(x1, x2, mid) < x) lo = mid;
+      else hi = mid;
+    }
+    return at(y1, y2, (lo + hi) / 2);
+  };
+};
+// Starts from rest and settles gently
+const glide = cubicBezier(0.3, 0, 0.4, 1);
+// Leaves at speed, for the return's drop (see DROP)
+const easeOutCubic = (t) => 1 - (1 - t) ** 3;
+// `ease` over the stretch of a flight's progress from a to b
+const during = (p, a, b, ease = glide) => ease(clamp01((p - a) / (b - a)));
+// The docking name's height above the nav line, given the hero name's (both
+// as fractions of the height it set off at): the same while the hero name
+// is above RIDE of it, then easing off exponentially, at the same height
+// and speed at RIDE, so it never passes the nav line
+const RIDE = 0.35;
+const ride = (x) => (x >= RIDE ? x : RIDE * Math.exp((x - RIDE) / RIDE));
+
+// The dock, as fractions of how far up the name is: its size settles ahead
+// of it (DOCK_SIZE), so a name that wraps in the hero (phones) isn't still
+// large as its top reaches the pill. On phones each later word also slides
+// along, then rises into the nav line, the rise starting as the slide
+// settles so the word never stops.
+const DOCK_SIZE = [0, 0.6];
+const DOCK_SLIDE = [0, 0.5];
+const DOCK_RISE = [0.4, 0.9];
+// The return, as fractions of its time, at the nav's size until the grow:
+// a drop to the hero name's line (DROP), across (ACROSS), then the grow in
+// place (GROW), which starts as the move across settles (within a few px).
+// The drop alone leaves at speed, downward like the page it goes with: the
+// page is usually still scrolling, bringing the photo down onto the nav
+// name's line, and on a phone (no room beside the photo) a drop that started
+// from rest would sit over it for a few frames. Growing, the words first drop
+// into their lines (FALL), then slide apart (SPREAD), as fractions of the grow.
+const DROP = [0, 0.25];
+const ACROSS = [0.04, 0.7];
+const GROW = [0.64, 1];
+const FALL = [0, 0.55];
+const SPREAD = [0.45, 1];
 
 // Viewport rects of each word of an element's (single) text node
 const wordRects = (element) => {
@@ -99,7 +145,7 @@ function NameFlight({ heroNameRef, navNameRef, navBarRef, onStateChange }) {
     let layout = null;
     let frame = 0;
     // The flight's progress, 0 (in the hero) to 1 (in the nav), and the
-    // move under way: { mode, setOffTop, from, to, startedAt, duration }
+    // move under way: { mode, setOffY, from, to, startedAt, duration }
     let progress = 0;
     let tween = null;
 
@@ -161,11 +207,36 @@ function NameFlight({ heroNameRef, navNameRef, navBarRef, onStateChange }) {
         word.toX = (word.endLeft - first.endLeft) / scale;
       }
       layout.glyphHeight = from[0].height; // at full size
-      // The hero name's centre, in page coordinates: the shrink happens
-      // around it, and the small name travels to and from it
+      // The hero name's centre, in page coordinates, and the nav name's, in
+      // the viewport: the name travels between them, changing size around
+      // its centre
       const block = bounds(layout.map((w) => w.fromX), layout.map((w) => w.fromY));
       layout.centerX = first.startLeft + block.centerX;
       layout.centerY = first.startTop + block.centerY;
+      const line = bounds(layout.map((w) => w.toX), layout.map(() => 0));
+      layout.navCenterX = first.endLeft + line.centerX * scale;
+      layout.navCenterY = first.endTop + line.centerY * scale;
+      layout.navHalfWidth = ((line.maxX - line.minX) * scale) / 2;
+      // The nav's first link (or, on phones, button) after the name: the
+      // docking name keeps below it until it's clear of it
+      const control = nav.nextElementSibling && nav.nextElementSibling.firstElementChild;
+      const dockedRight = layout.navCenterX + layout.navHalfWidth;
+      layout.clearRight = Infinity;
+      layout.clearEase = 1;
+      layout.clearBelow = 0;
+      if (control) {
+        const range = document.createRange();
+        range.selectNodeContents(control);
+        const ink = range.getBoundingClientRect();
+        // Its right edge, at the nav's size, clear of the link by the gap
+        // (or half what the nav leaves, on narrow phones), and the room from
+        // there to its place in the nav, which it rises over
+        layout.clearRight = ink.left - Math.min(CONTROL_GAP, (ink.left - dockedRight) / 2);
+        layout.clearEase = Math.min(CLEAR_EASE, layout.clearRight - dockedRight - 1);
+        if (layout.clearEase > 0) {
+          layout.clearBelow = ink.bottom - layout.navCenterY + CONTROL_GAP + (layout.glyphHeight * scale) / 2;
+        }
+      }
       // The lowest the small name's centre may ride up to: just under the bar
       layout.belowBar = bar.getBoundingClientRect().bottom + 4 + (to[0].height / 2);
       // Already past it (a reload part-way down): be there, without flying
@@ -173,58 +244,64 @@ function NameFlight({ heroNameRef, navNameRef, navBarRef, onStateChange }) {
       update();
     };
 
-    // Where each word goes for a given flight progress `e`: the scale, each
-    // word's offset from the first (in full-size units) and the first word's
-    // glyph box (top-left, in the viewport)
-    const placeDock = (e) => {
-      const [first] = layout;
-      const q = easeOut(e);
-      const scale = lerp(1, layout.scale, between(q, ...DOCK_SIZE));
-      const slide = between(q, ...DOCK_SLIDE);
-      const rise = between(q, ...DOCK_RISE);
-      const xs = layout.map((word) => lerp(word.fromX, word.toX, slide));
-      const ys = layout.map((word) => lerp(word.fromY, 0, rise));
-      const b = bounds(xs, ys);
-      const viewport = document.documentElement.clientWidth;
-      // Kept on screen while the words rearrange
-      const left = Math.max(
-        EDGE_MARGIN - b.minX * scale,
-        Math.min(lerp(first.startLeft, first.endLeft, q), viewport - EDGE_MARGIN - b.maxX * scale),
-      );
-      // From where the hero name was when it set off (it waits there rather
-      // than scroll up into the pill at full size); if the page heads back
-      // down meanwhile, from where the hero name is now
-      const heroTop = Math.max(tween.setOffTop, first.startTop - scroller.scrollTop);
-      return { scale, xs, ys, left, top: lerp(heroTop, first.endTop, q) };
-    };
-
-    const placeReturn = (e) => {
-      const [first] = layout;
-      // Around the hero name's centre, where it is now, so it lands exactly
-      // on it (but never up into the pill, if the page heads back down)
-      const centerX = layout.centerX;
-      const centerY = Math.max(layout.belowBar, layout.centerY - scroller.scrollTop);
-      const grow = between(e, ...GROW); // 0 at full size, 1 at the nav's
-      const scale = lerp(1, layout.scale, grow);
-      const slide = between(e, ...SLIDE);
-      const rise = between(e, ...RISE);
-      const xs = layout.map((word) => lerp(word.fromX, word.toX, slide));
-      const ys = layout.map((word) => lerp(word.fromY, 0, rise));
+    // Where each word goes for the name's centre (in the viewport), scale
+    // and arrangement (each word's offset from the first, in full-size
+    // units): the scale, the offsets and the first word's glyph box
+    // (top-left, in the viewport). Kept on screen while the words rearrange.
+    const place = (centerX, centerY, scale, xs, ys) => {
       const b = bounds(xs, ys);
       const viewport = document.documentElement.clientWidth;
       const left = Math.max(
         EDGE_MARGIN - b.minX * scale,
         Math.min(centerX - b.centerX * scale, viewport - EDGE_MARGIN - b.maxX * scale),
       );
-      const top = centerY - b.centerY * scale;
-      // From there to the nav: down/up and across at the nav's size
-      return {
-        scale,
-        xs,
-        ys,
-        left: lerp(left, first.endLeft, between(e, ...ACROSS)),
-        top: lerp(top, first.endTop, 1 - easeOut(clamp01((1 - e) / DROP))),
-      };
+      return { scale, xs, ys, left, top: centerY - b.centerY * scale };
+    };
+
+    // For a given flight progress `e` (0 = hero, 1 = nav)
+    const placeDock = (e) => {
+      const navY = layout.navCenterY;
+      const setOffAbove = Math.max(1, tween.setOffY - navY);
+      const centerX = lerp(layout.centerX, layout.navCenterX, glide(e));
+      // Kept below the nav's links until it's clear of them, then let up
+      // into the line over the room left before its place
+      const right = centerX + layout.navHalfWidth;
+      const crossing = during(right, layout.clearRight - layout.clearEase, layout.clearRight, smoothstep);
+      const floor = Math.min(setOffAbove / 2, layout.clearBelow * crossing);
+      // Carried up with the page, easing off before that height, and drawn
+      // into the nav over the flight's time. If the page heads back down
+      // meanwhile, it heads back with it, to where the hero name is now.
+      const heroAbove = layout.centerY - scroller.scrollTop - navY;
+      const room = setOffAbove - floor;
+      const centerY = navY + floor + room * ride((heroAbove - floor) / room) * (1 - glide(e));
+      // How far up it is, which sets its size and arrangement
+      const up = clamp01(1 - (centerY - navY) / setOffAbove);
+      const slide = during(up, ...DOCK_SLIDE);
+      const rise = during(up, ...DOCK_RISE);
+      return place(
+        centerX,
+        centerY,
+        lerp(1, layout.scale, during(up, ...DOCK_SIZE)),
+        layout.map((word) => lerp(word.fromX, word.toX, slide)),
+        layout.map((word) => lerp(word.fromY, 0, rise)),
+      );
+    };
+
+    const placeReturn = (e) => {
+      const r = 1 - e; // the return's own progress
+      const grow = clamp01((r - GROW[0]) / (GROW[1] - GROW[0]));
+      const fall = during(grow, ...FALL);
+      const spread = during(grow, ...SPREAD);
+      // To the hero name's centre, where it is now, so it lands exactly on
+      // it (but never up into the pill, if the page heads back down)
+      const heroY = Math.max(layout.belowBar, layout.centerY - scroller.scrollTop);
+      return place(
+        lerp(layout.navCenterX, layout.centerX, during(r, ...ACROSS)),
+        lerp(layout.navCenterY, heroY, during(r, ...DROP, easeOutCubic)),
+        lerp(layout.scale, 1, glide(grow)),
+        layout.map((word) => lerp(word.toX, word.fromX, spread)),
+        layout.map((word) => lerp(0, word.fromY, fall)),
+      );
     };
 
     const render = () => {
@@ -250,11 +327,14 @@ function NameFlight({ heroNameRef, navNameRef, navBarRef, onStateChange }) {
       frame = 0;
       if (!layout) return;
       if (tween) {
-        // (a frame's timestamp can predate the scroll that started the move)
         const t = Math.max(0, Math.min(1, (now - tween.startedAt) / tween.duration));
         // Linear in time: each stage eases itself, so a reversal part-way
         // carries on smoothly from wherever the name is
         progress = lerp(tween.from, tween.to, t);
+        // It sets off from where the hero name is on the first frame it
+        // flies: the page has usually scrolled on since the scroll that
+        // started it, and its size counts from there
+        if (tween.setOffY === null && progress > 0) tween.setOffY = layout.centerY - scroller.scrollTop;
         if (t >= 1) tween = null;
       }
       render();
@@ -282,10 +362,15 @@ function NameFlight({ heroNameRef, navNameRef, navBarRef, onStateChange }) {
         const mode = tween ? tween.mode : target === 1 ? "dock" : "return";
         tween = {
           mode,
-          setOffTop: tween ? tween.setOffTop : first.startTop - s,
+          // The hero name's centre (in the viewport) when it set off (set on
+          // its first frame)
+          setOffY: tween ? tween.setOffY : null,
           from: progress,
           to: target,
-          startedAt: performance.now(),
+          // As if a frame ago: the scroll that starts it is already on
+          // screen in the next frame, and a frame spent at rest would leave
+          // the name behind the page (on its way back, over the photo)
+          startedAt: performance.now() - FRAME_MS,
           duration: (mode === "dock" ? DOCK_MS : RETURN_MS) * Math.abs(target - progress),
         };
       }
