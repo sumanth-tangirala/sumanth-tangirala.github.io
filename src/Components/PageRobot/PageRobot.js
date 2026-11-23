@@ -75,9 +75,10 @@ const MAX_NODES = 1600;
 const SEARCH_TIMEOUT_MS = 1500;
 const SEARCH_TIMEOUT_PER_PX = 0.6;
 const GOAL_ATTEMPTS = 3;
-// A trip takes 0.35 s, 2 s for its first 320 px and 2 s more per e-fold beyond
-// (≈ 4.5 s a screen height away, ≈ 8 s down the whole page), at a steady speed
-const APPROACH = { timeConstant: 2, minSpeed: 160, accel: 800, startStop: 0.35 }; // s, px/s, px/s², s
+// A trip takes 0.35 s, its first 600 px at the hero's cruising speed, and 4 s
+// more per e-fold beyond (≈ 6 s a screen height away, ≈ 13 s down the whole
+// page, hurrying while out of view), at a steady speed
+const APPROACH = { timeConstant: 4, minSpeed: 150, accel: 400, startStop: 0.35 }; // s, px/s, px/s², s
 // Turning on the spot, like a motor: it speeds up and slows into place
 // (critically damped, so it never overshoots)
 const TURN_STIFFNESS = 90; // 1/s²
@@ -653,6 +654,8 @@ function PageRobot({ sectionRefs }) {
       },
       // Whether it may be set down at (x, y) (a hop lands): the same places
       canStand: (x, y) => controls.canCommand(x, y),
+      // Left alone a while as it waits here, it may doze off
+      mayDoze: true,
       command(x, y) {
         if (!controls.canCommand(x, y)) return false;
         trip = null;

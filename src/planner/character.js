@@ -4,9 +4,10 @@
 //
 // Moods are short: happy (booped), dizzy (booped too often), startled (picked
 // up), confused (sent somewhere it can't reach). Each rises quickly, holds,
-// and fades. With no input at all for a while it falls asleep; any input
-// wakes it with a start: its eyes snap open, it is startled, and it comes
-// round slowly.
+// and fades. Left alone, it dozes off once it is standing still: in the
+// hero after a few queries with no input (its driver says when), further
+// down the page after a while. Any input wakes it with a start: its eyes
+// snap open, it is startled, and it comes round slowly.
 
 const BLINK_EVERY = [2400, 6200]; // ms between blinks
 const BLINK_MS = 150;
@@ -30,7 +31,7 @@ const LIFT_MS = 220; // picked up, or set down
 // so three float up at a time; when it wakes they fade out where they are
 const SNORE_EVERY_MS = 850;
 const SNORE_LIFE = 3;
-const SNORE_FADE_MS = 150;
+const SNORE_FADE_MS = 80;
 
 const clamp01 = (t) => Math.min(1, Math.max(0, t));
 const easeOut = (t) => 1 - (1 - t) ** 3;
@@ -74,14 +75,9 @@ export const character = {
       emit("wake");
     }
   },
-  // Advance its clock: blinks, and falling asleep
-  update(now) {
-    if (!asleep && !carried && now - lastInput > SLEEP_AFTER_MS) {
-      asleep = true;
-      sleepChangedAt = now;
-      sleptAt = now;
-      emit("sleep");
-    }
+  // Advance its clock: blinks, and falling asleep if it `mayDoze` now
+  update(now, mayDoze) {
+    if (mayDoze && now - lastInput > SLEEP_AFTER_MS) character.doze(now);
     if (now >= nextBlinkAt) {
       blinks.push(now);
       if (Math.random() < DOUBLE_BLINK) blinks.push(now + BLINK_MS + 90);
@@ -89,8 +85,20 @@ export const character = {
     }
     blinks = blinks.filter((start) => now - start < BLINK_MS);
   },
+  // Fall asleep now (unless it is in hand)
+  doze(now = performance.now()) {
+    if (asleep || carried) return;
+    asleep = true;
+    sleepChangedAt = now;
+    sleptAt = now;
+    emit("sleep");
+  },
   get asleep() {
     return asleep;
+  },
+  // When the reader last did anything
+  get lastInput() {
+    return lastInput;
   },
   // 0 awake … 1 asleep, eased through falling asleep and waking
   sleep(now) {
@@ -183,11 +191,10 @@ export const character = {
       const since = now - sleepChangedAt - FALL_ASLEEP_MS;
       return now + Math.max(16, SNORE_EVERY_MS - (since % SNORE_EVERY_MS));
     }
-    return Math.min(nextBlinkAt, lastInput + SLEEP_AFTER_MS);
-  },
-  // Fall asleep now, as if left alone (for checking it in development)
-  sleepNow(now = performance.now()) {
-    lastInput = now - SLEEP_AFTER_MS - 1;
+    // (Past its bedtime but not where it may doze, its driver's next report
+    // brings the frame that puts it to sleep)
+    const bedtime = lastInput + SLEEP_AFTER_MS;
+    return Math.min(nextBlinkAt, bedtime > now ? bedtime : Infinity);
   },
   subscribe(listener) {
     listeners.add(listener);

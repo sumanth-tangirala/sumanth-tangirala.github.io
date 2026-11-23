@@ -19,7 +19,9 @@ import styles from "./robotLayer.module.scss";
 //            set down;
 //   send:    tap free space it could drive to (the pointer becomes a goal
 //            marker there) and it plans a route there;
-//   sleep:   left alone a while, it dozes off; any input wakes it;
+//   sleep:   left alone, it dozes off once it stands still (in the hero
+//            after a few routes, further down the page after a while);
+//            any input wakes it with a start (a "!", and a jump);
 //   looks:   right-click it to choose how it looks.
 // With reduced motion it is drawn still, and none of this happens.
 
@@ -42,6 +44,7 @@ const POINTER_GONE_MS = 1500; // after the pointer leaves the page
 // as a pointer hangs below where it points, and farther if below. On touch
 // the finger has lifted off it, so it hops where it is.
 const HOP = { ms: 380, clear: 25, below: 7 };
+const STARTLE_HOP_MS = 300; // woken: a jump on the spot, quicker than a boop's
 // Driving faster than this (px/s), it is leaving the pointer anyway: it
 // hops as it goes rather than leave its route
 const HOP_ON_THE_MOVE = 20;
@@ -151,7 +154,7 @@ function RobotLayer() {
     // controls, liftFrom, liftAt }
     let carry = null;
     let landing = null; // { from, to, start }
-    let hop = null; // { start, inPlace, from, to, controls }
+    let hop = null; // { start, ms, inPlace, from, to, controls }
     let spin = 0; // dizzy, rad
     let shown = null; // { pose, look } last drawn
     let speedNow = 0; // px/s, as last drawn
@@ -174,7 +177,7 @@ function RobotLayer() {
       }
       if (hop && !hop.inPlace) {
         // Across at an even pace (it is in the air), turning to face you
-        const k = clamp01((now - hop.start) / HOP.ms);
+        const k = clamp01((now - hop.start) / hop.ms);
         return {
           x: lerp(hop.from.x, hop.to.x, k),
           y: lerp(hop.from.y, hop.to.y, k),
@@ -250,7 +253,7 @@ function RobotLayer() {
       const wiggle = mood.happy > 0 ? 0.3 * Math.sin(character.progress("happy", now) * Math.PI * 6) * (1 - character.progress("happy", now)) : 0;
       spin = mood.dizzy > 0 ? 4 * Math.PI * easeInOut(character.progress("dizzy", now)) : 0;
       // Its hop: up and back down, as a thrown thing falls
-      const hopK = hop ? clamp01((now - hop.start) / HOP.ms) : 1;
+      const hopK = hop ? clamp01((now - hop.start) / hop.ms) : 1;
 
       return {
         s: {
@@ -355,7 +358,8 @@ function RobotLayer() {
         hide();
         return false;
       }
-      character.update(now);
+      const controls = robotLive.controls;
+      character.update(now, !!(controls && controls.mayDoze) && state.activity === "wait");
       const { s, moving } = describe(pose, now, dt, look);
       const half = Math.ceil(look.extent + BUBBLE_ROOM + HOP_PEAK);
       const dpr = s.dpr;
@@ -431,7 +435,7 @@ function RobotLayer() {
       // A driver already drew this frame: just keep going
       const busy = now - lastRender < 8 ? true : render(now);
       if (landing && now - landing.start >= LAND_MS) finishLanding();
-      if (hop && now - hop.start >= HOP.ms) finishHop();
+      if (hop && now - hop.start >= hop.ms) finishHop();
       schedule(busy);
     }
 
@@ -461,7 +465,11 @@ function RobotLayer() {
       character.input();
       if (wasAsleep && !frame) schedule(true);
     };
-    const wakeUp = character.subscribe(() => {
+    const wakeUp = character.subscribe((event) => {
+      // Woken with a start: it jumps on the spot (not in your hand)
+      if (event === "wake" && !reduceMotion && shown && !carry && !hop && !landing) {
+        hop = { start: performance.now(), ms: STARTLE_HOP_MS, inPlace: true };
+      }
       if (!frame) schedule(true);
     });
 
@@ -518,9 +526,9 @@ function RobotLayer() {
       const to = away && hopSpot(controls, at, shown.pose, shown.look);
       if (to) {
         controls.pickUp();
-        hop = { start: now, inPlace: false, from: { ...shown.pose }, to, controls };
+        hop = { start: now, ms: HOP.ms, inPlace: false, from: { ...shown.pose }, to, controls };
       } else {
-        hop = { start: now, inPlace: true };
+        hop = { start: now, ms: HOP.ms, inPlace: true };
       }
     };
 

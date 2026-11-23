@@ -36,7 +36,10 @@ const REFINE_DURATION_MS = 2200;
 const DRIVE_DIM_MS = 500; // the tree dims as the robot sets off
 const DRIVE_TREE_ALPHA = 0.5;
 const ARRIVE_HOLD_MS = 900; // at the goal before the next query
-const WAKE_PAUSE_MS = 600; // woken from a nap, before it carries on
+// Left alone for this many queries (no pointer, scroll or key), it stops
+// where it is and dozes off; woken, it pauses, then carries on
+const QUIET_QUERIES = 5;
+const WAKE_PAUSE_MS = 600;
 const UNSOLVED_HOLD_MS = 600;
 const STALL_MS = 1200; // a search that adds no nodes for this long gives up
 const SWAP_FADE_MS = 700; // outgoing plan fades while the next one starts
@@ -443,7 +446,8 @@ function PlannerBackground({ heroRef, startDelay }) {
     let away = false; // the page robot has the robot
     let carried = false; // the reader is carrying it (RobotLayer)
     let heldGoal = null; // where it was headed when picked up: { goal, requested }
-    let napping = false; // it fell asleep between queries
+    let napping = false; // stopped after QUIET_QUERIES, asleep
+    let quiet = { since: -Infinity, count: 0 }; // queries since the reader's last input
     let offset = { x: 0, y: 0 }; // the hero's place on the page
     let space = null; // where it may go: { width, height, obstacles }
 
@@ -490,17 +494,20 @@ function PlannerBackground({ heroRef, startDelay }) {
     };
 
     // `reset`: nowhere to drive to, so don't retry from this spot; fade the
-    // robot in again at the composed starting point. Asleep, it waits here
-    // until it is woken.
+    // robot in again at the composed starting point. Left alone long enough,
+    // it stops here and dozes until it is woken.
     const holdThenNext = (ms, reset) => {
       holding = true;
       report("wait");
       holdTimer = setTimeout(() => {
         holding = false;
-        if (character.asleep && !reset) {
+        if (character.lastInput !== quiet.since) quiet = { since: character.lastInput, count: 0 };
+        if (!reset && quiet.count >= QUIET_QUERIES) {
           napping = true;
+          character.doze();
           return;
         }
+        quiet.count += 1;
         outgoing = current && { query: current, from: time };
         drive = null;
         if (reset) {
@@ -705,16 +712,16 @@ function PlannerBackground({ heroRef, startDelay }) {
     };
     robotLive.setControls(controls);
 
-    document.fonts.ready.then(() => {
-      // Measure once the hero's entrance has settled
-      if (!cancelled) delayTimer = setTimeout(start, startDelay);
-    });
-
-    // Woken between queries: it carries on
+    // Woken from its nap: it carries on
     const unsubscribeCharacter = character.subscribe((event) => {
       if (event !== "wake" || !napping) return;
       napping = false;
       holdThenNext(WAKE_PAUSE_MS, false);
+    });
+
+    document.fonts.ready.then(() => {
+      // Measure once the hero's entrance has settled
+      if (!cancelled) delayTimer = setTimeout(start, startDelay);
     });
 
     // The page robot takes the robot while the reader is further down the

@@ -90,10 +90,11 @@ export const createApproach = (plan, { timeConstant, minSpeed, accel, startStop 
   const near = minSpeed * timeConstant;
   const seconds = startStop + Math.min(total, near) / minSpeed + timeConstant * Math.log(Math.max(total, near) / near);
   // The speed v that covers `total` in `seconds`, with a ramp of v / accel at
-  // each end: total = v (seconds − v / accel)
+  // each end: total = v (seconds − v / accel). A trip too short for that
+  // goes at `minSpeed` (or ramps up and straight down, if shorter still).
   const reach = accel * seconds;
   const fits = reach * reach - 4 * accel * total;
-  const speed = fits >= 0 ? (reach - Math.sqrt(fits)) / 2 : Math.sqrt(accel * total);
+  const speed = fits >= 0 ? (reach - Math.sqrt(fits)) / 2 : minSpeed;
   const profile = driveProfile(total, speed / 1000, accel / 1e6);
   let t = 0;
   return {
