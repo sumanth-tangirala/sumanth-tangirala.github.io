@@ -350,6 +350,7 @@ export const compose = (out, o) => {
 export const GLYPHS = {
   "!": ["xx", "xx", "xx", "..", "xx"],
   "?": [".xxx.", "x...x", "...x.", "..x..", ".....", "..x.."],
+  zBig: ["xxxxx", "...x.", "..x..", ".x...", "xxxxx"],
   z: ["xxxx", "..x.", ".x..", "xxxx"],
   zSmall: ["xxx", "..x", ".x.", "xxx"],
 };

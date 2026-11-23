@@ -5,7 +5,8 @@
 // Moods are short: happy (booped), dizzy (booped too often), startled (picked
 // up), confused (sent somewhere it can't reach). Each rises quickly, holds,
 // and fades. With no input at all for a while it falls asleep; any input
-// wakes it, slowly.
+// wakes it with a start: its eyes snap open, it is startled, and it comes
+// round slowly.
 
 const BLINK_EVERY = [2400, 6200]; // ms between blinks
 const BLINK_MS = 150;
@@ -13,6 +14,7 @@ const DOUBLE_BLINK = 0.2; // the share of blinks that come in twos
 const SLEEP_AFTER_MS = 25000;
 const FALL_ASLEEP_MS = 1400;
 const WAKE_MS = 700;
+const EYES_WAKE_MS = 90; // woken with a start
 const MOODS = {
   happy: 1400, // it hops out from under the pointer first (RobotLayer)
   dizzy: 2000,
@@ -24,7 +26,11 @@ const MOOD_OUT_MS = 320;
 const DIZZY_BOOPS = 4;
 const DIZZY_WINDOW_MS = 3600; // long enough to catch it after each hop
 const LIFT_MS = 220; // picked up, or set down
-const SNORE_EVERY_MS = 3200; // a "z" rises while it sleeps
+// While it sleeps a "z" rises this often and lasts this many times as long,
+// so three float up at a time; when it wakes they fade out where they are
+const SNORE_EVERY_MS = 850;
+const SNORE_LIFE = 3;
+const SNORE_FADE_MS = 150;
 
 const clamp01 = (t) => Math.min(1, Math.max(0, t));
 const easeOut = (t) => 1 - (1 - t) ** 3;
@@ -36,6 +42,7 @@ const emit = (event) => listeners.forEach((listener) => listener(event));
 let lastInput = performance.now();
 let asleep = false;
 let sleepChangedAt = -Infinity;
+let sleptAt = -Infinity;
 let blinks = []; // start times
 let nextBlinkAt = performance.now() + 2000;
 const moods = {}; // name → { from, until }
@@ -63,6 +70,7 @@ export const character = {
     if (asleep) {
       asleep = false;
       sleepChangedAt = now;
+      character.feel("startled", now);
       emit("wake");
     }
   },
@@ -71,6 +79,7 @@ export const character = {
     if (!asleep && !carried && now - lastInput > SLEEP_AFTER_MS) {
       asleep = true;
       sleepChangedAt = now;
+      sleptAt = now;
       emit("sleep");
     }
     if (now >= nextBlinkAt) {
@@ -96,7 +105,9 @@ export const character = {
       const k = clamp01((now - start) / BLINK_MS);
       if (k >= 0 && k <= 1) open = Math.min(open, Math.abs(1 - 2 * k));
     }
-    return open * (1 - character.sleep(now));
+    const t = now - sleepChangedAt;
+    const shut = asleep ? character.sleep(now) : 1 - easeOut(clamp01(t / EYES_WAKE_MS));
+    return open * (1 - shut);
   },
   mood: moodLevel,
   // How far through a mood it is, 0…1 (1 once it is over)
@@ -144,16 +155,17 @@ export const character = {
     const k = easeOut(clamp01((now - carryChangedAt) / LIFT_MS));
     return carried ? k : 1 - k;
   },
-  // The "z"s rising while it sleeps: [{ age 0…1, index }]
+  // The "z"s rising while it sleeps, and fading once it wakes:
+  // [{ age 0…1, index, alpha }]
   snores(now) {
-    if (!asleep) return [];
-    const since = now - sleepChangedAt - FALL_ASLEEP_MS;
-    if (since < 0) return [];
+    const alpha = asleep ? 1 : 1 - (now - sleepChangedAt) / SNORE_FADE_MS;
+    if (alpha <= 0) return [];
+    const since = now - sleptAt - FALL_ASLEEP_MS;
+    const last = Math.floor(((asleep ? now : sleepChangedAt) - sleptAt - FALL_ASLEEP_MS) / SNORE_EVERY_MS);
     const out = [];
-    const index = Math.floor(since / SNORE_EVERY_MS);
-    for (let i = Math.max(0, index - 1); i <= index; i++) {
-      const age = (since - i * SNORE_EVERY_MS) / (SNORE_EVERY_MS * 0.55);
-      if (age >= 0 && age <= 1) out.push({ age, index: i });
+    for (let i = Math.max(0, last - SNORE_LIFE + 1); i <= last; i++) {
+      const age = (since - i * SNORE_EVERY_MS) / (SNORE_EVERY_MS * SNORE_LIFE);
+      if (age >= 0 && age <= 1) out.push({ age, index: i, alpha });
     }
     return out;
   },

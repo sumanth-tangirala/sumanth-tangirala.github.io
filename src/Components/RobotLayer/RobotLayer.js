@@ -23,7 +23,7 @@ import styles from "./robotLayer.module.scss";
 //   looks:   right-click it to choose how it looks.
 // With reduced motion it is drawn still, and none of this happens.
 
-const BUBBLE_ROOM = 30; // px above it for its "z", "?" and "!"
+const BUBBLE_ROOM = 46; // px above it for its "z"s, "?" and "!"
 // Px around its body that still takes hold of it: small, since it drives
 // close to the hero's links and must never take their clicks
 const HIT_SLOP = { fine: 3, coarse: 8 };
@@ -286,35 +286,30 @@ function RobotLayer() {
     };
 
     // Its "z", "?" and "!" go on a side of it that is free space (above if
-    // it can), so they never sit over text. The side is kept while any of
-    // them shows.
+    // it can), so they never sit over text. A "?" or "!" keeps its side while
+    // it shows; each "z" takes the side free as it appears (it may still be
+    // finishing a drive) and floats off along its `trail` (px, over its life).
     let bubbleSide = null;
+    const zSides = new Map(); // a "z"'s index → its side
     const SIDES = [
-      { id: "up", at: (up) => ({ x: 0, y: -up }), dir: [0, -1] },
-      { id: "down", at: (up) => ({ x: 0, y: up + 16 }), dir: [0, 1] },
-      { id: "right", at: (up) => ({ x: up + 6, y: 4 }), dir: [1, 0] },
-      { id: "left", at: (up) => ({ x: -(up + 6), y: 4 }), dir: [-1, 0] },
+      { id: "up", at: (up) => ({ x: 0, y: -up }), trail: [18, -36] },
+      { id: "down", at: (up) => ({ x: 0, y: up + 16 }), trail: [26, 8] },
+      { id: "right", at: (up) => ({ x: up + 6, y: 4 }), trail: [22, -26] },
+      { id: "left", at: (up) => ({ x: -(up + 6), y: 4 }), trail: [-22, -26] },
     ];
     const chooseBubbleSide = (s, up) => {
       const controls = robotLive.controls;
       if (!controls) return SIDES[0];
       return (
-        SIDES.find(({ dir }) =>
-          [up, up + 14].every((d) => controls.canCommand(s.x + dir[0] * d, s.y + dir[1] * d)),
-        ) || SIDES[0]
+        SIDES.find(({ at, trail }) => {
+          const { x, y } = at(up);
+          return [0, 0.5, 1].every((k) => controls.canStand(s.x + x + trail[0] * k, s.y + y + trail[1] * k));
+        }) || SIDES[0]
       );
     };
 
     const drawBubbles = (s, look, now) => {
       const up = look.bubbleAt ? look.bubbleAt(s) : look.radius + 10;
-      const snores = character.snores(now);
-      if (!snores.length && !(s.mood.confused > 0) && !(s.mood.startled > 0)) {
-        bubbleSide = null;
-        return;
-      }
-      if (!bubbleSide) bubbleSide = chooseBubbleSide(s, up);
-      const anchor = bubbleSide.at(up);
-      const away = bubbleSide.id === "left" ? -1 : 1;
       const bubble = (glyph, x, y, size, alpha) => {
         if (look.drawBubble) {
           look.drawBubble(ctx, glyph, { x, y, size, alpha }, s);
@@ -329,10 +324,22 @@ function RobotLayer() {
         ctx.fillStyle = GREY(0.85 * alpha);
         ctx.fillText(glyph, x, y);
       };
-      for (const { age } of snores) {
-        const a = Math.sin(Math.PI * clamp01(age));
-        bubble("z", anchor.x + away * (6 + age * 8), anchor.y - age * 14, 10 + age * 4, a * s.alpha);
+      // Three at a time, each shrinking as it floats off: in quickly, out slowly
+      const snores = character.snores(now);
+      for (const index of zSides.keys()) if (!snores.some((z) => z.index === index)) zSides.delete(index);
+      for (const { age, alpha, index } of snores) {
+        if (!zSides.has(index)) zSides.set(index, chooseBubbleSide(s, up));
+        const { at, trail } = zSides.get(index);
+        const from = at(up);
+        const a = Math.min(1, age / 0.12, (1 - age) / 0.3) * alpha;
+        bubble("z", from.x + trail[0] * (0.15 + age), from.y + trail[1] * age, 16 - 9 * age, a * s.alpha);
       }
+      if (!(s.mood.confused > 0) && !(s.mood.startled > 0)) {
+        bubbleSide = null;
+        return;
+      }
+      if (!bubbleSide) bubbleSide = chooseBubbleSide(s, up);
+      const anchor = bubbleSide.at(up);
       if (s.mood.confused > 0) bubble("?", anchor.x, anchor.y, 15, s.mood.confused * s.alpha);
       if (s.mood.startled > 0) bubble("!", anchor.x, anchor.y - (1 - s.mood.startled) * 4, 15, s.mood.startled * s.alpha);
     };

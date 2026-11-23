@@ -5,10 +5,6 @@ const DRIVE_RAMP_MS = 700; // to reach cruising speed, and to stop
 // The path turns sharply at its nodes; the robot's heading is smoothed over
 // this stretch of path so it turns through each corner instead of snapping
 const HEADING_WINDOW = 14;
-// An approach eases to a stop over its last few px, and never crawls slower
-// than this before it arrives
-const STOP_PX = 24;
-const CREEP_SPEED = 12; // px/s
 
 const lerp = (a, b, t) => a + (b - a) * t;
 
@@ -40,26 +36,26 @@ const along = (path) => {
   return { total, pointAt, headingAt };
 };
 
-// Distance travelled after `t` ms: speed ramps up linearly, cruises, and ramps
-// down to stop exactly at `length` (a trapezoid, or a triangle if short)
-const driveProfile = (length) => {
-  const v = DRIVE_SPEED / 1000; // px/ms
-  const a = v / DRIVE_RAMP_MS;
-  if (length >= v * DRIVE_RAMP_MS) {
-    const duration = length / v + DRIVE_RAMP_MS;
+// Distance travelled after `t` ms at up to `v` px/ms, speeding up and slowing
+// down at `a` px/ms²: it ramps up, cruises, and ramps down to stop exactly at
+// `length` (a trapezoid, or a triangle if short)
+const driveProfile = (length, v, a) => {
+  const ramp = v / a;
+  if (length >= v * ramp) {
+    const duration = length / v + ramp;
     return {
       duration,
       at: (t) => {
-        if (t <= DRIVE_RAMP_MS) return 0.5 * a * t * t;
-        if (t < duration - DRIVE_RAMP_MS) return 0.5 * v * DRIVE_RAMP_MS + v * (t - DRIVE_RAMP_MS);
+        if (t <= ramp) return 0.5 * a * t * t;
+        if (t < duration - ramp) return 0.5 * v * ramp + v * (t - ramp);
         return length - 0.5 * a * (duration - t) ** 2;
       },
     };
   }
-  const ramp = Math.sqrt(length / a);
+  const half = Math.sqrt(length / a);
   return {
-    duration: 2 * ramp,
-    at: (t) => (t <= ramp ? 0.5 * a * t * t : length - 0.5 * a * (2 * ramp - t) ** 2),
+    duration: 2 * half,
+    at: (t) => (t <= half ? 0.5 * a * t * t : length - 0.5 * a * (2 * half - t) ** 2),
   };
 };
 
@@ -67,7 +63,8 @@ const driveProfile = (length) => {
 export const createDrive = (plan, startedAt) => {
   const { end } = plan;
   const { total, pointAt, headingAt } = along(plan.path);
-  const profile = driveProfile(total);
+  const v = DRIVE_SPEED / 1000;
+  const profile = driveProfile(total, v, v / DRIVE_RAMP_MS);
   return {
     startedAt,
     end,
@@ -82,26 +79,30 @@ export const createDrive = (plan, startedAt) => {
   };
 };
 
-// `plan`: { path, end }, driven at a speed proportional to the distance left
-// (distance / `timeConstant` s): fast from far away, slowing as it nears the
-// goal, but never below `minSpeed` until the last few px, where it eases to
-// a stop. It speeds up at `accel` px/s² at most, and never beyond `maxSpeed`.
-export const createApproach = (plan, { timeConstant, minSpeed, maxSpeed, accel }) => {
+// `plan`: { path, end }, driven like createDrive, in a time that grows with
+// the trip: `minSpeed × timeConstant` px take `timeConstant` s, and each
+// e-fold beyond that `timeConstant` s more (plus `startStop` s), so a trip
+// down the page is over in a few seconds. Its speed is the steady one that
+// fits that time, reached and shed at `accel` px/s².
+export const createApproach = (plan, { timeConstant, minSpeed, accel, startStop }) => {
   const { end } = plan;
   const { total, pointAt, headingAt } = along(plan.path);
-  let s = 0;
-  let speed = 0;
+  const near = minSpeed * timeConstant;
+  const seconds = startStop + Math.min(total, near) / minSpeed + timeConstant * Math.log(Math.max(total, near) / near);
+  // The speed v that covers `total` in `seconds`, with a ramp of v / accel at
+  // each end: total = v (seconds − v / accel)
+  const reach = accel * seconds;
+  const fits = reach * reach - 4 * accel * total;
+  const speed = fits >= 0 ? (reach - Math.sqrt(fits)) / 2 : Math.sqrt(accel * total);
+  const profile = driveProfile(total, speed / 1000, accel / 1e6);
+  let t = 0;
   return {
     startHeading: headingAt(0),
     // { x, y, theta, done } after `dt` more ms
     advance(dt) {
-      const seconds = dt / 1000;
-      const left = total - s;
-      const floor = Math.max(CREEP_SPEED, minSpeed * Math.min(1, left / STOP_PX));
-      const wanted = Math.min(maxSpeed, Math.max(floor, left / timeConstant));
-      speed = Math.min(wanted, speed + accel * seconds);
-      s = Math.min(total, s + speed * seconds);
-      if (total - s < 0.5) return { ...end, done: true };
+      t += dt;
+      if (t >= profile.duration) return { ...end, done: true };
+      const s = profile.at(t);
       const [x, y] = pointAt(s);
       return { x, y, theta: headingAt(s), done: false };
     },

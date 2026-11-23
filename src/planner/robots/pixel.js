@@ -114,11 +114,12 @@ const facingFor = (s, memo) => {
   return memo.facing;
 };
 
-// Its eyes' expression, the strongest feeling first
+// Its eyes' expression, the strongest feeling first (woken, it is startled
+// before it is awake)
 const expressionFor = (s) => {
+  if (s.mood.startled > 0.25) return "wide";
   if (s.sleep > 0.6) return "asleep";
   if (s.mood.dizzy > 0.25) return "dizzy";
-  if (s.mood.startled > 0.25) return "wide";
   if (s.mood.confused > 0.25) return "confused";
   if (s.mood.happy > 0.25) return "happy";
   if (s.open < 0.3) return "shut";
@@ -272,7 +273,8 @@ const look = {
 
   // The bubbles in its own pixel font, on its grid, faded in palette steps
   drawBubble(ctx, glyph, { x, y, size, alpha }, s) {
-    const name = glyph === "z" && size < 12 ? "zSmall" : glyph; // a "z" grows as it rises
+    // A "z" steps down a size as it rises (RobotLayer shrinks it 16 → 7)
+    const name = glyph !== "z" ? glyph : size > 13 ? "zBig" : size > 10 ? "z" : "zSmall";
     const rows = GLYPHS[name];
     if (!rows || alpha <= 0.05) return;
     const grid = gridFor(ctx, s);

@@ -75,9 +75,9 @@ const MAX_NODES = 1600;
 const SEARCH_TIMEOUT_MS = 1500;
 const SEARCH_TIMEOUT_PER_PX = 0.6;
 const GOAL_ATTEMPTS = 3;
-// Its speed is the distance left over this many seconds (≈ 490 px/s a screen
-// height away), within these limits, px/s and px/s²
-const APPROACH = { timeConstant: 2, minSpeed: 160, maxSpeed: 2400, accel: 2400 };
+// A trip takes 0.35 s, 2 s for its first 320 px and 2 s more per e-fold beyond
+// (≈ 4.5 s a screen height away, ≈ 8 s down the whole page), at a steady speed
+const APPROACH = { timeConstant: 2, minSpeed: 160, accel: 800, startStop: 0.35 }; // s, px/s, px/s², s
 // Turning on the spot, like a motor: it speeds up and slows into place
 // (critically damped, so it never overshoots)
 const TURN_STIFFNESS = 90; // 1/s²
