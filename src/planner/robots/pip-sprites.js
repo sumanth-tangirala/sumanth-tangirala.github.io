@@ -1,4 +1,4 @@
-// The pixel look's art (./pixel.js draws it). Hand-drawn pixel art of the
+// Pip's art (./pip.js draws it). Hand-drawn pixel art of the
 // robot in a 3/4 overworld view, as an old RPG draws its characters: seen
 // from above and in front, so you see the top of its drum, its lidar puck
 // and the face on the drum's side.

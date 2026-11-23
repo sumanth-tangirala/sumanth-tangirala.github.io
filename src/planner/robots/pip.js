@@ -1,10 +1,10 @@
 import { angleTo, clamp01, HOP_PEAK } from "./shared";
-import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, OUT_W, PAD_TOP } from "./pixel-sprites";
+import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, OUT_W, PAD_TOP } from "./pip-sprites";
 
-// The robot as a pixel-art sprite, as an old RPG draws its characters on
+// Pip: the robot as a pixel-art sprite, as an old RPG draws its characters on
 // the overworld: seen from above and in front, so it shows the top of its
 // drum, its lidar puck, and the face on its front. Its art is drawn by hand
-// in ./pixel-sprites.js; this places it on the page and animates it, all on
+// in ./pip-sprites.js; this places it on the page and animates it, all on
 // a grid of whole art pixels:
 //   facing:   sixteen facings, from nine drawings; it turns one facing at a
 //             time, like a sprite does
@@ -199,8 +199,8 @@ const drawCamo = (ctx, s, grid) => {
 };
 
 const look = {
-  id: "pixel",
-  name: "Pixel",
+  id: "pip",
+  name: "Pip",
   radius: 9.5,
   reach: 11,
   extent: 21,
