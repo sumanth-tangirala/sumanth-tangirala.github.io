@@ -79,23 +79,15 @@ export const createDrive = (plan, startedAt) => {
   };
 };
 
-// `plan`: { path, end }, driven like createDrive, in a time that grows with
-// the trip: `minSpeed × timeConstant` px take `timeConstant` s, and each
-// e-fold beyond that `timeConstant` s more (plus `startStop` s), so a trip
-// down the page is over in a few seconds. Its speed is the steady one that
-// fits that time, reached and shed at `accel` px/s².
-export const createApproach = (plan, { timeConstant, minSpeed, accel, startStop }) => {
+// `plan`: { path, end }, driven like createDrive: it speeds up at `accel`
+// px/s², cruises, and slows to a stop. It cruises at `cruise` px/s, or faster
+// on a long trip: at D / (timeConstant (1 + ln(D / near))) px/s, as if each
+// e-fold of distance beyond `near` px took `timeConstant` s more.
+export const createApproach = (plan, { cruise, near, timeConstant, accel }) => {
   const { end } = plan;
   const { total, pointAt, headingAt } = along(plan.path);
-  const near = minSpeed * timeConstant;
-  const seconds = startStop + Math.min(total, near) / minSpeed + timeConstant * Math.log(Math.max(total, near) / near);
-  // The speed v that covers `total` in `seconds`, with a ramp of v / accel at
-  // each end: total = v (seconds − v / accel). A trip too short for that
-  // goes at `minSpeed` (or ramps up and straight down, if shorter still).
-  const reach = accel * seconds;
-  const fits = reach * reach - 4 * accel * total;
-  const speed = fits >= 0 ? (reach - Math.sqrt(fits)) / 2 : minSpeed;
-  const profile = driveProfile(total, speed / 1000, accel / 1e6);
+  const long = total > near ? total / (timeConstant * (1 + Math.log(total / near))) : 0;
+  const profile = driveProfile(total, Math.max(cruise, long) / 1000, accel / 1e6);
   let t = 0;
   return {
     startHeading: headingAt(0),

@@ -75,10 +75,10 @@ const MAX_NODES = 1600;
 const SEARCH_TIMEOUT_MS = 1500;
 const SEARCH_TIMEOUT_PER_PX = 0.6;
 const GOAL_ATTEMPTS = 3;
-// A trip takes 0.35 s, its first 600 px at the hero's cruising speed, and 4 s
-// more per e-fold beyond (≈ 6 s a screen height away, ≈ 13 s down the whole
-// page, hurrying while out of view), at a steady speed
-const APPROACH = { timeConstant: 4, minSpeed: 150, accel: 400, startStop: 0.35 }; // s, px/s, px/s², s
+// It cruises at its top speed on screen, and faster only on trips longer
+// than a screen or so (≈ 400 px/s down the whole page, hurrying while out of
+// view); px/s, px, s, px/s²
+const APPROACH = { cruise: 200, near: 600, timeConstant: 4, accel: 600 };
 // Turning on the spot, like a motor: it speeds up and slows into place
 // (critically damped, so it never overshoots)
 const TURN_STIFFNESS = 90; // 1/s²
