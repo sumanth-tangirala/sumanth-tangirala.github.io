@@ -20,11 +20,17 @@
 .subSectionTitle {
   color: $primary_color;
   @include type-label;
-  margin-top: 2.5rem;
+  // Farther from the cards above than they are from each other, so it
+  // starts a group
+  margin-top: 4.5rem;
   margin-bottom: 1rem;
 
   &:first-child {
     margin-top: 0;
+  }
+
+  @media screen and (max-width: $mobile_screen_width) {
+    margin-top: 2.5rem;
   }
 }
 
@@ -39,8 +45,15 @@
   border-radius: $card_radius;
   padding: 1.25rem;
 
-  &:not(:first-child) {
-    margin-top: 1rem;
+  // Room for the page robot to pass between the cards (PageRobot): its body,
+  // and a little clear of each. On phones it stays in the hero, so there
+  // they sit closer.
+  & + & {
+    margin-top: 3rem;
+
+    @media screen and (max-width: $mobile_screen_width) {
+      margin-top: 1rem;
+    }
   }
 }
 

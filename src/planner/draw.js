@@ -1,10 +1,10 @@
-// Drawing the planner and its robot, shared by the hero and the page robot.
+// Drawing the planner, shared by the hero and the page robot (the robot
+// itself is drawn by RobotLayer, in planner/robots).
 
 // The plan and the goal are in the page's text grey, so they stay in the
 // background; only the robot is amber
 export const GREY = (alpha) => `rgba(216, 217, 221, ${alpha})`;
-export const AMBER = (alpha) => `rgba(251, 177, 60, ${alpha})`;
-export const ROBOT_RADIUS = 6.5;
+export const ROBOT_RADIUS = 6.5; // the tagline's bullet, which the robot starts as
 
 export const EDGE_ALPHA = 0.07;
 export const FRONTIER_ALPHA = 0.11; // new branches, just above settled ones (0.07)
@@ -63,28 +63,4 @@ export const drawGoal = (ctx, [x, y], alpha) => {
   ctx.strokeStyle = GREY(alpha);
   ctx.lineWidth = 1.25;
   ctx.stroke();
-};
-
-// The robot, from above: a round TurtleBot base with a dark mark showing
-// which way it faces
-export const drawRobot = (ctx, robot) => {
-  if (!robot || robot.alpha <= 0) return;
-  ctx.save();
-  ctx.translate(robot.x, robot.y);
-  ctx.rotate(robot.theta);
-  ctx.beginPath();
-  ctx.arc(0, 0, ROBOT_RADIUS, 0, 2 * Math.PI);
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = `rgba(17, 17, 17, ${0.9 * robot.alpha})`; // separates it from lines beneath
-  ctx.stroke();
-  ctx.fillStyle = AMBER(0.95 * robot.alpha);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(5.5, 0);
-  ctx.lineWidth = 2;
-  ctx.lineCap = "round";
-  ctx.strokeStyle = `rgba(17, 17, 17, ${0.75 * robot.alpha})`;
-  ctx.stroke();
-  ctx.restore();
 };

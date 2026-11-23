@@ -3,8 +3,10 @@ import { createRRTStar, seededRandom } from "../../planner/rrtStar";
 import { holonomic } from "../../planner/motion";
 import { measureObstacles } from "../../planner/heroObstacles";
 import { createApproach } from "../../planner/drive";
-import { drawGoal, drawRobot, drawTree, strokePath } from "../../planner/draw";
+import { drawGoal, drawTree, strokePath } from "../../planner/draw";
 import { robotHandoff } from "../../planner/robotHandoff";
+import { robotLive } from "../../planner/robotLive";
+import { character } from "../../planner/character";
 import { SECTION_TYPES } from "../../constants";
 import styles from "./pageRobot.module.scss";
 
@@ -17,7 +19,8 @@ import styles from "./pageRobot.module.scss";
 // waits it faces the text, or watches the mouse pointer, turning after it a
 // moment late, like a real robot. Each section's content is one obstacle, so
 // it keeps to the margins and crosses between them only through the gaps
-// between sections. It takes the robot over where the hero left it once the
+// between sections, and between the publication cards, which are obstacles
+// of their own (ITEMS). It takes the robot over where the hero left it once the
 // hero has scrolled out of view, and drives it back into the hero when the
 // reader returns there; the hero's planner carries on from it. Its tree and
 // path are fainter than the hero's: they sit beside what is being read.
@@ -48,6 +51,9 @@ const HOME_BAND = [0.62, 0.88];
 const MIN_MOVE = 90; // px: no shorter trips
 const SWITCH_SIDES = 0.35; // how often it heads for the other margin
 const REGION_PAD = 80; // px planned around the trip, above and below
+// ... crossing to the other margin, farther: far enough to reach a way
+// across (a gap between cards half a tall card away, on an iPad)
+const CROSSING_REGION_PAD = 320;
 // What is drawn: a window around the screen, moved with it when the reader
 // stops (fractions of the screen height above it, and in all)
 const WINDOW = { above: 0.3, height: 1.6 };
@@ -95,6 +101,13 @@ const MAX_FRAME_MS = 50;
 // content is taken over its text lines, these, and anything drawn as a box
 // (a background or a border: cards, panels, pills)
 const CONTENT_BOXES = "img, svg, canvas, video, button, a, article, li, hr";
+// A list whose children are each an obstacle of their own (the publication
+// cards), rather than part of their section's one box, so the robot can pass
+// between them. Above and below them it keeps this much clear (px; less than
+// CONTENT_MARGIN, which it keeps beside them): the gaps between them are
+// ways through.
+const ITEMS = "[data-robot-items]";
+const ITEM_GAP_MARGIN = 4;
 
 const lerp = (a, b, t) => a + (b - a) * t;
 const easeOutCubic = (t) => 1 - (1 - t) ** 3;
@@ -118,9 +131,10 @@ const drawnBoxes = (section) =>
     );
   });
 
-// The tight box around a section's content, in viewport px. `boxes`: its
-// elements drawn as boxes (they rarely change, so they are found once)
-const contentBox = (section, boxes) => {
+// The tight box around the content under \`root\`, in viewport px, leaving
+// out what \`skip\` says. \`drawn\`: its elements drawn as boxes (they rarely
+// change, so they are found once).
+const tightBox = (root, drawn, skip = () => false) => {
   const box = { left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity };
   const add = (r) => {
     if (r.width <= 0 || r.height <= 0) return;
@@ -130,15 +144,32 @@ const contentBox = (section, boxes) => {
     box.bottom = Math.max(box.bottom, r.bottom);
   };
   const range = document.createRange();
-  const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT);
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-    if (!node.textContent.trim()) continue;
+    if (!node.textContent.trim() || skip(node)) continue;
     range.selectNodeContents(node);
     for (const rect of range.getClientRects()) add(rect);
   }
-  section.querySelectorAll(CONTENT_BOXES).forEach((el) => add(el.getBoundingClientRect()));
-  boxes.forEach((el) => add(el.getBoundingClientRect()));
+  root.querySelectorAll(CONTENT_BOXES).forEach((el) => !skip(el) && add(el.getBoundingClientRect()));
+  drawn.forEach((el) => !skip(el) && add(el.getBoundingClientRect()));
   return box.left < box.right ? box : null;
+};
+
+// A section's content as obstacles: one box; or, where it has lists of
+// items (ITEMS), a box for each item and one for the rest
+const contentBoxes = (section, drawn) => {
+  const items = [...section.querySelectorAll(ITEMS)].flatMap((list) => [...list.children]);
+  if (!items.length) {
+    const box = tightBox(section, drawn);
+    return box ? [box] : [];
+  }
+  const inItem = (node) => items.some((item) => item.contains(node));
+  const boxes = [tightBox(section, drawn, inItem)];
+  for (const item of items) {
+    const box = tightBox(item, drawn.filter((el) => item.contains(el)));
+    if (box) boxes.push({ ...box, item: true });
+  }
+  return boxes.filter(Boolean);
 };
 
 // The page as the robot sees it, in page px (the scroller's content)
@@ -154,15 +185,20 @@ const measureWorld = (scroller, hero, sections, drawn) => {
   // Where the page's content ends (not the scroll height, which the robot's
   // own canvas would add to)
   const height = Math.max(...sections.map((s) => toPage(s.getBoundingClientRect(), 0).bottom));
-  const boxes = sections.map((section) => contentBox(section, drawn(section))).filter(Boolean);
+  const boxes = sections.flatMap((section) => contentBoxes(section, drawn(section)));
   const heroRect = toPage(hero.getBoundingClientRect(), 0);
-  const heroObstacles = measureObstacles(hero, HERO_MARGIN).map((o) => ({
+  const heroObstacles = measureObstacles(hero, HERO_MARGIN + robotLive.extraClearance).map((o) => ({
     left: o.left + heroRect.left,
     right: o.right + heroRect.left,
     top: o.top + heroRect.top,
     bottom: o.bottom + heroRect.top,
   }));
-  const content = boxes.map((b) => toPage(b, CONTENT_MARGIN));
+  const content = boxes.map((b) => {
+    const box = toPage(b, CONTENT_MARGIN + robotLive.extraClearance);
+    if (!b.item) return box;
+    const tight = toPage(b, ITEM_GAP_MARGIN + robotLive.extraClearance);
+    return { ...box, top: tight.top, bottom: tight.bottom };
+  });
   const obstacles = [...heroObstacles, ...content];
   const columnLeft = Math.min(...boxes.map((b) => b.left)) - origin.left;
   const columnRight = Math.max(...boxes.map((b) => b.right)) - origin.left;
@@ -226,6 +262,8 @@ function PageRobot({ sectionRefs }) {
     const pointer = [];
     let pointerLeftAt = -Infinity;
     let looking = null; // where it looks while it waits
+    let carried = false; // the reader is carrying it (RobotLayer)
+    let heldTrip = null; // where it was headed when picked up: { goal, handBack, requested }
 
     const viewNow = () => ({ top: scroller.scrollTop, height: scroller.clientHeight });
     // Whether the robot can be seen (a robot's width past an edge counts)
@@ -294,14 +332,17 @@ function PageRobot({ sectionRefs }) {
     const giveUp = () => {
       active = false;
       trip = null;
+      carried = false;
+      robotLive.releaseControls(controls);
       robotHandoff.handBack(null);
     };
 
     const planTrip = (goal, handBack, attempt) => {
-      const top = Math.max(0, Math.min(pose.y, goal.y) - REGION_PAD);
-      const bottom = Math.min(world.height, Math.max(pose.y, goal.y) + REGION_PAD);
       // Staying on its side, it plans on that half of the page only
       const sameSide = sideOf(pose.x) === goal.side;
+      const pad = sameSide ? REGION_PAD : CROSSING_REGION_PAD;
+      const top = Math.max(0, Math.min(pose.y, goal.y) - pad);
+      const bottom = Math.min(world.height, Math.max(pose.y, goal.y) + pad);
       const left = sameSide && goal.side === "right" ? world.width / 2 : 0;
       const right = sameSide && goal.side === "left" ? world.width / 2 : world.width;
       const obstacles = world.obstacles
@@ -390,9 +431,14 @@ function PageRobot({ sectionRefs }) {
             trip.foundNodes = planner.nodes.length;
           } else if (time - trip.createdAt > trip.timeout) {
             // Out of reach: try another goal, or stay put (or, on the way
-            // home, give the robot back)
-            const { attempt, handBack } = trip;
+            // home, give the robot back). Sent there by the reader, it is
+            // puzzled, and stays.
+            const { attempt, handBack, requested } = trip;
             trip = null;
+            if (requested) {
+              character.feel("confused");
+              return true;
+            }
             if (attempt + 1 < GOAL_ATTEMPTS) pickTrip(viewNow(), handBack, attempt + 1);
             else if (handBack) giveUp();
             return true;
@@ -435,6 +481,7 @@ function PageRobot({ sectionRefs }) {
         if (trip.handBack) {
           // Home: the hero's planner carries on from here
           active = false;
+          robotLive.releaseControls(controls);
           robotHandoff.handBack({ x: pose.x - world.hero.left, y: pose.y - world.hero.top, theta: pose.theta });
         } else {
           side = trip.goal.side;
@@ -453,7 +500,7 @@ function PageRobot({ sectionRefs }) {
       planShown = Math.max(0, Math.min(1, planShown + ((inView() ? 1 : -1) * dt) / PLAN_SHOW_MS));
       let busy = trip ? stepTrip(dt) : false;
       // Waiting: it looks at the text, or after the pointer
-      if (active && pose && (!trip || trip.phase === "fade")) {
+      if (active && pose && !carried && (!trip || trip.phase === "fade")) {
         const now = performance.now();
         const settled = turnToward(restingHeading(now), dt);
         const last = pointer[pointer.length - 1];
@@ -509,7 +556,15 @@ function PageRobot({ sectionRefs }) {
         }
         ctx.globalAlpha = 1;
       }
-      if (active && pose) drawRobot(ctx, { ...pose, y: pose.y - drawn.top, alpha: 1 });
+      if (active && pose && !carried) report();
+    };
+
+    // Tell RobotLayer where the robot is and what it is doing
+    const report = () => {
+      let activity = "wait";
+      if (trip && trip.phase === "search") activity = "search";
+      else if (trip && (trip.phase === "turn" || trip.phase === "drive")) activity = "drive";
+      robotLive.report({ pose, activity, goal: trip && trip.phase !== "fade" ? trip.goal : null, alpha: 1 });
     };
 
     const tick = (now) => {
@@ -556,7 +611,9 @@ function PageRobot({ sectionRefs }) {
         spin = 0;
         active = true;
         trip = null;
+        carried = false;
         robotHandoff.takeOver();
+        robotLive.setControls(controls);
       }
       const home = heroShown >= view.height * HOME_SHARE;
       const moving = trip && trip.phase !== "fade";
@@ -582,6 +639,73 @@ function PageRobot({ sectionRefs }) {
       pickTrip(view, home);
       render();
       wake();
+    };
+
+    // What RobotLayer may ask of it while it has the robot (page px)
+    const standsClear = (x, y) =>
+      !!world && x > EDGE && x < world.width - EDGE && world.clearanceAt(x, y) >= CLEARANCE + robotLive.extraClearance;
+    const controls = {
+      // Somewhere free in view: beside the content, or between sections
+      canCommand(x, y) {
+        if (!active || carried || !world) return false;
+        const view = viewNow();
+        return y > view.top + SEEN_BELOW && y < view.top + view.height - SEEN_ABOVE && standsClear(x, y);
+      },
+      // Whether it may be set down at (x, y) (a hop lands): the same places
+      canStand: (x, y) => controls.canCommand(x, y),
+      command(x, y) {
+        if (!controls.canCommand(x, y)) return false;
+        trip = null;
+        spin = 0;
+        planTrip({ x, y, side: sideOf(x) }, false, GOAL_ATTEMPTS - 1);
+        trip.requested = true;
+        render();
+        wake();
+        return true;
+      },
+      pickUp() {
+        heldTrip =
+          trip && trip.phase !== "fade" ? { goal: trip.goal, handBack: trip.handBack, requested: !!trip.requested } : null;
+        carried = true;
+        trip = null;
+        spin = 0;
+        render();
+      },
+      // The nearest place it may stand to (x, y)
+      place(x, y) {
+        if (standsClear(x, y)) return { x, y };
+        for (let r = 6; r < 500; r += 6) {
+          for (let a = 0; a < 2 * Math.PI; a += Math.PI / 16) {
+            const px = x + r * Math.cos(a);
+            const py = y + r * Math.sin(a);
+            if (standsClear(px, py)) return { x: px, y: py };
+          }
+        }
+        return null;
+      },
+      // Set down: it plans on from there to where it was headed, if it was
+      drop(at) {
+        carried = false;
+        pose = { x: at.x, y: at.y, theta: at.theta };
+        side = sideOf(pose.x);
+        looking = null;
+        if (heldTrip) {
+          planTrip(heldTrip.goal, heldTrip.handBack, GOAL_ATTEMPTS - 1);
+          trip.requested = heldTrip.requested;
+          heldTrip = null;
+        }
+        render();
+        wake();
+      },
+      bounds() {
+        const view = viewNow();
+        return {
+          left: EDGE,
+          right: world.width - EDGE,
+          top: view.top + SEEN_BELOW,
+          bottom: view.top + view.height - SEEN_ABOVE,
+        };
+      },
     };
 
     const onScroll = () => {
@@ -627,6 +751,7 @@ function PageRobot({ sectionRefs }) {
       document.removeEventListener("pointerout", onPointerOut);
       resize.disconnect();
       if (active) giveUp();
+      robotLive.releaseControls(controls);
     };
   }, [sectionRefs]);
 

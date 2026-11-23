@@ -1,0 +1,88 @@
+@import "src/styles.module";
+
+// The robot's own layer: at the top of the scroller's content, so it scrolls
+// with the page. Above the sections and the hero's content (1), below the
+// nav's scrim (3).
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+// What you take hold of: a circle around the robot. A swipe that starts on
+// it still scrolls the page; held first, it is picked up, and then RobotLayer
+// keeps the finger's moves from scrolling. No callout or selection while
+// it is held.
+.handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  will-change: transform;
+
+  &.held {
+    cursor: grabbing;
+  }
+}
+
+// Over free space it could drive to, the pointer becomes a goal marker
+.goalCursor {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='11' cy='11' r='5' fill='none' stroke='%23111' stroke-width='3.5'/%3E%3Ccircle cx='11' cy='11' r='5' fill='none' stroke='%23d8d9dd' stroke-width='1.5'/%3E%3C/svg%3E") 11 11, crosshair;
+}
+
+// The menu of looks (right-click it): the nav menu's panel and rows, each
+// row with the robot as it looks; the one it has now marked in amber
+.menu {
+  @include dark-dropdown;
+
+  :global {
+    .ant-dropdown-menu {
+      min-width: 11rem;
+    }
+
+    .ant-dropdown-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      // Less padding at the start: the picture brings its own space
+      padding: 0.375rem 1.25rem 0.375rem 0.625rem !important;
+    }
+
+    .ant-dropdown-menu-item-selected,
+    .ant-dropdown-menu-item-selected:hover {
+      color: $primary_color !important;
+      background: $primary_color_dim !important;
+    }
+  }
+}
+
+.icon {
+  display: block;
+  flex: none;
+  width: 30px; // ICON_PX
+  height: 30px;
+}
+
+// Under the menu while it is open (antd's layer is 1050)
+.menuShield {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}

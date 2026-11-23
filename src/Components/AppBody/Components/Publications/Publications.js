@@ -14,7 +14,9 @@ function Publications({ className, sectionRef, sectionProps, sectionHeadingClass
       <h2 className={cx(sectionHeadingClassName, styles.sectionTitle)}>
         {SECTION_TYPE_VS_NAME["PUBLICATIONS"]}
       </h2>
-      <div className={styles.content}>
+      {/* Each card is an obstacle of its own to the page robot, which passes
+          between them (PageRobot) */}
+      <div className={styles.content} data-robot-items>
         {_map(items, (publication) => (
           <PublicationItem key={publication.id} publication={publication} />
         ))}

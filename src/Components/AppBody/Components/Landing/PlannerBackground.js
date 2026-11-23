@@ -3,8 +3,10 @@ import { createRRTStar, seededRandom } from "../../../../planner/rrtStar";
 import { holonomic } from "../../../../planner/motion";
 import { measureObstacles } from "../../../../planner/heroObstacles";
 import { createDrive } from "../../../../planner/drive";
-import { drawGoal, drawRobot, drawTree, FRONTIER_MS, ROBOT_RADIUS, strokePath } from "../../../../planner/draw";
+import { drawGoal, drawTree, FRONTIER_MS, ROBOT_RADIUS, strokePath } from "../../../../planner/draw";
 import { robotHandoff } from "../../../../planner/robotHandoff";
+import { robotLive } from "../../../../planner/robotLive";
+import { character } from "../../../../planner/character";
 import styles from "./landing.module.scss";
 
 // A live RRT* planner drawn behind the hero, for a small robot (a top-down
@@ -34,6 +36,7 @@ const REFINE_DURATION_MS = 2200;
 const DRIVE_DIM_MS = 500; // the tree dims as the robot sets off
 const DRIVE_TREE_ALPHA = 0.5;
 const ARRIVE_HOLD_MS = 900; // at the goal before the next query
+const WAKE_PAUSE_MS = 600; // woken from a nap, before it carries on
 const UNSOLVED_HOLD_MS = 600;
 const STALL_MS = 1200; // a search that adds no nodes for this long gives up
 const SWAP_FADE_MS = 700; // outgoing plan fades while the next one starts
@@ -132,10 +135,10 @@ const routeOffset = (a, b) => {
 };
 
 // One planning query and its animation state. `from` is the robot's pose.
-const createQuery = (hero, random, { from, createdAt }) => {
+const createQuery = (hero, random, { from, createdAt, goal: requested = null }) => {
   const { width, height } = hero.getBoundingClientRect();
   const narrow = width <= 720;
-  const obstacles = measureObstacles(hero, OBSTACLE_MARGIN);
+  const obstacles = measureObstacles(hero, OBSTACLE_MARGIN + robotLive.extraClearance);
   // The first query is composed: lower left to upper right (always farther
   // apart than the minimum). If no valid goal exists from `from`, which a
   // cramped layout could cause, fall back to that composed query.
@@ -144,7 +147,8 @@ const createQuery = (hero, random, { from, createdAt }) => {
   composedStart.theta = Math.atan2(composedGoal[1] - composedStart.y, composedGoal[0] - composedStart.x);
   const motion = holonomic;
   const clearance = ENDPOINT_CLEARANCE;
-  const sampled = from && sampleGoal(from, width, height, obstacles, random, clearance);
+  // A goal the reader asked for, else one sampled
+  const sampled = from && (requested || sampleGoal(from, width, height, obstacles, random, clearance));
   const [start, goal] = sampled ? [from, sampled] : [composedStart, composedGoal];
   // Whether the robot may stop here: clear of content and the edges
   const hasTurningRoom = (x, y) =>
@@ -183,6 +187,8 @@ const createQuery = (hero, random, { from, createdAt }) => {
     height,
     start,
     goal,
+    requested: !!requested,
+    obstacles,
     motion,
     planner,
     births,
@@ -379,21 +385,9 @@ const createWake = (from) => {
   };
 };
 
-// Just the robot, before there is any plan
-const renderRobot = (canvas, width, height, robot) => {
-  const dpr = window.devicePixelRatio || 1;
-  if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) {
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-  }
-  const ctx = canvas.getContext("2d");
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, width, height);
-  drawRobot(ctx, robot);
-};
-
-// `layers`: [{ query, alpha }], drawn in order, then the robot on top
-const render = (canvas, layers, robot, time) => {
+// `layers`: [{ query, alpha }], drawn in order. The robot is drawn above them
+// by RobotLayer.
+const render = (canvas, layers, time) => {
   const dpr = window.devicePixelRatio || 1;
   const { width, height } = layers[layers.length - 1].query;
   if (canvas.width !== Math.round(width * dpr) || canvas.height !== Math.round(height * dpr)) {
@@ -414,8 +408,9 @@ const render = (canvas, layers, robot, time) => {
     drawGoal(ctx, query.goal, GOAL_ALPHA * Math.min(1, (time - query.createdAt) / ENDPOINT_FADE_MS));
   }
   ctx.globalAlpha = 1;
-  drawRobot(ctx, robot);
 };
+
+const clearCanvas = (canvas) => canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
 
 function PlannerBackground({ heroRef, startDelay }) {
   const canvasRef = useRef(null);
@@ -423,6 +418,7 @@ function PlannerBackground({ heroRef, startDelay }) {
   useEffect(() => {
     const hero = heroRef.current;
     const canvas = canvasRef.current;
+    const scroller = document.getElementById("root");
     if (!hero || !canvas) return undefined;
 
     // A fresh sequence each visit
@@ -445,24 +441,67 @@ function PlannerBackground({ heroRef, startDelay }) {
     let drive = null;
     let waking = null; // its moves on load: { wake, startedAt }
     let away = false; // the page robot has the robot
+    let carried = false; // the reader is carrying it (RobotLayer)
+    let heldGoal = null; // where it was headed when picked up: { goal, requested }
+    let napping = false; // it fell asleep between queries
+    let offset = { x: 0, y: 0 }; // the hero's place on the page
+    let space = null; // where it may go: { width, height, obstacles }
 
     // Each query sets off from the robot's pose
-    const nextQuery = () => createQuery(hero, random, { from: robot, createdAt: time });
+    const nextQuery = (goal = null) => {
+      const query = createQuery(hero, random, { from: robot, createdAt: time, goal });
+      space = query;
+      return query;
+    };
+
+    const measure = () => {
+      const { width, height } = hero.getBoundingClientRect();
+      space = { width, height, obstacles: measureObstacles(hero, OBSTACLE_MARGIN + robotLive.extraClearance) };
+      if (!scroller) return;
+      const origin = scroller.getBoundingClientRect();
+      const rect = hero.getBoundingClientRect();
+      offset = { x: rect.left - origin.left, y: rect.top - origin.top + scroller.scrollTop };
+    };
+
+    // Tell RobotLayer where the robot is (page px) and what it is doing
+    const report = (activity) => {
+      if (away) return;
+      robotLive.report({
+        pose: robot && { x: robot.x + offset.x, y: robot.y + offset.y, theta: robot.theta },
+        activity: robot ? activity : "hidden",
+        goal: current && { x: current.goal[0] + offset.x, y: current.goal[1] + offset.y },
+        alpha: robot ? robot.alpha : 0,
+      });
+    };
 
     const requestTick = () => {
-      if (cancelled || running || holding || away || !visible || !(current || waking)) return;
+      if (cancelled || running || holding || away || carried || napping || !visible || !(current || waking)) return;
       running = true;
       lastNow = performance.now();
       frame = requestAnimationFrame(tick);
     };
 
+    const stopAll = () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(holdTimer);
+      running = false;
+      holding = false;
+      napping = false;
+    };
+
     // `reset`: nowhere to drive to, so don't retry from this spot; fade the
-    // robot in again at the composed starting point
+    // robot in again at the composed starting point. Asleep, it waits here
+    // until it is woken.
     const holdThenNext = (ms, reset) => {
       holding = true;
+      report("wait");
       holdTimer = setTimeout(() => {
         holding = false;
-        outgoing = { query: current, from: time };
+        if (character.asleep && !reset) {
+          napping = true;
+          return;
+        }
+        outgoing = current && { query: current, from: time };
         drive = null;
         if (reset) {
           robot = null;
@@ -483,7 +522,7 @@ function PlannerBackground({ heroRef, startDelay }) {
         else outgoing = null;
       }
       layers.push({ query: current, alpha: 1 });
-      render(canvas, layers, robot, time);
+      render(canvas, layers, time);
     };
 
     const tick = (now) => {
@@ -502,9 +541,9 @@ function PlannerBackground({ heroRef, startDelay }) {
         const t = time - waking.startedAt;
         const pose = waking.wake.poseAt(t);
         robot = { ...pose, alpha: Math.min(1, t / APPEAR_MS) };
-        const { width, height } = hero.getBoundingClientRect();
-        renderRobot(canvas, width, height, robot);
         robotHandoff.reportHeroPose(robot);
+        // Still, it is the tagline's bullet; once it moves, a robot
+        report(t < WAKE_STEPS[0].pause ? "bullet" : "wake");
         if (pose.done) {
           waking = null;
           current = nextQuery();
@@ -513,7 +552,11 @@ function PlannerBackground({ heroRef, startDelay }) {
         return;
       }
 
-      if (drive) {
+      if (drive && time < drive.startedAt) {
+        // Turning on the spot to face its path, before it sets off
+        const k = easeInOutCubic(Math.min(1, (time - drive.turn.from) / (drive.startedAt - drive.turn.from)));
+        robot = { ...robot, theta: drive.turn.theta + drive.turn.by * k };
+      } else if (drive) {
         const pose = drive.poseAt(time);
         robot = { ...robot, x: pose.x, y: pose.y, theta: pose.theta };
         current.treeAlpha = lerp(1, DRIVE_TREE_ALPHA, easeOutCubic(Math.min(1, (time - drive.startedAt) / DRIVE_DIM_MS)));
@@ -528,16 +571,25 @@ function PlannerBackground({ heroRef, startDelay }) {
       }
       renderFrame();
       robotHandoff.reportHeroPose(robot);
+      report(drive ? "drive" : "search");
 
       if (!drive && !outgoing && current.isSettled(time)) {
         const plan = current.plan || current.fallback();
+        // Sent somewhere it can't reach: it is puzzled (and gets as close
+        // as it can, if it can)
+        if (current.requested && !current.solved) character.feel("confused");
         if (!plan) {
           // Stay and try a new goal from here; start over only if the tree
           // could not grow at all (the robot is boxed in)
           holdThenNext(UNSOLVED_HOLD_MS, current.stalled);
           return;
         }
-        drive = createDrive(plan, time);
+        // It turns on the spot to face its path first (as on load), so its
+        // heading never jumps
+        const by = angleTo(robot.theta, createDrive(plan, 0).poseAt(0).theta);
+        const turnMs = Math.abs(by) < 0.05 ? 0 : 150 + (Math.abs(by) / WAKE_TURN_RATE) * 1000;
+        drive = createDrive(plan, time + turnMs);
+        drive.turn = { from: time, theta: robot.theta, by };
       }
       requestTick();
     };
@@ -545,6 +597,8 @@ function PlannerBackground({ heroRef, startDelay }) {
     const start = () => {
       started = true;
       waking = null;
+      measure();
+      clearCanvas(canvas);
       const first = startPose(hero);
       robot = first && { ...first, alpha: 1 };
       robotHandoff.reportHeroPose(robot);
@@ -553,7 +607,9 @@ function PlannerBackground({ heroRef, startDelay }) {
         robot = robot || { ...current.start, alpha: reduceMotion ? 1 : 0 };
         if (reduceMotion) {
           current.finish();
-          render(canvas, [{ query: current, alpha: 1 }], robot, Infinity);
+          render(canvas, [{ query: current, alpha: 1 }], Infinity);
+          // Still, it stays the tagline's bullet
+          report(first ? "bullet" : "wait");
           return;
         }
         requestTick();
@@ -562,34 +618,127 @@ function PlannerBackground({ heroRef, startDelay }) {
       // It shows itself as a robot before its first plan
       current = null;
       waking = { wake: createWake(robot), startedAt: time };
+      report("bullet");
       requestTick();
     };
+
+    // Where the reader may send it: clear of content, within the band of the
+    // hero that is fully visible. Hero px.
+    const isFree = (x, y, band = [VISIBLE_TOP, VISIBLE_BOTTOM]) => {
+      if (!space) return false;
+      const { width, height, obstacles } = space;
+      const c = ENDPOINT_CLEARANCE;
+      return (
+        x >= c && x <= width - c && y >= band[0] && y <= height * band[1] &&
+        obstacles.every((o) => x < o.left - c || x > o.right + c || y < o.top - c || y > o.bottom + c)
+      );
+    };
+
+    // What RobotLayer may ask of it while the hero has the robot (page px)
+    const controls = {
+      canCommand: (x, y) => started && !carried && !!robot && !reduceMotion && isFree(x - offset.x, y - offset.y),
+      // Whether it may be set down at (x, y), as after a carry (a hop lands)
+      canStand: (x, y) =>
+        started && !carried && !!robot && !reduceMotion &&
+        isFree(x - offset.x, y - offset.y, [WIDE_BAND_TOP, WIDE_BAND_BOTTOM]),
+      // Plan from wherever it is now to where the reader tapped
+      command(x, y) {
+        if (!controls.canCommand(x, y)) return false;
+        stopAll();
+        waking = null;
+        drive = null;
+        if (current) outgoing = { query: current, from: time };
+        robot = { ...robot, alpha: 1 };
+        current = nextQuery([x - offset.x, y - offset.y]);
+        requestTick();
+        return true;
+      },
+      pickUp() {
+        // Where it was headed, if it had not got there yet
+        heldGoal = current && !holding && !napping && !waking ? { goal: current.goal, requested: current.requested } : null;
+        stopAll();
+        carried = true;
+        waking = null;
+        drive = null;
+      },
+      // The nearest place it may stand to (x, y)
+      place(x, y) {
+        const local = { x: x - offset.x, y: y - offset.y };
+        const band = [WIDE_BAND_TOP, WIDE_BAND_BOTTOM];
+        if (isFree(local.x, local.y, band)) return { x, y };
+        for (let r = 6; r < 500; r += 6) {
+          for (let a = 0; a < 2 * Math.PI; a += Math.PI / 16) {
+            const px = local.x + r * Math.cos(a);
+            const py = local.y + r * Math.sin(a);
+            if (isFree(px, py, band)) return { x: px + offset.x, y: py + offset.y };
+          }
+        }
+        return null;
+      },
+      // Set down: it plans on from there to where it was headed. If it had
+      // got there, it waits a moment, as on arriving, before a new goal.
+      drop(pose) {
+        carried = false;
+        robot = { x: pose.x - offset.x, y: pose.y - offset.y, theta: pose.theta, alpha: 1 };
+        drive = null;
+        const held = heldGoal;
+        heldGoal = null;
+        if (!held) {
+          holdThenNext(ARRIVE_HOLD_MS, false);
+          return;
+        }
+        if (current) outgoing = { query: current, from: time };
+        current = nextQuery(held.goal);
+        current.requested = held.requested; // puzzled if it can't get there only if sent there
+        report("search");
+        requestTick();
+      },
+      bounds() {
+        const { width, height } = hero.getBoundingClientRect();
+        return {
+          left: offset.x + ENDPOINT_CLEARANCE,
+          right: offset.x + width - ENDPOINT_CLEARANCE,
+          top: offset.y + WIDE_BAND_TOP,
+          bottom: offset.y + height * WIDE_BAND_BOTTOM,
+        };
+      },
+    };
+    robotLive.setControls(controls);
 
     document.fonts.ready.then(() => {
       // Measure once the hero's entrance has settled
       if (!cancelled) delayTimer = setTimeout(start, startDelay);
     });
 
+    // Woken between queries: it carries on
+    const unsubscribeCharacter = character.subscribe((event) => {
+      if (event !== "wake" || !napping) return;
+      napping = false;
+      holdThenNext(WAKE_PAUSE_MS, false);
+    });
+
     // The page robot takes the robot while the reader is further down the
     // page, and hands it back when they return: planning goes on from there
     const unsubscribe = robotHandoff.subscribe((owner) => {
-      cancelAnimationFrame(frame);
-      clearTimeout(holdTimer);
-      running = false;
-      holding = false;
+      stopAll();
       outgoing = null;
       drive = null;
       waking = null;
+      carried = false;
       if (owner === "page") {
         away = true;
-        canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+        robotLive.releaseControls(controls);
+        clearCanvas(canvas);
         return;
       }
       away = false;
+      measure();
+      robotLive.setControls(controls);
       const pose = robotHandoff.consumeHandback();
       robot = pose && { ...pose, alpha: 1 };
       current = nextQuery();
       robot = robot || { ...current.start, alpha: 0 };
+      report("search");
       requestTick();
     });
 
@@ -609,11 +758,8 @@ function PlannerBackground({ heroRef, startDelay }) {
       lastWidth = width;
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
-        if (!started || away) return;
-        cancelAnimationFrame(frame);
-        clearTimeout(holdTimer);
-        running = false;
-        holding = false;
+        if (!started || away || carried) return;
+        stopAll();
         outgoing = null;
         drive = null;
         start();
@@ -630,6 +776,8 @@ function PlannerBackground({ heroRef, startDelay }) {
       visibility.disconnect();
       resize.disconnect();
       unsubscribe();
+      unsubscribeCharacter();
+      robotLive.releaseControls(controls);
     };
   }, [heroRef, startDelay]);
 

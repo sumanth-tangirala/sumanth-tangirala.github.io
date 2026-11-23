@@ -4,6 +4,7 @@ import NavBar from "../NavBar";
 import NameFlight from "../NameFlight";
 import AppBody from "../AppBody";
 import PageRobot from "../PageRobot";
+import RobotLayer from "../RobotLayer";
 
 import { SECTION_TYPES, SECTION_TYPE_VS_ID } from "../../constants";
 import styles from "./basePage.module.scss";
@@ -84,6 +85,7 @@ function BasePage() {
       />
       {/* Before the sections, which rely on :last-child for the page's end */}
       <PageRobot sectionRefs={sectionRefs} />
+      <RobotLayer />
       <AppBody
         sectionRefs={sectionRefs}
         landingNameRef={landingNameRef}
