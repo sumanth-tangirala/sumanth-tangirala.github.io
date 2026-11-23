@@ -6,7 +6,7 @@ import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, O
 // drum, its lidar puck, and the face on its front. Its art is drawn by hand
 // in ./pixel-sprites.js; this places it on the page and animates it, all on
 // a grid of whole art pixels:
-//   facing:   eight facings, from five drawings; it turns one facing at a
+//   facing:   sixteen facings, from nine drawings; it turns one facing at a
 //             time, like a sprite does
 //   waiting:  it turns to face you, as townsfolk do, and its eye pixels
 //             follow your pointer; it blinks
@@ -25,7 +25,7 @@ import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, O
 // Nothing is smoothed: every pixel is a whole number of device pixels.
 
 const ART_PX = 1.5; // CSS px per art pixel (rounded to whole device px)
-const TURN_STEP_MS = 70; // it turns one facing (45°) at a time, this often
+const TURN_STEP_MS = 35; // it turns one facing (22.5°) at a time, this often
 const TURN_SLACK = 0.1; // rad past a facing's edge before it turns
 const NEAR_POINTER_PX = 24; // closer than this, a pointer has no direction
 const TREAD_PX = 7; // px driven per tread frame
@@ -62,7 +62,8 @@ const glyphPixels = (name) => {
   return out;
 };
 
-const octantOf = (angle) => ((Math.round(angle / (Math.PI / 4)) % 8) + 8) % 8;
+const SECTOR = Math.PI / 8; // a facing's share of a turn
+const facingOf = (angle) => ((Math.round(angle / SECTOR) % 16) + 16) % 16;
 const sign = (v, dead) => (v > dead ? 1 : v < -dead ? -1 : 0);
 
 // The art grid in device pixels: how big an art pixel is, and where the
@@ -78,8 +79,7 @@ const gridFor = (ctx, s) => {
 };
 
 // From each facing, the nearest one that shows its face (both eyes)
-const FACING_YOU = [1, 1, 2, 3, 3, 3, 2, 1];
-const OCTANT = Math.PI / 4;
+const FACING_YOU = [2, 2, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 4, 2, 2, 2];
 
 // Which facing it shows: its heading while it drives; you, while it waits
 // and your pointer is about; the goal while it searches. When it feels
@@ -90,15 +90,15 @@ const facingFor = (s, memo) => {
   let target = s.heading;
   const pointerFar = s.pointer && Math.hypot(s.pointer.x - s.x, s.pointer.y - s.y) > NEAR_POINTER_PX;
   if (s.activity === "search" || ((s.activity === "wait" || s.activity === "wake") && pointerFar)) target = s.gaze;
-  else if (s.pointer && memo.facing !== undefined && s.activity !== "drive") target = memo.facing * OCTANT;
+  else if (s.pointer && memo.facing !== undefined && s.activity !== "drive") target = memo.facing * SECTOR;
   const { happy, dizzy, startled, confused } = s.mood;
   if (happy > 0 || dizzy > 0 || startled > 0 || confused > 0 || s.sleep > 0) {
-    target = FACING_YOU[octantOf(target)] * OCTANT;
+    target = FACING_YOU[facingOf(target)] * SECTOR;
   }
   target += angleTo(s.heading, s.theta); // the layer's spin or wiggle
   // Stay put until it is clearly past the edge of the current facing
-  let want = octantOf(target);
-  if (memo.facing !== undefined && Math.abs(angleTo(memo.facing * OCTANT, target)) < OCTANT / 2 + TURN_SLACK) {
+  let want = facingOf(target);
+  if (memo.facing !== undefined && Math.abs(angleTo(memo.facing * SECTOR, target)) < SECTOR / 2 + TURN_SLACK) {
     want = memo.facing;
   }
   memo.wantFacing = want;
@@ -107,8 +107,8 @@ const facingFor = (s, memo) => {
     memo.facing = want;
     memo.turnedAt = s.t;
   } else if (want !== memo.facing && s.t - memo.turnedAt >= TURN_STEP_MS) {
-    const step = (want - memo.facing + 8) % 8 <= 4 ? 1 : -1;
-    memo.facing = (memo.facing + step + 8) % 8;
+    const step = (want - memo.facing + 16) % 16 <= 8 ? 1 : -1;
+    memo.facing = (memo.facing + step + 16) % 16;
     memo.turnedAt = s.t;
   }
   return memo.facing;
@@ -133,7 +133,7 @@ const eyeShift = (s, facing, memo) => {
   if (s.reduced || s.sleep > 0.6) return { x: 0, y: 0 };
   const near = s.pointer && Math.hypot(s.pointer.x - s.x, s.pointer.y - s.y) <= NEAR_POINTER_PX;
   if (near && memo.look) return memo.look; // a pointer on top of it: hold
-  const f = facing * (Math.PI / 4);
+  const f = facing * SECTOR;
   const look = {
     x: sign(Math.cos(s.gaze) - Math.cos(f), 0.3),
     y: sign(Math.sin(s.gaze) - Math.sin(f), 0.45),
@@ -234,7 +234,7 @@ const look = {
     const key = `${facing}${tread}${bob + settle}${dangle}${eyes}${shift.x}${shift.y}${glint}`;
     if (key !== memo.key) {
       compose(memo.buf, {
-        octant: facing,
+        facing,
         tread,
         bob: bob + settle,
         dangle,

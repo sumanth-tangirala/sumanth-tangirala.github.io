@@ -12,9 +12,9 @@
 //   WHEELS  per facing: the wheels, drawn under the drum, peeking out.
 //           "w" and "W" are the tread's two bands, which swap as it rolls.
 //   EYES    per facing: where the two eyes sit in the visor.
-// Five facings are drawn (S, SE, E, NE, N); SW, W and NW are their mirror
-// images. Only the face and wheels are mirrored, never the drum or its
-// light.
+// Nine facings are drawn, a sixteenth of a turn apart (S, SSE, SE, ESE, E,
+// ENE, NE, NNE, N); the other seven are their mirror images. Only the face
+// and wheels are mirrored, never the drum or its light.
 
 // The colours, keyed by the letters in the grids
 export const COLORS = {
@@ -23,8 +23,7 @@ export const COLORS = {
   a: "#fbb13c", // amber (the site's)
   s: "#c88327", // amber, in shade
   d: "#242228", // dark: visor, lidar, wheels
-  k: "#3e3b43", // dark, lit: the treads' light band
-  g: "#6f6a73", // the lidar's top, lit
+  g: "#6f6a73", // the lidar's top, lit; the treads' cleats
   e: "#ffeed0", // the eyes (the site's cream)
   m: "#a89a84", // the eyes, shut (dimmer)
 };
@@ -70,7 +69,7 @@ export const CAMO = [
 ];
 export const CAMO_EYES = [[3, 5], [6, 5]]; // one pixel each, in the slit
 
-// The five facings drawn. `face` marks the visor, `wheels` the wheels,
+// The nine facings drawn. `face` marks the visor, `wheels` the wheels,
 // `eyes` the top pixel of each eye (two, or one where the other is out of
 // sight).
 const FACINGS = {
@@ -113,6 +112,45 @@ const FACINGS = {
     ],
     eyes: [[5, 8], [10, 8]],
   },
+  SSE: {
+    face: [
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "....v......vvv..",
+      "....vvvvvvvvvv..",
+      "....vvvvvvvvvv..",
+      "....vvvvvvvvv...",
+      "......vvvvvv....",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+    ],
+    wheels: [
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "............ooo.",
+      ".ooooo......owo.",
+      ".owWwo......oWo.",
+      "..owWo......ooo.",
+      "..oooo..........",
+      "................",
+      "................",
+    ],
+    eyes: [[6, 8], [11, 8]],
+  },
   SE: {
     face: [
       "................",
@@ -151,6 +189,45 @@ const FACINGS = {
       "................",
     ],
     eyes: [[8, 8], [12, 7]],
+  },
+  ESE: {
+    face: [
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      ".............v..",
+      "...........vvv..",
+      "........vvvvvv..",
+      "........vvvvvv..",
+      "........vvvvv...",
+      "........vvv.....",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+    ],
+    wheels: [
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "...ooooooo......",
+      "...oddddddo.....",
+      "...owWwWwWo.....",
+      "....oooooo......",
+      "................",
+    ],
+    eyes: [[10, 8], [13, 7]],
   },
   E: {
     face: [
@@ -191,6 +268,45 @@ const FACINGS = {
     ],
     eyes: [[12, 7]],
   },
+  ENE: {
+    face: [
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      ".............v..",
+      "............vv..",
+      "............vv..",
+      "............vv..",
+      "............v...",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+    ],
+    wheels: [
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      ".....ooooooo....",
+      ".....oddddddo...",
+      ".....owWwWwWo...",
+      "......oooooo....",
+      "................",
+    ],
+    eyes: [[13, 7]],
+  },
   NE: {
     face: [
       "................",
@@ -230,6 +346,28 @@ const FACINGS = {
     ],
     eyes: [],
   },
+  NNE: {
+    face: null,
+    wheels: [
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................",
+      ".ooo............",
+      ".owo......ooooo.",
+      ".oWo......owWwo.",
+      ".ooo......oWwWo.",
+      "...........oooo.",
+      "................",
+      "................",
+    ],
+    eyes: [],
+  },
   N: {
     face: null,
     wheels: null, // as S
@@ -255,22 +393,31 @@ export const LOPSIDED = { left: [[0, 0, "e"], [0, 1, "e"]], right: [[0, 1, "e"]]
 
 const parse = (rows) => (rows ? rows.map((row) => row.split("")) : null);
 const DRUM_PX = parse(DRUM);
-const DRAWN = ["S", "SE", "E", "NE", "N"].map((name) => ({
+const DRAWN = ["S", "SSE", "SE", "ESE", "E", "ENE", "NE", "NNE", "N"].map((name) => ({
   face: parse(FACINGS[name].face),
   wheels: parse(FACINGS[name].wheels),
   eyes: FACINGS[name].eyes,
 }));
-// The eight facings, from heading east (0) clockwise in screen space:
-// which drawing, and whether mirrored
-export const OCTANTS = [
-  { drawn: 2, mirror: false }, // E
-  { drawn: 1, mirror: false }, // SE
-  { drawn: 0, mirror: false }, // S
-  { drawn: 1, mirror: true }, // SW
-  { drawn: 2, mirror: true }, // W
-  { drawn: 3, mirror: true }, // NW
-  { drawn: 4, mirror: false }, // N
-  { drawn: 3, mirror: false }, // NE
+// The sixteen facings, from heading east (0) clockwise in screen space, a
+// sixteenth of a turn apart: which drawing, and whether mirrored
+const D = (name) => ["S", "SSE", "SE", "ESE", "E", "ENE", "NE", "NNE", "N"].indexOf(name);
+export const FACINGS16 = [
+  { drawn: D("E"), mirror: false }, // E
+  { drawn: D("ESE"), mirror: false }, // ESE
+  { drawn: D("SE"), mirror: false }, // SE
+  { drawn: D("SSE"), mirror: false }, // SSE
+  { drawn: D("S"), mirror: false }, // S
+  { drawn: D("SSE"), mirror: true }, // SSW
+  { drawn: D("SE"), mirror: true }, // SW
+  { drawn: D("ESE"), mirror: true }, // WSW
+  { drawn: D("E"), mirror: true }, // W
+  { drawn: D("ENE"), mirror: true }, // WNW
+  { drawn: D("NE"), mirror: true }, // NW
+  { drawn: D("NNE"), mirror: true }, // NNW
+  { drawn: D("N"), mirror: false }, // N
+  { drawn: D("NNE"), mirror: false }, // NNE
+  { drawn: D("NE"), mirror: false }, // NE
+  { drawn: D("ENE"), mirror: false }, // ENE
 ];
 
 // The lidar glint's path round the puck (searching): along its lit top,
@@ -285,12 +432,12 @@ export const OUT_W = W;
 export const OUT_H = H + PAD_TOP + PAD_BOTTOM;
 
 // Compose the sprite into `out` (OUT_W × OUT_H colour letters, "" for
-// none). `o`: { octant 0–7, tread 0|1, bob (art px up), dangle (art px the
+// none). `o`: { facing 0–15, tread 0|1, bob (art px up), dangle (art px the
 // wheels hang down), eyes (an EXPRESSIONS name or "confused"), look { x, y }
 // (art px the eyes shift), lidar (−1, or which of the puck's eight glints) }
 export const compose = (out, o) => {
   out.fill("");
-  const { drawn, mirror } = OCTANTS[o.octant];
+  const { drawn, mirror } = FACINGS16[o.facing];
   const art = DRAWN[drawn];
   const put = (x, y, c) => {
     if (x >= 0 && x < OUT_W && y >= 0 && y < OUT_H) out[y * OUT_W + x] = c;
@@ -303,8 +450,8 @@ export const compose = (out, o) => {
       for (let x = 0; x < W; x++) {
         let c = art.wheels[y][x];
         if (c === ".") continue;
-        if (c === "w") c = o.tread ? "k" : "d";
-        else if (c === "W") c = o.tread ? "d" : "k";
+        if (c === "w") c = o.tread ? "g" : "d";
+        else if (c === "W") c = o.tread ? "d" : "g";
         put(mx(x), y0 + y, c);
       }
     }
