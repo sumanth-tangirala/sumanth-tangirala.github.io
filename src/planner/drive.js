@@ -33,7 +33,27 @@ const along = (path) => {
     const [bx, by] = pointAt(s + HEADING_WINDOW);
     return Math.atan2(by - ay, bx - ax);
   };
-  return { total, pointAt, headingAt };
+  // How far from `s` until the path first lies between heights `top` and
+  // `bottom` (the rest of the path if it never does)
+  const untilBand = (s, top, bottom) => {
+    const [, y0] = pointAt(s);
+    if (y0 >= top && y0 <= bottom) return 0;
+    let i = 1;
+    while (i < lengths.length - 1 && lengths[i] <= s) i++;
+    let fromS = s;
+    let fromY = y0;
+    for (; i < lengths.length; i++) {
+      const y = path[i][1];
+      if ((fromY < top && y >= top) || (fromY > bottom && y <= bottom)) {
+        const edge = fromY < top ? top : bottom;
+        return fromS - s + ((lengths[i] - fromS) * (edge - fromY)) / (y - fromY);
+      }
+      fromS = lengths[i];
+      fromY = y;
+    }
+    return total - s;
+  };
+  return { total, pointAt, headingAt, untilBand };
 };
 
 // Distance travelled after `t` ms at up to `v` px/ms, speeding up and slowing
@@ -80,22 +100,24 @@ export const createDrive = (plan, startedAt) => {
 };
 
 // `plan`: { path, end }, driven like createDrive: it speeds up at `accel`
-// px/s², cruises, and slows to a stop. It cruises at `cruise` px/s, or faster
-// on a long trip: at D / (timeConstant (1 + ln(D / near))) px/s, as if each
-// e-fold of distance beyond `near` px took `timeConstant` s more.
-export const createApproach = (plan, { cruise, near, timeConstant, accel }) => {
+// px/s², cruises at `cruise` px/s, and slows to a stop. Time is the caller's,
+// so a caller can hurry it along.
+export const createApproach = (plan, { cruise, accel }) => {
   const { end } = plan;
-  const { total, pointAt, headingAt } = along(plan.path);
-  const long = total > near ? total / (timeConstant * (1 + Math.log(total / near))) : 0;
-  const profile = driveProfile(total, Math.max(cruise, long) / 1000, accel / 1e6);
+  const { total, pointAt, headingAt, untilBand } = along(plan.path);
+  const profile = driveProfile(total, cruise / 1000, accel / 1e6);
   let t = 0;
+  let s = 0;
   return {
     startHeading: headingAt(0),
+    // How much further it drives before it first comes between heights `top`
+    // and `bottom` (0 if it is there now)
+    untilBand: (top, bottom) => untilBand(s, top, bottom),
     // { x, y, theta, done } after `dt` more ms
     advance(dt) {
       t += dt;
       if (t >= profile.duration) return { ...end, done: true };
-      const s = profile.at(t);
+      s = profile.at(t);
       const [x, y] = pointAt(s);
       return { x, y, theta: headingAt(s), done: false };
     },

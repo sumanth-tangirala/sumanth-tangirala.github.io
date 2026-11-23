@@ -61,10 +61,15 @@ const STEP = 26;
 const GOAL_RADIUS = 2;
 const SEARCH_RATE = 1.4; // nodes per ms: a quick look, not the hero's slow search
 // ... per screen height the trip spans: a long way is searched as quickly
-// Out of view it hurries: no turn on the spot, and it drives this much faster
-// (it still travels the whole way). Its tree and path are drawn only while
-// it is in view, fading in as it arrives; the goal always shows.
-const OFFSCREEN_HURRY = 2;
+// Out of view it hurries: no turn on the spot, and the farther it still has
+// to drive before it comes into view, the faster it goes (it still travels
+// the whole way): 1× more for every HURRY_PER px of path out of sight ahead,
+// up to HURRY_MAX×. So it is back to its own speed as it comes into view, and
+// a trip from screens away takes a few seconds. Its tree and path are drawn
+// only while it is in view, fading in as it arrives; the goal always shows.
+const OUT_OF_SIGHT = 30; // px past the window's edge, past its body and bubbles
+const HURRY_PER = 150; // px
+const HURRY_MAX = 20;
 const PLAN_SHOW_MS = 250;
 const REFINE_MS = 500;
 // The finished tree is as dense as the hero's: a node per this many px² of
@@ -75,10 +80,8 @@ const MAX_NODES = 1600;
 const SEARCH_TIMEOUT_MS = 1500;
 const SEARCH_TIMEOUT_PER_PX = 0.6;
 const GOAL_ATTEMPTS = 3;
-// It cruises at its top speed on screen, and faster only on trips longer
-// than a screen or so (≈ 400 px/s down the whole page, hurrying while out of
-// view); px/s, px, s, px/s²
-const APPROACH = { cruise: 200, near: 600, timeConstant: 4, accel: 600 };
+// In view it never goes faster than this; px/s, px/s²
+const APPROACH = { cruise: 200, accel: 600 };
 // Turning on the spot, like a motor: it speeds up and slows into place
 // (critically damped, so it never overshoots)
 const TURN_STIFFNESS = 90; // 1/s²
@@ -270,6 +273,13 @@ function PageRobot({ sectionRefs }) {
     // Whether the robot can be seen (a robot's width past an edge counts)
     const inView = () =>
       !!pose && pose.y > scroller.scrollTop - 8 && pose.y < scroller.scrollTop + scroller.clientHeight + 8;
+    // How much faster it may drive `drive` now: by how far it has to go out
+    // of sight
+    const hurry = (drive) => {
+      const top = scroller.scrollTop - OUT_OF_SIGHT;
+      const hidden = drive.untilBand(top, top + scroller.clientHeight + 2 * OUT_OF_SIGHT);
+      return Math.min(HURRY_MAX, 1 + hidden / HURRY_PER);
+    };
     const sideOf = (x) => (x < world.width / 2 ? "left" : "right");
     const faceText = (s) => (s === "left" ? 0 : Math.PI);
 
@@ -471,7 +481,7 @@ function PageRobot({ sectionRefs }) {
         return true;
       }
       if (trip.phase === "drive") {
-        const next = trip.drive.advance(inView() ? dt : dt * OFFSCREEN_HURRY);
+        const next = trip.drive.advance(dt * hurry(trip.drive));
         pose = { x: next.x, y: next.y, theta: next.theta };
         const dim = easeOutCubic(Math.min(1, (time - trip.driveStartedAt) / DRIVE_DIM_MS));
         trip.treeAlpha = lerp(TREE_ALPHA, DRIVE_TREE_ALPHA, dim);
