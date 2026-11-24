@@ -340,7 +340,10 @@ function RobotLayer() {
       const noticed = pointerTrail.filter((p) => p.t <= now - GAZE.noticeMs).pop();
       const seen = noticed && !(now - pointerLeftAt > POINTER_GONE_MS && pointerLeftAt > 0) ? toPage(noticed.x, noticed.y) : null;
       let gaze = pose.theta;
-      if (seen && (activity === "wait" || activity === "wake" || carry)) gaze = Math.atan2(seen.y - pose.y, seen.x - pose.x);
+      // Showing you something, it looks at that (its heading), not your pointer
+      const pointing = !!state.pointing && activity === "wait" && !carry;
+      if (pointing) gaze = pose.theta;
+      else if (seen && (activity === "wait" || activity === "wake" || carry)) gaze = Math.atan2(seen.y - pose.y, seen.x - pose.x);
       else if (state.goal && activity === "search") gaze = Math.atan2(state.goal.y - pose.y, state.goal.x - pose.x);
       else if (seen && activity !== "drive") gaze = Math.atan2(seen.y - pose.y, seen.x - pose.x);
       // Fidgeting, it glances one way and then the other; reading along, its
@@ -403,6 +406,7 @@ function RobotLayer() {
           carried: !!(carry && carry.moved),
           mood,
           moodK: { proud: character.progress("proud", now), purr: character.progress("purr", now) },
+          pointing,
           fidget,
           reading,
           gaze,

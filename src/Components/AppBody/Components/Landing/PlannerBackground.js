@@ -519,6 +519,7 @@ function PlannerBackground({ heroRef, startDelay }) {
         activity: robot ? activity : "hidden",
         goal: current && { x: current.goal[0] + offset.x, y: current.goal[1] + offset.y },
         alpha: robot ? robot.alpha : 0,
+        pointing: false,
       });
     };
 

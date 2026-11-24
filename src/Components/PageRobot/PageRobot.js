@@ -7,6 +7,7 @@ import { drawGoal, drawTree, strokePath } from "../../planner/draw";
 import { robotHandoff } from "../../planner/robotHandoff";
 import { robotLive } from "../../planner/robotLive";
 import { character } from "../../planner/character";
+import { robotTour, STOPS } from "../../planner/robotTour";
 import { SECTION_TYPES } from "../../constants";
 import styles from "./pageRobot.module.scss";
 
@@ -15,9 +16,11 @@ import styles from "./pageRobot.module.scss";
 // up the way it moves in the hero, from wherever it is: a quick, faint RRT*
 // search through the margins, then it turns to face its path and drives it,
 // at a speed proportional to the distance left: quick from far away, slowing
-// as it arrives. While it
-// waits it faces the text, or watches the mouse pointer, turning after it a
-// moment late, like a real robot. Each section's content is one obstacle, so
+// as it arrives. It waits beside something worth seeing in view, if there is
+// one (robotTour's stops: a highlighted phrase, a paper, a role), facing it,
+// or else beside the text; and watches the mouse pointer, turning after it a
+// moment late, like a real robot. Shown something (a section chosen in the
+// nav), it goes to wait beside it, and faces it, not you. Each section's content is one obstacle, so
 // it keeps to the margins and crosses between them only through the gaps
 // between sections, and between the publication cards, which are obstacles
 // of their own (ITEMS). It takes the robot over where the hero left it once the
@@ -275,6 +278,9 @@ function PageRobot({ sectionRefs }) {
     let looking = null; // where it looks while it waits
     let carried = false; // the reader is carrying it (RobotLayer)
     let heldTrip = null; // where it was headed when picked up: { goal, handBack, requested }
+    // What it is showing the reader, waiting beside it: { at: page px, insist }
+    // (insist: asked to show it, so it faces it rather than your pointer)
+    let pointing = null;
 
     const viewNow = () => ({ top: scroller.scrollTop, height: scroller.clientHeight });
     // Whether the robot can be seen (a robot's width past an edge counts)
@@ -356,6 +362,7 @@ function PageRobot({ sectionRefs }) {
     };
 
     const planTrip = (goal, handBack, attempt) => {
+      pointing = null;
       // Staying on its side, it plans on that half of the page only
       const sameSide = sideOf(pose.x) === goal.side;
       const pad = sameSide ? REGION_PAD : CROSSING_REGION_PAD;
@@ -402,6 +409,13 @@ function PageRobot({ sectionRefs }) {
     };
 
     const pickTrip = (view, home, attempt = 0) => {
+      // Somewhere to wait: beside something worth seeing, if one is in view
+      const stop = !home && attempt === 0 ? stopSpotInView(view) : null;
+      if (stop) {
+        planTrip({ x: stop.x, y: stop.y, side: sideOf(stop.x) }, false, attempt);
+        trip.pointAt = { at: stop.look, insist: false };
+        return;
+      }
       const goal = home ? sampleHomeGoal(pose) : sampleGoal(view, pose);
       if (goal) planTrip(goal, home, attempt);
       else if (home) giveUp();
@@ -425,10 +439,16 @@ function PageRobot({ sectionRefs }) {
     // Where it looks while it waits: where the pointer was a moment ago, or
     // (no pointer, or it has left the page) at the text
     const restingHeading = (now) => {
+      // Showing you something, it faces it (asked to, it keeps to it)
+      const shown = pointing && Math.atan2(pointing.at.y - pose.y, pointing.at.x - pose.x);
+      if (pointing && pointing.insist) {
+        looking = shown;
+        return looking;
+      }
       const seen = pointer.filter((p) => p.t <= now - LOOK_DELAY_MS).pop();
       const gone = seen && pointerLeftAt > seen.t && now - pointerLeftAt > LOOK_AWAY_MS;
       if (!seen || gone) {
-        looking = faceText(side);
+        looking = pointing ? shown : faceText(side);
         return looking;
       }
       const heading = Math.atan2(seen.y + scroller.scrollTop - pose.y, seen.x - pose.x);
@@ -503,6 +523,7 @@ function PageRobot({ sectionRefs }) {
           robotHandoff.handBack({ x: pose.x - world.hero.left, y: pose.y - world.hero.top, theta: pose.theta });
         } else {
           side = trip.goal.side;
+          pointing = trip.pointAt || null;
           character.arrived(trip.drive.length); // pleased, after a long way
         }
         return true;
@@ -583,7 +604,13 @@ function PageRobot({ sectionRefs }) {
       let activity = "wait";
       if (trip && trip.phase === "search") activity = "search";
       else if (trip && (trip.phase === "turn" || trip.phase === "drive")) activity = "drive";
-      robotLive.report({ pose, activity, goal: trip && trip.phase !== "fade" ? trip.goal : null, alpha: 1 });
+      robotLive.report({
+        pose,
+        activity,
+        goal: trip && trip.phase !== "fade" ? trip.goal : null,
+        alpha: 1,
+        pointing: activity === "wait" && !!pointing && pointing.insist,
+      });
     };
 
     const tick = (now) => {
@@ -627,7 +654,8 @@ function PageRobot({ sectionRefs }) {
       }
       const heroShown = Math.max(0, Math.min(view.height, world.hero.bottom - view.top));
       if (!active) {
-        if (heroShown > HERO_GONE_PX) return; // still the hero's
+        // still the hero's, unless it is to show the reader something below
+        if (heroShown > HERO_GONE_PX && !robotTour.shown) return;
         // It sets off from where the hero left it
         const last = robotHandoff.heroPose;
         pose = last
@@ -641,6 +669,8 @@ function PageRobot({ sectionRefs }) {
         robotHandoff.takeOver();
         robotLive.setControls(controls);
       }
+      // Showing the reader something: it goes to stand beside it
+      if (robotTour.shown && showThere()) return;
       const home = heroShown >= view.height * HOME_SHARE;
       const moving = trip && trip.phase !== "fade";
       if (home) {
@@ -776,6 +806,88 @@ function PageRobot({ sectionRefs }) {
       },
     };
 
+    // Where to stand to show `el` (page px): level with it in the margin
+    // beside its content, on its own side first (or just above it, for a
+    // heading: in the gap before its section), in view; and the point it
+    // faces there. Null if there is no room in view.
+    const spotFor = (el) => {
+      if (!world || !el || !el.isConnected) return null;
+      const origin = scroller.getBoundingClientRect();
+      const rect = el.getClientRects()[0] || el.getBoundingClientRect();
+      const box = {
+        left: rect.left - origin.left,
+        right: rect.right - origin.left,
+        top: rect.top - origin.top + scroller.scrollTop,
+        bottom: rect.bottom - origin.top + scroller.scrollTop,
+      };
+      // level with its top part (a card's title, a highlight's first line)
+      const y = box.top + Math.min(box.bottom - box.top, 80) / 2;
+      const x = (box.left + box.right) / 2;
+      const look = { x: Math.min(box.right, Math.max(box.left, x)), y };
+      // the content around it, as the robot keeps clear of it
+      const around = world.obstacles.find((o) => x > o.left && x < o.right && y > o.top && y < o.bottom) || box;
+      const left = { x: around.left - SENT_CLEARANCE - 4, y };
+      const right = { x: around.right + SENT_CLEARANCE + 4, y };
+      const above = { x, y: around.top - SENT_CLEARANCE - 4 };
+      const ownSide = pose && pose.x > world.width / 2 ? [right, left] : [left, right];
+      const order = /^H[1-6]$/.test(el.tagName) ? [above, ...ownSide] : ownSide;
+      for (const want of order) {
+        const at = standNear(want.x, want.y, 60);
+        if (at && inSight(at.y)) return { x: at.x, y: at.y, look };
+      }
+      return null;
+    };
+    // The stop in view nearest the middle of where it waits, and where to
+    // stand to show it
+    const stopSpotInView = (view) => {
+      const middle = view.top + view.height * ((GOAL_BAND[0] + GOAL_BAND[1]) / 2);
+      const origin = scroller.getBoundingClientRect();
+      const seen = STOPS.map((stop) => stop.find())
+        .filter(Boolean)
+        .map((el) => {
+          const rect = el.getClientRects()[0] || el.getBoundingClientRect();
+          return { el, y: rect.top - origin.top + scroller.scrollTop };
+        })
+        .filter(({ y }) => y > view.top + view.height * 0.2 && y < view.top + view.height * 0.8)
+        .sort((a, b) => Math.abs(a.y - middle) - Math.abs(b.y - middle));
+      for (const { el } of seen) {
+        const spot = spotFor(el);
+        if (spot) return spot;
+      }
+      return null;
+    };
+    // Go and wait beside what is being shown, if there is room in view;
+    // whether it is there (or on its way)
+    const showThere = () => {
+      const spot = spotFor(robotTour.shown.el);
+      if (!spot) return false;
+      const point = { at: spot.look, insist: true };
+      const moving = trip && trip.phase !== "fade";
+      const at = moving ? trip.goal : pose;
+      if (Math.hypot(spot.x - at.x, spot.y - at.y) < 12) {
+        if (moving) trip.pointAt = point;
+        else pointing = point;
+      } else {
+        trip = null;
+        spin = 0;
+        planTrip({ x: spot.x, y: spot.y, side: sideOf(spot.x) }, false, GOAL_ATTEMPTS - 1);
+        trip.requested = true;
+        trip.pointAt = point;
+      }
+      render();
+      wake();
+      return true;
+    };
+    // Shown something, or no longer: look again once any scroll that
+    // brings it into view has settled
+    const unsubscribeTour = robotTour.subscribe((shown) => {
+      if (!shown && pointing && pointing.insist) {
+        pointing = null;
+        wake();
+      }
+      if (shown && active) onScroll();
+    });
+
     // Carried back into the hero and set down there, it is the hero's again
     const unsubscribeHandoff = robotHandoff.subscribe((owner) => {
       if (owner !== "hero" || !active) return;
@@ -830,6 +942,7 @@ function PageRobot({ sectionRefs }) {
       document.removeEventListener("pointerout", onPointerOut);
       resize.disconnect();
       unsubscribeHandoff();
+      unsubscribeTour();
       robotHandoff.offerToTake("page", null);
       if (active) giveUp();
       robotLive.releaseControls(controls);

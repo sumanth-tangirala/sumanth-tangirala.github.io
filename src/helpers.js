@@ -45,7 +45,7 @@ export const keepLastWords = (text, maxChars = TITLE_KEEP, count = 3) => {
 export const parse = (text, keepChars = TITLE_KEEP) => {
   text = text.replaceAll(
     "<highlight>",
-    `<span style="color:${PRIMARY_COLOR};">`,
+    `<span data-highlight style="color:${PRIMARY_COLOR};">`,
   );
   text = text.replaceAll("</highlight>", "</span>");
 

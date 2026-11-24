@@ -15,6 +15,7 @@
 //   mood: { happy, dizzy, startled, confused } (0…1 each),
 //   gaze (screen angle it looks along), look (−1…1, that angle beside its
 //   heading), pointer ({ x, y } page px, a mouse or pen, or null),
+//   pointing (it is showing the reader something it faces: not the pointer),
 //   unfold (0: camouflaged as the tagline's bullet … 1: itself; each look
 //   draws its own camouflage and how it breaks cover), alpha.
 // `memo` is the look's own state between frames (gait, trail), kept until

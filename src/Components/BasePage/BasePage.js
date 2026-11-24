@@ -5,6 +5,7 @@ import NameFlight from "../NameFlight";
 import AppBody from "../AppBody";
 import PageRobot from "../PageRobot";
 import RobotLayer from "../RobotLayer";
+import { robotTour } from "../../planner/robotTour";
 
 import { SECTION_TYPES, SECTION_TYPE_VS_ID } from "../../constants";
 import styles from "./basePage.module.scss";
@@ -52,6 +53,8 @@ function BasePage() {
     (section) => {
       const sectionRef = sectionRefs[section];
       sectionRef.current.scrollIntoView({ behavior: "smooth" });
+      // The robot runs ahead to wait at its heading
+      if (section !== SECTION_TYPES.LANDING) robotTour.show(sectionRef.current.querySelector("h2"));
       const hash = section === SECTION_TYPES.LANDING ? "" : `#${SECTION_TYPE_VS_ID[section]}`;
       window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${hash}`);
     },

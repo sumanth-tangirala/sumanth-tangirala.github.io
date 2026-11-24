@@ -95,9 +95,9 @@ const FACING_YOU = [2, 2, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 4, 2, 2, 2];
 // spins it (dizzy), which shows at once.
 const facingFor = (s, memo) => {
   let target = s.heading;
-  const pointerFar = s.pointer && Math.hypot(s.pointer.x - s.x, s.pointer.y - s.y) > NEAR_POINTER_PX;
+  const pointerFar = !s.pointing && s.pointer && Math.hypot(s.pointer.x - s.x, s.pointer.y - s.y) > NEAR_POINTER_PX;
   if (s.activity === "search" || ((s.activity === "wait" || s.activity === "wake") && pointerFar)) target = s.gaze;
-  else if (s.pointer && memo.facing !== undefined && s.activity !== "drive") target = memo.facing * SECTOR;
+  else if (s.pointer && !s.pointing && memo.facing !== undefined && s.activity !== "drive") target = memo.facing * SECTOR;
   if (s.fidget && s.fidget.kind === "glance") target = s.gaze; // looking about
   // Reading along, it turns from the text toward you by an eighth of a turn,
   // so both its eyes show running along the lines
