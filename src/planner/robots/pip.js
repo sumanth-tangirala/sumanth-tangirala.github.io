@@ -1,5 +1,5 @@
-import { angleTo, clamp01, HOP_PEAK } from "./shared";
-import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, OUT_W, PAD_TOP } from "./pip-sprites";
+import { angleTo, HOP_PEAK } from "./shared";
+import { ANCHOR, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, OUT_W, PAD_TOP } from "./pip-sprites";
 
 // Pip: the robot as a pixel-art sprite, as an old RPG draws its characters on
 // the overworld: seen from above and in front, so it shows the top of its
@@ -25,10 +25,8 @@ import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, O
 //             down; when you stop, they look up
 //   carried:  it rises a few pixels off its shadow, its wheels dangling
 //   hop:      the same, higher, and back down
-//   on load:  camouflaged as the tagline's bullet: tucked into an amber ball
-//             the bullet's size, only its eyes in a slit giving it away (they
-//             blink, and glance at your pointer); then it breaks cover,
-//             popping up to its full size in a hop
+//   on load:  it sits at the start of the tagline, as itself, before it says
+//             hello and sets off; it comes home there to sleep
 // Nothing is smoothed: every pixel is a whole number of device pixels.
 
 const ART_PX = 1.5; // CSS px per art pixel (rounded to whole device px)
@@ -44,11 +42,6 @@ const SHADOW_FILL = "rgba(0, 0, 0, 0.45)";
 // [first column, width] per row, centred under it
 const SHADOW = { rest: [[2, 6], [0, 10], [2, 6]], lifted: [[2, 4], [0, 8], [2, 4]], row: 5 };
 const SHAKE_RAD = 0.12; // a happy wiggle beyond this shifts it a pixel
-// Breaking cover: s.unfold (0…1, eased), as time through it (0…1).
-// Camouflaged until `at`, then it pops up to its full size in a hop `art`
-// art px high, landed by `land`.
-const BREAK = { at: 0.2, land: 0.75, art: 5 };
-const unease = (u) => (u < 0.5 ? Math.cbrt(u / 4) : 1 - Math.cbrt(2 * (1 - u)) / 2); // shared.easeInOut⁻¹
 
 const INK_GREY = "#d8d9dd"; // the page's text grey, for its glyphs
 
@@ -113,7 +106,7 @@ const facingFor = (s, memo) => {
     want = memo.facing;
   }
   memo.wantFacing = want;
-  const immediate = memo.facing === undefined || s.reduced || s.unfold < 1 || dizzy > 0;
+  const immediate = memo.facing === undefined || s.reduced || dizzy > 0;
   if (immediate) {
     memo.facing = want;
     memo.turnedAt = s.t;
@@ -197,31 +190,6 @@ const paint = (ctx, buf, x0, y0, P) => {
   }
 };
 
-// Camouflaged as the bullet: the ball, centred on the pose, its eyes in the
-// slit (shut as it blinks), glancing your way
-const drawCamo = (ctx, s, grid) => {
-  const { P } = grid;
-  const x0 = grid.ax - (CAMO[0].length / 2) * P;
-  const y0 = grid.ay - (CAMO.length / 2) * P;
-  ctx.save();
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.globalAlpha = s.alpha;
-  CAMO.forEach((row, y) => {
-    for (let x = 0; x < row.length; x++) {
-      const c = row[x] === "v" ? "d" : row[x];
-      if (c === ".") continue;
-      ctx.fillStyle = COLORS[c];
-      ctx.fillRect(x0 + x * P, y0 + y * P, P, P);
-    }
-  });
-  if (s.open >= 0.5) {
-    const glance = s.reduced ? 0 : sign(Math.cos(s.gaze), 0.3);
-    ctx.fillStyle = COLORS.e;
-    for (const [ex, ey] of CAMO_EYES) ctx.fillRect(x0 + (ex + glance) * P, y0 + ey * P, P, P);
-  }
-  ctx.restore();
-};
-
 const look = {
   id: "pip",
   name: "Pip",
@@ -234,20 +202,12 @@ const look = {
 
   draw(ctx, s, memo) {
     const grid = gridFor(ctx, s);
-    const time = unease(clamp01(s.unfold));
-    if (time < BREAK.at) {
-      drawCamo(ctx, s, grid);
-      memo.facing = undefined;
-      return;
-    }
-    const popped = clamp01((time - BREAK.at) / (BREAK.land - BREAK.at));
-    const pop = popped < 1 ? Math.round(BREAK.art * Math.sin(Math.PI * popped)) : 0;
     const { P } = grid;
     const facing = facingFor(s, memo);
     const eyes = expressionFor(s);
     const shift = eyeShift(s, facing, memo);
     const { tread, bob, nudge = 0 } = gait(s, memo);
-    const rise = Math.max(pop, Math.round(Math.max(s.lift * LIFT_ART, s.hop / ART_PX)));
+    const rise = Math.round(Math.max(s.lift * LIFT_ART, s.hop / ART_PX));
     const searching = s.activity === "search" && !s.reduced;
     const fidget = s.fidget ? s.fidget.kind : null;
     let glint = searching ? Math.floor(s.t / GLINT_MS) % LIDAR_GLINT.length : -1;
@@ -263,7 +223,7 @@ const look = {
     const ahead = facing * SECTOR;
     const nx = nudge * Math.round(Math.cos(ahead));
     const ny = nudge * Math.round(Math.sin(ahead));
-    const dangle = s.lift > 0.5 || s.hop > HOP_PEAK / 3 || pop > 1 ? 1 : 0;
+    const dangle = s.lift > 0.5 || s.hop > HOP_PEAK / 3 ? 1 : 0;
 
     memo.buf = memo.buf || new Array(OUT_W * OUT_H);
     const key = `${facing}${tread}${up}${dangle}${eyes}${shift.x}${shift.y}${glint}`;

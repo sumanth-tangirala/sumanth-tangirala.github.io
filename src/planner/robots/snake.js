@@ -1,4 +1,4 @@
-import { AMBER, angleTo, BULLET_RADIUS, clamp01, CREAM, easeOut, HOP_PEAK, INK, lerp } from "./shared";
+import { AMBER, angleTo, clamp01, CREAM, easeOut, HOP_PEAK, INK, lerp } from "./shared";
 
 // A modular snake robot (a research platform: a chain of identical joint
 // modules), seen from above: amber modules with dark joints between them,
@@ -20,12 +20,7 @@ import { AMBER, angleTo, BULLET_RADIUS, clamp01, CREAM, easeOut, HOP_PEAK, INK, 
 //             swinging a little;
 //   hop:      all of it at once, as it lies (it doesn't turn in the air);
 //   confused: its head tilts;
-//   asleep:   it coils up, its tail tucked in by its head, eyes shut;
-//   on load:  camouflaged as the tagline's bullet: its head drawn in to the
-//             bullet's disc, its body hidden behind it; only its face, where
-//             the bullet's mark would be, gives it away (it turns your way,
-//             and blinks). Breaking cover, its head takes its shape and its
-//             body slides out from behind it.
+//   asleep:   it coils up, its tail tucked in by its head, eyes shut.
 
 // Its parts, px (x forward)
 const HEAD = { back: 3.3, front: 3.8, half: 3.0, radius: 1.6 };
@@ -68,7 +63,6 @@ const COIL = { radius: 7.4, tighten: 0.5 };
 const SLEEP_SCALE = 0.03;
 // Unfolding: the disc becomes its head by this far through (0…1); its body
 // slides out from this far through to the end
-const UNFOLD = { head: 0.45, slide: 0.12 };
 
 const wrap = (angle) => angleTo(0, angle);
 
@@ -187,7 +181,6 @@ const look = {
   },
 
   draw(ctx, s, memo) {
-    const u = s.unfold;
     const t = s.t;
     const alpha = s.alpha;
     const lift = easeOut(clamp01(s.lift));
@@ -279,13 +272,11 @@ const look = {
     memo.happy = mood.happy > 0;
     const ripple = memo.happyAt === undefined ? Infinity : (t - memo.happyAt) / RIPPLE.ms;
     const rippling = ripple < 1 + n * RIPPLE.lag;
-    // On the ground: along the trail (sliding out from under the head as it
-    // unfolds; s.unfold is eased already), with its wave
-    const hidden = (1 - clamp01((u - UNFOLD.slide) / (1 - UNFOLD.slide))) * BODY_LENGTH;
+    // On the ground: along the trail, with its wave
     cx[0] = s.x;
     cy[0] = s.y;
     for (let i = 1; i <= n; i++) {
-      const arc = Math.max(0, NECK + (i - 1) * SPACING - hidden);
+      const arc = NECK + (i - 1) * SPACING;
       along(trail, s.x, s.y, arc, point);
       let x = point.x;
       let y = point.y;
@@ -402,29 +393,22 @@ const look = {
       const by = cy[i] - cy[i + 1];
       return Math.atan2(ay / (link[i] || 1) + by / (link[i + 1] || 1), ax / (link[i] || 1) + bx / (link[i + 1] || 1));
     };
-    const visible = (i) => NECK + (i - 1) * SPACING - hidden > HEAD.back - MODULE.length / 2;
-    const headShape = (grow) => {
-      const w = lerp(2 * BULLET_RADIUS, HEAD.back + HEAD.front, grow);
-      const h = lerp(2 * BULLET_RADIUS, 2 * HEAD.half, grow);
-      const r = lerp(BULLET_RADIUS, HEAD.radius, grow);
-      const back = lerp(BULLET_RADIUS, HEAD.back, grow);
+    const headShape = () => {
       ctx.beginPath();
-      ctx.roundRect(-back, -h / 2, w, h, r);
+      ctx.roundRect(-HEAD.back, -HEAD.half, HEAD.back + HEAD.front, 2 * HEAD.half, HEAD.radius);
     };
-    const grow = easeOut(clamp01(u / UNFOLD.head));
 
     // Lifted: its shadow, left on the ground
     if (raised > 0) {
       ctx.fillStyle = `rgba(0, 0, 0, ${SHADOW.alpha * raised * alpha})`;
       for (let i = n; i >= 1; i--) {
-        if (!visible(i)) continue;
         moduleAt(ctx, cx[i] - x0 + SHADOW.x * raised, cy[i] - y0 + SHADOW.y * raised, angleOf(i), i === n);
         ctx.fill();
       }
       ctx.save();
       ctx.translate(headX + SHADOW.x * raised, headY + SHADOW.y * raised);
       ctx.rotate(headAngle);
-      headShape(1);
+      headShape();
       ctx.fill();
       ctx.restore();
     }
@@ -432,26 +416,20 @@ const look = {
     ctx.strokeStyle = INK(0.92 * alpha);
     ctx.lineWidth = 2 * EDGE;
     for (let i = n; i >= 1; i--) {
-      if (!visible(i)) continue;
       moduleAt(ctx, cx[i] - x0, cy[i] - y0, angleOf(i), i === n);
       ctx.stroke();
     }
     // Its spine: the joints between modules, dark
-    let spineFrom = 0;
-    for (let i = 1; i <= n; i++) if (visible(i)) spineFrom = i;
-    if (spineFrom > 0) {
-      ctx.beginPath();
-      ctx.moveTo(headX, headY);
-      for (let i = 1; i <= spineFrom; i++) ctx.lineTo(cx[i] - x0, cy[i] - y0);
-      ctx.lineWidth = SPINE.width;
-      ctx.lineCap = "round";
-      ctx.strokeStyle = `rgba(${SPINE.rgb}, ${alpha})`;
-      ctx.stroke();
-      ctx.strokeStyle = INK(0.92 * alpha);
-    }
+    ctx.beginPath();
+    ctx.moveTo(headX, headY);
+    for (let i = 1; i <= n; i++) ctx.lineTo(cx[i] - x0, cy[i] - y0);
+    ctx.lineWidth = SPINE.width;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = `rgba(${SPINE.rgb}, ${alpha})`;
+    ctx.stroke();
+    ctx.strokeStyle = INK(0.92 * alpha);
     // The modules, tail first, each edged in dark where it meets the next
     for (let i = n; i >= 1; i--) {
-      if (!visible(i)) continue;
       moduleAt(ctx, cx[i] - x0, cy[i] - y0, angleOf(i), i === n);
       ctx.lineWidth = 1.5;
       ctx.stroke();
@@ -460,11 +438,11 @@ const look = {
       ctx.fillStyle = AMBER(0.95 * alpha);
       ctx.fill();
     }
-    // The head: grown from the bullet's disc, its dark mark becoming its face
+    // The head, its dark face at the front
     ctx.save();
     ctx.translate(headX, headY);
     ctx.rotate(headAngle);
-    headShape(grow);
+    headShape();
     ctx.lineWidth = 2.6;
     ctx.strokeStyle = INK(0.92 * alpha);
     ctx.stroke();
@@ -473,7 +451,7 @@ const look = {
     ctx.fillStyle = AMBER(0.95 * alpha);
     ctx.fill();
     {
-      const front = lerp(BULLET_RADIUS, HEAD.front, grow);
+      const front = HEAD.front;
       const across = HEAD.half - FACE.inset;
       ctx.beginPath();
       ctx.roundRect(front - FACE.inset - FACE.depth, -across, FACE.depth, 2 * across, FACE.radius);

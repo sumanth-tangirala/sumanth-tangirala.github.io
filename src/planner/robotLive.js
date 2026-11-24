@@ -3,8 +3,9 @@
 // the controls of whichever driver has it, so the layer can hand it things
 // the reader asks for (a goal, a carry).
 //
-// activity: "bullet" (on load, posing as the tagline's bullet), "wake" (its
-// first moves), "search", "drive", "wait", or "hidden"
+// activity: "bullet" (still at its spot before the tagline: on load, and
+// asleep at home), "wake" (its first moves), "search", "drive", "wait", or
+// "hidden"
 
 const listeners = new Set();
 let state = { pose: null, activity: "hidden", goal: null, alpha: 1 };

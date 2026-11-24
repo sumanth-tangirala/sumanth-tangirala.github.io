@@ -52,23 +52,6 @@ const DRUM = [
   "................",
 ];
 
-// Camouflaged as the tagline's bullet (on load): tucked into a ball the
-// bullet's size and amber, its visor (v) only a slit across its front, so
-// only its two eyes give it away. The pose is at the ball's middle.
-export const CAMO = [
-  "...oooo...",
-  ".oohhaaoo.",
-  ".ohhaaaao.",
-  "ohaaaaaaao",
-  "oaaaaaaaso",
-  "oavvvvvvso",
-  "oassssssso",
-  ".osssssso.",
-  ".oossssoo.",
-  "...oooo...",
-];
-export const CAMO_EYES = [[3, 5], [6, 5]]; // one pixel each, in the slit
-
 // The nine facings drawn. `face` marks the visor, `wheels` the wheels,
 // `eyes` the top pixel of each eye (two, or one where the other is out of
 // sight).

@@ -1,4 +1,4 @@
-import { AMBER, BULLET_RADIUS, CREAM, GREY, INK, clamp01, easeInOut, HOP_PEAK, lerp } from "./shared";
+import { AMBER, CREAM, GREY, INK, clamp01, easeInOut, HOP_PEAK, lerp } from "./shared";
 
 // A small quadrotor, seen from above: an X frame with a prop at each end, an
 // amber body, and a camera gimbal under its nose that turns to whatever it
@@ -12,12 +12,6 @@ import { AMBER, BULLET_RADIUS, CREAM, GREY, INK, clamp01, easeInOut, HOP_PEAK, l
 // drive, it spins up and lifts off. Flying, it leans into its acceleration,
 // as a quadrotor steers (drawn foreshortened along the axis it leans on), and
 // its shadow trails it a little.
-//
-// On load it is camouflaged as the tagline's bullet: landed, its arms folded
-// under its body, drawn in to the bullet's disc; only its camera, where the
-// bullet's mark would be, gives it away (it turns to you, and its lens
-// blinks). Breaking cover, its body draws in to its plate, its arms reach
-// out, and its props spin up.
 
 // Its shape, px
 const MOTOR = 7.6; // from the centre to each motor
@@ -234,10 +228,10 @@ const leanInto = (ctx, lean, at) => {
 // The frame's shadow: one shape (so its overlaps don't darken twice), filled
 // faintly and blurred round its edge by the canvas's own shadow, which
 // doubles its darkness inside (alpha a reads as about a·(2 − a))
-const drawShadow = (ctx, s, f, arms, px) => {
+const drawShadow = (ctx, s, f, px) => {
   const h = f.h;
   const reach = SHADOW.base + h;
-  const alpha = lerp(SHADOW_ALPHA.floor, SHADOW_ALPHA.high, clamp01(h / CARRIED_HEIGHT)) * arms;
+  const alpha = lerp(SHADOW_ALPHA.floor, SHADOW_ALPHA.high, clamp01(h / CARRIED_HEIGHT));
   if (alpha <= 0) return;
   ctx.save();
   ctx.translate(f.ox + SHADOW.x * reach + f.tx, f.oy + SHADOW.y * reach + f.ty);
@@ -252,134 +246,131 @@ const drawShadow = (ctx, s, f, arms, px) => {
   for (let i = 0; i < 4; i++) {
     ctx.save();
     ctx.rotate(MOTORS[i]);
-    ctx.rect(0, -1.1, MOTOR * arms, 2.2);
+    ctx.rect(0, -1.1, MOTOR, 2.2);
     ctx.restore();
-    ctx.moveTo(MX[i] * MOTOR * arms + POD + 0.3, MY[i] * MOTOR * arms);
-    ctx.arc(MX[i] * MOTOR * arms, MY[i] * MOTOR * arms, POD + 0.3, 0, TAU);
+    ctx.moveTo(MX[i] * MOTOR + POD + 0.3, MY[i] * MOTOR);
+    ctx.arc(MX[i] * MOTOR, MY[i] * MOTOR, POD + 0.3, 0, TAU);
   }
   ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
   ctx.fill();
   // The props and their guards, faintly
   ctx.beginPath();
   for (let i = 0; i < 4; i++) {
-    const x = MX[i] * MOTOR * arms;
-    const y = MY[i] * MOTOR * arms;
-    ctx.moveTo(x + PROP * arms, y);
-    ctx.arc(x, y, PROP * arms, 0, TAU);
+    const x = MX[i] * MOTOR;
+    const y = MY[i] * MOTOR;
+    ctx.moveTo(x + PROP, y);
+    ctx.arc(x, y, PROP, 0, TAU);
   }
   ctx.fillStyle = `rgba(0, 0, 0, ${alpha * (0.25 + 0.1 * blurAt(f.spin))})`;
   ctx.fill();
   ctx.restore();
 };
 
-// The quadrotor itself, in its own frame (x ahead). `arms` 0…1: how far its
-// arms are out (unfolding); `body` 0…1: the bullet's disc become its body.
-// Bottom to top: a dark disc inside each guard, the arms and motors, the
-// props, their guards, then the body and its gimbal over all of it.
-const drawCraft = (ctx, s, f, memo, arms, body) => {
+// The quadrotor itself, in its own frame (x ahead). Bottom to top: a dark
+// disc inside each guard, the arms and motors, the props, their guards, then
+// the body and its gimbal over all of it.
+const drawCraft = (ctx, s, f, memo) => {
   const lights = lerp(1, ASLEEP_LIGHTS, s.sleep);
-  const blur = blurAt(f.spin) * arms;
-  const reach = MOTOR * arms;
-  const prop = PROP * arms;
+  const blur = blurAt(f.spin);
+  const reach = MOTOR;
+  const prop = PROP;
   ctx.lineCap = "round";
 
-  if (arms > 0) {
-    // A dark disc inside each guard, so it reads over the lines behind it
-    // (darker while the props spin)
+  // A dark disc inside each guard, so it reads over the lines behind it
+  // (darker while the props spin)
+  ctx.beginPath();
+  for (let i = 0; i < 4; i++) {
+    ctx.moveTo(MX[i] * reach + prop, MY[i] * reach);
+    ctx.arc(MX[i] * reach, MY[i] * reach, prop, 0, TAU);
+  }
+  ctx.fillStyle = INK(0.35 + 0.25 * blur);
+  ctx.fill();
+
+  // The arms: dark under-strokes, grey arms
+  ctx.beginPath();
+  for (let i = 0; i < 4; i++) {
+    ctx.moveTo(0, 0);
+    ctx.lineTo(MX[i] * reach, MY[i] * reach);
+  }
+  ctx.lineWidth = ARM_W + 2;
+  ctx.strokeStyle = INK(0.95);
+  ctx.stroke();
+  ctx.lineWidth = ARM_W;
+  ctx.strokeStyle = GREY(0.6);
+  ctx.stroke();
+  // The motors: the front two amber, as its arms' tips, so its heading reads
+  const pod = POD;
+  for (let i = 0; i < 4; i++) {
+    const x = MX[i] * reach;
+    const y = MY[i] * reach;
     ctx.beginPath();
-    for (let i = 0; i < 4; i++) {
-      ctx.moveTo(MX[i] * reach + prop, MY[i] * reach);
-      ctx.arc(MX[i] * reach, MY[i] * reach, prop, 0, TAU);
-    }
-    ctx.fillStyle = INK(0.35 + 0.25 * blur);
+    ctx.arc(x, y, pod + 0.9, 0, TAU);
+    ctx.fillStyle = INK(0.95);
     ctx.fill();
-
-    // The arms: dark under-strokes, grey arms
     ctx.beginPath();
-    for (let i = 0; i < 4; i++) {
-      ctx.moveTo(0, 0);
-      ctx.lineTo(MX[i] * reach, MY[i] * reach);
-    }
-    ctx.lineWidth = ARM_W + 2;
-    ctx.strokeStyle = INK(0.95);
-    ctx.stroke();
-    ctx.lineWidth = ARM_W;
-    ctx.strokeStyle = GREY(0.6);
-    ctx.stroke();
-    // The motors: the front two amber, as its arms' tips, so its heading reads
-    const pod = POD * Math.min(1, arms * 1.6);
-    for (let i = 0; i < 4; i++) {
-      const x = MX[i] * reach;
-      const y = MY[i] * reach;
-      ctx.beginPath();
-      ctx.arc(x, y, pod + 0.9, 0, TAU);
-      ctx.fillStyle = INK(0.95);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(x, y, pod, 0, TAU);
-      ctx.fillStyle = i < 2 ? AMBER(0.95 * lights) : GREY(0.6);
-      ctx.fill();
-    }
+    ctx.arc(x, y, pod, 0, TAU);
+    ctx.fillStyle = i < 2 ? AMBER(0.95 * lights) : GREY(0.6);
+    ctx.fill();
+  }
 
-    // The props: a faint disc and a blurred blade while they spin, the
-    // blades themselves once they stop
-    const blade = prop * BLADE;
-    for (let i = 0; i < 4; i++) {
-      const x = MX[i] * reach;
-      const y = MY[i] * reach;
-      const p = memo.phase[i];
-      if (blur > 0) {
-        ctx.beginPath();
-        ctx.arc(x, y, prop, 0, TAU);
-        ctx.fillStyle = GREY(0.05 * blur);
-        ctx.fill();
-        // the blur behind each blade
-        const back = -TURNS[i] * BLUR_ARC;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.arc(x, y, blade, p + back, p, TURNS[i] < 0);
-        ctx.closePath();
-        ctx.moveTo(x, y);
-        ctx.arc(x, y, blade, p + Math.PI + back, p + Math.PI, TURNS[i] < 0);
-        ctx.closePath();
-        ctx.fillStyle = GREY(0.1 * blur);
-        ctx.fill();
-      }
-      const cx = Math.cos(p) * blade;
-      const cy = Math.sin(p) * blade;
+  // The props: a faint disc and a blurred blade while they spin, the
+  // blades themselves once they stop
+  const blade = prop * BLADE;
+  for (let i = 0; i < 4; i++) {
+    const x = MX[i] * reach;
+    const y = MY[i] * reach;
+    const p = memo.phase[i];
+    if (blur > 0) {
       ctx.beginPath();
-      ctx.moveTo(x - cx, y - cy);
-      ctx.lineTo(x + cx, y + cy);
-      if (blur < 1) {
-        ctx.lineWidth = 2.1;
-        ctx.strokeStyle = INK(0.85 * (1 - blur));
-        ctx.stroke();
-      }
-      ctx.lineWidth = lerp(1, 0.8, blur);
-      ctx.strokeStyle = GREY(lerp(0.72, 0.3, blur));
+      ctx.arc(x, y, prop, 0, TAU);
+      ctx.fillStyle = GREY(0.05 * blur);
+      ctx.fill();
+      // the blur behind each blade
+      const back = -TURNS[i] * BLUR_ARC;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.arc(x, y, blade, p + back, p, TURNS[i] < 0);
+      ctx.closePath();
+      ctx.moveTo(x, y);
+      ctx.arc(x, y, blade, p + Math.PI + back, p + Math.PI, TURNS[i] < 0);
+      ctx.closePath();
+      ctx.fillStyle = GREY(0.1 * blur);
+      ctx.fill();
+    }
+    const cx = Math.cos(p) * blade;
+    const cy = Math.sin(p) * blade;
+    ctx.beginPath();
+    ctx.moveTo(x - cx, y - cy);
+    ctx.lineTo(x + cx, y + cy);
+    if (blur < 1) {
+      ctx.lineWidth = 2.1;
+      ctx.strokeStyle = INK(0.85 * (1 - blur));
       ctx.stroke();
     }
-
-    // The guards round the props
-    ctx.beginPath();
-    for (let i = 0; i < 4; i++) {
-      ctx.moveTo(MX[i] * reach + prop, MY[i] * reach);
-      ctx.arc(MX[i] * reach, MY[i] * reach, prop, 0, TAU);
-    }
-    ctx.lineWidth = GUARD_W + 1.2;
-    ctx.strokeStyle = INK(0.8);
-    ctx.stroke();
-    ctx.lineWidth = GUARD_W;
-    ctx.strokeStyle = GREY(lerp(0.3, 0.34, blur));
+    ctx.lineWidth = lerp(1, 0.8, blur);
+    ctx.strokeStyle = GREY(lerp(0.72, 0.3, blur));
     ctx.stroke();
   }
 
-  // The body: the bullet's disc, drawn in to a rounded plate
-  const a = lerp(BULLET_RADIUS, BODY.a, body);
-  const b = lerp(BULLET_RADIUS, BODY.b, body);
+  // The guards round the props
   ctx.beginPath();
-  ctx.roundRect(-a, -b, 2 * a, 2 * b, lerp(BULLET_RADIUS, BODY.r, body));
-  ctx.lineWidth = lerp(3, 2.4, body);
+  for (let i = 0; i < 4; i++) {
+    ctx.moveTo(MX[i] * reach + prop, MY[i] * reach);
+    ctx.arc(MX[i] * reach, MY[i] * reach, prop, 0, TAU);
+  }
+  ctx.lineWidth = GUARD_W + 1.2;
+  ctx.strokeStyle = INK(0.8);
+  ctx.stroke();
+  ctx.lineWidth = GUARD_W;
+  ctx.strokeStyle = GREY(lerp(0.3, 0.34, blur));
+  ctx.stroke();
+
+  // The body: a rounded plate
+  const a = BODY.a;
+  const b = BODY.b;
+  ctx.beginPath();
+  ctx.roundRect(-a, -b, 2 * a, 2 * b, BODY.r);
+  ctx.lineWidth = 2.4;
   ctx.strokeStyle = INK(0.9);
   ctx.stroke();
   ctx.fillStyle = AMBER(0.95);
@@ -414,18 +405,6 @@ const look = {
   hitScale: 1.1,
   bubbleAt: (s) => 15 + s.lift * 4,
   draw(ctx, s, memo) {
-    // Camouflaged as the tagline's bullet: on the floor, folded into the
-    // bullet's disc, its camera turned to you
-    if (s.unfold <= 0 || s.activity === "bullet") {
-      start(memo, s, false);
-      const yaw = s.reduced ? 0 : Math.max(-GIMBAL_YAW, Math.min(GIMBAL_YAW, s.look * 1.2));
-      ctx.save();
-      ctx.globalAlpha *= s.alpha;
-      ctx.rotate(s.theta);
-      drawCraft(ctx, s, Object.assign(frame, { h: 0, spin: 0, yaw }), memo, 0, 0);
-      ctx.restore();
-      return;
-    }
     if (!memo.ready) start(memo, s, !s.reduced && (underway(s) || (moved(s) && s.sleep === 0)));
     let f;
     if (s.reduced) {
@@ -436,28 +415,17 @@ const look = {
       f = fly(s, memo, frame);
     }
 
-    // Unfolding: the disc draws in to its body, its arms reach out from under
-    // it, and only then do its props spin up and it lifts off
-    const u = s.unfold;
-    const body = easeInOut(clamp01(u / 0.55));
-    const arms = easeInOut(clamp01((u - 0.2) / 0.6));
-    if (u < 1) {
-      f.spin = Math.min(f.spin, clamp01((u - 0.6) / 0.4));
-      f.h *= easeInOut(clamp01((u - 0.65) / 0.35));
-      f.lean *= u;
-    }
-
     const m = ctx.getTransform();
     const px = Math.hypot(m.a, m.b);
     ctx.save();
     ctx.globalAlpha *= s.alpha;
-    drawShadow(ctx, s, f, arms, px);
+    drawShadow(ctx, s, f, px);
     ctx.translate(f.ox, f.oy);
     leanInto(ctx, f.lean, f.leanAt);
     ctx.rotate(s.theta);
     const scale = SCALE.floor + SCALE.perPx * f.h;
     ctx.scale(scale, scale);
-    drawCraft(ctx, s, f, memo, arms, body);
+    drawCraft(ctx, s, f, memo);
     ctx.restore();
   },
   // Frames while its props turn, it climbs or lands, or its gimbal turns

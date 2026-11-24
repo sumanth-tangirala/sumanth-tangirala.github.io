@@ -4,7 +4,6 @@
 // The plan and the goal are in the page's text grey, so they stay in the
 // background; only the robot is amber
 export const GREY = (alpha) => `rgba(216, 217, 221, ${alpha})`;
-export const ROBOT_RADIUS = 6.5; // the tagline's bullet, which the robot starts as
 
 export const EDGE_ALPHA = 0.07;
 export const FRONTIER_ALPHA = 0.11; // new branches, just above settled ones (0.07)

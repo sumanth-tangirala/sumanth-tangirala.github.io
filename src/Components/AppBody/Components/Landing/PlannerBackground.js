@@ -3,7 +3,7 @@ import { createRRTStar, seededRandom } from "../../../../planner/rrtStar";
 import { holonomic } from "../../../../planner/motion";
 import { measureObstacles } from "../../../../planner/heroObstacles";
 import { createDrive } from "../../../../planner/drive";
-import { drawGoal, drawTree, FRONTIER_MS, ROBOT_RADIUS, strokePath } from "../../../../planner/draw";
+import { drawGoal, drawTree, FRONTIER_MS, strokePath } from "../../../../planner/draw";
 import { robotHandoff } from "../../../../planner/robotHandoff";
 import { robotLive } from "../../../../planner/robotLive";
 import { character } from "../../../../planner/character";
@@ -37,24 +37,24 @@ const DRIVE_DIM_MS = 500; // the tree dims as the robot sets off
 const DRIVE_TREE_ALPHA = 0.5;
 const ARRIVE_HOLD_MS = 900; // at the goal before the next query
 // Left alone for this many queries (no pointer, scroll or key), it goes
-// home: it plans its way back to where it rolled off its bullet, yawns,
-// rolls in and curls up as the bullet to sleep. Woken, it pops out with a
-// start, rolls off again and carries on.
+// home: it plans its way back to its spot before the tagline, yawns, rolls
+// in and sleeps there. Woken, it starts, rolls off again and carries on.
 const QUIET_QUERIES = 5;
 const WAKE_PAUSE_MS = 600;
 const UNSOLVED_HOLD_MS = 600;
 const STALL_MS = 1200; // a search that adds no nodes for this long gives up
 const SWAP_FADE_MS = 700; // outgoing plan fades while the next one starts
+const REST_FADE_MS = 900; // asleep, its last plan fades away
 const ENDPOINT_FADE_MS = 300;
-// Where it appears on load: as a list's bullet would sit before the
-// tagline's first line, centred on the height of its capitals (the line's
-// visual middle; the lowercase middle leaves a disc this size hanging low),
-// its edge this far (× the font size) from the text
+// Where it appears on load (its spot): as a list's bullet would sit before
+// the tagline's first line, centred on the height of its capitals (the
+// line's visual middle), its side this far (× the font size) from the text
 const BULLET_GAP_EM = 0.5;
+const ROBOT_HALF = 10; // px: half the robot's width there (Pip's body)
 const APPEAR_MS = 300; // it fades in with the tagline
 // ... and what it does there before planning: stay still, turn around, roll
 // off, and look one way and the other. Each move eases in and out.
-const HOME_STEP = 18; // px from its bullet to where it plans from
+const HOME_STEP = 18; // px from its spot to where it plans from
 const WAKE_STEPS = [
   { pause: 1500 },
   { turnTo: Math.PI },
@@ -69,7 +69,7 @@ const WAKE_STEPS = [
   { greet: true },
   { pause: 900 },
 ];
-// Woken at home: out of its bullet with a start, and off its doorstep
+// Woken at home: a start, and off its doorstep
 const HOME_WAKE_STEPS = [{ pause: 500 }, { turnTo: Math.PI }, { pause: 150 }, { drive: HOME_STEP }, { pause: 300 }];
 const WAKE_TURN_RATE = 3.5; // rad/s
 const WAKE_SPEED = 45; // px/s
@@ -374,7 +374,7 @@ const startPose = (hero) => {
   const slide = style.transform === "none" ? { m41: 0, m42: 0 } : new DOMMatrixReadOnly(style.transform);
   const origin = hero.getBoundingClientRect();
   return {
-    x: at.left - slide.m41 - origin.left - BULLET_GAP_EM * parseFloat(style.fontSize) - ROBOT_RADIUS,
+    x: at.left - slide.m41 - origin.left - BULLET_GAP_EM * parseFloat(style.fontSize) - ROBOT_HALF,
     y: at.top - slide.m42 - origin.top,
     theta: 0,
   };
@@ -481,16 +481,17 @@ function PlannerBackground({ heroRef, startDelay }) {
     let outgoing = null; // { query, from }
     let robot = null; // { x, y, theta, alpha }
     let drive = null;
-    // Scripted moves (on load, going into its bullet, coming out):
-    // { moves, startedAt, bulletMs (posing as the bullet till then), then,
+    // Scripted moves (on load, going home to its spot, coming out):
+    // { moves, startedAt, bulletMs (still at its spot till then), then,
     // since (going in: the reader's last input when it set off) }
     let waking = null;
     let homing = null; // on its way home: { since, home }
-    let atHome = false; // asleep in its bullet
+    let atHome = false; // asleep at its spot
     let away = false; // the page robot has the robot
     let carried = false; // the reader is carrying it (RobotLayer)
     let heldGoal = null; // where it was headed when picked up: { goal, requested }
     let napping = false; // stopped after QUIET_QUERIES, asleep
+    let fadeFrame = 0; // its last plan fading as it falls asleep
     let quiet = { since: -Infinity, count: 0 }; // queries since the reader's last input
     let offset = { x: 0, y: 0 }; // the hero's place on the page
     let space = null; // where it may go: { width, height, obstacles }
@@ -532,6 +533,7 @@ function PlannerBackground({ heroRef, startDelay }) {
 
     const stopAll = () => {
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(fadeFrame);
       clearTimeout(holdTimer);
       running = false;
       holding = false;
@@ -540,7 +542,7 @@ function PlannerBackground({ heroRef, startDelay }) {
       atHome = false;
     };
 
-    // Its bullet, and its doorstep (where it rolls off to plan), hero px
+    // Its spot, and its doorstep (where it rolls off to plan), hero px
     const homePose = () => {
       const bullet = startPose(hero);
       return bullet && { bullet, porch: { x: bullet.x - HOME_STEP, y: bullet.y } };
@@ -551,11 +553,32 @@ function PlannerBackground({ heroRef, startDelay }) {
       drive = null;
       current = nextQuery();
     };
-    // Into its bullet, to sleep
+    // Asleep, its last plan fades away, leaving it alone where it rests
+    const fadePlan = () => {
+      cancelAnimationFrame(fadeFrame);
+      const query = current;
+      current = null;
+      outgoing = null;
+      if (!query) return;
+      const from = performance.now();
+      const step = (now) => {
+        if (!napping) return; // woken: planning takes the canvas back
+        const alpha = 1 - (now - from) / REST_FADE_MS;
+        if (alpha <= 0) {
+          clearCanvas(canvas);
+          return;
+        }
+        render(canvas, [{ query, alpha }], time);
+        fadeFrame = requestAnimationFrame(step);
+      };
+      fadeFrame = requestAnimationFrame(step);
+    };
+    // Into its spot, to sleep
     const tuckIn = () => {
       homing = null;
       atHome = true;
       napping = true;
+      fadePlan();
       report("bullet");
       character.doze(performance.now(), { yawn: false });
     };
@@ -578,6 +601,7 @@ function PlannerBackground({ heroRef, startDelay }) {
       if (!there) {
         homing = null;
         napping = true;
+        fadePlan();
         report("wait");
         character.doze();
         return;
@@ -615,10 +639,11 @@ function PlannerBackground({ heroRef, startDelay }) {
         if (character.lastInput !== quiet.since) quiet = { since: character.lastInput, count: 0 };
         if (!reset && quiet.count >= QUIET_QUERIES) {
           // Left alone a while: it goes home to sleep (or dozes here, if
-          // it can't find its bullet)
+          // it can't find its spot)
           const home = homePose();
           if (!home) {
             napping = true;
+            fadePlan();
             character.doze();
             return;
           }
@@ -668,7 +693,7 @@ function PlannerBackground({ heroRef, startDelay }) {
       lastNow = now;
 
       if (waking) {
-        // Going into its bullet, it turns back if you stir
+        // Going into its spot, it turns back if you stir
         if (waking.since !== undefined && character.lastInput !== waking.since) {
           const { home } = waking;
           waking = null;
@@ -685,7 +710,7 @@ function PlannerBackground({ heroRef, startDelay }) {
             if (event.name === "greet") character.greet();
           }
         }
-        // Still, it is the tagline's bullet; once it moves, a robot
+        // Still at its spot; once it moves, under way
         report(t < waking.bulletMs ? "bullet" : "wake");
         if (pose.done) {
           const { then } = waking;
@@ -732,6 +757,7 @@ function PlannerBackground({ heroRef, startDelay }) {
             // No way home from here: it dozes where it is
             homing = null;
             napping = true;
+            fadePlan();
             report("wait");
             character.doze();
             return;
@@ -774,7 +800,7 @@ function PlannerBackground({ heroRef, startDelay }) {
         if (reduceMotion) {
           current.finish();
           render(canvas, [{ query: current, alpha: 1 }], Infinity);
-          // Still, it stays the tagline's bullet
+          // Still, it stays at its spot
           report(first ? "bullet" : "wait");
           return;
         }
@@ -872,7 +898,7 @@ function PlannerBackground({ heroRef, startDelay }) {
     robotLive.setControls(controls);
 
     // Woken from its nap (or stirred before it dropped off): it carries on;
-    // at home, it pops out of its bullet and rolls off its doorstep first
+    // at home, it starts and rolls off its doorstep first
     const unsubscribeCharacter = character.subscribe((event) => {
       if ((event !== "wake" && event !== "stir") || !napping) return;
       napping = false;
@@ -951,6 +977,7 @@ function PlannerBackground({ heroRef, startDelay }) {
     return () => {
       cancelled = true;
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(fadeFrame);
       clearTimeout(delayTimer);
       clearTimeout(holdTimer);
       clearTimeout(resizeTimer);

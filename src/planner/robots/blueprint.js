@@ -1,4 +1,4 @@
-import { AMBER, angleTo, BULLET_RADIUS, clamp01, easeOut, GREY, HOP_PEAK, INK, lerp } from "./shared";
+import { AMBER, angleTo, clamp01, easeOut, GREY, HOP_PEAK, INK, lerp } from "./shared";
 
 // The robot as a technical drawing of itself, in the planner tree's own
 // hairlines: its base's outline, the two wheels in their wells, the lidar
@@ -17,10 +17,6 @@ import { AMBER, angleTo, BULLET_RADIUS, clamp01, easeOut, GREY, HOP_PEAK, INK, l
 //              line marking the lift, "z"
 //   confused:  the bearing to where it couldn't go, marked ×
 //   asleep:    every line goes dashed and dim
-//   on load:   camouflaged as the tagline's bullet: the bullet's amber disc,
-//              but on it, inked, its lidar and the centre mark that is its
-//              eye (it blinks, and leans your way); breaking cover, the disc
-//              shrinks away as its lines draw themselves
 
 const R = 8.5; // px: the base's radius
 const LINE = (a) => GREY(0.75 * a); // its outlines
@@ -41,112 +37,56 @@ const LIFT_SCALE = 0.06;
 
 const lineDash = (ctx, sleep) => ctx.setLineDash(sleep > 0.01 ? [2, 2.2 * sleep] : []);
 
-// A path traced only `p` (0…1) of its length, by dashing it: for lines
-// that draw themselves
-const partial = (ctx, length, p) => ctx.setLineDash(p >= 1 ? [] : [Math.max(0.01, length * p), length]);
-
-// Its drawing, in its own frame (x ahead). `p` says how much of each part
-// is drawn (the unfold); the bullet, while it is still there, sits between
-// the base's fill and its lines
-// Camouflaged as the bullet, `scale` its size (shrinking as it unfolds): the
-// bullet's disc, with its lidar and eye inked on it in place of the mark
-const CAMO_LEAN = 0.7; // px its eye leans toward what it looks at
-const drawCamo = (ctx, s, scale, alpha) => {
-  ctx.save();
-  ctx.scale(scale, scale);
+// Its drawing, in its own frame (x ahead)
+const drawBody = (ctx, s, alpha) => {
+  // The base: page-coloured, on a dark edge that keeps tree lines off it
   ctx.beginPath();
-  ctx.arc(0, 0, BULLET_RADIUS, 0, Math.PI * 2);
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = INK(0.9 * alpha);
-  ctx.stroke();
-  ctx.fillStyle = AMBER(0.95 * alpha);
+  ctx.arc(0, 0, R, 0, Math.PI * 2);
+  ctx.fillStyle = INK(s.alpha); // the fill stays the page, even when it dims
   ctx.fill();
-  const toward = s.gaze - s.theta;
-  const lean = s.reduced ? 0 : CAMO_LEAN;
-  ctx.translate(LIDAR.x + lean * Math.cos(toward), lean * Math.sin(toward));
-  ctx.lineWidth = 1;
-  ctx.setLineDash([]);
-  ctx.beginPath();
-  ctx.arc(0, 0, LIDAR.r, 0, Math.PI * 2);
-  ctx.strokeStyle = INK(0.7 * alpha);
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = INK(0.9 * s.alpha);
   ctx.stroke();
+  ctx.lineWidth = LINE_W;
+  ctx.beginPath();
+  ctx.arc(0, 0, R, 0, Math.PI * 2);
+  ctx.strokeStyle = LINE(alpha);
+  lineDash(ctx, s.sleep);
+  ctx.stroke();
+  // The wheels in their wells, and the lidar with its centre mark
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.rect(-WHEEL.length / 2, side * WHEEL.y - WHEEL.width / 2, WHEEL.length, WHEEL.width);
+    lineDash(ctx, s.sleep);
+    ctx.stroke();
+  }
+  ctx.beginPath();
+  ctx.arc(LIDAR.x, 0, LIDAR.r, 0, Math.PI * 2);
+  lineDash(ctx, s.sleep);
+  ctx.stroke();
+  // Its centre mark is its eye: it shrinks to a point as it blinks
   const mark = LIDAR.mark * (0.3 + 0.7 * s.open);
   ctx.beginPath();
-  ctx.moveTo(-mark, 0);
-  ctx.lineTo(mark, 0);
-  ctx.moveTo(0, -mark);
-  ctx.lineTo(0, mark);
-  ctx.strokeStyle = INK(0.85 * alpha);
+  ctx.moveTo(LIDAR.x - mark, 0);
+  ctx.lineTo(LIDAR.x + mark, 0);
+  ctx.moveTo(LIDAR.x, -mark);
+  ctx.lineTo(LIDAR.x, mark);
+  ctx.setLineDash([]);
+  ctx.strokeStyle = GREY(0.45 * alpha);
   ctx.stroke();
-  ctx.restore();
-};
-
-const drawBody = (ctx, s, p, alpha, bullet) => {
-  const opaque = s.alpha; // the fill stays the page, even when it dims
-  const { base, parts, arrow } = p;
-  const r = lerp(BULLET_RADIUS, R, Math.min(1, base * 1.4));
-  // The base: page-coloured, on a dark edge that keeps tree lines off it
-  if (base > 0) {
-    const fill = opaque * Math.min(1, base * 2);
-    ctx.beginPath();
-    ctx.arc(0, 0, r, 0, Math.PI * 2);
-    ctx.fillStyle = INK(fill);
-    ctx.fill();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = INK(0.9 * fill);
-    ctx.stroke();
-  }
-  if (bullet > 0) drawCamo(ctx, s, bullet, s.alpha * Math.min(1, bullet * 1.5));
-  ctx.lineWidth = LINE_W;
-  if (base > 0) {
-    ctx.beginPath();
-    ctx.arc(0, 0, r, 0, Math.PI * 2);
-    ctx.strokeStyle = LINE(alpha);
-    if (base < 1) partial(ctx, 2 * Math.PI * r, base);
-    else lineDash(ctx, s.sleep);
-    ctx.stroke();
-  }
-  // The wheels in their wells, and the lidar with its centre mark
-  if (parts > 0) {
-    ctx.strokeStyle = LINE(alpha);
-    for (const side of [-1, 1]) {
-      ctx.beginPath();
-      ctx.rect(-WHEEL.length / 2, side * WHEEL.y - WHEEL.width / 2, WHEEL.length, WHEEL.width);
-      if (parts < 1) partial(ctx, 2 * (WHEEL.length + WHEEL.width), parts);
-      else lineDash(ctx, s.sleep);
-      ctx.stroke();
-    }
-    ctx.beginPath();
-    ctx.arc(LIDAR.x, 0, LIDAR.r, 0, Math.PI * 2);
-    if (parts < 1) partial(ctx, 2 * Math.PI * LIDAR.r, parts);
-    else lineDash(ctx, s.sleep);
-    ctx.stroke();
-    // Its centre mark is its eye: it shrinks to a point as it blinks
-    const mark = LIDAR.mark * parts * (0.3 + 0.7 * s.open);
-    ctx.beginPath();
-    ctx.moveTo(LIDAR.x - mark, 0);
-    ctx.lineTo(LIDAR.x + mark, 0);
-    ctx.moveTo(LIDAR.x, -mark);
-    ctx.lineTo(LIDAR.x, mark);
-    ctx.setLineDash([]);
-    ctx.strokeStyle = GREY(0.45 * alpha);
-    ctx.stroke();
-  }
   // The heading arrow: its velocity vector
-  if (arrow > 0) {
-    const length = (ARROW.rest + Math.min(ARROW.max, s.speed * ARROW.perSpeed)) * arrow;
-    const tip = ARROW.from + length;
-    ctx.beginPath();
-    ctx.moveTo(ARROW.from - 1.5, 0);
-    ctx.lineTo(tip, 0);
-    ctx.moveTo(tip - ARROW.head, -ARROW.head * 0.75);
-    ctx.lineTo(tip, 0);
-    ctx.lineTo(tip - ARROW.head, ARROW.head * 0.75);
-    ctx.setLineDash([]);
-    ctx.lineWidth = 1.25;
-    ctx.strokeStyle = AMBER(0.9 * alpha * (1 - 0.4 * s.sleep));
-    ctx.stroke();
-  }
+  const length = ARROW.rest + Math.min(ARROW.max, s.speed * ARROW.perSpeed);
+  const tip = ARROW.from + length;
+  ctx.beginPath();
+  ctx.moveTo(ARROW.from - 1.5, 0);
+  ctx.lineTo(tip, 0);
+  ctx.moveTo(tip - ARROW.head, -ARROW.head * 0.75);
+  ctx.lineTo(tip, 0);
+  ctx.lineTo(tip - ARROW.head, ARROW.head * 0.75);
+  ctx.setLineDash([]);
+  ctx.lineWidth = 1.25;
+  ctx.strokeStyle = AMBER(0.9 * alpha * (1 - 0.4 * s.sleep));
+  ctx.stroke();
 };
 
 // A tiny label in the drawing's hand, set beside a point in the direction
@@ -277,13 +217,6 @@ const look = {
   extent: R + 34,
 
   draw(ctx, s, memo) {
-    if (s.unfold <= 0) {
-      ctx.save();
-      ctx.rotate(s.theta);
-      drawCamo(ctx, s, 1, s.alpha);
-      ctx.restore();
-      return;
-    }
     const a = s.alpha;
     ctx.save();
     // Whole device pixels at its centre, so straight lines stay crisp
@@ -300,10 +233,9 @@ const look = {
     }
     const since = s.t - (memo.movedAt === undefined ? -Infinity : memo.movedAt);
     const far = s.pointer && Math.hypot(s.pointer.x - s.x, s.pointer.y - s.y) > R + 10;
-    const bearing = watching && far && s.unfold >= 1 ? 1 - clamp01((since - BEARING_HOLD_MS) / BEARING_FADE_MS) : 0;
+    const bearing = watching && far ? 1 - clamp01((since - BEARING_HOLD_MS) / BEARING_FADE_MS) : 0;
     memo.bearingShown = bearing > 0;
 
-    const u = s.unfold;
     // Held up, or in a hop (dimensioned the same)
     const lift = Math.max(s.carried || s.lift > 0 ? s.lift : 0, clamp01(s.hop / HOP_PEAK));
     const rise = LIFT_PX * lift;
@@ -312,7 +244,7 @@ const look = {
 
     // Notes on the ground, under it
     if (lift > 0.01) drawLift(ctx, rise, lift, a);
-    if (s.activity === "search" && !s.reduced && u >= 1) drawRing(ctx, s, a * notes);
+    if (s.activity === "search" && !s.reduced) drawRing(ctx, s, a * notes);
     if (bearing > 0) drawBearing(ctx, s, s.theta, a * bearing);
     if (s.mood.confused > 0) drawBlocked(ctx, s, s.mood.confused, a);
 
@@ -323,14 +255,7 @@ const look = {
     if (s.mood.happy > 0) drawTicks(ctx, s.mood.happy, a);
     if (s.mood.dizzy > 0) drawRotation(ctx, s.mood.dizzy, a);
     ctx.rotate(s.theta);
-    const progress = {
-      base: clamp01((u - 0.05) / 0.5),
-      parts: clamp01((u - 0.4) / 0.45),
-      arrow: clamp01((u - 0.5) / 0.5),
-    };
-    // Breaking cover, the disc shrinks away as its lines draw themselves
-    const bullet = u < 1 ? 1 - clamp01(u / 0.5) : 0;
-    drawBody(ctx, s, progress, a * dim, bullet);
+    drawBody(ctx, s, a * dim);
     ctx.restore();
     ctx.restore();
   },

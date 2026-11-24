@@ -29,8 +29,9 @@ import styles from "./robotLayer.module.scss";
 //            looks up when you stop;
 //   sleep:   left alone, it fidgets while it waits, then yawns and dozes
 //            off once it stands still (in the hero after a few routes, at
-//            home in the tagline's bullet; further down the page after a
-//            while); any input wakes it with a start (a "!", and a jump);
+//            home at its spot before the tagline; further down the page
+//            after a while); any input wakes it with a start (a "!", and a
+//            jump);
 //   looks:   right-click it to choose how it looks.
 // With reduced motion it is drawn still, and none of this happens.
 
@@ -48,7 +49,6 @@ const LONG_PRESS_MS = 400;
 const PRESS_SLOP_PX = 8;
 const PICKUP_MS = 200; // picked up, it comes to the hand
 const LAND_MS = 260;
-const UNFOLD_MS = 750;
 const SPEED_SMOOTH_MS = 90;
 const POINTER_GONE_MS = 1500; // after the pointer leaves the page
 // Its gaze, like a real robot's: it sees the pointer where it was this long
@@ -101,7 +101,6 @@ const stillState = (look, icon, dpr) => ({
   gaze: icon.heading,
   look: 0,
   pointer: null,
-  unfold: 1,
   alpha: 1,
   reduced: true,
 });
@@ -136,14 +135,7 @@ function RobotLayer() {
 
   useEffect(() => {
     const look = LOOKS.find((l) => l.id === lookId);
-    const previous = lookRef.current;
-    lookRef.current = {
-      look,
-      memo: {},
-      // Changed while on the page: it folds back to the bullet and unfolds
-      // as the new look
-      swappedAt: previous && previous.look.id !== lookId ? performance.now() : null,
-    };
+    lookRef.current = { look, memo: {} };
     // The drivers keep content clear of its body and of the handle around it,
     // so the handle never takes a click meant for a link (their margins are
     // set for today's disc, which reached 1.5px past them)
@@ -168,15 +160,10 @@ function RobotLayer() {
     let vx = 0;
     let vy = 0;
     let turn = 0;
-    let wasBullet = false;
-    let unfoldFrom = null;
-    let foldFrom = null; // going back into its bullet (home, to sleep)
-    let lastActivity = null;
     let pet = null; // strokes over it: { dir, travel, turns: [times] }
     const scrolls = []; // [{ t, top }], recent
     let readFrom = null; // reading along since
     let readUntil = -Infinity; // and stopped then
-    let seenSwap = null;
     let pointer = null; // a mouse or pen: { x, y } viewport px
     const pointerTrail = []; // and where it was: [{ x, y, t }], recent
     let gazeNow = null; // rad, where its gaze is turned
@@ -313,30 +300,6 @@ function RobotLayer() {
       const speed = Math.hypot(vx, vy);
       speedNow = speed;
 
-      // Camouflaged as the bullet, then breaking cover; and again when its
-      // look is changed
-      const { swappedAt } = lookRef.current;
-      if (swappedAt !== null && swappedAt !== seenSwap) {
-        seenSwap = swappedAt;
-        if (activity !== "bullet") {
-          wasBullet = true;
-          unfoldFrom = swappedAt;
-        }
-      }
-      let unfold = 1;
-      if (activity === "bullet") {
-        // Back into its bullet (gone home to sleep): it folds up
-        if (lastActivity !== null && lastActivity !== "bullet" && lastActivity !== "hidden") foldFrom = now;
-        wasBullet = true;
-        unfoldFrom = null;
-        unfold = foldFrom === null ? 0 : 1 - easeInOut(clamp01((now - foldFrom) / UNFOLD_MS));
-      } else if (wasBullet) {
-        foldFrom = null;
-        if (unfoldFrom === null) unfoldFrom = now;
-        unfold = easeInOut(clamp01((now - unfoldFrom) / UNFOLD_MS));
-      }
-      lastActivity = activity;
-
       // What it looks at: you, while you hold it or point near; where it is
       // going while it searches; ahead while it drives
       const noticed = pointerTrail.filter((p) => p.t <= now - GAZE.noticeMs).pop();
@@ -414,11 +377,10 @@ function RobotLayer() {
           gaze,
           look: look01,
           pointer: seen,
-          unfold,
           alpha: state.alpha === undefined ? 1 : state.alpha,
           reduced: reduceMotion,
         },
-        moving: speed > 2 || Math.abs(turn) > 0.05 || (unfold > 0 && unfold < 1) || !!reading,
+        moving: speed > 2 || Math.abs(turn) > 0.05 || !!reading,
         gazeSettling,
       };
     };

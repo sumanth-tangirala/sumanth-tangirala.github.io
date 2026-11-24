@@ -1,4 +1,4 @@
-import { AMBER, angleTo, BULLET_RADIUS, clamp01, CREAM, easeInOut, easeOut, GREY, HOP_PEAK, INK, lerp } from "./shared";
+import { AMBER, angleTo, clamp01, CREAM, easeInOut, easeOut, GREY, HOP_PEAK, INK, lerp } from "./shared";
 
 // A six-legged walking robot seen from above: an amber shell with a servo at
 // each hip, a small dark sensor head on its front with two eyes, and six
@@ -18,12 +18,7 @@ import { AMBER, angleTo, BULLET_RADIUS, clamp01, CREAM, easeInOut, easeOut, GREY
 //   dizzy:    legs splayed, scrambling to keep up with the spin;
 //   carried:  lifted, legs dangling close under it, paddling slowly;
 //   confused: its head tilts one way and the other;
-//   asleep:   legs folded under it, body lowered, eyes shut;
-//   on load:  camouflaged as the tagline's bullet: its shell drawn in to the
-//             bullet's disc, its legs folded out of sight under it; only its
-//             head, where the bullet's mark would be, gives it away (it
-//             watches you, and blinks). Breaking cover, its shell grows and
-//             its legs unfold from under it.
+//   asleep:   legs folded under it, body lowered, eyes shut.
 
 // The body, px (x forward, y to its right)
 const BODY = { a: 8.4, b: 6.0 }; // semi-axes of the shell
@@ -80,9 +75,6 @@ const LIFT_SCALE = 0.06;
 const SHADOW = { x: 2, y: 4.5, spread: 2.5, alpha: 0.5 }; // carried: px off, px wider than its shell
 const TUCK = -1.3; // px out from its hip a folded foot rests (under the shell)
 const SLEEP_SCALE = 0.05;
-// Unfolding: its legs start this small, folded under the disc, and reach
-// their size by this far through (0…1); they stand from this far through
-const UNFOLD = { scale: 0.55, grow: 0.35, stand: 0.2 };
 
 const FOOT_TO_HIP = LEGS.map((leg) => Math.hypot(leg.fx - leg.hx, leg.fy - leg.hy));
 // Each leg's way out from its hip, at rest
@@ -234,8 +226,8 @@ const walk = (memo, s, theta, splay, calm) => {
 };
 
 // An oval a little squarer than an ellipse (a superellipse, |x/a|^n +
-// |y/b|^n = 1): a machined plate rather than a beetle's back. n = 2 is the
-// bullet's disc.
+// |y/b|^n = 1): a machined plate rather than a beetle's back. n = 2 is an
+// ellipse.
 const oval = (ctx, a, b, n) => {
   ctx.beginPath();
   for (let i = 0; i < OVAL_POINTS; i++) {
@@ -257,7 +249,7 @@ const shell = (ctx, a, b, n, alpha) => {
   ctx.strokeStyle = INK(0.92 * alpha);
   ctx.stroke();
   // Over the page's own colour first, so the legs folded beneath it don't
-  // show through: the same amber as the bullet's
+  // show through: the site's amber
   ctx.fillStyle = INK(alpha);
   ctx.fill();
   ctx.fillStyle = AMBER(0.95 * alpha);
@@ -282,7 +274,6 @@ const look = {
   },
 
   draw(ctx, s, memo) {
-    const u = s.unfold;
     const t = s.t;
     const alpha = s.alpha;
     // Held up, or in a hop: its legs hang
@@ -360,10 +351,6 @@ const look = {
 
     // Each leg's hip, knee and foot in its own frame
     const legOut = memo.legOut || (memo.legOut = LEGS.map(() => ({ kx: 0, ky: 0, fx: 0, fy: 0, lift: 0 })));
-    // Unfolding: the legs first grow out folded from under the disc, then
-    // unfold to stand
-    const unfold = easeInOut(clamp01((u - UNFOLD.stand) / (1 - UNFOLD.stand)));
-    const legScale = lerp(UNFOLD.scale, 1, easeOut(clamp01(u / UNFOLD.grow)));
     const searching = s.activity === "search" && memo.searchAt !== undefined;
     const tapP = searching ? (t - memo.searchAt - TAP.delay) / TAP.every : -1;
     for (let i = 0; i < 6; i++) {
@@ -409,18 +396,12 @@ const look = {
         height = lerp(height, -PADDLE.hang, lift);
         up *= 1 - lift;
       }
-      // Unfolding: from folded under the disc
-      if (unfold < 1) {
-        fx = lerp(tuckX, fx, unfold);
-        fy = lerp(tuckY, fy, unfold);
-      }
       solveLeg(i, fx, fy, height, legOut[i]);
       legOut[i].lift = up;
     }
 
     // Legs: their dark under-strokes, then the segments, then the joints
     ctx.save();
-    ctx.scale(legScale, legScale);
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.beginPath();
@@ -461,24 +442,19 @@ const look = {
     }
     ctx.restore();
 
-    // The shell, grown from the bullet's disc, its top plate inset
-    const grow = easeOut(clamp01(u / 0.6));
-    const a = lerp(BULLET_RADIUS, BODY.a, grow);
-    const b = lerp(BULLET_RADIUS, BODY.b, grow);
-    const n = lerp(2, SHELL_N, grow);
-    shell(ctx, a, b, n, alpha);
-    oval(ctx, a - RIM, b - RIM, n);
+    // The shell, its top plate inset
+    shell(ctx, BODY.a, BODY.b, SHELL_N, alpha);
+    oval(ctx, BODY.a - RIM, BODY.b - RIM, SHELL_N);
     ctx.lineWidth = 0.7;
-    ctx.strokeStyle = INK(0.3 * alpha * grow);
+    ctx.strokeStyle = INK(0.3 * alpha);
     ctx.stroke();
     // The hip servos on its edge, each turned along its leg
-    const servo = clamp01((u - 0.5) / 0.4) * alpha;
+    const servo = alpha;
     if (servo > 0) {
       for (let i = 0; i < 6; i++) {
         const leg = LEGS[i];
         const o = legOut[i];
         ctx.save();
-        ctx.scale(legScale, legScale);
         ctx.translate(leg.hx, leg.hy);
         ctx.rotate(Math.atan2(o.ky - leg.hy, o.kx - leg.hx));
         ctx.beginPath();
