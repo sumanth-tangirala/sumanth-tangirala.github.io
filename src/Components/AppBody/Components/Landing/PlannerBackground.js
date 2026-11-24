@@ -759,6 +759,15 @@ function PlannerBackground({ heroRef, startDelay }) {
       const first = startPose(hero);
       robot = first && { ...first, alpha: 1 };
       robotHandoff.reportHeroPose(robot);
+      // Asleep (the layout changed while it slept, or the page's code was
+      // reloaded): it stays asleep, tucked in at home, until it is woken
+      if (character.asleep && robot && !reduceMotion) {
+        current = null;
+        atHome = true;
+        napping = true;
+        report("bullet");
+        return;
+      }
       if (reduceMotion || !robot) {
         current = nextQuery();
         robot = robot || { ...current.start, alpha: reduceMotion ? 1 : 0 };
