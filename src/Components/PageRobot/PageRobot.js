@@ -23,7 +23,8 @@ import styles from "./pageRobot.module.scss";
 // of their own (ITEMS). It takes the robot over where the hero left it once the
 // hero has scrolled out of view (or the reader carries it out of the hero and
 // sets it down below), and drives it back into the hero when the reader
-// returns there; the hero's planner carries on from it. Its tree and
+// returns there (or they carry it back in); the hero's planner carries on
+// from it. Its tree and
 // path are fainter than the hero's: they sit beside what is being read.
 // Where the margins are too narrow for it (phones), or with reduced motion,
 // the robot stays in the hero.
@@ -613,12 +614,12 @@ function PageRobot({ sectionRefs }) {
       moveWindow(view);
       if (world.gutter < MIN_GUTTER) {
         // No room beside the content (a narrow screen): it belongs in the hero
-        robotHandoff.offerToTake(null);
+        robotHandoff.offerToTake("page", null);
         if (active) giveUp();
         render();
         return;
       }
-      robotHandoff.offerToTake(taker);
+      robotHandoff.offerToTake("page", taker);
       // In the reader's hand: whoever has it keeps it until it is set down
       if (robotHandoff.inHand) {
         render();
@@ -775,6 +776,17 @@ function PageRobot({ sectionRefs }) {
       },
     };
 
+    // Carried back into the hero and set down there, it is the hero's again
+    const unsubscribeHandoff = robotHandoff.subscribe((owner) => {
+      if (owner !== "hero" || !active) return;
+      active = false;
+      trip = null;
+      heldTrip = null;
+      carried = false;
+      robotLive.releaseControls(controls);
+      render();
+    });
+
     const onScroll = () => {
       clearTimeout(settleTimer);
       settleTimer = setTimeout(onSettle, SETTLE_MS);
@@ -817,7 +829,8 @@ function PageRobot({ sectionRefs }) {
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("pointerout", onPointerOut);
       resize.disconnect();
-      robotHandoff.offerToTake(null);
+      unsubscribeHandoff();
+      robotHandoff.offerToTake("page", null);
       if (active) giveUp();
       robotLive.releaseControls(controls);
     };

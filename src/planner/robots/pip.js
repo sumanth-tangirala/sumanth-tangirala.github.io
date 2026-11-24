@@ -311,8 +311,8 @@ const look = {
 
   // The bubbles in its own pixel font, on its grid, faded in palette steps
   drawBubble(ctx, glyph, { x, y, size, alpha }, s) {
-    // A "z" steps down a size as it rises (RobotLayer shrinks it 16 → 7)
-    const name = glyph !== "z" ? glyph : size > 13 ? "zBig" : size > 10 ? "z" : "zSmall";
+    // A "z" steps down a size as it rises (RobotLayer shrinks it 12 → 6)
+    const name = glyph !== "z" ? glyph : size > 10.5 ? "z" : "zSmall";
     const rows = GLYPHS[name];
     if (!rows || alpha <= 0.05) return;
     const grid = gridFor(ctx, s);

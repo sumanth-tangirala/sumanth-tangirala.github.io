@@ -17,8 +17,8 @@ import styles from "./robotLayer.module.scss";
 //            dizzy;
 //   carry:   drag it somewhere (on touch, hold it first: a swipe that
 //            starts on it scrolls the page); it plans on from where it is
-//            set down. Out of the hero and set down below it, the page
-//            robot has it from there;
+//            set down: by the hero's planner in the hero, by the page
+//            robot below it, whichever had it;
 //   send:    tap free space it could drive to (the pointer becomes a goal
 //            marker there) and it plans a route there;
 //   pet:     stroke it back and forth (a mouse or pen, no click) and it
@@ -33,6 +33,7 @@ import styles from "./robotLayer.module.scss";
 // With reduced motion it is drawn still, and none of this happens.
 
 const BUBBLE_ROOM = 46; // px above it for its "z"s, "?" and "!"
+const Z_PX = { from: 12, to: 6 }; // a "z" shrinks as it floats off
 // Px around its body that still takes hold of it: small, since it drives
 // close to the hero's links and must never take their clicks
 const HIT_SLOP = { fine: 3, coarse: 8 };
@@ -46,6 +47,10 @@ const LAND_MS = 260;
 const UNFOLD_MS = 750;
 const SPEED_SMOOTH_MS = 90;
 const POINTER_GONE_MS = 1500; // after the pointer leaves the page
+// Its gaze, like a real robot's: it sees the pointer where it was this long
+// ago (ms), and turns its gaze like a motor, speeding up and slowing into
+// place (critically damped, never past it), as the page robot turns
+const GAZE = { noticeMs: 250, stiffness: 90, maxRate: 5 };
 // Booped, it hops out from under the pointer (which hid its face), to land
 // facing it this far (px) from where it points: above it if there is room,
 // as a pointer hangs below where it points, and farther if below. On touch
@@ -169,6 +174,9 @@ function RobotLayer() {
     let readUntil = -Infinity; // and stopped then
     let seenSwap = null;
     let pointer = null; // a mouse or pen: { x, y } viewport px
+    const pointerTrail = []; // and where it was: [{ x, y, t }], recent
+    let gazeNow = null; // rad, where its gaze is turned
+    let gazeSpin = 0; // rad/s
     let pointerLeftAt = -Infinity;
     // Pressed on it: { id, kind, from, at, client, grab, pose, moved, timer,
     // controls, liftFrom, liftAt }
@@ -327,7 +335,8 @@ function RobotLayer() {
 
       // What it looks at: you, while you hold it or point near; where it is
       // going while it searches; ahead while it drives
-      const seen = pointer && !(now - pointerLeftAt > POINTER_GONE_MS && pointerLeftAt > 0) ? toPage(pointer.x, pointer.y) : null;
+      const noticed = pointerTrail.filter((p) => p.t <= now - GAZE.noticeMs).pop();
+      const seen = noticed && !(now - pointerLeftAt > POINTER_GONE_MS && pointerLeftAt > 0) ? toPage(noticed.x, noticed.y) : null;
       let gaze = pose.theta;
       if (seen && (activity === "wait" || activity === "wake" || carry)) gaze = Math.atan2(seen.y - pose.y, seen.x - pose.x);
       else if (state.goal && activity === "search") gaze = Math.atan2(state.goal.y - pose.y, state.goal.x - pose.x);
@@ -339,6 +348,24 @@ function RobotLayer() {
       if (fidget && fidget.kind === "glance") gaze = pose.theta + (fidget.k < 0.5 ? -0.7 : 0.7) * Math.sin(Math.PI * ((fidget.k * 2) % 1));
       const reading = readingAt(now, activity);
       if (reading && reading.line !== null) gaze = pose.theta + 0.5 * (2 * reading.line - 1);
+      // Its gaze turns there, rather than jumping
+      if (gazeNow === null || reduceMotion) {
+        gazeNow = gaze;
+        gazeSpin = 0;
+      } else {
+        const seconds = dt / 1000;
+        const error = angleTo(gazeNow, gaze);
+        gazeSpin += (GAZE.stiffness * error - 2 * Math.sqrt(GAZE.stiffness) * gazeSpin) * seconds;
+        gazeSpin = Math.max(-GAZE.maxRate, Math.min(GAZE.maxRate, gazeSpin));
+        gazeNow += gazeSpin * seconds;
+        if (Math.abs(error) < 0.003 && Math.abs(gazeSpin) < 0.02) {
+          gazeNow = gaze;
+          gazeSpin = 0;
+        }
+      }
+      const gazeSettling =
+        gazeSpin !== 0 || (pointerTrail.length > 0 && pointerTrail[pointerTrail.length - 1].t > now - GAZE.noticeMs);
+      gaze = gazeNow;
       const look01 = Math.max(-1, Math.min(1, angleTo(pose.theta, gaze) / 1.2));
 
       const mood = character.moods(now);
@@ -384,6 +411,7 @@ function RobotLayer() {
           reduced: reduceMotion,
         },
         moving: speed > 2 || Math.abs(turn) > 0.05 || (unfold > 0 && unfold < 1) || !!reading,
+        gazeSettling,
       };
     };
 
@@ -434,7 +462,8 @@ function RobotLayer() {
         const { at, trail } = zSides.get(index);
         const from = at(up);
         const a = Math.min(1, age / 0.12, (1 - age) / 0.3) * alpha;
-        bubble("z", from.x + trail[0] * (0.15 + age), from.y + trail[1] * age, 16 - 9 * age, a * s.alpha);
+        const size = Z_PX.from - (Z_PX.from - Z_PX.to) * age;
+        bubble("z", from.x + trail[0] * (0.15 + age), from.y + trail[1] * age, size, a * s.alpha);
       }
       if (!(s.mood.confused > 0) && !(s.mood.startled > 0)) {
         bubbleSide = null;
@@ -460,7 +489,7 @@ function RobotLayer() {
       const controls = robotLive.controls;
       const idle = state.activity === "wait" && !carry && !hop && !landing;
       character.update(now, !!(controls && controls.mayDoze) && state.activity === "wait", idle, look.fidgets || ["glance"]);
-      const { s, moving } = describe(pose, now, dt, look);
+      const { s, moving, gazeSettling } = describe(pose, now, dt, look);
       const half = Math.ceil(look.extent + BUBBLE_ROOM + HOP_PEAK);
       const dpr = s.dpr;
       const size = 2 * half;
@@ -495,6 +524,7 @@ function RobotLayer() {
       if (reduceMotion) return false;
       return (
         moving ||
+        gazeSettling ||
         !!carry ||
         !!landing ||
         !!hop ||
@@ -556,6 +586,9 @@ function RobotLayer() {
       character.input();
       if (event.pointerType === "touch") return;
       pointer = { x: event.clientX, y: event.clientY };
+      const now = performance.now();
+      pointerTrail.push({ ...pointer, t: now });
+      while (pointerTrail.length > 2 && pointerTrail[1].t < now - GAZE.noticeMs) pointerTrail.shift();
       pointerLeftAt = -Infinity;
       strokeAt(event);
       if (!frame) schedule(true);
@@ -640,8 +673,8 @@ function RobotLayer() {
     };
 
     // ---- carry: the handle ----
-    // Within where its driver may take it, or where the page robot would
-    // take it from the hero: the nearer
+    // Within where its driver may take it, or where the other would take it
+    // from there: the nearer
     const follow = (at) => {
       const want = { x: at.x - carry.grab.x, y: at.y - carry.grab.y };
       const taker = robotHandoff.taker;
@@ -725,10 +758,12 @@ function RobotLayer() {
       if (!was.moved) {
         if (event.type === "pointerup") boop(event);
       } else {
-        // Set it down where it may stand, nearest where it was let go: below
-        // the hero, the page robot takes it from there
+        // Set it down where it may stand, nearest where it was let go: in the
+        // hero, the hero has it from there; below it, the page robot
         const taker = robotHandoff.taker;
-        let pass = taker && pose.y > was.controls.bounds().bottom ? taker : null;
+        const heroHasIt = robotHandoff.owner === "hero";
+        const hero = heroHasIt ? was.controls.bounds() : taker && taker.bounds();
+        let pass = taker && (pose.y <= hero.bottom) !== heroHasIt ? taker : null;
         let to = pass && pass.place(pose.x, pose.y);
         if (!to) {
           pass = null;

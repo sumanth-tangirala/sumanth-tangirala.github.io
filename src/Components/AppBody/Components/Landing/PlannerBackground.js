@@ -93,6 +93,10 @@ const VISIBLE_TOP = 150;
 const VISIBLE_BOTTOM = 0.88; // × hero height
 const WIDE_BAND_TOP = 110; // fallback band when the visible one has no valid goal
 const WIDE_BAND_BOTTOM = 0.94;
+// With the hero scrolled part-way off screen, goals stay on the part still
+// shown: this far (px) below the screen's top (under the nav) and above its
+// bottom
+const ON_SCREEN = { below: 100, above: 40 };
 // Kept faint so the name, not the planner, holds the eye (the page robot's
 // plan, beside the reading, is fainter still)
 const TREE_ALPHA = 0.7;
@@ -106,14 +110,15 @@ const angleTo = (from, to) => Math.atan2(Math.sin(to - from), Math.cos(to - from
 const lerp = (a, b, t) => a + (b - a) * t;
 
 // A goal at least `clearance` from content and the minimum distance from
-// `start`: the diagonal of a square whose side is half the smaller hero
-// dimension. It prefers the clearly visible band and widens only if that has
-// no valid point; it never relaxes the distance.
-const sampleGoal = (start, width, height, obstacles, random, clearance) => {
-  const minDistance = (Math.SQRT2 * Math.min(width, height)) / 2;
+// `start`: the diagonal of a square whose side is half the smaller dimension
+// of the hero as shown. It prefers the clearly visible band and widens only if
+// that has no valid point. `shown`: the part of the hero on screen ({ top,
+// bottom }, hero px); goals keep to it while it has room for one, so the
+// robot never drives off screen. Only then is the whole hero used (and the
+// distance its own).
+const sampleGoal = (start, width, height, obstacles, random, clearance, shown) => {
   const side = Math.max(width * 0.04, clearance);
-  const isValid = (x, y) =>
-    Math.hypot(x - start.x, y - start.y) >= minDistance &&
+  const isClear = (x, y) =>
     obstacles.every(
       (o) =>
         x < o.left - clearance || x > o.right + clearance ||
@@ -123,11 +128,21 @@ const sampleGoal = (start, width, height, obstacles, random, clearance) => {
     [VISIBLE_TOP, height * VISIBLE_BOTTOM],
     [WIDE_BAND_TOP, height * WIDE_BAND_BOTTOM],
   ];
-  for (const [top, bottom] of bands) {
+  const tries = [
+    ...bands.map(([top, bottom]) => ({
+      top: Math.max(top, shown.top + ON_SCREEN.below),
+      bottom: Math.min(bottom, shown.bottom - ON_SCREEN.above),
+      span: Math.min(width, shown.bottom - shown.top),
+    })),
+    ...bands.map(([top, bottom]) => ({ top, bottom, span: Math.min(width, height) })),
+  ];
+  for (const { top, bottom, span } of tries) {
+    if (bottom <= top) continue;
+    const minDistance = (Math.SQRT2 * span) / 2;
     for (let i = 0; i < 400; i++) {
       const x = lerp(side, width - side, random());
       const y = lerp(top, bottom, random());
-      if (isValid(x, y)) return [x, y];
+      if (Math.hypot(x - start.x, y - start.y) >= minDistance && isClear(x, y)) return [x, y];
     }
   }
   return null;
@@ -147,7 +162,9 @@ const routeOffset = (a, b) => {
 
 // One planning query and its animation state. `from` is the robot's pose.
 const createQuery = (hero, random, { from, createdAt, goal: requested = null }) => {
-  const { width, height } = hero.getBoundingClientRect();
+  const rect = hero.getBoundingClientRect();
+  const { width, height } = rect;
+  const shown = { top: Math.max(0, -rect.top), bottom: Math.min(height, window.innerHeight - rect.top) };
   const narrow = width <= 720;
   const obstacles = measureObstacles(hero, OBSTACLE_MARGIN + robotLive.extraClearance);
   // The first query is composed: lower left to upper right (always farther
@@ -159,7 +176,7 @@ const createQuery = (hero, random, { from, createdAt, goal: requested = null }) 
   const motion = holonomic;
   const clearance = ENDPOINT_CLEARANCE;
   // A goal the reader asked for, else one sampled
-  const sampled = from && (requested || sampleGoal(from, width, height, obstacles, random, clearance));
+  const sampled = from && (requested || sampleGoal(from, width, height, obstacles, random, clearance, shown));
   const [start, goal] = sampled ? [from, sampled] : [composedStart, composedGoal];
   // Whether the robot may stop here: clear of content and the edges
   const hasTurningRoom = (x, y) =>
@@ -888,6 +905,14 @@ function PlannerBackground({ heroRef, startDelay }) {
       requestTick();
     });
 
+    // Carried in from the page robot and set down in the hero: the hero plans
+    // on from there
+    robotHandoff.offerToTake("hero", {
+      bounds: () => controls.bounds(),
+      place: (x, y) => (started ? controls.place(x, y) : null),
+      take: (at) => robotHandoff.handBack({ x: at.x - offset.x, y: at.y - offset.y, theta: at.theta }),
+    });
+
     // Pause while the hero is off screen
     const visibility = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -923,6 +948,7 @@ function PlannerBackground({ heroRef, startDelay }) {
       resize.disconnect();
       unsubscribe();
       unsubscribeCharacter();
+      robotHandoff.offerToTake("hero", null);
       robotLive.releaseControls(controls);
     };
   }, [heroRef, startDelay]);
