@@ -34,6 +34,11 @@ const MIN_GUTTER = 56; // px of margin beside the content
 const CONTENT_MARGIN = 20; // px kept clear around each section's content
 const HERO_MARGIN = 5; // as the hero's planner
 const CLEARANCE = 14; // px around where it stops
+// The reader may send it (or set it down) anywhere it can drive to and stand:
+// clear of the content by the margins the obstacles already keep (grown by
+// its reach), with only this to spare, px. So a gap between publication cards
+// too, which it drives through. Where it goes by itself it keeps CLEARANCE.
+const SENT_CLEARANCE = 3;
 const HERO_CLEARANCE = 12;
 const EDGE = 16; // px from the page's side edges
 // With less of the hero than this on screen, the page robot takes the robot;
@@ -662,26 +667,53 @@ function PageRobot({ sectionRefs }) {
     };
 
     // What RobotLayer may ask of it while it has the robot (page px)
-    const standsClear = (x, y) =>
-      !!world && x > EDGE && x < world.width - EDGE && world.clearanceAt(x, y) >= CLEARANCE + robotLive.extraClearance;
+    const standsClear = (x, y) => {
+      if (!world) return false;
+      const edge = Math.max(EDGE, CLEARANCE + robotLive.extraClearance); // nothing grows the page's edges
+      return Math.min(x, world.width - x) > edge && world.clearanceAt(x, y) >= SENT_CLEARANCE;
+    };
+    // The nearest place it may stand to (x, y), as far as `within` px away
+    const standNear = (x, y, within) => {
+      if (standsClear(x, y)) return { x, y };
+      for (let ring = 6; ring < within + 6; ring += 6) {
+        const r = Math.min(ring, within);
+        for (let a = 0; a < 2 * Math.PI; a += Math.PI / 16) {
+          const px = x + r * Math.cos(a);
+          const py = y + r * Math.sin(a);
+          if (standsClear(px, py)) return { x: px, y: py };
+        }
+      }
+      return null;
+    };
+    const inSight = (y) => {
+      const view = viewNow();
+      return y > view.top + SEEN_BELOW && y < view.top + view.height - SEEN_ABOVE;
+    };
+    // Where a reader's goal at (x, y) takes it: free and in view. Sent to a
+    // point it can't stand on, it goes to the nearest one as far away as it
+    // keeps from a card's edge: so all of a gap between cards takes a click,
+    // not just its middle, and nothing on a card does.
+    const sentTo = (x, y) => {
+      if (!active || carried || !world || !inSight(y)) return null;
+      const at = standNear(x, y, ITEM_GAP_MARGIN + robotLive.extraClearance + SENT_CLEARANCE);
+      return at && inSight(at.y) ? at : null;
+    };
     const controls = {
-      // Somewhere free in view: beside the content, or between sections
-      canCommand(x, y) {
-        if (!active || carried || !world) return false;
-        const view = viewNow();
-        return y > view.top + SEEN_BELOW && y < view.top + view.height - SEEN_ABOVE && standsClear(x, y);
-      },
-      // Whether it may be set down at (x, y) (a hop lands): the same places
-      canStand: (x, y) => controls.canCommand(x, y),
+      // Somewhere free in view (or nearly): beside the content, between
+      // sections, or between publication cards
+      canCommand: (x, y) => !!sentTo(x, y),
+      // Whether it may be set down right at (x, y) (a hop lands)
+      canStand: (x, y) => !active || carried || !world ? false : inSight(y) && standsClear(x, y),
       // Left alone a while as it waits here, it may doze off
       mayDoze: true,
       // Waiting beside your page, its eyes read along as you scroll slowly
       readsAlong: true,
       command(x, y) {
-        if (!controls.canCommand(x, y)) return false;
+        const at = sentTo(x, y);
+        if (!at) return false;
         trip = null;
         spin = 0;
-        planTrip({ x, y, side: sideOf(x) }, false, GOAL_ATTEMPTS - 1);
+        planTrip({ x: at.x, y: at.y, side: sideOf(at.x) }, false, GOAL_ATTEMPTS - 1);
         trip.requested = true;
         render();
         wake();
@@ -696,17 +728,7 @@ function PageRobot({ sectionRefs }) {
         render();
       },
       // The nearest place it may stand to (x, y)
-      place(x, y) {
-        if (standsClear(x, y)) return { x, y };
-        for (let r = 6; r < 500; r += 6) {
-          for (let a = 0; a < 2 * Math.PI; a += Math.PI / 16) {
-            const px = x + r * Math.cos(a);
-            const py = y + r * Math.sin(a);
-            if (standsClear(px, py)) return { x: px, y: py };
-          }
-        }
-        return null;
-      },
+      place: (x, y) => standNear(x, y, 500),
       // Set down: it plans on from there to where it was headed, if it was
       drop(at) {
         carried = false;
