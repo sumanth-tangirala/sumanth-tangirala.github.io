@@ -35,7 +35,9 @@ import styles from "./robotLayer.module.scss";
 // With reduced motion it is drawn still, and none of this happens.
 
 const BUBBLE_ROOM = 46; // px above it for its "z"s, "?" and "!"
-const Z_PX = { from: 12, to: 6 }; // a "z" shrinks as it floats off
+// A "z" shrinks as it floats off: three show at once, each clearly smaller
+// than the one before it
+const Z_PX = { from: 12, to: 4 };
 // Px around its body that still takes hold of it: small, since it drives
 // close to the hero's links and must never take their clicks
 const HIT_SLOP = { fine: 3, coarse: 8 };

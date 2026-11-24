@@ -308,13 +308,17 @@ const look = {
 
   // The bubbles in its own pixel font, on its grid, faded in palette steps
   drawBubble(ctx, glyph, { x, y, size, alpha }, s) {
-    // A "z" steps down a size as it rises (RobotLayer shrinks it 12 → 6)
-    let name = glyph !== "z" ? glyph : size > 10.5 ? "z" : "zSmall";
+    // A "z" steps down a size each third of the way up (RobotLayer shrinks it
+    // 12 → 4), so the three showing at once differ: 4 art px wide; then the
+    // same in finer pixels (two thirds of its own); then a narrower one in
+    // those, without its outline
+    const step = glyph !== "z" ? 0 : size > 9.3 ? 0 : size > 6.7 ? 1 : 2;
+    let name = step === 2 ? "zSmall" : glyph;
     if (glyph === "sparkle" && size < 10) name = "sparkleSmall";
     const rows = GLYPHS[name];
     if (!rows || alpha <= 0.05) return;
     const grid = gridFor(ctx, s);
-    const { P } = grid;
+    const P = step > 0 ? Math.max(1, Math.round((grid.P * 2) / 3)) : grid.P;
     const w = rows[0].length;
     const h = rows.length;
     // (x, y) is the glyph's foot, centred
@@ -328,6 +332,7 @@ const look = {
     // the outline one art px around it
     let style = "";
     for (const [i, j, ink] of glyphPixels(name)) {
+      if (!ink && step === 2) continue;
       const fill = ink ? (name.startsWith("heart") || name.startsWith("sparkle") ? COLORS.a : INK_GREY) : COLORS.o;
       if (fill !== style) {
         ctx.fillStyle = fill;
