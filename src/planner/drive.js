@@ -88,6 +88,7 @@ export const createDrive = (plan, startedAt) => {
   return {
     startedAt,
     end,
+    length: total,
     // { x, y, theta, done } at `time`
     poseAt(time) {
       const t = time - startedAt;
@@ -110,6 +111,7 @@ export const createApproach = (plan, { cruise, accel }) => {
   let s = 0;
   return {
     startHeading: headingAt(0),
+    length: total,
     // How much further it drives before it first comes between heights `top`
     // and `bottom` (0 if it is there now)
     untilBand: (top, bottom) => untilBand(s, top, bottom),

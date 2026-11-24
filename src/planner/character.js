@@ -2,12 +2,15 @@
 // feels, whether it is asleep, being carried. Its drivers move it; this
 // keeps what happens to it besides moving, and RobotLayer draws both.
 //
-// Moods are short: happy (booped), dizzy (booped too often), startled (picked
-// up), confused (sent somewhere it can't reach). Each rises quickly, holds,
-// and fades. Left alone, it dozes off once it is standing still: in the
-// hero after a few queries with no input (its driver says when), further
-// down the page after a while. Any input wakes it with a start: its eyes
-// snap open, it is startled, and it comes round slowly.
+// Moods are short: happy (booped, or greeting you), dizzy (booped too
+// often), startled (picked up), confused (sent somewhere it can't reach),
+// purr (petted), proud (parked after a long trip). Each rises quickly,
+// holds, and fades. While it waits it fidgets now and then (its look draws
+// them): it glances about, runs its lidar round, shuffles on its treads.
+// Left alone, it yawns and dozes off once it is standing still: in the hero
+// after a few queries with no input (its driver says when, and takes it
+// home first), further down the page after a while. Any input wakes it with
+// a start: its eyes snap open, it is startled, and it comes round slowly.
 
 const BLINK_EVERY = [2400, 6200]; // ms between blinks
 const BLINK_MS = 150;
@@ -21,7 +24,19 @@ const MOODS = {
   dizzy: 2000,
   startled: 700,
   confused: 1800,
+  purr: 700, // kept up while the petting goes on
+  proud: 1100,
 };
+// Waiting, now and then it does something to itself (ms each), after this
+// long without any input, and this long apart
+const FIDGETS = { glance: 1700, scan: 1300, shuffle: 900 };
+const FIDGET_EVERY = [5000, 9000];
+const FIDGET_QUIET_MS = 2500;
+const YAWN_MS = 1500; // before it falls asleep
+// Parked after a trip this long (px), it is pleased with itself, but not
+// more often than this
+const PROUD_TRIP_PX = 420;
+const PROUD_EVERY_MS = 15000;
 const MOOD_IN_MS = 120;
 const MOOD_OUT_MS = 320;
 const DIZZY_BOOPS = 4;
@@ -50,6 +65,12 @@ const moods = {}; // name → { from, until }
 let boops = [];
 let carried = false;
 let carryChangedAt = -Infinity;
+let fidget = null; // { kind, from, ms }: a fidget, or its yawn
+let idleSince = null;
+let nextFidgetAt = Infinity;
+let dozeAt = null; // it falls asleep then, once its yawn is over
+let proudAt = -Infinity;
+const between = ([lo, hi]) => lo + Math.random() * (hi - lo);
 
 const scheduleBlink = (now) => {
   nextBlinkAt = now + BLINK_EVERY[0] + Math.random() * (BLINK_EVERY[1] - BLINK_EVERY[0]);
@@ -63,11 +84,24 @@ const moodLevel = (name, now) => {
   return easeOut(Math.min(rise, fall));
 };
 
+const fallAsleep = (now) => {
+  asleep = true;
+  sleepChangedAt = now;
+  sleptAt = now;
+  emit("sleep");
+};
+
 export const character = {
   // Something the reader did (pointer, scroll, key, touch): it stays awake,
   // or wakes
   input(now = performance.now()) {
     lastInput = now;
+    if (dozeAt !== null) {
+      // Disturbed mid-yawn: it stays up
+      dozeAt = null;
+      fidget = null;
+      emit("stir");
+    }
     if (asleep) {
       asleep = false;
       sleepChangedAt = now;
@@ -75,9 +109,33 @@ export const character = {
       emit("wake");
     }
   },
-  // Advance its clock: blinks, and falling asleep if it `mayDoze` now
-  update(now, mayDoze) {
-    if (mayDoze && now - lastInput > SLEEP_AFTER_MS) character.doze(now);
+  // Advance its clock: blinks, fidgets while it is `idle` (of the `kinds`
+  // its look draws), and yawning off to sleep if it `mayDoze` now
+  update(now, mayDoze, idle = false, kinds = ["glance"]) {
+    if (fidget && now >= fidget.from + fidget.ms) fidget = null;
+    if (dozeAt !== null && now >= dozeAt) {
+      dozeAt = null;
+      fallAsleep(now);
+    } else if (mayDoze && now - lastInput > SLEEP_AFTER_MS - YAWN_MS) {
+      character.doze(now);
+    }
+    const calm =
+      idle && !asleep && !carried && dozeAt === null && now - lastInput > FIDGET_QUIET_MS &&
+      Object.keys(MOODS).every((name) => moodLevel(name, now) === 0);
+    if (!calm) {
+      idleSince = null;
+      if (fidget && fidget.kind !== "yawn") fidget = null;
+    } else {
+      if (idleSince === null) {
+        idleSince = now;
+        nextFidgetAt = now + between(FIDGET_EVERY);
+      }
+      if (!fidget && now >= nextFidgetAt && kinds.length) {
+        const kind = kinds[Math.floor(Math.random() * kinds.length)];
+        fidget = { kind, from: now, ms: FIDGETS[kind] };
+        nextFidgetAt = now + fidget.ms + between(FIDGET_EVERY);
+      }
+    }
     if (now >= nextBlinkAt) {
       blinks.push(now);
       if (Math.random() < DOUBLE_BLINK) blinks.push(now + BLINK_MS + 90);
@@ -85,13 +143,47 @@ export const character = {
     }
     blinks = blinks.filter((start) => now - start < BLINK_MS);
   },
-  // Fall asleep now (unless it is in hand)
-  doze(now = performance.now()) {
-    if (asleep || carried) return;
-    asleep = true;
-    sleepChangedAt = now;
-    sleptAt = now;
-    emit("sleep");
+  // Fall asleep (unless it is in hand): it yawns first, unless `yawn` is
+  // false (it already has)
+  doze(now = performance.now(), { yawn = true } = {}) {
+    if (asleep || carried || dozeAt !== null) return;
+    if (!yawn) {
+      fallAsleep(now);
+      return;
+    }
+    character.yawn(now);
+    dozeAt = now + YAWN_MS;
+  },
+  // A yawn, and a stretch (its look draws it)
+  yawn(now = performance.now()) {
+    fidget = { kind: "yawn", from: now, ms: YAWN_MS };
+    emit("yawn");
+  },
+  get yawnMs() {
+    return YAWN_MS;
+  },
+  // What it is doing to itself now, if anything: { kind, k 0…1 }
+  fidget(now) {
+    if (!fidget || now >= fidget.from + fidget.ms) return null;
+    return { kind: fidget.kind, k: clamp01((now - fidget.from) / fidget.ms) };
+  },
+  // It says hello: pleased to see you (RobotLayer adds a bounce)
+  greet(now = performance.now()) {
+    character.feel("happy", now);
+    emit("greet");
+  },
+  // Stroked: it purrs while the petting goes on
+  pet(now = performance.now()) {
+    character.input(now);
+    const purr = moods.purr;
+    if (purr && now < purr.until) purr.until = now + MOODS.purr;
+    else character.feel("purr", now);
+  },
+  // Parked after a trip `length` px long
+  arrived(length, now = performance.now()) {
+    if (length < PROUD_TRIP_PX || now - proudAt < PROUD_EVERY_MS) return;
+    proudAt = now;
+    character.feel("proud", now);
   },
   get asleep() {
     return asleep;
@@ -180,6 +272,7 @@ export const character = {
   // Whether anything about it is changing now (so it needs frames)
   animating(now) {
     if (blinks.length) return true;
+    if (character.fidget(now)) return true;
     if (now - sleepChangedAt < Math.max(FALL_ASLEEP_MS, WAKE_MS) + 50) return true;
     if (now - carryChangedAt < LIFT_MS + 50) return true;
     if (Object.keys(MOODS).some((name) => moodLevel(name, now) > 0)) return true;
@@ -193,8 +286,14 @@ export const character = {
     }
     // (Past its bedtime but not where it may doze, its driver's next report
     // brings the frame that puts it to sleep)
-    const bedtime = lastInput + SLEEP_AFTER_MS;
-    return Math.min(nextBlinkAt, bedtime > now ? bedtime : Infinity);
+    const bedtime = lastInput + SLEEP_AFTER_MS - YAWN_MS;
+    const quietAt = lastInput + FIDGET_QUIET_MS;
+    return Math.min(
+      nextBlinkAt,
+      bedtime > now ? bedtime : Infinity,
+      dozeAt !== null ? dozeAt : Infinity,
+      idleSince !== null ? nextFidgetAt : quietAt > now ? quietAt : Infinity,
+    );
   },
   subscribe(listener) {
     listeners.add(listener);

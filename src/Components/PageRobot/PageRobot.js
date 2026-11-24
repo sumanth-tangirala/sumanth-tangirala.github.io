@@ -21,8 +21,9 @@ import styles from "./pageRobot.module.scss";
 // it keeps to the margins and crosses between them only through the gaps
 // between sections, and between the publication cards, which are obstacles
 // of their own (ITEMS). It takes the robot over where the hero left it once the
-// hero has scrolled out of view, and drives it back into the hero when the
-// reader returns there; the hero's planner carries on from it. Its tree and
+// hero has scrolled out of view (or the reader carries it out of the hero and
+// sets it down below), and drives it back into the hero when the reader
+// returns there; the hero's planner carries on from it. Its tree and
 // path are fainter than the hero's: they sit beside what is being read.
 // Where the margins are too narrow for it (phones), or with reduced motion,
 // the robot stays in the hero.
@@ -496,6 +497,7 @@ function PageRobot({ sectionRefs }) {
           robotHandoff.handBack({ x: pose.x - world.hero.left, y: pose.y - world.hero.top, theta: pose.theta });
         } else {
           side = trip.goal.side;
+          character.arrived(trip.drive.length); // pleased, after a long way
         }
         return true;
       }
@@ -606,7 +608,14 @@ function PageRobot({ sectionRefs }) {
       moveWindow(view);
       if (world.gutter < MIN_GUTTER) {
         // No room beside the content (a narrow screen): it belongs in the hero
+        robotHandoff.offerToTake(null);
         if (active) giveUp();
+        render();
+        return;
+      }
+      robotHandoff.offerToTake(taker);
+      // In the reader's hand: whoever has it keeps it until it is set down
+      if (robotHandoff.inHand) {
         render();
         return;
       }
@@ -666,6 +675,8 @@ function PageRobot({ sectionRefs }) {
       canStand: (x, y) => controls.canCommand(x, y),
       // Left alone a while as it waits here, it may doze off
       mayDoze: true,
+      // Waiting beside your page, its eyes read along as you scroll slowly
+      readsAlong: true,
       command(x, y) {
         if (!controls.canCommand(x, y)) return false;
         trip = null;
@@ -721,6 +732,27 @@ function PageRobot({ sectionRefs }) {
       },
     };
 
+    // Carried out of the hero and set down below it: it is the page robot's
+    // from there, and waits where it was put
+    const taker = {
+      bounds: () => controls.bounds(),
+      place: (x, y) => controls.place(x, y),
+      take(at) {
+        pose = { x: at.x, y: at.y, theta: at.theta };
+        side = sideOf(pose.x);
+        spin = 0;
+        trip = null;
+        heldTrip = null;
+        carried = false;
+        looking = null;
+        active = true;
+        robotHandoff.takeOver();
+        robotLive.setControls(controls);
+        render();
+        wake();
+      },
+    };
+
     const onScroll = () => {
       clearTimeout(settleTimer);
       settleTimer = setTimeout(onSettle, SETTLE_MS);
@@ -763,6 +795,7 @@ function PageRobot({ sectionRefs }) {
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("pointerout", onPointerOut);
       resize.disconnect();
+      robotHandoff.offerToTake(null);
       if (active) giveUp();
       robotLive.releaseControls(controls);
     };

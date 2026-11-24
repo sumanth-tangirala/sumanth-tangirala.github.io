@@ -13,9 +13,16 @@ import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, O
 //   search:   a glint goes round its lidar puck; it faces the goal
 //   drive:    its wheels' treads roll (two frames) and it bobs a pixel, at
 //             the pace of the ground it covers
-//   moods:    it turns its face to you, and its eyes change: ∩ ∩ (booped),
-//             x x (dizzy), wide (picked up), lopsided (confused), shut
-//             lines (asleep, settled a pixel onto its wheels)
+//   moods:    it turns its face to you, and its eyes change: ∩ ∩ (booped,
+//             saying hello, or petted, when it shivers a pixel too), x x
+//             (dizzy), wide (picked up), lopsided (confused), shut lines
+//             (asleep, settled a pixel onto its wheels); parked after a
+//             long trip, it nods twice, ∩ ∩, where it faces
+//   fidgets:  waiting, it turns to glance about, runs the glint round its
+//             lidar once, or shuffles a pixel on its treads; it yawns
+//             (eyes squeezed shut, stretched up a pixel) before it sleeps
+//   reading:  its eyes step along a line of your page and back, looking
+//             down; when you stop, they look up
 //   carried:  it rises a few pixels off its shadow, its wheels dangling
 //   hop:      the same, higher, and back down
 //   on load:  camouflaged as the tagline's bullet: tucked into an amber ball
@@ -91,8 +98,12 @@ const facingFor = (s, memo) => {
   const pointerFar = s.pointer && Math.hypot(s.pointer.x - s.x, s.pointer.y - s.y) > NEAR_POINTER_PX;
   if (s.activity === "search" || ((s.activity === "wait" || s.activity === "wake") && pointerFar)) target = s.gaze;
   else if (s.pointer && memo.facing !== undefined && s.activity !== "drive") target = memo.facing * SECTOR;
-  const { happy, dizzy, startled, confused } = s.mood;
-  if (happy > 0 || dizzy > 0 || startled > 0 || confused > 0 || s.sleep > 0) {
+  if (s.fidget && s.fidget.kind === "glance") target = s.gaze; // looking about
+  // Reading along, it turns from the text toward you by an eighth of a turn,
+  // so both its eyes show running along the lines
+  if (s.reading) target = s.heading + (angleTo(s.heading, Math.PI / 2) >= 0 ? 1 : -1) * (Math.PI / 4);
+  const { happy, dizzy, startled, confused, purr } = s.mood;
+  if (happy > 0 || dizzy > 0 || startled > 0 || confused > 0 || purr > 0 || s.sleep > 0) {
     target = FACING_YOU[facingOf(target)] * SECTOR;
   }
   target += angleTo(s.heading, s.theta); // the layer's spin or wiggle
@@ -119,9 +130,11 @@ const facingFor = (s, memo) => {
 const expressionFor = (s) => {
   if (s.mood.startled > 0.25) return "wide";
   if (s.sleep > 0.6) return "asleep";
+  const yawn = s.fidget && s.fidget.kind === "yawn" ? s.fidget.k : -1;
+  if (yawn > 0.15 && yawn < 0.85) return "asleep"; // squeezed shut, mid-yawn
   if (s.mood.dizzy > 0.25) return "dizzy";
   if (s.mood.confused > 0.25) return "confused";
-  if (s.mood.happy > 0.25) return "happy";
+  if (s.mood.happy > 0.25 || s.mood.purr > 0.25 || s.mood.proud > 0.25) return "happy";
   if (s.open < 0.3) return "shut";
   if (s.open < 0.75) return "half";
   return "open";
@@ -131,6 +144,12 @@ const expressionFor = (s) => {
 // from where it faces
 const eyeShift = (s, facing, memo) => {
   if (s.reduced || s.sleep > 0.6) return { x: 0, y: 0 };
+  // Reading along: a step at a time along the line, looking down at it, and
+  // back; looking up once you stop
+  if (s.reading) {
+    if (s.reading.line === null) return { x: 0, y: -1 };
+    return { x: s.reading.line < 0.4 ? -1 : s.reading.line < 0.8 ? 0 : 1, y: 1 };
+  }
   const near = s.pointer && Math.hypot(s.pointer.x - s.x, s.pointer.y - s.y) <= NEAR_POINTER_PX;
   if (near && memo.look) return memo.look; // a pointer on top of it: hold
   const f = facing * SECTOR;
@@ -145,6 +164,11 @@ const eyeShift = (s, facing, memo) => {
 // The tread's frame and the bob, from the ground it has covered
 const gait = (s, memo) => {
   if (s.reduced || s.carried || s.hop > 0) return { tread: memo.tread || 0, bob: 0 };
+  if (s.fidget && s.fidget.kind === "shuffle") {
+    // Shuffling: a pixel forward on its treads and back, the treads rolling
+    const step = Math.min(3, Math.floor(s.fidget.k * 4));
+    return { tread: step % 2, bob: 0, nudge: step === 1 || step === 2 ? 1 : 0 };
+  }
   const rate = Math.min(TREAD_MAX_HZ, s.speed / TREAD_PX); // frames per second
   memo.phase = ((memo.phase || 0) + (rate * s.dt) / 1000) % 2;
   memo.tread = Math.floor(memo.phase);
@@ -205,6 +229,8 @@ const look = {
   reach: 11,
   extent: 21,
   icon: { heading: Math.PI / 2 }, // facing you
+  fidgets: ["glance", "scan", "shuffle"],
+  ownMoods: true, // draws a purr and pride itself
 
   draw(ctx, s, memo) {
     const grid = gridFor(ctx, s);
@@ -220,23 +246,35 @@ const look = {
     const facing = facingFor(s, memo);
     const eyes = expressionFor(s);
     const shift = eyeShift(s, facing, memo);
-    const { tread, bob } = gait(s, memo);
+    const { tread, bob, nudge = 0 } = gait(s, memo);
     const rise = Math.max(pop, Math.round(Math.max(s.lift * LIFT_ART, s.hop / ART_PX)));
     const searching = s.activity === "search" && !s.reduced;
-    const glint = searching ? Math.floor(s.t / GLINT_MS) % LIDAR_GLINT.length : -1;
-    // Asleep, it settles a pixel onto its wheels
+    const fidget = s.fidget ? s.fidget.kind : null;
+    let glint = searching ? Math.floor(s.t / GLINT_MS) % LIDAR_GLINT.length : -1;
+    if (fidget === "scan") glint = Math.min(LIDAR_GLINT.length - 1, Math.floor(s.fidget.k * LIDAR_GLINT.length));
+    // Asleep, it settles a pixel onto its wheels; yawning, it stretches up a
+    // pixel on them; pleased with a long trip, it nods twice
     const settle = s.sleep > 0.6 ? -1 : 0;
-    // Happy, it shakes a pixel side to side with the layer's wiggle
-    const shake = s.mood.happy > 0 ? sign(angleTo(s.heading, s.theta), SHAKE_RAD) : 0;
+    const stretch = fidget === "yawn" && s.fidget.k > 0.2 && s.fidget.k < 0.8 ? 1 : 0;
+    const proudK = s.moodK ? s.moodK.proud : 1;
+    const nod = s.mood.proud > 0 && ((proudK > 0.15 && proudK < 0.3) || (proudK > 0.45 && proudK < 0.6)) ? -1 : 0;
+    const up = bob + settle + stretch + nod;
+    // Happy, it shakes a pixel side to side with the layer's wiggle; purring,
+    // it shivers a pixel; shuffling, it rolls a pixel the way it faces
+    let shake = s.mood.happy > 0 ? sign(angleTo(s.heading, s.theta), SHAKE_RAD) : 0;
+    if (s.mood.purr > 0.3) shake = Math.floor(s.t / 70) % 2;
+    const ahead = facing * SECTOR;
+    const nx = nudge * Math.round(Math.cos(ahead));
+    const ny = nudge * Math.round(Math.sin(ahead));
     const dangle = s.lift > 0.5 || s.hop > HOP_PEAK / 3 || pop > 1 ? 1 : 0;
 
     memo.buf = memo.buf || new Array(OUT_W * OUT_H);
-    const key = `${facing}${tread}${bob + settle}${dangle}${eyes}${shift.x}${shift.y}${glint}`;
+    const key = `${facing}${tread}${up}${dangle}${eyes}${shift.x}${shift.y}${glint}`;
     if (key !== memo.key) {
       compose(memo.buf, {
         facing,
         tread,
-        bob: bob + settle,
+        bob: up,
         dangle,
         eyes,
         look: shift,
@@ -248,8 +286,8 @@ const look = {
     ctx.save();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalAlpha = s.alpha;
-    const x0 = grid.ax - ANCHOR.x * P + shake * P;
-    const y0 = grid.ay - (ANCHOR.y + PAD_TOP) * P - rise * P;
+    const x0 = grid.ax - ANCHOR.x * P + (shake + nx) * P;
+    const y0 = grid.ay - (ANCHOR.y + PAD_TOP) * P - rise * P + ny * P;
     // Its shadow on the ground, which stays there as it is lifted
     const rows = rise > 0 ? SHADOW.lifted : SHADOW.rest;
     const half = rows[1][1] / 2;

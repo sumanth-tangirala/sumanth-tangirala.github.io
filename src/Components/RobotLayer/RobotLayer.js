@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Dropdown } from "antd";
 import { robotLive } from "../../planner/robotLive";
+import { robotHandoff } from "../../planner/robotHandoff";
 import { character } from "../../planner/character";
 import { LOOKS, chosenLook, rememberLook } from "../../planner/robots";
 import { angleTo, clamp01, easeInOut, easeOut, GREY, HOP_PEAK, lerp } from "../../planner/robots/shared";
@@ -16,12 +17,18 @@ import styles from "./robotLayer.module.scss";
 //            dizzy;
 //   carry:   drag it somewhere (on touch, hold it first: a swipe that
 //            starts on it scrolls the page); it plans on from where it is
-//            set down;
+//            set down. Out of the hero and set down below it, the page
+//            robot has it from there;
 //   send:    tap free space it could drive to (the pointer becomes a goal
 //            marker there) and it plans a route there;
-//   sleep:   left alone, it dozes off once it stands still (in the hero
-//            after a few routes, further down the page after a while);
-//            any input wakes it with a start (a "!", and a jump);
+//   pet:     stroke it back and forth (a mouse or pen, no click) and it
+//            purrs;
+//   read:    scroll slowly through the page and its eyes read along; it
+//            looks up when you stop;
+//   sleep:   left alone, it fidgets while it waits, then yawns and dozes
+//            off once it stands still (in the hero after a few routes, at
+//            home in the tagline's bullet; further down the page after a
+//            while); any input wakes it with a start (a "!", and a jump);
 //   looks:   right-click it to choose how it looks.
 // With reduced motion it is drawn still, and none of this happens.
 
@@ -49,6 +56,13 @@ const STARTLE_HOP_MS = 300; // woken: a jump on the spot, quicker than a boop's
 // hops as it goes rather than leave its route
 const HOP_ON_THE_MOVE = 20;
 const ICON_PX = 30; // its picture in the menu of looks
+// Petting: strokes back and forth over it, each at least this long (px),
+// this many turns within this long (ms)
+const PET = { stroke: 3, turns: 3, within: 1500, slop: 6 };
+// Reading along: scrolling at a reading pace (px/s, averaged over the last
+// `window` ms) for a while; it looks up for `lookUp` ms after you stop, if
+// it read for at least `minRead` ms
+const READ = { slow: 12, fast: 450, window: 1200, stopAfter: 450, minRead: 1200, lookUp: 800, lineMs: 1100 };
 
 const isInteractive = (el) =>
   !!el.closest("a, button, input, textarea, select, label, summary, [role='button'], [contenteditable]");
@@ -74,7 +88,7 @@ const stillState = (look, icon, dpr) => ({
   hop: 0,
   hopping: false,
   carried: false,
-  mood: { happy: 0, dizzy: 0, startled: 0, confused: 0 },
+  mood: { happy: 0, dizzy: 0, startled: 0, confused: 0, purr: 0, proud: 0 },
   gaze: icon.heading,
   look: 0,
   pointer: null,
@@ -147,13 +161,19 @@ function RobotLayer() {
     let turn = 0;
     let wasBullet = false;
     let unfoldFrom = null;
+    let foldFrom = null; // going back into its bullet (home, to sleep)
+    let lastActivity = null;
+    let pet = null; // strokes over it: { dir, travel, turns: [times] }
+    const scrolls = []; // [{ t, top }], recent
+    let readFrom = null; // reading along since
+    let readUntil = -Infinity; // and stopped then
     let seenSwap = null;
     let pointer = null; // a mouse or pen: { x, y } viewport px
     let pointerLeftAt = -Infinity;
-    // Pressed on it: { id, kind, from, at, grab, pose, moved, timer,
+    // Pressed on it: { id, kind, from, at, client, grab, pose, moved, timer,
     // controls, liftFrom, liftAt }
     let carry = null;
-    let landing = null; // { from, to, start }
+    let landing = null; // { from, to, start, pass }
     let hop = null; // { start, ms, inPlace, from, to, controls }
     let spin = 0; // dizzy, rad
     let shown = null; // { pose, look } last drawn
@@ -202,6 +222,68 @@ function RobotLayer() {
       setMenuOpen(false);
     };
 
+    // Reading along, while the page robot waits in view: { line 0…1 or null
+    // (looking up, after), up 0…1 }, or null
+    const readingAt = (now, activity) => {
+      const controls = robotLive.controls;
+      if (reduceMotion || !controls || !controls.readsAlong || activity !== "wait") return null;
+      if (readFrom !== null && now - readUntil < READ.stopAfter) {
+        return { line: ((now - readFrom) % READ.lineMs) / READ.lineMs, up: 0 };
+      }
+      if (readFrom !== null && readUntil - readFrom >= READ.minRead && now - readUntil < READ.stopAfter + READ.lookUp) {
+        return { line: null, up: 1 };
+      }
+      return null;
+    };
+    const onScrollRead = () => {
+      const now = performance.now();
+      scrolls.push({ t: now, top: scroller.scrollTop });
+      while (scrolls.length && now - scrolls[0].t > READ.window) scrolls.shift();
+      let travelled = 0;
+      for (let i = 1; i < scrolls.length; i++) travelled += Math.abs(scrolls[i].top - scrolls[i - 1].top);
+      const pace = (travelled / READ.window) * 1000;
+      const reading = pace >= READ.slow && pace <= READ.fast;
+      if (reading) {
+        if (readFrom === null || now - readUntil > READ.stopAfter + READ.lookUp) readFrom = now;
+        readUntil = now;
+      } else if (pace > READ.fast) {
+        readFrom = null; // skimming, not reading
+      }
+      if (!frame) schedule(true);
+    };
+
+    // Petting: a mouse or pen stroking back and forth over it, unpressed
+    const strokeAt = (event) => {
+      if (reduceMotion || event.pointerType === "touch" || event.buttons || carry || !shown) {
+        pet = null;
+        return;
+      }
+      const at = toPage(event.clientX, event.clientY);
+      const { pose, look } = shown;
+      if (Math.hypot(at.x - pose.x, at.y - pose.y) > look.radius + PET.slop) {
+        pet = null;
+        return;
+      }
+      const now = performance.now();
+      if (!pet) {
+        pet = { x: at.x, dir: 0, travel: 0, turns: [] };
+        return;
+      }
+      const dx = at.x - pet.x;
+      pet.x = at.x;
+      if (Math.abs(dx) < 0.5) return;
+      const dir = Math.sign(dx);
+      if (dir !== pet.dir) {
+        if (pet.dir !== 0 && pet.travel >= PET.stroke) pet.turns.push(now);
+        pet.dir = dir;
+        pet.travel = Math.abs(dx);
+      } else {
+        pet.travel += Math.abs(dx);
+      }
+      pet.turns = pet.turns.filter((t) => now - t < PET.within);
+      if (pet.turns.length >= PET.turns) character.pet(now);
+    };
+
     // Everything a look draws from (planner/robots/shared.js)
     const describe = (pose, now, dt, look) => {
       const state = robotLive.state;
@@ -231,12 +313,17 @@ function RobotLayer() {
       }
       let unfold = 1;
       if (activity === "bullet") {
+        // Back into its bullet (gone home to sleep): it folds up
+        if (lastActivity !== null && lastActivity !== "bullet" && lastActivity !== "hidden") foldFrom = now;
         wasBullet = true;
-        unfold = 0;
+        unfoldFrom = null;
+        unfold = foldFrom === null ? 0 : 1 - easeInOut(clamp01((now - foldFrom) / UNFOLD_MS));
       } else if (wasBullet) {
+        foldFrom = null;
         if (unfoldFrom === null) unfoldFrom = now;
         unfold = easeInOut(clamp01((now - unfoldFrom) / UNFOLD_MS));
       }
+      lastActivity = activity;
 
       // What it looks at: you, while you hold it or point near; where it is
       // going while it searches; ahead while it drives
@@ -245,9 +332,18 @@ function RobotLayer() {
       if (seen && (activity === "wait" || activity === "wake" || carry)) gaze = Math.atan2(seen.y - pose.y, seen.x - pose.x);
       else if (state.goal && activity === "search") gaze = Math.atan2(state.goal.y - pose.y, state.goal.x - pose.x);
       else if (seen && activity !== "drive") gaze = Math.atan2(seen.y - pose.y, seen.x - pose.x);
+      // Fidgeting, it glances one way and then the other; reading along, its
+      // gaze runs along the lines (looks that draw these themselves have
+      // `fidget` and `reading` too)
+      const fidget = reduceMotion ? null : character.fidget(now);
+      if (fidget && fidget.kind === "glance") gaze = pose.theta + (fidget.k < 0.5 ? -0.7 : 0.7) * Math.sin(Math.PI * ((fidget.k * 2) % 1));
+      const reading = readingAt(now, activity);
+      if (reading && reading.line !== null) gaze = pose.theta + 0.5 * (2 * reading.line - 1);
       const look01 = Math.max(-1, Math.min(1, angleTo(pose.theta, gaze) / 1.2));
 
       const mood = character.moods(now);
+      // Looks that draw only the first moods show a purr or pride as happy
+      if (!look.ownMoods) mood.happy = Math.max(mood.happy, mood.purr, mood.proud);
       // Moods move its whole body: a happy wiggle, a dizzy spin (two whole
       // turns, so it ends facing where it was)
       const wiggle = mood.happy > 0 ? 0.3 * Math.sin(character.progress("happy", now) * Math.PI * 6) * (1 - character.progress("happy", now)) : 0;
@@ -270,13 +366,16 @@ function RobotLayer() {
           vx,
           vy,
           turn,
-          open: reduceMotion ? 1 : character.open(now),
+          open: reduceMotion ? 1 : fidget && fidget.kind === "yawn" ? Math.min(character.open(now), 0.2 + 0.8 * Math.abs(2 * fidget.k - 1) ** 3) : character.open(now),
           sleep: reduceMotion ? 0 : character.sleep(now),
           lift: character.lift(now),
           hop: hop ? HOP_PEAK * 4 * hopK * (1 - hopK) : 0,
           hopping: !!hop,
           carried: !!(carry && carry.moved),
           mood,
+          moodK: { proud: character.progress("proud", now), purr: character.progress("purr", now) },
+          fidget,
+          reading,
           gaze,
           look: look01,
           pointer: seen,
@@ -284,7 +383,7 @@ function RobotLayer() {
           alpha: state.alpha === undefined ? 1 : state.alpha,
           reduced: reduceMotion,
         },
-        moving: speed > 2 || Math.abs(turn) > 0.05 || (unfold > 0 && unfold < 1),
+        moving: speed > 2 || Math.abs(turn) > 0.05 || (unfold > 0 && unfold < 1) || !!reading,
       };
     };
 
@@ -359,7 +458,8 @@ function RobotLayer() {
         return false;
       }
       const controls = robotLive.controls;
-      character.update(now, !!(controls && controls.mayDoze) && state.activity === "wait");
+      const idle = state.activity === "wait" && !carry && !hop && !landing;
+      character.update(now, !!(controls && controls.mayDoze) && state.activity === "wait", idle, look.fidgets || ["glance"]);
       const { s, moving } = describe(pose, now, dt, look);
       const half = Math.ceil(look.extent + BUBBLE_ROOM + HOP_PEAK);
       const dpr = s.dpr;
@@ -419,8 +519,13 @@ function RobotLayer() {
 
     // Set down after a carry, or landed from a hop: the driver plans on
     const finishLanding = () => {
-      const { to } = landing;
+      const { to, pass } = landing;
       landing = null;
+      robotHandoff.setInHand(false);
+      if (pass) {
+        pass.take(to);
+        return;
+      }
       const controls = robotLive.controls;
       if (controls) controls.drop(to);
     };
@@ -452,6 +557,7 @@ function RobotLayer() {
       if (event.pointerType === "touch") return;
       pointer = { x: event.clientX, y: event.clientY };
       pointerLeftAt = -Infinity;
+      strokeAt(event);
       if (!frame) schedule(true);
       updateGoalCursor(event);
     };
@@ -466,9 +572,10 @@ function RobotLayer() {
       if (wasAsleep && !frame) schedule(true);
     };
     const wakeUp = character.subscribe((event) => {
-      // Woken with a start: it jumps on the spot (not in your hand)
-      if (event === "wake" && !reduceMotion && shown && !carry && !hop && !landing) {
-        hop = { start: performance.now(), ms: STARTLE_HOP_MS, inPlace: true };
+      // Woken with a start: it jumps on the spot (not in your hand); saying
+      // hello, it bounces
+      if ((event === "wake" || event === "greet") && !reduceMotion && shown && !carry && !hop && !landing) {
+        hop = { start: performance.now(), ms: event === "wake" ? STARTLE_HOP_MS : HOP.ms, inPlace: true };
       }
       if (!frame) schedule(true);
     });
@@ -533,13 +640,19 @@ function RobotLayer() {
     };
 
     // ---- carry: the handle ----
+    // Within where its driver may take it, or where the page robot would
+    // take it from the hero: the nearer
     const follow = (at) => {
-      const bounds = carry.controls.bounds();
-      carry.pose = {
-        ...carry.pose,
-        x: Math.min(bounds.right, Math.max(bounds.left, at.x - carry.grab.x)),
-        y: Math.min(bounds.bottom, Math.max(bounds.top, at.y - carry.grab.y)),
-      };
+      const want = { x: at.x - carry.grab.x, y: at.y - carry.grab.y };
+      const taker = robotHandoff.taker;
+      let best = null;
+      for (const bounds of taker ? [carry.controls.bounds(), taker.bounds()] : [carry.controls.bounds()]) {
+        const x = Math.min(bounds.right, Math.max(bounds.left, want.x));
+        const y = Math.min(bounds.bottom, Math.max(bounds.top, want.y));
+        const off = Math.hypot(x - want.x, y - want.y);
+        if (!best || off < best.off) best = { x, y, off };
+      }
+      carry.pose = { ...carry.pose, x: best.x, y: best.y };
     };
     const takeHold = () => {
       if (!carry || carry.moved) return;
@@ -550,6 +663,7 @@ function RobotLayer() {
       carry.controls = controls;
       carry.liftFrom = shown ? { ...shown.pose } : { ...carry.pose };
       carry.liftAt = now;
+      robotHandoff.setInHand(true);
       controls.pickUp();
       character.pickUp(now);
       handle.classList.add(styles.held);
@@ -571,6 +685,7 @@ function RobotLayer() {
         kind: event.pointerType,
         from: at,
         at,
+        client: { x: event.clientX, y: event.clientY },
         grab: { x: at.x - shown.pose.x, y: at.y - shown.pose.y },
         pose: { ...shown.pose },
         moved: false,
@@ -582,6 +697,7 @@ function RobotLayer() {
       if (!carry || event.pointerId !== carry.id) return;
       const at = toPage(event.clientX, event.clientY);
       carry.at = at;
+      carry.client = { x: event.clientX, y: event.clientY };
       if (!carry.moved) {
         const far = Math.hypot(at.x - carry.from.x, at.y - carry.from.y);
         if (carry.kind !== "mouse") {
@@ -609,11 +725,25 @@ function RobotLayer() {
       if (!was.moved) {
         if (event.type === "pointerup") boop(event);
       } else {
-        // Set it down where it may stand, nearest where it was let go
-        const to = was.controls.place(pose.x, pose.y) || was.from;
+        // Set it down where it may stand, nearest where it was let go: below
+        // the hero, the page robot takes it from there
+        const taker = robotHandoff.taker;
+        let pass = taker && pose.y > was.controls.bounds().bottom ? taker : null;
+        let to = pass && pass.place(pose.x, pose.y);
+        if (!to) {
+          pass = null;
+          to = was.controls.place(pose.x, pose.y) || was.from;
+        }
         character.setDown();
-        landing = { from: pose, to: { ...pose, ...to }, start: performance.now() };
+        landing = { from: pose, to: { ...pose, ...to }, start: performance.now(), pass };
       }
+      if (!frame) schedule(true);
+    };
+    // Scrolled while it is held (a mouse's wheel): it stays in the hand
+    const onScrollCarry = () => {
+      if (!carry || !carry.moved) return;
+      carry.at = toPage(carry.client.x, carry.client.y);
+      follow(carry.at);
       if (!frame) schedule(true);
     };
     // Once it is held, a finger moving it moves it, not the page
@@ -632,6 +762,8 @@ function RobotLayer() {
     window.addEventListener("wheel", onInput, { passive: true });
     window.addEventListener("resize", closeMenu);
     scroller.addEventListener("scroll", onInput, { passive: true });
+    scroller.addEventListener("scroll", onScrollRead, { passive: true });
+    scroller.addEventListener("scroll", onScrollCarry, { passive: true });
     scroller.addEventListener("scroll", closeMenu, { passive: true });
     scroller.addEventListener("click", onClick);
     handle.addEventListener("pointerdown", onHandleDown);
@@ -662,6 +794,9 @@ function RobotLayer() {
       window.removeEventListener("resize", closeMenu);
       window.removeEventListener("keydown", onKey);
       scroller.removeEventListener("scroll", onInput);
+      scroller.removeEventListener("scroll", onScrollRead);
+      scroller.removeEventListener("scroll", onScrollCarry);
+      robotHandoff.setInHand(false);
       scroller.removeEventListener("scroll", closeMenu);
       scroller.removeEventListener("click", onClick);
       scroller.classList.remove(styles.goalCursor);

@@ -32,7 +32,8 @@ export const robotLive = {
   // the goal; canCommand(x, y); canStand(x, y) → whether it may be set
   // down right there; pickUp(); place(x, y) → the nearest pose it
   // may be set down at, or null; drop(pose); bounds() → page px rect it may
-  // be carried within; mayDoze → whether it may fall asleep while it waits.
+  // be carried within; mayDoze → whether it may fall asleep while it waits;
+  // readsAlong → whether its eyes read along as the reader scrolls slowly.
   // Page px throughout.
   setControls(next) {
     controls = next;

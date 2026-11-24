@@ -6,6 +6,8 @@ const listeners = new Set();
 let owner = "hero";
 let heroPose = null; // hero-local px: { x, y, theta }
 let handback = null;
+let taker = null; // the page robot, while it could take the robot off the hero
+let inHand = false;
 
 const emit = () => listeners.forEach((listener) => listener(owner));
 
@@ -30,6 +32,24 @@ export const robotHandoff = {
     owner = "hero";
     handback = pose;
     emit();
+  },
+  // Where it could stand beside the content, the page robot offers to take
+  // the robot from the reader's hand: carried out of the hero and set down
+  // below it, it is the page robot's from there. { bounds(), place(x, y),
+  // take(pose) }, page px; null where it can't (narrow screens).
+  offerToTake(next) {
+    taker = next;
+  },
+  get taker() {
+    return owner === "hero" ? taker : null;
+  },
+  // The reader is carrying it: neither driver takes it from the other
+  // meanwhile (scrolling as they carry it)
+  get inHand() {
+    return inHand;
+  },
+  setInHand(held) {
+    inHand = held;
   },
   consumeHandback() {
     const pose = handback;

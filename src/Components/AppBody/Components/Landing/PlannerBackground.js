@@ -23,8 +23,8 @@ import styles from "./landing.module.scss";
 //           otherwise it stays and tries a new goal.
 // On load the robot sits where the tagline's bullet point would be
 // (data-robot-start), still for a few seconds. Then it shows itself for what
-// it is: it turns around, rolls off a little and looks about, and only then
-// makes its first plan. After a
+// it is: it turns around, rolls off a little, looks about, turns to you and
+// says hello, and only then makes its first plan. After a
 // short pause each next query starts from where the robot stopped,
 // towards a newly sampled goal far enough away. The loop pauses while the
 // hero is off screen; with reduced motion a single finished plan is drawn.
@@ -36,8 +36,10 @@ const REFINE_DURATION_MS = 2200;
 const DRIVE_DIM_MS = 500; // the tree dims as the robot sets off
 const DRIVE_TREE_ALPHA = 0.5;
 const ARRIVE_HOLD_MS = 900; // at the goal before the next query
-// Left alone for this many queries (no pointer, scroll or key), it stops
-// where it is and dozes off; woken, it pauses, then carries on
+// Left alone for this many queries (no pointer, scroll or key), it goes
+// home: it plans its way back to where it rolled off its bullet, yawns,
+// rolls in and curls up as the bullet to sleep. Woken, it pops out with a
+// start, rolls off again and carries on.
 const QUIET_QUERIES = 5;
 const WAKE_PAUSE_MS = 600;
 const UNSOLVED_HOLD_MS = 600;
@@ -52,17 +54,23 @@ const BULLET_GAP_EM = 0.5;
 const APPEAR_MS = 300; // it fades in with the tagline
 // ... and what it does there before planning: stay still, turn around, roll
 // off, and look one way and the other. Each move eases in and out.
+const HOME_STEP = 18; // px from its bullet to where it plans from
 const WAKE_STEPS = [
   { pause: 1500 },
   { turnTo: Math.PI },
   { pause: 200 },
-  { drive: 18 },
+  { drive: HOME_STEP },
   { pause: 300 },
   { turnBy: -0.7 },
   { pause: 350 },
   { turnBy: 1.3 },
-  { pause: 400 },
+  { pause: 300 },
+  { turnTo: Math.PI / 2 }, // to you
+  { greet: true },
+  { pause: 900 },
 ];
+// Woken at home: out of its bullet with a start, and off its doorstep
+const HOME_WAKE_STEPS = [{ pause: 500 }, { turnTo: Math.PI }, { pause: 150 }, { drive: HOME_STEP }, { pause: 300 }];
 const WAKE_TURN_RATE = 3.5; // rad/s
 const WAKE_SPEED = 45; // px/s
 const PATH_FADE_MS = 380; // search → found, and route cross-fades
@@ -355,25 +363,39 @@ const startPose = (hero) => {
   };
 };
 
-// Its moves on load, from `from`: { poseAt(t ms) → { x, y, theta, done } }
-const createWake = (from) => {
+// Scripted moves from `from` (its moves on load, and going home or out of
+// it): { poseAt(t ms) → { x, y, theta, done }, events: [{ at, name }] }.
+// Steps: pause, turnTo, turnBy, faceTo {x, y}, drive (px ahead), driveTo
+// {x, y}, greet (says hello then).
+const createMoves = (from, steps) => {
   const segments = [];
+  const events = [];
   let pose = from;
-  for (const step of WAKE_STEPS) {
+  let at = 0;
+  for (const step of steps) {
+    if (step.greet) {
+      events.push({ at, name: "greet" });
+      continue;
+    }
     let to = pose;
     let duration = step.pause || 0;
-    if (step.turnTo !== undefined || step.turnBy !== undefined) {
-      const turn = step.turnTo !== undefined ? angleTo(pose.theta, step.turnTo) : step.turnBy;
+    const facing = step.faceTo ? Math.atan2(step.faceTo.y - pose.y, step.faceTo.x - pose.x) : step.turnTo;
+    if (facing !== undefined || step.turnBy !== undefined) {
+      const turn = facing !== undefined ? angleTo(pose.theta, facing) : step.turnBy;
       to = { ...pose, theta: pose.theta + turn };
-      duration = 150 + (Math.abs(turn) / WAKE_TURN_RATE) * 1000;
-    } else if (step.drive) {
-      to = { ...pose, x: pose.x + step.drive * Math.cos(pose.theta), y: pose.y + step.drive * Math.sin(pose.theta) };
-      duration = 200 + (step.drive / WAKE_SPEED) * 1000;
+      duration = Math.abs(turn) < 0.01 ? 0 : 150 + (Math.abs(turn) / WAKE_TURN_RATE) * 1000;
+    } else if (step.drive || step.driveTo) {
+      const target = step.driveTo || { x: pose.x + step.drive * Math.cos(pose.theta), y: pose.y + step.drive * Math.sin(pose.theta) };
+      const d = Math.hypot(target.x - pose.x, target.y - pose.y);
+      to = { ...pose, x: target.x, y: target.y };
+      duration = d < 0.5 ? 0 : 200 + (d / WAKE_SPEED) * 1000;
     }
     segments.push({ from: pose, to, duration });
+    at += duration;
     pose = to;
   }
   return {
+    events,
     poseAt(t) {
       let elapsed = t;
       for (const { from: a, to: b, duration } of segments) {
@@ -442,7 +464,12 @@ function PlannerBackground({ heroRef, startDelay }) {
     let outgoing = null; // { query, from }
     let robot = null; // { x, y, theta, alpha }
     let drive = null;
-    let waking = null; // its moves on load: { wake, startedAt }
+    // Scripted moves (on load, going into its bullet, coming out):
+    // { moves, startedAt, bulletMs (posing as the bullet till then), then,
+    // since (going in: the reader's last input when it set off) }
+    let waking = null;
+    let homing = null; // on its way home: { since, home }
+    let atHome = false; // asleep in its bullet
     let away = false; // the page robot has the robot
     let carried = false; // the reader is carrying it (RobotLayer)
     let heldGoal = null; // where it was headed when picked up: { goal, requested }
@@ -491,6 +518,72 @@ function PlannerBackground({ heroRef, startDelay }) {
       running = false;
       holding = false;
       napping = false;
+      homing = null;
+      atHome = false;
+    };
+
+    // Its bullet, and its doorstep (where it rolls off to plan), hero px
+    const homePose = () => {
+      const bullet = startPose(hero);
+      return bullet && { bullet, porch: { x: bullet.x - HOME_STEP, y: bullet.y } };
+    };
+    // Plans on from where it is
+    const planOn = () => {
+      outgoing = current && { query: current, from: time };
+      drive = null;
+      current = nextQuery();
+    };
+    // Into its bullet, to sleep
+    const tuckIn = () => {
+      homing = null;
+      atHome = true;
+      napping = true;
+      report("bullet");
+      character.doze(performance.now(), { yawn: false });
+    };
+    // Back out to its doorstep, then on
+    const comeOut = (home, steps) => {
+      waking = { moves: createMoves(robot, steps || [{ faceTo: home.porch }, { driveTo: home.porch }, { pause: 200 }]), startedAt: time, bulletMs: 0, then: planOn };
+      requestTick();
+    };
+    // Home: a yawn on the doorstep, then in it goes. Disturbed on the way,
+    // or kept from its doorstep, it carries on (or dozes where it is).
+    const arriveHome = () => {
+      const { since, home } = homing;
+      drive = null; // there: its scripted moves take it from here
+      const there = Math.hypot(robot.x - home.porch.x, robot.y - home.porch.y) < 8;
+      if (character.lastInput !== since) {
+        homing = null;
+        holdThenNext(ARRIVE_HOLD_MS, false);
+        return;
+      }
+      if (!there) {
+        homing = null;
+        napping = true;
+        report("wait");
+        character.doze();
+        return;
+      }
+      character.yawn();
+      holding = true;
+      report("wait");
+      holdTimer = setTimeout(() => {
+        holding = false;
+        if (character.lastInput !== since) {
+          homing = null;
+          holdThenNext(WAKE_PAUSE_MS, false);
+          return;
+        }
+        waking = {
+          moves: createMoves(robot, [{ faceTo: home.bullet }, { driveTo: home.bullet }, { turnTo: 0 }, { pause: 150 }]),
+          startedAt: time,
+          bulletMs: 0,
+          since,
+          home,
+          then: tuckIn,
+        };
+        requestTick();
+      }, character.yawnMs);
     };
 
     // `reset`: nowhere to drive to, so don't retry from this spot; fade the
@@ -503,8 +596,20 @@ function PlannerBackground({ heroRef, startDelay }) {
         holding = false;
         if (character.lastInput !== quiet.since) quiet = { since: character.lastInput, count: 0 };
         if (!reset && quiet.count >= QUIET_QUERIES) {
-          napping = true;
-          character.doze();
+          // Left alone a while: it goes home to sleep (or dozes here, if
+          // it can't find its bullet)
+          const home = homePose();
+          if (!home) {
+            napping = true;
+            character.doze();
+            return;
+          }
+          homing = { since: character.lastInput, home };
+          outgoing = current && { query: current, from: time };
+          drive = null;
+          current = nextQuery([home.porch.x, home.porch.y]);
+          current.home = true;
+          requestTick();
           return;
         }
         quiet.count += 1;
@@ -545,15 +650,29 @@ function PlannerBackground({ heroRef, startDelay }) {
       lastNow = now;
 
       if (waking) {
-        const t = time - waking.startedAt;
-        const pose = waking.wake.poseAt(t);
-        robot = { ...pose, alpha: Math.min(1, t / APPEAR_MS) };
-        robotHandoff.reportHeroPose(robot);
-        // Still, it is the tagline's bullet; once it moves, a robot
-        report(t < WAKE_STEPS[0].pause ? "bullet" : "wake");
-        if (pose.done) {
+        // Going into its bullet, it turns back if you stir
+        if (waking.since !== undefined && character.lastInput !== waking.since) {
+          const { home } = waking;
           waking = null;
-          current = nextQuery();
+          comeOut(home);
+          return;
+        }
+        const t = time - waking.startedAt;
+        const pose = waking.moves.poseAt(t);
+        robot = { ...pose, alpha: Math.min(1, Math.max(robot ? robot.alpha : 0, t / APPEAR_MS)) };
+        robotHandoff.reportHeroPose(robot);
+        for (const event of waking.moves.events) {
+          if (!event.done && t >= event.at) {
+            event.done = true;
+            if (event.name === "greet") character.greet();
+          }
+        }
+        // Still, it is the tagline's bullet; once it moves, a robot
+        report(t < waking.bulletMs ? "bullet" : "wake");
+        if (pose.done) {
+          const { then } = waking;
+          waking = null;
+          then();
         }
         requestTick();
         return;
@@ -569,6 +688,11 @@ function PlannerBackground({ heroRef, startDelay }) {
         current.treeAlpha = lerp(1, DRIVE_TREE_ALPHA, easeOutCubic(Math.min(1, (time - drive.startedAt) / DRIVE_DIM_MS)));
         if (pose.done) {
           renderFrame();
+          if (current.home && homing) {
+            arriveHome();
+            return;
+          }
+          character.arrived(drive.length);
           holdThenNext(ARRIVE_HOLD_MS, false);
           return;
         }
@@ -584,8 +708,16 @@ function PlannerBackground({ heroRef, startDelay }) {
         const plan = current.plan || current.fallback();
         // Sent somewhere it can't reach: it is puzzled (and gets as close
         // as it can, if it can)
-        if (current.requested && !current.solved) character.feel("confused");
+        if (current.requested && !current.solved && !current.home) character.feel("confused");
         if (!plan) {
+          if (current.home) {
+            // No way home from here: it dozes where it is
+            homing = null;
+            napping = true;
+            report("wait");
+            character.doze();
+            return;
+          }
           // Stay and try a new goal from here; start over only if the tree
           // could not grow at all (the robot is boxed in)
           holdThenNext(UNSOLVED_HOLD_MS, current.stalled);
@@ -624,7 +756,7 @@ function PlannerBackground({ heroRef, startDelay }) {
       }
       // It shows itself as a robot before its first plan
       current = null;
-      waking = { wake: createWake(robot), startedAt: time };
+      waking = { moves: createMoves(robot, WAKE_STEPS), startedAt: time, bulletMs: WAKE_STEPS[0].pause, then: planOn };
       report("bullet");
       requestTick();
     };
@@ -712,10 +844,17 @@ function PlannerBackground({ heroRef, startDelay }) {
     };
     robotLive.setControls(controls);
 
-    // Woken from its nap: it carries on
+    // Woken from its nap (or stirred before it dropped off): it carries on;
+    // at home, it pops out of its bullet and rolls off its doorstep first
     const unsubscribeCharacter = character.subscribe((event) => {
-      if (event !== "wake" || !napping) return;
+      if ((event !== "wake" && event !== "stir") || !napping) return;
       napping = false;
+      if (atHome) {
+        atHome = false;
+        report("wake");
+        comeOut(null, HOME_WAKE_STEPS);
+        return;
+      }
       holdThenNext(WAKE_PAUSE_MS, false);
     });
 
