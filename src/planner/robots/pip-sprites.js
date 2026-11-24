@@ -499,4 +499,7 @@ export const GLYPHS = {
   "?": [".xxx.", "x...x", "...x.", "..x..", ".....", "..x.."],
   z: ["xxxx", "..x.", ".x..", "xxxx"],
   zSmall: ["xxx", "..x", ".x.", "xxx"],
+  heart: ["xx.xx", "xxxxx", ".xxx.", "..x.."],
+  sparkle: ["..x..", "..x..", "xx.xx", "..x..", "..x.."],
+  sparkleSmall: [".x.", "xxx", ".x."],
 };

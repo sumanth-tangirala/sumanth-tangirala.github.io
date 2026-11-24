@@ -22,7 +22,9 @@ import styles from "./robotLayer.module.scss";
 //   send:    tap free space it could drive to (the pointer becomes a goal
 //            marker there) and it plans a route there;
 //   pet:     stroke it back and forth (a mouse or pen, no click) and it
-//            purrs;
+//            purrs: it smiles at you, and hearts float off it;
+//   proud:   parked after a long trip, it smiles at you, and a sparkle
+//            twinkles beside its head;
 //   read:    scroll slowly through the page and its eyes read along; it
 //            looks up when you stop;
 //   sleep:   left alone, it fidgets while it waits, then yawns and dozes
@@ -420,6 +422,9 @@ function RobotLayer() {
     // it shows; each "z" takes the side free as it appears (it may still be
     // finishing a drive) and floats off along its `trail` (px, over its life).
     let bubbleSide = null;
+    const HEART = { every: 650, life: 1300 }; // ms
+    const hearts = []; // [{ t, side, dx }]
+    let lastHeartAt = -Infinity;
     const zSides = new Map(); // a "z"'s index → its side
     const SIDES = [
       { id: "up", at: (up) => ({ x: 0, y: -up }), trail: [18, -36] },
@@ -445,14 +450,15 @@ function RobotLayer() {
           look.drawBubble(ctx, glyph, { x, y, size, alpha }, s);
           return;
         }
+        const text = { heart: "♥", sparkle: "✦" }[glyph] || glyph;
         ctx.font = `italic 500 ${size}px Newsreader, Georgia, serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "alphabetic";
         ctx.lineWidth = 3;
         ctx.strokeStyle = `rgba(17, 17, 17, ${0.9 * alpha})`;
-        ctx.strokeText(glyph, x, y);
-        ctx.fillStyle = GREY(0.85 * alpha);
-        ctx.fillText(glyph, x, y);
+        ctx.strokeText(text, x, y);
+        ctx.fillStyle = text === glyph ? GREY(0.85 * alpha) : `rgba(251, 177, 60, ${0.9 * alpha})`;
+        ctx.fillText(text, x, y);
       };
       // Three at a time, each shrinking as it floats off: in quickly, out slowly
       const snores = character.snores(now);
@@ -465,12 +471,33 @@ function RobotLayer() {
         const size = Z_PX.from - (Z_PX.from - Z_PX.to) * age;
         bubble("z", from.x + trail[0] * (0.15 + age), from.y + trail[1] * age, size, a * s.alpha);
       }
-      if (!(s.mood.confused > 0) && !(s.mood.startled > 0)) {
+      // Petted: hearts float off while you go on, one at a time, each on the
+      // side free as it appears, as the "z"s do (to one side, then the other)
+      if (s.mood.purr > 0.3 && now - lastHeartAt > HEART.every) {
+        lastHeartAt = now;
+        hearts.push({ t: now, side: chooseBubbleSide(s, up), dx: hearts.length % 2 ? -5 : 5 });
+      }
+      while (hearts.length && now - hearts[0].t > HEART.life) hearts.shift();
+      for (const { t, side, dx } of hearts) {
+        const age = (now - t) / HEART.life;
+        const a = Math.min(1, age / 0.15, (1 - age) / 0.35);
+        const from = side.at(up);
+        bubble("heart", from.x + dx + side.trail[0] * 0.5 * age, from.y + 4 + side.trail[1] * 0.8 * age, 12, a * s.alpha);
+      }
+      // Pleased with a long trip: a sparkle twinkles beside its head, where
+      // its "!" would be
+      const proud = s.mood.proud > 0 && s.moodK.proud < 0.85;
+      if (!(s.mood.confused > 0) && !(s.mood.startled > 0) && !proud) {
         bubbleSide = null;
         return;
       }
       if (!bubbleSide) bubbleSide = chooseBubbleSide(s, up);
       const anchor = bubbleSide.at(up);
+      if (proud) {
+        const k = s.moodK.proud;
+        const size = k < 0.12 || (k > 0.35 && k < 0.47) || k > 0.7 ? 8 : 12;
+        bubble("sparkle", anchor.x + (bubbleSide.id === "left" ? -9 : 9), anchor.y + 2, size, s.alpha);
+      }
       if (s.mood.confused > 0) bubble("?", anchor.x, anchor.y, 15, s.mood.confused * s.alpha);
       if (s.mood.startled > 0) bubble("!", anchor.x, anchor.y - (1 - s.mood.startled) * 4, 15, s.mood.startled * s.alpha);
     };
@@ -525,6 +552,7 @@ function RobotLayer() {
       return (
         moving ||
         gazeSettling ||
+        hearts.length > 0 ||
         !!carry ||
         !!landing ||
         !!hop ||

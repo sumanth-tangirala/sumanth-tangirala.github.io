@@ -14,10 +14,10 @@ import { ANCHOR, CAMO, CAMO_EYES, COLORS, compose, GLYPHS, LIDAR_GLINT, OUT_H, O
 //   drive:    its wheels' treads roll (two frames) and it bobs a pixel, at
 //             the pace of the ground it covers
 //   moods:    it turns its face to you, and its eyes change: ∩ ∩ (booped,
-//             saying hello, or petted, when it shivers a pixel too), x x
-//             (dizzy), wide (picked up), lopsided (confused), shut lines
-//             (asleep, settled a pixel onto its wheels); parked after a
-//             long trip, it nods twice, ∩ ∩, where it faces
+//             saying hello, petted, or parked after a long trip; RobotLayer
+//             adds hearts and a sparkle), x x (dizzy), wide (picked up),
+//             lopsided (confused), shut lines (asleep, settled a pixel
+//             onto its wheels)
 //   fidgets:  waiting, it turns to glance about, runs the glint round its
 //             lidar once, or shuffles a pixel on its treads; it yawns
 //             (eyes squeezed shut, stretched up a pixel) before it sleeps
@@ -102,8 +102,8 @@ const facingFor = (s, memo) => {
   // Reading along, it turns from the text toward you by an eighth of a turn,
   // so both its eyes show running along the lines
   if (s.reading) target = s.heading + (angleTo(s.heading, Math.PI / 2) >= 0 ? 1 : -1) * (Math.PI / 4);
-  const { happy, dizzy, startled, confused, purr } = s.mood;
-  if (happy > 0 || dizzy > 0 || startled > 0 || confused > 0 || purr > 0 || s.sleep > 0) {
+  const { happy, dizzy, startled, confused, purr, proud } = s.mood;
+  if (happy > 0 || dizzy > 0 || startled > 0 || confused > 0 || purr > 0 || proud > 0 || s.sleep > 0) {
     target = FACING_YOU[facingOf(target)] * SECTOR;
   }
   target += angleTo(s.heading, s.theta); // the layer's spin or wiggle
@@ -253,16 +253,13 @@ const look = {
     let glint = searching ? Math.floor(s.t / GLINT_MS) % LIDAR_GLINT.length : -1;
     if (fidget === "scan") glint = Math.min(LIDAR_GLINT.length - 1, Math.floor(s.fidget.k * LIDAR_GLINT.length));
     // Asleep, it settles a pixel onto its wheels; yawning, it stretches up a
-    // pixel on them; pleased with a long trip, it nods twice
+    // pixel on them
     const settle = s.sleep > 0.6 ? -1 : 0;
     const stretch = fidget === "yawn" && s.fidget.k > 0.2 && s.fidget.k < 0.8 ? 1 : 0;
-    const proudK = s.moodK ? s.moodK.proud : 1;
-    const nod = s.mood.proud > 0 && ((proudK > 0.15 && proudK < 0.3) || (proudK > 0.45 && proudK < 0.6)) ? -1 : 0;
-    const up = bob + settle + stretch + nod;
-    // Happy, it shakes a pixel side to side with the layer's wiggle; purring,
-    // it shivers a pixel; shuffling, it rolls a pixel the way it faces
-    let shake = s.mood.happy > 0 ? sign(angleTo(s.heading, s.theta), SHAKE_RAD) : 0;
-    if (s.mood.purr > 0.3) shake = Math.floor(s.t / 70) % 2;
+    const up = bob + settle + stretch;
+    // Happy, it shakes a pixel side to side with the layer's wiggle;
+    // shuffling, it rolls a pixel the way it faces
+    const shake = s.mood.happy > 0 ? sign(angleTo(s.heading, s.theta), SHAKE_RAD) : 0;
     const ahead = facing * SECTOR;
     const nx = nudge * Math.round(Math.cos(ahead));
     const ny = nudge * Math.round(Math.sin(ahead));
@@ -312,7 +309,8 @@ const look = {
   // The bubbles in its own pixel font, on its grid, faded in palette steps
   drawBubble(ctx, glyph, { x, y, size, alpha }, s) {
     // A "z" steps down a size as it rises (RobotLayer shrinks it 12 → 6)
-    const name = glyph !== "z" ? glyph : size > 10.5 ? "z" : "zSmall";
+    let name = glyph !== "z" ? glyph : size > 10.5 ? "z" : "zSmall";
+    if (glyph === "sparkle" && size < 10) name = "sparkleSmall";
     const rows = GLYPHS[name];
     if (!rows || alpha <= 0.05) return;
     const grid = gridFor(ctx, s);
@@ -330,7 +328,7 @@ const look = {
     // the outline one art px around it
     let style = "";
     for (const [i, j, ink] of glyphPixels(name)) {
-      const fill = ink ? INK_GREY : COLORS.o;
+      const fill = ink ? (name.startsWith("heart") || name.startsWith("sparkle") ? COLORS.a : INK_GREY) : COLORS.o;
       if (fill !== style) {
         ctx.fillStyle = fill;
         style = fill;
